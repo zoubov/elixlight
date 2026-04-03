@@ -110,7 +110,7 @@
             display: block;
         }
         
-        /* Navigation - Tubik style with bounce */
+        /* Navigation - Tubik style with smallcaps and bounce */
         .nav-container {
             position: fixed;
             top: 0;
@@ -125,32 +125,50 @@
         .brand-text {
             font-family: 'Inter', sans-serif;
             font-weight: 500;
-            font-size: 1.5rem;
+            font-size: 1.1rem;
             letter-spacing: 0.02em;
-            text-transform: lowercase;
-            font-variant: small-caps;
+            color: var(--charcoal);
         }
         
         .nav-link {
             position: relative;
-            color: var(--charcoal);
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            color: var(--text-muted);
+            transition: all 0.3s ease;
             font-weight: 400;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
             text-transform: lowercase;
             font-variant: small-caps;
-            letter-spacing: 0.02em;
-            padding: 0.25rem 0;
-            display: inline-block;
+            padding: 0.5rem 0;
         }
         
-        .nav-link:hover {
-            color: var(--blue);
-            transform: translateY(-3px);
-        }
-        
+        .nav-link:hover,
         .nav-link.active {
             color: var(--blue);
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+            50% { transform: translateY(-2px); }
+            70% { transform: translateY(-3px); }
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--blue);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
         }
         
         /* Hero section */
@@ -175,7 +193,7 @@
             line-height: 1.1;
             margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
-            color: var(--blue);
+            color: #000;
         }
         
         .hero-subtitle {
@@ -220,48 +238,23 @@
             font-weight: 300;
         }
         
-        /* Visual cards for What I Do / Who This Is For */
-        .visual-card {
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 24px;
-            padding: 2rem;
-            transition: all 0.4s ease;
-            text-align: center;
+        /* Collaborate link */
+        .collab-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        .visual-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 25px 50px rgba(74, 144, 226, 0.1);
+        .collab-link:hover {
+            color: var(--orange);
+            transform: translateX(5px);
         }
         
-        .visual-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-        
-        .visual-card h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-            margin-bottom: 0.5rem;
-            color: var(--charcoal);
-        }
-        
-        .visual-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-        
-        /* Regular cards */
+        /* Cards */
         .card {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(20px);
@@ -396,36 +389,6 @@
             transform-origin: left;
         }
         
-        /* Next page link */
-        .next-page-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--blue);
-            font-size: 1rem;
-            text-transform: lowercase;
-            font-variant: small-caps;
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            margin-top: 4rem;
-        }
-        
-        .next-page-link:hover {
-            gap: 1rem;
-            transform: translateX(5px);
-        }
-        
-        .next-page-link svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.3s ease;
-        }
-        
-        .next-page-link:hover svg {
-            transform: translateX(5px);
-        }
-        
         /* Philosophy article styling */
         .philosophy-article {
             max-width: 680px;
@@ -456,7 +419,7 @@
             font-style: italic;
             margin-top: 3rem;
             padding-top: 2rem;
-            border-top: 1px solid rgba(74, 144, 226, 0.3);
+            border-top: 1px solid rgba(230, 126, 34, 0.3);
         }
         
         /* Animations */
@@ -501,11 +464,11 @@
             }
             
             .nav-link {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             
             .brand-text {
-                font-size: 1.25rem;
+                font-size: 1rem;
             }
             
             .hero-title {
@@ -519,10 +482,6 @@
             .philosophy-article {
                 padding: 0 1rem;
             }
-            
-            .visual-card {
-                padding: 1.5rem;
-            }
         }
         
         /* Smooth scroll */
@@ -535,6 +494,13 @@
             background: rgba(74, 144, 226, 0.2);
             color: var(--charcoal);
         }
+        
+        /* Contact section at bottom */
+        .contact-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+        }
     </style>
 <base target="_blank">
 </head>
@@ -543,18 +509,18 @@
     <!-- Grain texture overlay -->
     <div class="grain-overlay"></div>
 
-    <!-- Navigation - Collaboration moved to end -->
+    <!-- Navigation - Tubik style with smallcaps and bounce -->
     <nav class="nav-container">
         <div class="max-w-6xl mx-auto px-6 py-5">
             <div class="nav-content flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="brand-text cursor-pointer" onclick="showPage('home')">
-                    elixlight
+                    ELIXLIGHT
                 </div>
-                <div class="nav-links flex gap-8 md:gap-12">
+                <div class="nav-links flex gap-8">
                     <button onclick="showPage('home')" class="nav-link" id="nav-home">home</button>
                     <button onclick="showPage('framework')" class="nav-link" id="nav-framework">framework</button>
-                    <button onclick="showPage('philosophy')" class="nav-link" id="nav-philosophy">philosophy</button>
                     <button onclick="showPage('collaboration')" class="nav-link" id="nav-collaboration">collaboration</button>
+                    <button onclick="showPage('philosophy')" class="nav-link" id="nav-philosophy">philosophy</button>
                 </div>
             </div>
         </div>
@@ -575,7 +541,7 @@
                     <span class="italic">Lighting Strategy</span>
                 </h1>
                 <p class="hero-subtitle fade-in-up delay-100">
-                    Translating human hormonal biology into lighting design strategies for residences, hospitality and professional spaces.
+                    Translating human hormonal biology into lighting design strategies for residences, hospitality, and professional spaces.
                 </p>
             </div>
         </div>
@@ -588,33 +554,16 @@
                     I collaborate with lighting designers, architects and hospitality teams to integrate human hormonal and circadian responses into lighting concepts.
                 </p>
                 <p class="section-text mb-4">
-                    My role is not to design lighting systems.<br>
-                    My role is to inform design decisions by translating how light affects the human body into clear spatial strategies.
+                    My role is to add a layer to the design process. I consult design decisions by translating how light affects the human body into clear spatial strategies.
                 </p>
-                
-                <!-- Visual cards 2x2 -->
-                <div class="grid md:grid-cols-2 gap-6 mt-12">
-                    <div class="visual-card fade-in-up delay-100">
-                        <div class="visual-icon">💡</div>
-                        <h3>Concept Development</h3>
-                        <p>Shaping the foundational vision through biological insight</p>
-                    </div>
-                    <div class="visual-card fade-in-up delay-150">
-                        <div class="visual-icon">🏛️</div>
-                        <h3>Spatial Intent</h3>
-                        <p>Defining how spaces should feel and function for occupants</p>
-                    </div>
-                    <div class="visual-card fade-in-up delay-200">
-                        <div class="visual-icon">👤</div>
-                        <h3>User Experience</h3>
-                        <p>Crafting environments that support human wellbeing</p>
-                    </div>
-                    <div class="visual-card fade-in-up delay-250">
-                        <div class="visual-icon">🧬</div>
-                        <h3>Biological Impact</h3>
-                        <p>Understanding light's effect on hormones and circadian rhythms</p>
-                    </div>
-                </div>
+                <p class="text-gray-500 mb-4">I contribute at the level of:</p>
+                <ul class="elegant-list">
+                    <li>concept development</li>
+                    <li>spatial intent</li>
+                    <li>user experience</li>
+                    <li>biological impact of light</li>
+                </ul>
+                <span class="collab-link" onclick="showPage('collaboration')">let's collaborate →</span>
             </div>
         </div>
 
@@ -623,7 +572,7 @@
             <div class="gradient-orb orb-3" style="opacity: 0.3;"></div>
             <div class="fade-in-up">
                 <p class="section-label">What You Can Expect</p>
-                <p class="section-text mb-6">Working together, you can expect:</p>
+                <p class="section-text mb-6">Implementing the Hormone-Aware Lighting Strategy, you can expect:</p>
                 <ul class="elegant-list section-text">
                     <li>A clear understanding of how your project influences human states and behaviors</li>
                     <li>Translation of these states into lighting principles (not fixtures)</li>
@@ -660,8 +609,7 @@
                 
                 <div class="mt-12 text-center fade-in-up delay-300">
                     <p class="font-serif text-2xl md:text-3xl italic text-gray-500 leading-relaxed">
-                        Most projects consider aesthetics and visibility.<br>
-                        <span class="text-gray-800">Few consider how a space regulates the human nervous and hormonal system.</span><br>
+                        Beyond aesthetics and visibility, a space regulates the human nervous and hormonal system.<br>
                         <span class="text-gray-800">This is where I contribute.</span>
                     </p>
                 </div>
@@ -699,17 +647,19 @@
                         <p class="text-gray-600 pl-12">Provides feedback on lighting proposals based on hormonal and circadian impact.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <div class="gradient-orb orb-1" style="opacity: 0.3; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+            <div class="fade-in-up">
+                <p class="section-label mb-8">Contact</p>
+                <p class="text-gray-500 mb-8">Available for collaborations worldwide.</p>
                 
-                <!-- Link to Collaboration -->
-                <div class="text-center mt-16 fade-in-up delay-400">
-                    <button onclick="showPage('collaboration')" class="next-page-link">
-                        explore collaboration
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-                </div>
+                <a href="mailto:zelisavet@gmail.com" class="email-link font-serif italic">
+                    zelisavet@gmail.com
+                </a>
             </div>
         </div>
     </section>
@@ -870,54 +820,11 @@
                     <li>translate that into lighting behavior</li>
                     <li>create more intentional and differentiated experiences</li>
                 </ul>
-                
-                <!-- Link to Collaboration -->
-                <div class="text-center mt-16">
-                    <button onclick="showPage('collaboration')" class="next-page-link">
-                        explore collaboration
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Page 3: Philosophy -->
-    <section id="philosophy" class="page">
-        <div class="content-section pt-32 min-h-screen flex items-center">
-            <div class="philosophy-article fade-in-up">
-                <p class="section-label mb-12">Philosophy</p>
-                
-                <p class="philosophy-lead font-serif text-2xl md:text-3xl leading-relaxed">
-                    If nature is not available, light becomes the closest thing to it.
-                </p>
-                
-                <p class="philosophy-body">
-                    Our environments are constantly affecting our nervous system — quietly, biologically, continuously. When we lose connection with natural light, we don't just lose aesthetics. We lose rhythm: sleep suffers, stress increases, the body stops regulating properly.
-                </p>
-                
-                <p class="philosophy-conclusion font-serif">
-                    The highest form of aesthetics is a regulated nervous system.
-                </p>
-                
-                <!-- Link to Collaboration -->
-                <div class="text-center mt-16">
-                    <button onclick="showPage('collaboration')" class="next-page-link">
-                        explore collaboration
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Page 4: Collaboration -->
+    <!-- Page 3: Collaboration -->
     <section id="collaboration" class="page">
         <div class="content-section pt-32">
             <div class="mb-16 fade-in-up">
@@ -927,32 +834,15 @@
                 </p>
             </div>
 
-            <!-- Who This Is For - Visual Cards -->
+            <!-- Who This Is For -->
             <div class="mb-16 fade-in-up delay-100">
                 <p class="section-label">Who This Is For</p>
-                
-                <div class="grid md:grid-cols-2 gap-6 mt-8">
-                    <div class="visual-card fade-in-up delay-100">
-                        <div class="visual-icon">💡</div>
-                        <h3>Lighting Design Studios</h3>
-                        <p>Teams seeking biological insight to enhance their lighting concepts</p>
-                    </div>
-                    <div class="visual-card fade-in-up delay-150">
-                        <div class="visual-icon">🏛️</div>
-                        <h3>Architectural Studios</h3>
-                        <p>Firms integrating wellness into their spatial design approach</p>
-                    </div>
-                    <div class="visual-card fade-in-up delay-200">
-                        <div class="visual-icon">🍽️</div>
-                        <h3>Hospitality Design Teams</h3>
-                        <p>Creating memorable guest experiences through light</p>
-                    </div>
-                    <div class="visual-card fade-in-up delay-250">
-                        <div class="visual-icon">🧘</div>
-                        <h3>Wellness & Longevity Projects</h3>
-                        <p>Spaces designed for health, recovery, and human optimization</p>
-                    </div>
-                </div>
+                <ul class="elegant-list section-text">
+                    <li>lighting design studios</li>
+                    <li>architectural studios</li>
+                    <li>hospitality design teams</li>
+                    <li>wellness and longevity-focused projects</li>
+                </ul>
             </div>
 
             <!-- Where I Contribute -->
@@ -1049,6 +939,27 @@
         </div>
     </section>
 
+    <!-- Page 4: Philosophy -->
+    <section id="philosophy" class="page">
+        <div class="content-section pt-32 min-h-screen flex items-center">
+            <div class="philosophy-article fade-in-up">
+                <p class="section-label mb-12">Philosophy</p>
+                
+                <p class="philosophy-lead font-serif text-2xl md:text-3xl leading-relaxed">
+                    If nature is not available, light becomes the closest thing to it.
+                </p>
+                
+                <p class="philosophy-body">
+                    Our environments are constantly affecting our nervous system — quietly, biologically, continuously. When we lose connection with natural light, we don't just lose aesthetics. We lose rhythm: sleep suffers, stress increases, the body stops regulating properly.
+                </p>
+                
+                <p class="philosophy-conclusion font-serif">
+                    The highest form of aesthetics is a regulated nervous system.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <script>
         // Page navigation
         function showPage(pageName) {
@@ -1100,7 +1011,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.framework-card, .collab-card, .card, .phase-card, .visual-card').forEach(el => {
+        document.querySelectorAll('.framework-card, .collab-card, .card, .phase-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(20px)';
             el.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
