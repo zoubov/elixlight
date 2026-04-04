@@ -58,11 +58,12 @@
         }
         
         .orb-2 {
-            width: 500px;
-            height: 500px;
+            width: 700px;
+            height: 700px;
             background: linear-gradient(135deg, #b8e3ff 0%, #a2d2ff 100%);
-            top: 20%;
-            left: -150px;
+            top: -150px;
+            left: -250px;
+            opacity: 0.35;
         }
         
         .orb-3 {
@@ -74,9 +75,9 @@
         }
         
         .orb-4 {
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(135deg, #ffe5b4 0%, #fff1cc 100%);
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #ffd4b8 0%, #ffcaa0 100%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -261,19 +262,19 @@
         
         /* Cards */
         .card {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 24px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 32px;
+            padding: 3rem;
+            transition: all 0.5s ease;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 20px 40px rgba(230, 126, 34, 0.1);
-            border-color: rgba(230, 126, 34, 0.2);
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateX(10px);
+            border-left: 3px solid var(--orange);
+            box-shadow: 0 8px 16px rgba(230, 126, 34, 0.06);
         }
         
         /* Framework cards */
@@ -291,6 +292,7 @@
             background: rgba(255, 255, 255, 0.5);
             transform: translateX(10px);
             border-left: 3px solid var(--orange);
+            box-shadow: 0 8px 16px rgba(230, 126, 34, 0.06);
         }
         
         .hormone-tag {
@@ -334,19 +336,20 @@
         
         /* Collaboration cards */
         .collab-card {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 24px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 32px;
+            padding: 3rem;
+            transition: all 0.5s ease;
             cursor: pointer;
         }
         
         .collab-card:hover {
-            transform: scale(1.02);
-            background: rgba(255, 255, 255, 0.6);
-            border-color: rgba(230, 126, 34, 0.3);
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateX(10px);
+            border-left: 3px solid var(--orange);
+            box-shadow: 0 8px 16px rgba(230, 126, 34, 0.06);
         }
         
         /* Phase cards */
@@ -537,8 +540,9 @@
         <!-- Hero -->
         <div class="hero-section">
             <div class="gradient-orb orb-1"></div>
-            <div class="gradient-orb orb-2"></div>
             <div class="gradient-orb orb-4"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb" style="width: 650px; height: 650px; background: linear-gradient(145deg, #fff1cc 0%, #ffe5b4 100%); bottom: 10%; left: 8%; opacity: 0.5;"></div>
             
             <div class="hero-content">
                 <h1 class="hero-title font-serif fade-in-up">
@@ -612,8 +616,10 @@
                     </div>
                 </div>
                 
-                <div class="mt-12 text-center fade-in-up delay-300">
-                    <p class="font-serif text-2xl md:text-3xl italic text-gray-500 leading-relaxed">
+                <div class="mt-12 text-center fade-in-up delay-300" style="position: relative;">
+                    <div class="gradient-orb" style="width: 500px; height: 500px; background: linear-gradient(135deg, #ffb3ba 0%, #ffd1dc 100%); top: 50%; left: -100px; opacity: 0.15;"></div>
+                    <div class="gradient-orb" style="width: 400px; height: 400px; background: linear-gradient(135deg, #b8e3ff 0%, #a2d2ff 100%); top: 50%; right: -80px; opacity: 0.18;"></div>
+                    <p class="font-serif text-2xl md:text-3xl italic text-gray-500 leading-relaxed" style="position: relative; z-index: 10;">
                         Beyond aesthetics and visibility, a space regulates the human nervous and hormonal system.<br>
                         <span class="text-gray-800">This is where I contribute.</span>
                     </p>
@@ -830,8 +836,11 @@
     </section>
 
     <!-- Page 3: Collaboration -->
-    <section id="collaboration" class="page">
-        <div class="content-section pt-32">
+    <section id="collaboration" class="page" style="background: linear-gradient(110deg, rgba(255, 176, 124, 0.08) 0%, rgba(255, 255, 255, 0.02) 40%, rgba(184, 227, 255, 0.12) 100%); position: relative;">
+        <div class="gradient-orb" style="width: 900px; height: 900px; background: linear-gradient(110deg, #fff1cc 0%, #ffe5b4 100%); top: -350px; left: 5%; opacity: 0.28;"></div>
+        <div class="gradient-orb" style="width: 550px; height: 550px; background: linear-gradient(200deg, #a2d2ff 0%, #b8e3ff 100%); bottom: 5%; right: -100px; opacity: 0.2;"></div>
+        <div class="gradient-orb" style="width: 700px; height: 700px; background: linear-gradient(310deg, #ffb07c 0%, #ff8c69 100%); top: 20%; left: -200px; opacity: 0.22;"></div>
+        <div class="content-section pt-32" style="position: relative; z-index: 10;">
             <div class="mb-16 fade-in-up">
                 <p class="section-label">Collaboration</p>
                 <p class="section-text">
@@ -941,62 +950,66 @@
                 </a>
             </div>
         </div>
+        </div>
     </section>
 
     <!-- Page 4: Philosophy -->
-    <section id="philosophy" class="page">
-        <div class="content-section pt-32 min-h-screen flex items-center">
-            <div class="philosophy-article fade-in-up">
-                <p class="section-label mb-12">Philosophy</p>
+    <section id="philosophy" class="page" style="background: linear-gradient(220deg, rgba(255, 179, 186, 0.14) 0%, rgba(255, 240, 200, 0.08) 50%, rgba(184, 227, 255, 0.1) 100%); position: relative;">
+        <div class="gradient-orb" style="width: 800px; height: 800px; background: linear-gradient(220deg, #ffb3ba 0%, #ffd1dc 100%); bottom: -250px; right: 8%; opacity: 0.22;"></div>
+        <div class="gradient-orb" style="width: 600px; height: 600px; background: linear-gradient(35deg, #ffe5b4 0%, #fff1cc 100%); top: -100px; right: -150px; opacity: 0.18;"></div>
+        <div class="gradient-orb" style="width: 400px; height: 400px; background: linear-gradient(150deg, #a2d2ff 0%, #b8e3ff 100%); top: 30%; left: -80px; opacity: 0.16;"></div>
+        <div class="content-section pt-32 min-h-screen flex items-center" style="position: relative; z-index: 10;">
+            <div class="philosophy-article fade-in-up" style="max-width: 750px; line-height: 1.6; font-size: 1rem;">
+                <p class="section-label mb-8">Philosophy</p>
                 
-                <p class="philosophy-body">
+                <p class="philosophy-conclusion font-serif" style="margin-top: 0; padding-top: 0; border-top: none; margin-bottom: 2rem;">
                     What we call "comfort" or "atmosphere" is often a biological response we don't fully recognize.
                 </p>
                 
-                <p class="philosophy-body">
+                <p class="philosophy-body" style="margin-bottom: 1rem;">
                     We are not only perceiving light visually. We are responding to it hormonally.
                 </p>
                 
-                <p class="philosophy-body">
-                    Light informs the body when to activate, when to soften, when to connect, when to let go. Without these signals, the nervous system remains in subtle confusion.
+                <p class="philosophy-body" style="margin-bottom: 1rem;">
+                    Light informs the body when to <span style="color: var(--charcoal); font-style: italic; font-weight: 500;">activate, soften, connect, let go</span>. Without these signals, the nervous system remains in subtle confusion.
                 </p>
                 
-                <p class="philosophy-body">
+                <p class="philosophy-body" style="margin-bottom: 1rem;">
                     Spaces may look beautiful, but feel slightly off. Too sharp, too flat, too exposed, too alert. This is not a design flaw. It is a biological misalignment.
                 </p>
                 
-                <p class="philosophy-body">
+                <p class="philosophy-body" style="margin-bottom: 1rem;">
                     In contemporary environments, light has become increasingly artificial, static, and disconnected from natural rhythms. As a result, many spaces unintentionally:
                 </p>
                 
-                <ul class="elegant-list philosophy-body mb-6">
+                <ul class="elegant-list philosophy-body" style="margin-bottom: 1rem;">
                     <li>prolong stimulation into the evening</li>
                     <li>reduce the body's ability to unwind</li>
                     <li>disrupt sleep preparation</li>
                     <li>increase baseline stress levels</li>
                 </ul>
                 
-                <p class="philosophy-body">
+                <p class="philosophy-body" style="margin-bottom: 1rem;">
                     Not dramatically — but consistently. And consistency is what shapes the nervous system over time.
                 </p>
                 
-                <p class="philosophy-body">
+                <p class="philosophy-body" style="margin-bottom: 1rem;">
                     This work exists to bring awareness back into the design of light. Not as a technical correction, but as a shift in intention.
                 </p>
                 
-                <p class="philosophy-body font-serif italic mb-6">
+                <p class="philosophy-conclusion font-serif" style="margin-top: 2rem; padding-top: 0; border-top: none; margin-bottom: 1rem;">
                     To move from:
                 </p>
-                
-                <ul class="elegant-list philosophy-body mb-6">
-                    <li>lighting as visibility → to lighting as regulation</li>
-                    <li>lighting as decoration → to lighting as experience</li>
+                <ul class="elegant-list" style="margin-bottom: 2rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--text-muted); font-weight: 400;">
+                    <li style="color: var(--text-muted);">lighting as visibility → <span style="color: var(--charcoal); font-weight: 400;">to lighting as regulation</span></li>
+                    <li style="color: var(--text-muted);">lighting as decoration → <span style="color: var(--charcoal); font-weight: 400;">to lighting as experience</span></li>
                 </ul>
                 
-                <p class="philosophy-conclusion font-serif">
+                <p class="philosophy-conclusion font-serif" style="margin-top: 2rem;">
                     Because when light supports the body, people don't just see better. They rest deeper. They connect more easily. They feel safer in a space. And this changes everything — quietly, but profoundly.
                 </p>
             </div>
+        </div>
         </div>
     </section>
 
