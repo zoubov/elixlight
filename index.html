@@ -161,14 +161,25 @@
             right: 0;
             z-index: 100;
             padding: 2rem;
-            mix-blend-mode: difference;
         }
         
-        /* Hide navigation on mobile */
-        @media (max-width: 768px) {
-            .sticky-nav {
-                display: none;
-            }
+        .nav-logo {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.1);
+            transition: text-shadow 0.3s ease;
+        }
+        
+        .nav-logo:hover {
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
         }
         
         .nav-link {
@@ -196,6 +207,23 @@
             width: 100%;
             height: 1px;
             background: #fff;
+        }
+        
+        /* Hide nav links on narrow screens (when Work gets close to ELIXLIGHT) */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        /* Also hide full navigation on mobile */
+        @media (max-width: 768px) {
+            .sticky-nav {
+                display: block; /* Keep logo visible */
+            }
+            .nav-links {
+                display: none;
+            }
         }
         
         .orb-small {
@@ -253,8 +281,8 @@
     <div class="grain-overlay"></div>
     
     <nav class="sticky-nav flex justify-between items-center">
-        <a href="#" class="nav-link font-medium tracking-widest" data-section="hero">ELIXLIGHT</a>
-        <div class="flex gap-8">
+        <a href="#" class="nav-logo font-medium tracking-widest" data-section="hero">ELIXLIGHT</a>
+        <div class="nav-links">
             <a href="#work" class="nav-link" data-section="work">Work</a>
             <a href="#framework" class="nav-link" data-section="framework">Framework</a>
             <a href="#philosophy" class="nav-link" data-section="philosophy">Philosophy</a>
