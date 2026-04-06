@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELIXLIGHT | Project Scope Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #d4c4b0;
+            color: #1a1a1a;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .blue-text { color: #0033cc; }
+        h1, h2, h3, .display-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 500;
+        }
+        .hero-orb {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(245, 235, 220, 0.9) 0%, rgba(232, 218, 200, 0.6) 30%, rgba(212, 196, 176, 0.3) 60%, transparent 80%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: breathe 8s ease-in-out infinite;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-20px, -20px); }
+        }
+        .progress-bar {
+            height: 4px;
+            background: rgba(0, 51, 204, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #0033cc;
+            transition: width 0.4s ease;
+        }
+        .step-container {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .step-container.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .option-card {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .option-card:hover {
+            transform: translateX(8px);
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(0, 51, 204, 0.3);
+        }
+        .option-card.selected {
+            background: rgba(0, 51, 204, 0.1);
+            border-color: #0033cc;
+            transform: translateX(12px);
+        }
+        .result-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .price-range {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #0033cc;
+        }
+        .deliverable-item {
+            position: relative;
+            padding-left: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .deliverable-item::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #0033cc;
+        }
+        .deliverable-text { flex: 1; }
+        .role-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(0, 51, 204, 0.1);
+            color: #0033cc;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .fade-in { animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="grain-overlay"></div>
+    <div class="relative min-h-screen flex flex-col">
+        <div class="hero-orb" style="top: -10%; left: -10%;"></div>
+        <div class="hero-orb" style="bottom: -10%; right: -10%; animation-delay: -4s;"></div>
+        
+        <!-- Header with back link -->
+        <header class="relative z-10 p-8 flex justify-between items-center">
+            <a href="index.html" class="text-white font-medium tracking-widest text-sm hover:opacity-70 transition-opacity" style="text-shadow: 0 0 20px rgba(255,255,255,0.3);">ELIXLIGHT</a>
+            <a href="index.html" class="text-white text-sm hover:opacity-70 transition-opacity" style="text-shadow: 0 0 20px rgba(255,255,255,0.3);">← back to main</a>
+        </header>
+        
+        <main class="flex-1 relative z-10 flex items-center justify-center p-4 md:p-8">
+            <div class="w-full max-w-3xl">
+                <div class="mb-8" id="progressContainer">
+                    <div class="flex justify-between text-xs text-gray-600 mb-2">
+                        <span>Progress</span>
+                        <span id="progressText">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <!-- Step 0: Welcome -->
+                <div class="step-container active" id="step0">
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl md:text-6xl blue-text mb-6 leading-tight">Discover the right level of<br>hormonal lighting advisory<br>for your project</h1>
+                        <p class="text-lg text-gray-700 max-w-xl mx-auto leading-relaxed">Answer a few questions to see how this strategy can integrate into your project and estimate investment range.</p>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="nextStep()" class="inline-block px-12 py-4 bg-blue-700 text-white font-medium rounded-full hover:bg-blue-800 transition-all transform hover:scale-105 shadow-lg">
+                            Start
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Steps 1-7: Questions -->
+                <div class="step-container" id="step1">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">What type of project is this?</h2>
+                    <div class="space-y-4">
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(1, 1, 'Private Residential')">
+                            <p class="text-lg font-medium text-gray-800">Private Residential</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(1, 2, 'High-End Residential / Villa')">
+                            <p class="text-lg font-medium text-gray-800">High-End Residential / Villa</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(1, 3, 'Boutique Hotel')">
+                            <p class="text-lg font-medium text-gray-800">Boutique Hotel</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(1, 3, 'Luxury Hotel / Resort')">
+                            <p class="text-lg font-medium text-gray-800">Luxury Hotel / Resort</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(1, 3, 'Wellness / Spa')">
+                            <p class="text-lg font-medium text-gray-800">Wellness / Spa</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(1, 2, 'Workplace / Hybrid')">
+                            <p class="text-lg font-medium text-gray-800">Workplace / Hybrid</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-container" id="step2">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">At what stage is the project currently?</h2>
+                    <div class="space-y-4">
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(2, 1, 'Early concept')">
+                            <p class="text-lg font-medium text-gray-800">Early concept</p>
+                            <p class="text-sm text-gray-600 mt-1">No lighting decisions yet</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(2, 2, 'Concept defined')">
+                            <p class="text-lg font-medium text-gray-800">Concept defined</p>
+                            <p class="text-sm text-gray-600 mt-1">Design starting</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(2, 2, 'Lighting design in progress')">
+                            <p class="text-lg font-medium text-gray-800">Lighting design in progress</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(2, 3, 'Lighting mostly defined')">
+                            <p class="text-lg font-medium text-gray-800">Lighting mostly defined</p>
+                            <p class="text-sm text-gray-600 mt-1">Pre-final review stage</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(2, 3, 'Post-design')">
+                            <p class="text-lg font-medium text-gray-800">Post-design</p>
+                            <p class="text-sm text-gray-600 mt-1">Review or fixes needed</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-container" id="step3">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">How central is user experience, wellness, or behavioral alignment?</h2>
+                    <div class="space-y-4">
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(3, 1, 'Not a priority')">
+                            <p class="text-lg font-medium text-gray-800">Not a priority</p>
+                            <p class="text-sm text-gray-600 mt-1">Mostly aesthetic / functional</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(3, 2, 'Important but not core')">
+                            <p class="text-lg font-medium text-gray-800">Important but not core</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(3, 3, 'Core concept')">
+                            <p class="text-lg font-medium text-gray-800">Core concept</p>
+                            <p class="text-sm text-gray-600 mt-1">Wellness, recovery, or behavioral experience</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-container" id="step4">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">How would you describe the lighting complexity?</h2>
+                    <div class="space-y-4">
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(4, 1, 'Simple')">
+                            <p class="text-lg font-medium text-gray-800">Simple</p>
+                            <p class="text-sm text-gray-600 mt-1">Few zones, consistent use</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(4, 2, 'Moderate')">
+                            <p class="text-lg font-medium text-gray-800">Moderate</p>
+                            <p class="text-sm text-gray-600 mt-1">Multiple zones, varied states</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(4, 3, 'Complex')">
+                            <p class="text-lg font-medium text-gray-800">Complex</p>
+                            <p class="text-sm text-gray-600 mt-1">Dynamic lighting, day-to-night transitions</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-container" id="step5">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">Are there specific issues or goals to address?</h2>
+                    <div class="space-y-4">
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(5, 1, 'No specific issue')">
+                            <p class="text-lg font-medium text-gray-800">No specific issue</p>
+                            <p class="text-sm text-gray-600 mt-1">Exploratory</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(5, 2, 'General goals')">
+                            <p class="text-lg font-medium text-gray-800">General goals</p>
+                            <p class="text-sm text-gray-600 mt-1">Comfort, atmosphere, mood</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(5, 3, 'Clear problem')">
+                            <p class="text-lg font-medium text-gray-800">Clear problem or performance goal</p>
+                            <p class="text-sm text-gray-600 mt-1">Sleep, recovery, behavior optimization</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-container" id="step6">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">What is the timeline?</h2>
+                    <div class="space-y-4">
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(6, 1, 'Flexible')">
+                            <p class="text-lg font-medium text-gray-800">Flexible</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(6, 2, 'Defined / manageable')">
+                            <p class="text-lg font-medium text-gray-800">Defined / manageable</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(6, 3, 'Urgent / fast-track')">
+                            <p class="text-lg font-medium text-gray-800">Urgent / fast-track</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-container" id="step7">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">Who will you collaborate with?</h2>
+                    <div class="space-y-4">
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(7, 1, 'Lighting designer only')">
+                            <p class="text-lg font-medium text-gray-800">Lighting designer only</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(7, 2, 'Architect / designer team')">
+                            <p class="text-lg font-medium text-gray-800">Architect / designer team</p>
+                        </div>
+                        <div class="option-card p-6 rounded-2xl" onclick="selectOption(7, 3, 'Multiple stakeholders')">
+                            <p class="text-lg font-medium text-gray-800">Multiple stakeholders</p>
+                            <p class="text-sm text-gray-600 mt-1">Hospitality operator, wellness consultant, client</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 8: Results -->
+                <div class="step-container" id="step8">
+                    <h2 class="text-3xl md:text-4xl blue-text mb-8">Recommended Scope & Investment</h2>
+                    <div class="result-card p-8 rounded-3xl mb-6 fade-in">
+                        <div class="mb-6">
+                            <p class="text-sm text-gray-600 uppercase tracking-wider mb-2">Recommended Package</p>
+                            <h3 class="text-2xl md:text-3xl font-semibold blue-text" id="packageName">Loading...</h3>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-sm text-gray-600 mb-2">Estimated Investment</p>
+                            <p class="price-range" id="priceRange">€0 – €0</p>
+                        </div>
+                        <div class="border-t border-gray-300 pt-6">
+                            <p class="text-sm text-gray-600 uppercase tracking-wider mb-4">Suggested Deliverables</p>
+                            <ul class="space-y-3 text-gray-800" id="deliverablesList"></ul>
+                        </div>
+                    </div>
+                    <div class="bg-white/30 backdrop-blur-sm p-6 rounded-2xl fade-in">
+                        <p class="text-lg text-gray-800 mb-4">Would you like to see a reference case study?</p>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="alert('Opening case study...')" class="px-6 py-3 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition-colors">
+                                Yes, view case study →
+                            </button>
+                            <button onclick="resetCalculator()" class="px-6 py-3 border border-blue-700 text-blue-700 rounded-full hover:bg-blue-50 transition-colors">
+                                Start over
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 flex justify-between" id="navButtons">
+                    <button onclick="prevStep()" id="backBtn" class="px-6 py-3 text-gray-600 hover:text-blue-700 transition-colors opacity-0 pointer-events-none">
+                        ← Back
+                    </button>
+                    <div></div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="relative z-10 py-8 text-center text-gray-600 text-sm">
+            <p>© 2024 ELIXLIGHT. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        let currentStep = 0;
+        const scores = { projectType: 0, projectStage: 0, experienceAmbition: 0, lightingComplexity: 0, problemClarity: 0, timeline: 0, teamIntegration: 0 };
+        const packages = {
+            basic: {
+                name: "Hormonal Lighting Strategy",
+                minPrice: 2000, maxPrice: 4000,
+                deliverables: [
+                    { text: "1–2 strategy sessions", role: "All stakeholders" },
+                    { text: "Hormonal Lighting Strategy document", role: "Lighting designer & architect" },
+                    { text: "High-level human state mapping", role: "Design team" },
+                    { text: "Basic lighting behavior guidelines", role: "Lighting designer" }
+                ]
+            },
+            standard: {
+                name: "Strategy + Design Alignment",
+                minPrice: 5000, maxPrice: 9000,
+                deliverables: [
+                    { text: "2–3 strategy sessions", role: "All stakeholders" },
+                    { text: "Detailed Human State Mapping", role: "Design team & wellness consultant" },
+                    { text: "Zone-specific lighting guidelines", role: "Lighting designer" },
+                    { text: "Design alignment sessions", role: "Architect & lighting designer" },
+                    { text: "Circadian flow documentation", role: "All stakeholders" }
+                ]
+            },
+            full: {
+                name: "Full Advisory",
+                minPrice: 8000, maxPrice: 15000,
+                deliverables: [
+                    { text: "3–5 strategy sessions", role: "All stakeholders" },
+                    { text: "Complete Human State Mapping", role: "Design team, wellness consultant & operator" },
+                    { text: "Detailed lighting behavior specifications", role: "Lighting designer" },
+                    { text: "Multiple design review cycles", role: "All stakeholders" },
+                    { text: "Pre-implementation review", role: "Lighting designer & architect" },
+                    { text: "Stakeholder alignment workshops", role: "All stakeholders" }
+                ]
+            }
+        };
+        
+        function updateProgress() {
+            const progress = (currentStep / 8) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            document.getElementById('progressContainer').style.display = currentStep === 8 ? 'none' : 'block';
+        }
+        
+        function showStep(step) {
+            document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            const backBtn = document.getElementById('backBtn');
+            if (step === 0 || step === 8) {
+                backBtn.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                backBtn.classList.remove('opacity-0', 'pointer-events-none');
+            }
+            updateProgress();
+        }
+        
+        function nextStep() { if (currentStep < 8) { currentStep++; showStep(currentStep); } }
+        function prevStep() { if (currentStep > 0) { currentStep--; showStep(currentStep); } }
+        
+        function selectOption(step, score, label) {
+            switch(step) {
+                case 1: scores.projectType = score; break;
+                case 2: scores.projectStage = score; break;
+                case 3: scores.experienceAmbition = score; break;
+                case 4: scores.lightingComplexity = score; break;
+                case 5: scores.problemClarity = score; break;
+                case 6: scores.timeline = score; break;
+                case 7: scores.teamIntegration = score; break;
+            }
+            document.querySelectorAll('#step' + step + ' .option-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            setTimeout(() => {
+                if (step === 7) {
+                    calculateAndShowResults();
+                    nextStep();
+                } else {
+                    nextStep();
+                }
+            }, 300);
+        }
+        
+        function calculateAndShowResults() {
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+            let selectedPackage;
+            if (totalScore <= 9) selectedPackage = packages.basic;
+            else if (totalScore <= 13) selectedPackage = packages.standard;
+            else selectedPackage = packages.full;
+            
+            let modifier = 1;
+            if (scores.timeline === 3) modifier += 0.25;
+            if (scores.teamIntegration === 3) modifier += 0.15;
+            
+            const adjustedMin = Math.round(selectedPackage.minPrice * modifier);
+            const adjustedMax = Math.round(selectedPackage.maxPrice * modifier);
+            
+            document.getElementById('packageName').textContent = selectedPackage.name;
+            document.getElementById('priceRange').textContent = '€' + adjustedMin.toLocaleString() + ' – €' + adjustedMax.toLocaleString() + (totalScore > 13 ? '+' : '');
+            
+            const deliverablesList = document.getElementById('deliverablesList');
+            deliverablesList.innerHTML = '';
+            selectedPackage.deliverables.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'deliverable-item';
+                li.innerHTML = `<span class="deliverable-text">${item.text}</span><span class="role-tag">${item.role}</span>`;
+                deliverablesList.appendChild(li);
+            });
+        }
+        
+        function resetCalculator() {
+            Object.keys(scores).forEach(key => scores[key] = 0);
+            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+            currentStep = 0;
+            showStep(0);
+        }
+        
+        updateProgress();
+    </script>
+</body>
+</html>
