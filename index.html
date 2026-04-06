@@ -298,8 +298,8 @@
             color: #0033cc;
         }
         
-        /* Style for case study and back links - same as "let's collaborate" */
-        .case-study-link {
+        /* Style for reference case study and back links - same as "let's collaborate" */
+        .example-link {
             display: inline-block;
             color: #1d4ed8;
             transition: color 0.3s;
@@ -308,7 +308,7 @@
             text-decoration: none;
         }
         
-        .case-study-link:hover {
+        .example-link:hover {
             color: #1e3a8a;
         }
         
@@ -471,7 +471,50 @@
             color: #888;
             margin-top: 4rem;
         }
+        
+        /* New content styles */
+        .intro-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .value-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .value-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #0033cc;
+            font-weight: bold;
+        }
+        
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .scenario-card:hover {
+            transform: translateX(12px);
+        }
+        
+        .output-tag {
+            display: inline-block;
+            color: #0033cc;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body>
@@ -484,13 +527,13 @@
             <div class="nav-links">
                 <a href="#work" class="nav-link" data-section="work">Work</a>
                 <a href="#framework" class="nav-link" data-section="framework">Framework</a>
-                <a href="#philosophy" class="nav-link" data-section="philosophy">Philosophy</a>
+                <a href="#scenarios" class="nav-link" data-section="scenarios">Scenarios</a>
                 <a href="#contact" class="nav-link" data-section="contact">Contact</a>
             </div>
         </nav>
 
         <!-- Hero Section -->
-        <section id="hero" class="section-hero relative">
+        <section id="hero" class="intro-section relative">
             <div class="hero-orb" style="top: 10%; left: 20%;"></div>
             <div class="hero-orb" style="bottom: 20%; right: 10%; animation-delay: -4s;"></div>
             
@@ -499,122 +542,121 @@
                     Hormone-Aware<br>Lighting Strategy
                 </h1>
                 <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed fade-in" style="transition-delay: 0.2s;">
-                    Translating human hormonal biology into lighting design strategies for residences, hospitality, and professional spaces.
+                    Translating human hormonal biology into lighting strategies for architecture, hospitality and wellness environments.
                 </p>
             </div>
         </section>
 
-        <!-- What I Do Section -->
+        <!-- A Different Layer Section -->
         <section id="work" class="py-32 px-8 relative">
             <div class="orb-small" style="right: 10%; top: 20%;"></div>
             <div class="container mx-auto max-w-6xl">
                 <div class="grid md:grid-cols-2 gap-16 items-start">
                     <div class="fade-in">
-                        <h2 class="text-4xl md:text-5xl blue-text mb-8">What I Do</h2>
+                        <h2 class="text-4xl md:text-5xl blue-text mb-8">A different layer<br>of lighting design</h2>
                     </div>
                     <div class="fade-in space-y-8 text-lg text-gray-800 leading-relaxed">
-                        <p>I collaborate with lighting designers, architects and hospitality teams to integrate human hormonal and circadian responses into lighting concepts.</p>
-                        <p>My role is to add a layer to the design process. I consult design decisions by translating how light affects the human body into clear spatial strategies.</p>
-                        <p class="text-gray-600">I contribute at the level of:</p>
-                        <ul class="space-y-2 ml-4">
-                            <li class="flex items-center gap-3">
-                                <span class="w-1 h-1 bg-blue-600 rounded-full"></span>
-                                <span>concept development</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <span class="w-1 h-1 bg-blue-600 rounded-full"></span>
-                                <span>spatial intent</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <span class="w-1 h-1 bg-blue-600 rounded-full"></span>
-                                <span>user experience</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <span class="w-1 h-1 bg-blue-600 rounded-full"></span>
-                                <span>biological impact of light</span>
-                            </li>
+                        <p>Lighting does more than shape how a space looks.</p>
+                        <p>It shapes how the body functions within it.</p>
+                        <p>Energy, relaxation, social comfort and sleep<br>are all influenced by how light behaves over time.</p>
+                        <p class="text-gray-600 mt-8">This work introduces a strategic layer that aligns lighting with:</p>
+                        <ul class="value-list space-y-2 ml-4 text-gray-700">
+                            <li>circadian rhythm</li>
+                            <li>hormonal regulation</li>
+                            <li>nervous system states</li>
                         </ul>
-                        <a href="#contact" class="inline-block mt-8 text-blue-700 hover:text-blue-900 transition-colors border-b border-blue-700 pb-1">let's collaborate →</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- What You Can Expect -->
+        <!-- What This Adds Section -->
         <section class="py-32 px-8 relative bg-gradient-to-b from-transparent to-white/10">
             <div class="container mx-auto max-w-6xl">
                 <div class="grid md:grid-cols-2 gap-16">
                     <div class="fade-in">
-                        <h2 class="text-4xl md:text-5xl blue-text mb-8">What You<br>Can Expect</h2>
-                        <p class="text-gray-600 text-lg">Implementing the Hormone-Aware Lighting Strategy, you can expect:</p>
+                        <h2 class="text-4xl md:text-5xl blue-text mb-8">What this adds<br>to a project</h2>
+                        <p class="text-gray-600 text-lg">Projects often define how a space should look.<br>Fewer define how it should affect the body.</p>
                     </div>
                     <div class="fade-in space-y-6">
                         <div class="expect-card p-6 rounded-2xl bg-white/20 backdrop-blur-sm">
-                            <p class="text-lg leading-relaxed">A clear understanding of how your project influences human states and behaviors</p>
+                            <p class="text-lg leading-relaxed">A clear link between lighting decisions and human biological responses</p>
                         </div>
                         <div class="expect-card p-6 rounded-2xl bg-white/20 backdrop-blur-sm">
-                            <p class="text-lg leading-relaxed">Translation of these states into lighting principles (not fixtures)</p>
+                            <p class="text-lg leading-relaxed">Structured guidance for how light should behave across the day</p>
                         </div>
                         <div class="expect-card p-6 rounded-2xl bg-white/20 backdrop-blur-sm">
-                            <p class="text-lg leading-relaxed">Guidance that strengthens your concept with a scientific and experiential narrative</p>
-                        </div>
-                        <div class="expect-card p-6 rounded-2xl bg-white/20 backdrop-blur-sm">
-                            <p class="text-lg leading-relaxed">Support in aligning lighting with wellness, hospitality or experiential goals</p>
-                        </div>
-                        <!-- Reference Case Study Link -->
-                        <div class="pt-4">
-                            <a href="#" class="case-study-link" onclick="showSampleProject(event)">
-                                <span class="neon-highlight">reference case study</span>
-                            </a>
+                            <p class="text-lg leading-relaxed">A stronger experiential narrative for clients and users</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Why Hormones Matter -->
+        <!-- What to Expect Section -->
         <section class="py-32 px-8 relative">
             <div class="orb-small" style="left: 5%; bottom: 10%;"></div>
             <div class="container mx-auto max-w-6xl">
-                <div class="text-center mb-20 fade-in">
-                    <h2 class="text-4xl md:text-6xl blue-text mb-6">Why Hormones Matter</h2>
-                    <p class="text-xl text-gray-700">Light does more than illuminate space.</p>
+                <div class="mb-20 fade-in">
+                    <h2 class="text-4xl md:text-6xl blue-text mb-6">What to expect</h2>
+                    <p class="text-xl text-gray-700">The contribution is not technical lighting design.<br>It is a decision-making framework that informs it.</p>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto mb-16">
-                    <div class="fade-in">
-                        <p class="text-lg text-gray-800 leading-relaxed">It directly affects:</p>
-                    </div>
-                </div>
+                <p class="text-lg text-gray-600 mb-12 fade-in">Depending on the stage of the project, the outcome includes:</p>
                 
-                <!-- Hormone Cards - Styled like Framework Cards -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 fade-in">
-                    <div class="hormone-card text-center">
-                        <h3 class="text-2xl blue-text mb-3">cortisol</h3>
-                        <p class="text-sm text-gray-600 tracking-wide">energy, alertness, stress</p>
+                <div class="space-y-12">
+                    <!-- Early Concept Stage -->
+                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
+                        <div class="md:col-span-1">
+                            <h3 class="text-2xl blue-text mb-2">Early Concept Stage</h3>
+                            <p class="text-gray-600">Defines the foundation of the experience.</p>
+                        </div>
+                        <div class="md:col-span-2 space-y-3">
+                            <ul class="value-list text-gray-700">
+                                <li>What states the space should support (activation, connection, restoration)</li>
+                                <li>How these states relate to time of day</li>
+                                <li>The role of light in shaping them</li>
+                            </ul>
+                            <span class="output-tag">→ Output: Hormonal Lighting Strategy</span>
+                        </div>
                     </div>
-                    <div class="hormone-card text-center">
-                        <h3 class="text-2xl blue-text mb-3">melatonin</h3>
-                        <p class="text-sm text-gray-600 tracking-wide">sleep and recovery</p>
+                    
+                    <!-- Design Development -->
+                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
+                        <div class="md:col-span-1">
+                            <h3 class="text-2xl blue-text mb-2">Design Development</h3>
+                            <p class="text-gray-600">Aligns the concept with spatial and lighting behavior.</p>
+                        </div>
+                        <div class="md:col-span-2 space-y-3">
+                            <ul class="value-list text-gray-700">
+                                <li>Translation of human states into lighting principles</li>
+                                <li>Clarification of how different zones should function</li>
+                                <li>Support in maintaining consistency across the project</li>
+                            </ul>
+                            <span class="output-tag">→ Output: Human State Mapping + Lighting Guidelines</span>
+                        </div>
                     </div>
-                    <div class="hormone-card text-center">
-                        <h3 class="text-2xl blue-text mb-3">dopamine & serotonin</h3>
-                        <p class="text-sm text-gray-600 tracking-wide">mood, motivation, social comfort</p>
+                    
+                    <!-- Pre-Final Lighting Review -->
+                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
+                        <div class="md:col-span-1">
+                            <h3 class="text-2xl blue-text mb-2">Pre-Final Lighting Review</h3>
+                            <p class="text-gray-600">Evaluates the proposal before implementation.</p>
+                        </div>
+                        <div class="md:col-span-2 space-y-3">
+                            <ul class="value-list text-gray-700">
+                                <li>Identification of overstimulation or insufficient contrast</li>
+                                <li>Detection of circadian disruption risks</li>
+                                <li>Alignment check between concept and lighting behavior</li>
+                            </ul>
+                            <span class="output-tag">→ Output: Hormonal Design Review</span>
+                        </div>
                     </div>
-                    <div class="hormone-card text-center">
-                        <h3 class="text-2xl blue-text mb-3">oxytocin</h3>
-                        <p class="text-sm text-gray-600 tracking-wide">connection and emotional safety</p>
-                    </div>
-                </div>
-                
-                <div class="mt-20 text-center max-w-3xl mx-auto fade-in">
-                    <p class="text-lg leading-relaxed text-gray-800">Beyond aesthetics and visibility, a space regulates the human nervous and hormonal system.</p>
-                    <p class="text-2xl blue-text mt-6 font-medium">This is where I contribute.</p>
                 </div>
             </div>
         </section>
 
-        <!-- How I Work -->
+        <!-- How I Work Section (Preserved) -->
         <section class="py-32 px-8 relative overflow-hidden">
             <div class="hero-orb" style="right: -10%; top: 0; width: 500px; height: 500px; opacity: 0.5;"></div>
             <div class="container mx-auto max-w-6xl relative z-10">
@@ -654,7 +696,7 @@
             </div>
         </section>
 
-        <!-- The Framework -->
+        <!-- The Human Light-Hormone Model Section (Preserved) -->
         <section id="framework" class="py-32 px-8 relative bg-white/10">
             <div class="container mx-auto max-w-6xl">
                 <div class="text-center mb-20 fade-in">
@@ -791,189 +833,140 @@
             </div>
         </section>
 
-        <!-- Collaboration -->
-        <section class="py-32 px-8 relative">
+        <!-- Where This Becomes Valuable Section -->
+        <section id="scenarios" class="py-32 px-8 relative">
             <div class="orb-small" style="right: 20%; top: 10%;"></div>
             <div class="container mx-auto max-w-6xl">
                 <div class="text-center mb-20 fade-in">
-                    <h2 class="text-4xl md:text-6xl blue-text mb-6">Collaboration</h2>
-                    <p class="text-xl text-gray-700">Delivering strategic guidance for projects where lighting is a critical component of the human experience.</p>
+                    <h2 class="text-4xl md:text-6xl blue-text mb-6">Where this becomes valuable</h2>
+                    <p class="text-xl text-gray-700">This approach is most relevant in projects where lighting is expected to influence:</p>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-16 mb-20">
-                    <!-- Who This Is For -->
-                    <div class="fade-in">
-                        <h3 class="text-2xl blue-text mb-6">Who This Is For</h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-center gap-3">
-                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                                <span>lighting design studios</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                                <span>architectural studios</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                                <span>hospitality design teams</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                                <span>wellness and longevity-focused projects</span>
-                            </li>
-                        </ul>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+                    <div class="scenario-card p-8 rounded-2xl text-center fade-in">
+                        <p class="text-lg text-gray-800">rest and recovery</p>
                     </div>
-                    
-                    <!-- Where I Contribute -->
-                    <div class="fade-in">
-                        <h3 class="text-2xl blue-text mb-6">Where I Contribute</h3>
-                        <div class="space-y-6">
-                            <div class="contribution-card p-4 rounded-xl bg-white/10">
-                                <h4 class="font-medium text-gray-900 mb-2">Early Concept Stage</h4>
-                                <p class="text-sm text-gray-600">Helping define desired human states, biological goals, and strategic lighting intent.</p>
-                            </div>
-                            <div class="contribution-card p-4 rounded-xl bg-white/10">
-                                <h4 class="font-medium text-gray-900 mb-2">Design Development</h4>
-                                <p class="text-sm text-gray-600">Translating human responses into guidelines and clarifying zone behaviors.</p>
-                            </div>
-                            <div class="contribution-card p-4 rounded-xl bg-white/10">
-                                <h4 class="font-medium text-gray-900 mb-2">Pre-Implementation Review</h4>
-                                <p class="text-sm text-gray-600">Identifying stimulation risks and circadian disruption.</p>
-                            </div>
-                            <div class="contribution-card p-4 rounded-xl bg-white/10">
-                                <h4 class="font-medium text-gray-900 mb-2">Optional Final Review</h4>
-                                <p class="text-sm text-gray-600">Feedback on implemented space focusing on user experience.</p>
-                            </div>
-                        </div>
+                    <div class="scenario-card p-8 rounded-2xl text-center fade-in" style="transition-delay: 0.1s;">
+                        <p class="text-lg text-gray-800">emotional comfort</p>
+                    </div>
+                    <div class="scenario-card p-8 rounded-2xl text-center fade-in" style="transition-delay: 0.2s;">
+                        <p class="text-lg text-gray-800">social interaction</p>
+                    </div>
+                    <div class="scenario-card p-8 rounded-2xl text-center fade-in" style="transition-delay: 0.3s;">
+                        <p class="text-lg text-gray-800">cognitive performance</p>
                     </div>
                 </div>
                 
-                <!-- When to Bring This Into a Project -->
-                <div class="mb-24 fade-in">
-                    <h3 class="text-3xl blue-text mb-12 text-center">When to Bring This Into a Project</h3>
-                    <p class="text-center text-gray-700 mb-12 max-w-3xl mx-auto">This contribution is most valuable when lighting is expected to shape how people feel, function or recover within a space.</p>
+                <!-- Scenarios to Consider -->
+                <div class="mb-16 fade-in">
+                    <h3 class="text-3xl blue-text mb-12 text-center">Scenarios to consider</h3>
+                    <p class="text-center text-gray-700 mb-12 max-w-3xl mx-auto">Lighting strategy becomes particularly impactful in situations where human states are not stable or predictable.</p>
                     
-                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Early Concept Stage -->
-                        <div class="timing-card p-8 rounded-2xl">
-                            <h4 class="text-xl blue-text mb-4">Early Concept Stage</h4>
-                            <p class="text-sm text-gray-600 mb-3 font-medium">To define:</p>
-                            <ul class="timing-list space-y-2 text-sm text-gray-700">
-                                <li>desired human states</li>
-                                <li>biological and experiential goals</li>
-                                <li>the role of light beyond visibility</li>
-                            </ul>
+                    <div class="space-y-12">
+                        <!-- Jet Lag & Travel Recovery -->
+                        <div class="scenario-card p-8 rounded-2xl fade-in">
+                            <h4 class="text-xl blue-text mb-3">Jet Lag & Travel Recovery</h4>
+                            <p class="text-gray-700 mb-4">Spaces designed for international travelers often prioritize comfort, but do not support circadian realignment.</p>
+                            <p class="text-gray-600"><strong>→</strong> Lighting can guide the body through re-synchronization with local time.</p>
                         </div>
                         
-                        <!-- During Design Development -->
-                        <div class="timing-card p-8 rounded-2xl">
-                            <h4 class="text-xl blue-text mb-4">During Design Development</h4>
-                            <p class="text-sm text-gray-600 mb-3 font-medium">To support:</p>
-                            <ul class="timing-list space-y-2 text-sm text-gray-700">
-                                <li>alignment between concept and lighting behavior</li>
-                                <li>clarity across different spatial zones</li>
-                                <li>integration of circadian and hormonal principles</li>
-                            </ul>
+                        <!-- Evening Environments -->
+                        <div class="scenario-card p-8 rounded-2xl fade-in">
+                            <h4 class="text-xl blue-text mb-3">Evening Environments That Remain Too Stimulating</h4>
+                            <p class="text-gray-700 mb-4">Residential or hospitality spaces that maintain daytime lighting logic into the evening.</p>
+                            <p class="text-gray-600"><strong>→</strong> Lighting can support downregulation and sleep preparation.</p>
                         </div>
                         
-                        <!-- Before Finalizing -->
-                        <div class="timing-card p-8 rounded-2xl">
-                            <h4 class="text-xl blue-text mb-4">Before Finalizing the Lighting Proposal</h4>
-                            <p class="text-sm text-gray-600 mb-3 font-medium">To evaluate:</p>
-                            <ul class="timing-list space-y-2 text-sm text-gray-700">
-                                <li>overstimulation or insufficient contrast</li>
-                                <li>disruption of evening or recovery states</li>
-                                <li>misalignment with intended user experience</li>
-                            </ul>
+                        <!-- Wellness Spaces -->
+                        <div class="scenario-card p-8 rounded-2xl fade-in">
+                            <h4 class="text-xl blue-text mb-3">Wellness Spaces with Visual Overstimulation</h4>
+                            <p class="text-gray-700 mb-4">Environments intended for relaxation that rely on contrast and visual intensity.</p>
+                            <p class="text-gray-600"><strong>→</strong> Lighting can reduce sensory load and support deeper recovery.</p>
                         </div>
                         
-                        <!-- For Wellness Projects -->
-                        <div class="timing-card p-8 rounded-2xl">
-                            <h4 class="text-xl blue-text mb-4">For Projects Positioning Around Wellness</h4>
-                            <p class="text-sm text-gray-600 mb-3 font-medium">Especially relevant when a project aims to communicate:</p>
-                            <ul class="timing-list space-y-2 text-sm text-gray-700">
-                                <li>rest and recovery</li>
-                                <li>longevity</li>
-                                <li>elevated user experience</li>
-                                <li>emotional or sensory quality</li>
-                            </ul>
+                        <!-- Social Spaces -->
+                        <div class="scenario-card p-8 rounded-2xl fade-in">
+                            <h4 class="text-xl blue-text mb-3">Social Spaces with Low Emotional Comfort</h4>
+                            <p class="text-gray-700 mb-4">Restaurants or lounges where exposure and brightness affect interaction.</p>
+                            <p class="text-gray-600"><strong>→</strong> Lighting can increase perceived safety and ease of connection.</p>
+                        </div>
+                        
+                        <!-- Work + Living Hybrid -->
+                        <div class="scenario-card p-8 rounded-2xl fade-in">
+                            <h4 class="text-xl blue-text mb-3">Work + Living Hybrid Spaces</h4>
+                            <p class="text-gray-700 mb-4">Rooms used for both productivity and rest without clear separation.</p>
+                            <p class="text-gray-600"><strong>→</strong> Lighting can define transitions between activation and decompression.</p>
                         </div>
                     </div>
-                    
-                    <!-- Reference Case Study Link -->
-                    <div class="text-center mt-12">
-                        <a href="#" class="case-study-link text-lg" onclick="showSampleProject(event)">
-                            <span class="neon-highlight">reference case study</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Applied Thinking Section -->
+        <section class="py-32 px-8 relative bg-gradient-to-b from-transparent to-white/10">
+            <div class="container mx-auto max-w-6xl">
+                <div class="mb-12 fade-in">
+                    <h2 class="text-4xl md:text-5xl blue-text mb-8">Applied thinking</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed max-w-3xl">This work is best understood through specific conditions, where lighting directly supports biological adaptation.</p>
+                </div>
+                
+                <div class="fade-in p-10 rounded-3xl bg-white/20 backdrop-blur-sm">
+                    <h3 class="text-2xl blue-text mb-4">One example: Jet Lag Recovery Room</h3>
+                    <p class="text-gray-700 mb-6">A hotel room designed to support circadian realignment through light.</p>
+                    <p class="text-gray-600 mb-4">Instead of static illumination, the space guides the body through:</p>
+                    <ul class="value-list space-y-2 ml-4 text-gray-700 mb-6">
+                        <li>arrival and orientation</li>
+                        <li>morning activation</li>
+                        <li>daytime stabilization</li>
+                        <li>evening decompression</li>
+                        <li>sleep preparation</li>
+                    </ul>
+                    <p class="text-gray-600 mb-2"><strong>→ Result:</strong> faster adjustment, improved sleep, more stable energy levels</p>
+                    <div class="mt-6">
+                        <a href="#" class="example-link" onclick="showSampleProject(event)">
+                            <span class="neon-highlight">reference case study→</span>
                         </a>
                     </div>
                 </div>
-                
-                <div class="text-center max-w-3xl mx-auto fade-in p-10 rounded-3xl bg-white/20 backdrop-blur-sm contribution-card">
-                    <h3 class="text-xl blue-text mb-4">How I Work</h3>
-                    <p class="text-gray-700 mb-6">remotely · through focused sessions and strategic documents · in collaboration with the design team (not in place of it)</p>
-                    <p class="text-gray-600 italic">My goal is to support and elevate the existing design process, not to replace it.</p>
-                </div>
-                
-                <div class="mt-20 text-center fade-in">
-                    <h3 class="text-2xl blue-text mb-6">Collaboration Format</h3>
-                    <p class="text-gray-700 mb-8">Engagement includes:</p>
-                    <div class="flex flex-wrap justify-center gap-4 mb-8">
-                        <span class="collab-format-tag px-6 py-3 bg-white/40 rounded-full text-gray-800">1–2 strategy sessions</span>
-                        <span class="collab-format-tag px-6 py-3 bg-white/40 rounded-full text-gray-800">Hormonal Lighting Strategy document</span>
-                        <span class="collab-format-tag px-6 py-3 bg-white/40 rounded-full text-gray-800">1–2 design review sessions</span>
-                    </div>
-                    <p class="text-gray-600 max-w-2xl mx-auto">This work is most valuable in projects that aim to go beyond visual design, and intentionally shape how people feel, function and recover within a space.</p>
-                </div>
             </div>
         </section>
 
-        <!-- Philosophy -->
-        <section id="philosophy" class="py-32 px-8 relative">
-            <div class="container mx-auto max-w-4xl">
-                <h2 class="text-4xl md:text-5xl blue-text mb-16 text-center fade-in">Philosophy</h2>
-                
-                <div class="space-y-12 text-lg leading-relaxed text-gray-800 fade-in">
-                    <p>What we call "comfort" or "atmosphere" is often a biological response we don't fully recognize.</p>
-                    
-                    <p class="text-2xl blue-text text-center py-8">We are not only perceiving light visually. We are responding to it hormonally.</p>
-                    
-                    <p>Light informs the body when to activate, soften, connect, let go. Without these signals, the nervous system remains in subtle confusion.</p>
-                    
-                    <p>Spaces may look beautiful, but feel slightly off. Too sharp, too flat, too exposed, too alert. This is not a design flaw. It is a biological misalignment.</p>
-                    
-                    <p>In contemporary environments, light has become increasingly artificial, static, and disconnected from natural rhythms. As a result, many spaces unintentionally:</p>
-                    
-                    <ul class="space-y-3 ml-6 list-disc text-gray-700">
-                        <li>prolong stimulation into the evening</li>
-                        <li>reduce the body's ability to unwind</li>
-                        <li>disrupt sleep preparation</li>
-                        <li>increase baseline stress levels</li>
-                    </ul>
-                    
-                    <p>Not dramatically — but consistently. And consistency is what shapes the nervous system over time.</p>
-                    
-                    <p>This work exists to bring awareness back into the design of light. Not as a technical correction, but as a shift in intention.</p>
-                    
-                    <div class="py-12 space-y-6">
-                        <p class="text-center text-xl">To move from:</p>
-                        <div class="grid md:grid-cols-2 gap-8 text-center">
-                            <div class="philosophy-shift p-6 rounded-2xl bg-white/10">
-                                <p class="text-gray-500 mb-2">lighting as visibility</p>
-                                <p class="text-2xl blue-text">→ lighting as regulation</p>
-                            </div>
-                            <div class="philosophy-shift p-6 rounded-2xl bg-white/10">
-                                <p class="text-gray-500 mb-2">lighting as decoration</p>
-                                <p class="text-2xl blue-text">→ lighting as experience</p>
-                            </div>
+        <!-- How This Integrates Section -->
+        <section class="py-32 px-8 relative">
+            <div class="container mx-auto max-w-6xl">
+                <div class="grid md:grid-cols-2 gap-16 items-start">
+                    <div class="fade-in">
+                        <h2 class="text-4xl md:text-5xl blue-text mb-8">How this integrates<br>into a team</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed">This contribution works alongside existing roles.</p>
+                    </div>
+                    <div class="fade-in space-y-6">
+                        <div class="contribution-card p-6 rounded-xl bg-white/10">
+                            <p class="text-gray-800"><strong>Lighting designers</strong> — design and implementation</p>
                         </div>
+                        <div class="contribution-card p-6 rounded-xl bg-white/10">
+                            <p class="text-gray-800"><strong>Architects & interior designers</strong> — spatial intent</p>
+                        </div>
+                        <div class="contribution-card p-6 rounded-xl bg-white/10">
+                            <p class="text-gray-800"><strong>Hospitality or wellness teams</strong> — user experience</p>
+                        </div>
+                        <p class="text-gray-600 mt-8 italic">The strategy provides a shared layer of biological intent that informs decisions across disciplines.</p>
                     </div>
-                    
-                    <p class="text-xl leading-relaxed text-center py-8">Because when light supports the body, people don't just see better. They rest deeper. They connect more easily. They feel safer in a space. And this changes everything — quietly, but profoundly.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Contact - Moved to Bottom -->
+        <!-- Final Note Section -->
+        <section class="py-32 px-8 relative">
+            <div class="container mx-auto max-w-4xl text-center">
+                <div class="fade-in space-y-8 text-lg leading-relaxed text-gray-800">
+                    <h2 class="text-4xl md:text-5xl blue-text mb-8">Final note</h2>
+                    <p>Lighting is often treated as a visual tool.<br>In practice, it is also a biological one.</p>
+                    <p class="text-xl">When aligned with the body,<br>it does not only improve how a space looks —<br>it improves how it is experienced, used and remembered.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
         <section id="contact" class="py-32 px-8 relative bg-gradient-to-b from-transparent to-white/20">
             <div class="hero-orb" style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; opacity: 0.4;"></div>
             <div class="container mx-auto max-w-4xl text-center relative z-10">
@@ -998,349 +991,301 @@
         </nav>
 
         <div class="project-header">
-            <p class="text-sm tracking-widest text-gray-500 mb-4 uppercase">Applied Lighting Strategy — Reference Case Study</p>
-            <h1 class="display-text">Jet Lag Recovery Room</h1>
-            <p class="subtitle">A Lighting Strategy for Circadian Realignment</p>
+            <p class="text-sm tracking-widest text-gray-500 mb-4 uppercase">Applied Lighting Strategy — Sample Project</p>
+            <h1 class="display-text">Applied Lighting Strategy</h1>
+            <p class="subtitle">A conceptual project demonstrating how hormonal and circadian principles can inform lighting design in a luxury hospitality environment.</p>
         </div>
 
-        <!-- Scenario -->
+        <!-- 01 — PROJECT OVERVIEW -->
         <div class="project-section">
-            <span class="section-number">SCENARIO</span>
-            <h2>Scenario</h2>
+            <span class="section-number">01 — PROJECT OVERVIEW</span>
+            <h2>Project Overview</h2>
             
-            <p>A hotel room designed for international travelers arriving with jet lag.</p>
-            <p>The intention of the space is to support rest and recovery.</p>
-            <p>However, recovery from jet lag is not achieved through comfort alone.</p>
-            <p>It requires realignment of the body's internal timing system.</p>
-            <p>Light becomes the primary tool through which this realignment can occur.</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- The Biological Context -->
-        <div class="project-section">
-            <span class="section-number">THE BIOLOGICAL CONTEXT</span>
-            <h2>The Biological Context</h2>
+            <h3>Project Type</h3>
+            <p>Luxury Coastal Resort</p>
             
-            <p>Jet lag is not simply fatigue.</p>
-            <p>It is a misalignment between internal circadian rhythms and external time.</p>
-            <p>This misalignment affects:</p>
-            <ul>
-                <li>cortisol timing (energy and alertness)</li>
-                <li>melatonin production (sleep readiness)</li>
-                <li>cognitive clarity</li>
-                <li>emotional regulation</li>
-            </ul>
-            <p>The body does not immediately adapt to a new time zone.</p>
-            <p>It relies on environmental signals to recalibrate.</p>
-            <p>The most powerful of these signals is light.</p>
+            <h3>Project Focus</h3>
+            <p>Rest, recovery and circadian alignment</p>
+            
+            <h3>User Profile</h3>
+            <p>Guests seeking relaxation, disconnection from stress, and improved sleep quality</p>
+            
+            <h3>Project Intent</h3>
+            <p>This sample project explores how lighting can move beyond visual design and actively support physiological regulation.</p>
+            <p>In hospitality environments, rest is often approached aesthetically. This project reframes rest as a biological process influenced by light.</p>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Design Challenge -->
+        <!-- 02 — DESIGN APPROACH -->
         <div class="project-section">
-            <span class="section-number">DESIGN CHALLENGE</span>
-            <h2>Design Challenge</h2>
-            
-            <p>Most hotel rooms are designed with static lighting logic:</p>
+            <span class="section-number">02 — DESIGN APPROACH</span>
+            <h2>Design Approach</h2>
+            <p>Lighting is treated as a regulatory layer, not only a visual one.</p>
+            <p>The approach is based on three principles:</p>
             <ul>
-                <li>consistent intensity</li>
-                <li>minimal variation throughout the day</li>
-                <li>limited distinction between morning and evening conditions</li>
+                <li>Light influences hormonal activity</li>
+                <li>Hormonal activity shapes human states</li>
+                <li>Human states define spatial experience</li>
             </ul>
-            <p>As a result:</p>
+            <h3>Objective</h3>
+            <p>To align lighting behavior with:</p>
             <ul>
-                <li>the body receives conflicting signals</li>
-                <li>alertness may persist into the night</li>
-                <li>sleep becomes shallow or delayed</li>
-                <li>recovery is prolonged</li>
+                <li>activation</li>
+                <li>relaxation</li>
+                <li>social connection</li>
+                <li>sleep preparation</li>
             </ul>
-            <p>The room may feel comfortable, but it does not actively support physiological adjustment.</p>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Strategic Approach -->
+        <!-- 03 — HUMAN STATE GOALS -->
         <div class="project-section">
-            <span class="section-number">STRATEGIC APPROACH</span>
-            <h2>Strategic Approach</h2>
+            <span class="section-number">03 — HUMAN STATE GOALS</span>
+            <h2>Human State Goals</h2>
+            <p>The project is structured around four key daily states:</p>
             
-            <p>The room is not treated as a neutral container.</p>
-            <p>It is designed as a time-regulating environment, where light changes behavior in order to guide the body through:</p>
-            <ul>
-                <li>Arrival</li>
-                <li>Activation</li>
-                <li>Stabilization</li>
-                <li>Decompression</li>
-                <li>Sleep Preparation</li>
-            </ul>
-            <p>Each phase is supported through specific lighting behavior.</p>
+            <h3>Morning Activation</h3>
+            <p>Supporting wakefulness, alertness and energy</p>
+            
+            <h3>Daytime Balance</h3>
+            <p>Maintaining stable energy and visual comfort</p>
+            
+            <h3>Evening Decompression</h3>
+            <p>Reducing stimulation and preparing the body for rest</p>
+            
+            <h3>Sleep Preparation</h3>
+            <p>Supporting melatonin production and deep rest</p>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Phase 01 -->
+        <!-- 04 — HORMONAL INTENT -->
         <div class="project-section">
-            <span class="section-number">PHASE 01 — ARRIVAL</span>
-            <h2>Arrival (Disorientation → Orientation)</h2>
+            <span class="section-number">04 — HORMONAL INTENT</span>
+            <h2>Hormonal Intent</h2>
+            <p>Lighting is designed to support the following biological responses:</p>
             
-            <h3>Condition</h3>
-            <p>The user enters the room with:</p>
+            <h3>Morning</h3>
+            <p><strong>Target:</strong></p>
             <ul>
-                <li>internal time mismatch</li>
-                <li>fatigue combined with alertness</li>
-                <li>reduced sensory clarity</li>
+                <li>cortisol activation</li>
+                <li>dopamine engagement</li>
             </ul>
-            
-            <h3>Lighting Response</h3>
+            <p><strong>Lighting implications:</strong></p>
             <ul>
-                <li>moderate, non-aggressive light levels</li>
-                <li>warm-neutral spectrum (avoiding extremes)</li>
-                <li>soft gradients instead of abrupt transitions</li>
-            </ul>
-            
-            <h3>Rationale</h3>
-            <p>The goal is not immediate activation.</p>
-            <p>The body is in a confused state.</p>
-            <p>Strong lighting contrast or intensity can increase stress.</p>
-            <p>Instead, light acts as a buffer, allowing gradual orientation to the space and new time zone.</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Phase 02 -->
-        <div class="project-section">
-            <span class="section-number">PHASE 02 — MORNING ACTIVATION</span>
-            <h2>Morning Activation (Resetting Cortisol Rhythm)</h2>
-            
-            <h3>Condition</h3>
-            <p>The following morning is critical.</p>
-            <p>This is the moment where the body begins to recalibrate.</p>
-            
-            <h3>Lighting Response</h3>
-            <ul>
-                <li>high vertical illumination (light reaching the eyes)</li>
+                <li>increasing intensity</li>
                 <li>cooler spectrum</li>
-                <li>directional light supporting wakefulness</li>
-                <li>gradual intensity ramp (not instant exposure)</li>
+                <li>directional exposure</li>
             </ul>
             
-            <h3>Rationale</h3>
-            <p>Cortisol release is triggered by light exposure, especially in the morning.</p>
-            <p>Without sufficient light:</p>
+            <h3>Day</h3>
+            <p><strong>Target:</strong></p>
             <ul>
-                <li>the body remains in a low-energy state</li>
-                <li>adaptation is delayed</li>
+                <li>stable alertness</li>
+                <li>reduced fatigue</li>
             </ul>
-            <p>Vertical light is prioritized because:</p>
+            <p><strong>Lighting implications:</strong></p>
             <ul>
-                <li>circadian receptors respond more strongly to light entering the eyes</li>
-                <li>not just horizontal ambient light</li>
-            </ul>
-            <p>The ramping effect avoids shock and supports a more natural waking process.</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Phase 03 -->
-        <div class="project-section">
-            <span class="section-number">PHASE 03 — DAYTIME STABILIZATION</span>
-            <h2>Daytime Stabilization</h2>
-            
-            <h3>Condition</h3>
-            <p>The user may remain in the room during the day:</p>
-            <ul>
-                <li>remote work</li>
-                <li>rest periods</li>
-                <li>irregular activity</li>
-            </ul>
-            
-            <h3>Lighting Response</h3>
-            <ul>
-                <li>balanced intensity (not overly bright, not dim)</li>
+                <li>balanced intensity</li>
                 <li>neutral spectrum</li>
-                <li>even distribution without flattening the space</li>
-            </ul>
-            
-            <h3>Rationale</h3>
-            <p>At this stage, the goal is stability.</p>
-            <p>Too much intensity → leads to fatigue</p>
-            <p>Too little → maintains sluggishness</p>
-            <p>The lighting supports:</p>
-            <ul>
-                <li>cognitive clarity</li>
                 <li>visual comfort</li>
-                <li>sustained alertness without overstimulation</li>
+            </ul>
+            
+            <h3>Evening</h3>
+            <p><strong>Target:</strong></p>
+            <ul>
+                <li>reduced cortisol</li>
+                <li>transition toward melatonin production</li>
+            </ul>
+            <p><strong>Lighting implications:</strong></p>
+            <ul>
+                <li>gradual dimming</li>
+                <li>warmer spectrum</li>
+                <li>reduced overhead light</li>
+            </ul>
+            
+            <h3>Night</h3>
+            <p><strong>Target:</strong></p>
+            <ul>
+                <li>melatonin support</li>
+                <li>minimal disruption</li>
+            </ul>
+            <p><strong>Lighting implications:</strong></p>
+            <ul>
+                <li>very low intensity</li>
+                <li>warm, indirect light</li>
+                <li>localized sources only</li>
             </ul>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Phase 04 -->
+        <!-- 05 — HUMAN STATE MAPPING -->
         <div class="project-section">
-            <span class="section-number">PHASE 04 — EVENING DECOMPRESSION</span>
-            <h2>Evening Decompression</h2>
+            <span class="section-number">05 — HUMAN STATE MAPPING</span>
+            <h2>Human State Mapping</h2>
+            <p>Each space is defined by its intended human effect.</p>
             
-            <h3>Condition</h3>
-            <p>The body needs to transition toward rest.</p>
-            <p>However, in jet lag, this transition is often delayed.</p>
+            <p><strong>Lobby</strong> → mild stimulation, orientation, arrival energy</p>
+            <p><strong>Restaurant</strong> → social connection, comfort</p>
+            <p><strong>Bar</strong> → sensory stimulation, engagement</p>
+            <p><strong>Guest Rooms</strong> → restoration, sleep preparation</p>
+            <p><strong>Spa</strong> → deep relaxation, parasympathetic activation</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 06 — CIRCADIAN LIGHTING FLOW -->
+        <div class="project-section">
+            <span class="section-number">06 — CIRCADIAN LIGHTING FLOW</span>
+            <h2>Circadian Lighting Flow</h2>
+            <p>The lighting experience evolves throughout the day:</p>
             
-            <h3>Lighting Response</h3>
-            <ul>
-                <li>progressive reduction of intensity</li>
-                <li>shift to warm spectrum</li>
-                <li>removal of overhead dominance</li>
-                <li>introduction of lateral and indirect light</li>
-            </ul>
+            <h3>Morning</h3>
+            <p>Bright, directional, cooler tones → supports wakefulness</p>
             
-            <h3>Rationale</h3>
-            <p>Melatonin production is inhibited by light intensity and spectrum.</p>
-            <p>Especially:</p>
+            <h3>Daytime</h3>
+            <p>Balanced, stable light → supports sustained function</p>
+            
+            <h3>Evening</h3>
+            <p>Gradual reduction in intensity. Warmer tones → supports decompression</p>
+            
+            <h3>Night</h3>
+            <p>Minimal, low-level lighting → supports sleep continuity</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 07 — LIGHTING BEHAVIORAL PRINCIPLES -->
+        <div class="project-section">
+            <span class="section-number">07 — LIGHTING BEHAVIORAL PRINCIPLES</span>
+            <h2>Lighting Behavioral Principles</h2>
+            <p>This strategy focuses on behavior, not fixtures.</p>
             <ul>
-                <li>bright light</li>
-                <li>blue-enriched light</li>
-                <li>overhead exposure</li>
-            </ul>
-            <p>By reducing these → the body receives a clear signal that night is approaching</p>
-            <p>Lateral lighting (eye-level, indirect):</p>
-            <ul>
-                <li>reduces sensory alertness</li>
-                <li>increases perceived safety and relaxation</li>
+                <li>Gradual transitions instead of abrupt lighting changes</li>
+                <li>Avoidance of prolonged overhead lighting in evening environments</li>
+                <li>Use of lateral (eye-level) lighting in social spaces</li>
+                <li>Reduction of glare to support visual comfort and relaxation</li>
+                <li>Differentiation between zones to reinforce daily rhythm</li>
+                <li>Limitation of visual contrast in recovery environments</li>
             </ul>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Phase 05 -->
+        <!-- 08 — ZONE-SPECIFIC GUIDELINES -->
         <div class="project-section">
-            <span class="section-number">PHASE 05 — SLEEP PREPARATION</span>
-            <h2>Sleep Preparation</h2>
+            <span class="section-number">08 — ZONE-SPECIFIC GUIDELINES</span>
+            <h2>Zone-Specific Guidelines</h2>
             
-            <h3>Condition</h3>
-            <p>The final stage before sleep.</p>
-            <p>The body must fully disengage from stimulation.</p>
-            
-            <h3>Lighting Response</h3>
+            <h3>Guest Room — Evening / Night</h3>
+            <p><strong>Intent:</strong> restoration and sleep preparation</p>
+            <p><strong>Lighting:</strong></p>
             <ul>
-                <li>very low light levels</li>
-                <li>warm spectrum only</li>
-                <li>no direct light in the visual field</li>
-                <li>minimal visual contrast</li>
+                <li>low intensity</li>
+                <li>warm spectrum</li>
+                <li>indirect sources</li>
+                <li>minimal ceiling exposure</li>
             </ul>
             
-            <h3>Rationale</h3>
-            <p>At this point, light should not "activate" perception.</p>
-            <p>It should allow the nervous system to:</p>
+            <h3>Restaurant</h3>
+            <p><strong>Intent:</strong> connection and comfort</p>
+            <p><strong>Lighting:</strong></p>
             <ul>
-                <li>downregulate</li>
-                <li>reduce sensory input</li>
-                <li>prepare for deep rest</li>
-            </ul>
-            <p>Even small amounts of intrusive light can:</p>
-            <ul>
-                <li>delay melatonin</li>
-                <li>fragment sleep</li>
-            </ul>
-            <p>The room becomes visually quiet, not just dim.</p>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Spatial Implications -->
-        <div class="project-section">
-            <span class="section-number">SPATIAL IMPLICATIONS</span>
-            <h2>Spatial Implications</h2>
-            
-            <p>Lighting strategy informs spatial behavior.</p>
-            
-            <h3>Entry Zone</h3>
-            <ul>
-                <li>transitional light buffer</li>
-                <li>avoids abrupt exposure</li>
-                <li>supports orientation</li>
+                <li>warm tones</li>
+                <li>eye-level sources</li>
+                <li>soft contrast</li>
+                <li>reduced glare</li>
             </ul>
             
-            <h3>Bathroom</h3>
+            <h3>Spa</h3>
+            <p><strong>Intent:</strong> deep relaxation</p>
+            <p><strong>Lighting:</strong></p>
             <ul>
-                <li>strong activation zone (especially morning)</li>
-                <li>higher intensity and vertical light</li>
-                <li>contrast with the rest of the room</li>
+                <li>very low intensity</li>
+                <li>minimal contrast</li>
+                <li>indirect light only</li>
+                <li>absence of visual stimulation</li>
             </ul>
             
-            <h3>Bed Area</h3>
+            <h3>Lobby</h3>
+            <p><strong>Intent:</strong> arrival and orientation</p>
+            <p><strong>Lighting:</strong></p>
             <ul>
-                <li>no dominant overhead light</li>
-                <li>indirect, low-level lighting only</li>
-                <li>clearly defined as a restoration zone</li>
-            </ul>
-            
-            <h3>Work / Seating Area</h3>
-            <ul>
-                <li>adaptable lighting for daytime use</li>
-                <li>supports focus without overstimulation</li>
+                <li>moderate intensity</li>
+                <li>defined focal points</li>
+                <li>balanced contrast</li>
             </ul>
         </div>
 
         <div class="divider"></div>
 
-        <!-- What This Changes -->
+        <!-- 09 — DESIGN REVIEW (EXAMPLE) -->
         <div class="project-section">
-            <span class="section-number">WHAT THIS CHANGES</span>
-            <h2>What This Changes</h2>
+            <span class="section-number">09 — DESIGN REVIEW (EXAMPLE)</span>
+            <h2>Design Review (Example)</h2>
+            <p>This section demonstrates how lighting proposals are evaluated.</p>
             
-            <p>This approach transforms the room from:</p>
-            <p><strong>a visually comfortable environment</strong></p>
-            <p>to</p>
-            <p><strong>a biologically responsive environment</strong></p>
-            <p>Instead of passively hosting the user, the space actively supports:</p>
+            <h3>Observation</h3>
+            <p>Consistent overhead lighting is used across all evening environments.</p>
+            
+            <h3>Impact</h3>
             <ul>
-                <li>circadian alignment</li>
-                <li>energy regulation</li>
-                <li>improved sleep quality</li>
-                <li>faster recovery from travel</li>
+                <li>prolonged alertness</li>
+                <li>delayed melatonin production</li>
+                <li>reduced ability to unwind</li>
+            </ul>
+            
+            <h3>Recommendation</h3>
+            <ul>
+                <li>introduce layered lighting</li>
+                <li>reduce ceiling dominance</li>
+                <li>shift toward warmer tones and lower intensity</li>
+            </ul>
+            
+            <h3>Result</h3>
+            <p>Improved alignment with the intended evening experience and guest recovery.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- 10 — WHAT THIS ADDS TO A PROJECT -->
+        <div class="project-section">
+            <span class="section-number">10 — WHAT THIS ADDS TO A PROJECT</span>
+            <h2>What This Adds to a Project</h2>
+            <ul>
+                <li>Aligns lighting with human biological responses</li>
+                <li>Enhances rest quality and guest experience</li>
+                <li>Strengthens the project's wellness narrative</li>
+                <li>Creates a more intentional and differentiated environment</li>
             </ul>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Beyond Jet Lag -->
+        <!-- 11 — COLLABORATION MODEL -->
         <div class="project-section">
-            <span class="section-number">BEYOND JET LAG</span>
-            <h2>Beyond Jet Lag</h2>
-            
-            <p>Jet lag is temporary.</p>
-            <p>The room must support additional states once adaptation begins.</p>
-            
-            <h3>Additional Scenarios the Space Must Accommodate</h3>
-            
-            <h3>Remote Work</h3>
-            <p>sustained focus, visual clarity without fatigue</p>
-            
-            <h3>Daytime Rest</h3>
-            <p>partial recovery without disrupting night sleep</p>
-            
-            <h3>Social Interaction</h3>
-            <p>softer, more connective lighting conditions</p>
-            
-            <h3>Evening Relaxation</h3>
-            <p>gradual transition out of alertness</p>
-            
-            <h3>Extended Stay Living</h3>
-            <p>support of daily rhythm beyond travel recovery</p>
+            <span class="section-number">11 — COLLABORATION MODEL</span>
+            <h2>Collaboration Model</h2>
+            <p>This type of strategy is typically delivered through:</p>
+            <ul>
+                <li>Initial strategy session</li>
+                <li>Hormonal Lighting Strategy document</li>
+                <li>Human state mapping</li>
+                <li>Design review sessions</li>
+            </ul>
+            <p>The role is advisory, supporting the design team without replacing the lighting designer.</p>
         </div>
 
         <div class="divider"></div>
 
-        <!-- Closing Note -->
+        <!-- 12 — FINAL NOTE -->
         <div class="project-section">
-            <span class="section-number">CLOSING NOTE</span>
-            <h2>Closing Note</h2>
-            
-            <p>This approach does not add complexity to lighting design.</p>
-            <p>It adds intentionality.</p>
-            <p>Lighting is no longer treated as a static layer, but as a system that interacts with the body over time.</p>
-            <p>And in conditions such as jet lag, this interaction becomes not only relevant — but essential.</p>
+            <span class="section-number">12 — FINAL NOTE</span>
+            <h2>Final Note</h2>
+            <p>This sample project illustrates how lighting can move beyond visibility and aesthetics, and become a tool for shaping how people feel, function and recover within a space.</p>
             
             <div class="mt-12 text-center">
                 <a href="#" class="back-link text-lg" onclick="showMainContent(event)">
@@ -1404,7 +1349,7 @@
         });
 
         // Active navigation state based on scroll position
-        const sections = ['hero', 'work', 'framework', 'philosophy', 'contact'];
+        const sections = ['hero', 'work', 'framework', 'scenarios', 'contact'];
         const navLinks = document.querySelectorAll('.nav-link');
         
         function updateActiveNav() {
