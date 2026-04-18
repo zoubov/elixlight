@@ -182,9 +182,10 @@
         }
         
         .nav-icon {
-            width: 1.5rem;
-            height: 1.5rem;
-            display: block;
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            vertical-align: middle;
         }
         
         .nav-links {
@@ -472,15 +473,12 @@
     <div class="main-content" id="mainContent">
         <nav class="sticky-nav flex justify-between items-center">
             <a href="#" class="nav-logo font-medium tracking-widest" data-section="hero">
-                <svg class="nav-icon" width="105" height="105" viewBox="0 0 105 105" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="41.1127" cy="41.5" rx="39.1127" ry="39.5" fill="#0051FF"/>
-                    <ellipse cx="62.1127" cy="62.5" rx="39.1127" ry="39.5" fill="#1F1D22"/>
-                    <path d="M88.2255 48.5C88.2255 70.3152 70.7141 88 49.1127 88C27.5114 88 9 71.3152 9 49.5C9 27.6848 26.5114 10 48.1127 10C69.7141 10 88.2255 26.6848 88.2255 48.5Z" fill="#CDFF02"/>
-                    <path d="M93.2255 52.5C93.2255 74.3152 75.7141 92 54.1127 92C32.5114 92 26 87.3152 26 65.5C26 43.6848 41.5114 25 63.1127 25C84.7141 25 93.2255 30.6848 93.2255 52.5Z" fill="#FF6936"/>
-                    <path d="M84.5 36C84.5 57.8152 61.1014 83.5 39.5 83.5C27.2794 83.5 22 81 22 65.5C22 43.6848 44.5114 22 66.1128 22C79.0002 22 84.5 26.4996 84.5 36Z" fill="#FFFED8"/>
-                </svg>
+                
+                <img src="/favicon.svg" class="nav-icon" alt="ELIXLIGHT logo">
+        
                 ELIXLIGHT
             </a>
+        
             <div class="nav-links">
                 <a href="#work" class="nav-link" data-section="work">Work</a>
                 <a href="#framework" class="nav-link" data-section="framework">Framework</a>
