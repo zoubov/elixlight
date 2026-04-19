@@ -220,17 +220,15 @@
             background: #fff;
         }
         
-        /* Hide nav links on narrow screens (when Work gets close to ELIXLIGHT) */
         @media (max-width: 900px) {
             .nav-links {
                 display: none;
             }
         }
         
-        /* Also hide full navigation on mobile */
         @media (max-width: 768px) {
             .sticky-nav {
-                display: block; /* Keep logo visible */
+                display: block;
             }
             .nav-links {
                 display: none;
@@ -309,7 +307,6 @@
             color: #0033cc;
         }
         
-        /* Style for reference case study and back links - same as "let's collaborate" */
         .example-link {
             display: inline-block;
             color: #1d4ed8;
@@ -323,7 +320,6 @@
             color: #1e3a8a;
         }
         
-        /* Solid transparent neon yellow highlight - behind the text - opacity reduced by 20% */
         .neon-highlight {
             background-color: rgba(204, 255, 0, 0.26);
             padding: 2px 6px;
@@ -378,7 +374,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Fixed Contact Button */
         .contact-button-fixed {
             position: fixed;
             bottom: 2rem;
@@ -402,58 +397,57 @@
             }
         }
 
-        /* Premium Stats Visual */
-        .premium-stats-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .premium-stat-card {
+        /* Compact Metric Styles */
+        .metric-compact {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            text-align: center;
+            border-radius: 0.75rem;
+            padding: 1rem;
             transition: transform 0.3s ease;
         }
         
-        .premium-stat-card:hover {
-            transform: translateY(-4px);
+        .metric-compact:hover {
+            transform: translateY(-2px);
         }
         
-        .premium-stat-card.highlight {
-            background: rgba(204, 255, 0, 0.15);
-            border: 1px solid rgba(204, 255, 0, 0.3);
-        }
-        
-        .premium-amount {
+        .metric-compact-value {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 700;
             color: #0033cc;
-            margin-bottom: 0.5rem;
-        }
-        
-        .premium-label {
-            font-size: 0.875rem;
-            color: #666;
-            line-height: 1.4;
-        }
-        
-        .premium-brand {
-            font-weight: 600;
-            color: #1a1a1a;
-            display: block;
+            line-height: 1;
             margin-bottom: 0.25rem;
         }
         
-        @media (max-width: 768px) {
-            .premium-stats-container {
-                grid-template-columns: 1fr;
-            }
+        .metric-compact-label {
+            font-size: 0.8rem;
+            color: #1a1a1a;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+        
+        .cagr-badge-small {
+            display: inline-block;
+            background: rgba(0, 51, 204, 0.1);
+            color: #0033cc;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .doi-link {
+            font-size: 0.7rem;
+            color: #888;
+            text-decoration: none;
+            border-bottom: 1px solid #ccc;
+            transition: color 0.2s;
+        }
+        
+        .doi-link:hover {
+            color: #0033cc;
+            border-bottom-color: #0033cc;
         }
     </style>
     <base target="_blank">
@@ -462,23 +456,18 @@
 <body>
     <div class="grain-overlay"></div>
     
-    <!-- Fixed Contact Button -->
     <div class="contact-button-fixed" id="contactButton">
         <a href="#contact" class="example-link text-lg" onclick="scrollToContact(event)">
             <span class="neon-highlight">Contact ↓</span>
         </a>
     </div>
     
-    <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <nav class="sticky-nav flex justify-between items-center">
             <a href="#" class="nav-logo font-medium tracking-widest" data-section="hero">
-                
                 <img src="/favicon.svg" class="nav-icon" alt="ELIXLIGHT logo">
-        
                 ELIXLIGHT
             </a>
-        
             <div class="nav-links">
                 <a href="#work" class="nav-link" data-section="work">Work</a>
                 <a href="#framework" class="nav-link" data-section="framework">Framework</a>
@@ -487,7 +476,6 @@
             </div>
         </nav>
 
-        <!-- Hero Section -->
         <section id="hero" class="intro-section relative">
             <div class="hero-orb" style="top: 10%; left: 20%;"></div>
             <div class="hero-orb" style="bottom: 20%; right: 10%; animation-delay: -4s;"></div>
@@ -496,7 +484,7 @@
                 <h1 class="display-text text-5xl md:text-7xl lg:text-8xl mb-8 blue-text leading-tight fade-in">
                     Lighting Strategy
                 </h1>
-                <h2 class="text-4xl md:text-6xl blue-text mb-8" blue-text leading-tight fade-in">
+                <h2 class="text-4xl md:text-6xl blue-text mb-8 leading-tight fade-in">
                     for Hormonal Health
                 </h2>
                 <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed fade-in" style="transition-delay: 0.2s;">
@@ -505,7 +493,6 @@
             </div>
         </section>
 
-        <!-- Lighting Design for Health Section -->
         <section id="work" class="py-32 px-8 relative">
             <div class="orb-small" style="right: 10%; top: 20%;"></div>
             <div class="container mx-auto max-w-6xl">
@@ -515,7 +502,7 @@
                     </div>
                     <div class="fade-in space-y-8 text-lg text-gray-800 leading-relaxed">
                         <p>Your space is either supporting biology<br>or working against it.</p>
-                        <p>We don't design lighting as a visual layer. We define what the space does to the human system.<br>Before fixtures.<br>Before placement.<br>Before aesthetics.<br>
+                        <p>We don't design lighting as a visual layer. We define what the space does to the human system.<br>Before fixtures.<br>Before placement.<br>Before aesthetics.</p>
                         <p>Light shapes:</p>
                         <ul class="value-list space-y-2 ml-4 text-gray-700">
                             <li>when you relax</li>
@@ -528,7 +515,6 @@
             </div>
         </section>
 
-        <!-- The Human Light-Hormone Model Section -->
         <section id="framework" class="py-32 px-8 relative bg-white/10">
             <div class="container mx-auto max-w-6xl">
                 <div class="text-center mb-20 fade-in">
@@ -537,9 +523,7 @@
                     <p class="text-lg text-gray-700 max-w-2xl mx-auto">Right now lighting is perceived as a visual layer. It is behavioral infrastructure.</p>
                 </div>
                 
-                <!-- Framework Cards -->
                 <div class="grid md:grid-cols-2 gap-8 mb-20">
-                    <!-- Activation -->
                     <div class="framework-card p-10 rounded-3xl fade-in">
                         <h3 class="text-3xl blue-text mb-4">Activation</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports energy, alertness and cognitive engagement.</p>
@@ -565,7 +549,6 @@
                         </div>
                     </div>
                     
-                    <!-- Connection -->
                     <div class="framework-card p-10 rounded-3xl fade-in" style="transition-delay: 0.1s;">
                         <h3 class="text-3xl blue-text mb-4">Connection</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports social comfort, trust and emotional presence.</p>
@@ -590,7 +573,6 @@
                         </div>
                     </div>
                     
-                    <!-- Restoration -->
                     <div class="framework-card p-10 rounded-3xl fade-in" style="transition-delay: 0.2s;">
                         <h3 class="text-3xl blue-text mb-4">Restoration</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports recovery, relaxation and sleep preparation.</p>
@@ -615,7 +597,6 @@
                         </div>
                     </div>
                     
-                    <!-- Sensory Pleasure -->
                     <div class="framework-card p-10 rounded-3xl fade-in" style="transition-delay: 0.3s;">
                         <h3 class="text-3xl blue-text mb-4">Sensory Pleasure</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports stimulation, curiosity and emotional engagement.</p>
@@ -661,7 +642,6 @@
             </div>
         </section>
 
-        <!-- Collaboration Section -->
         <section class="py-32 px-8 relative overflow-hidden">
             <div class="hero-orb" style="right: -10%; top: 0; width: 500px; height: 500px; opacity: 0.5;"></div>
             <div class="container mx-auto max-w-6xl relative z-10">
@@ -671,7 +651,6 @@
                 </div>
                 
                 <div class="space-y-24">
-                    <!-- Phase 1 -->
                     <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
                         <div class="phase-number">1</div>
                         <div class="md:col-span-2">
@@ -680,7 +659,6 @@
                         </div>
                     </div>
                     
-                    <!-- Phase 2 -->
                     <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
                         <div class="phase-number">2</div>
                         <div class="md:col-span-2">
@@ -689,7 +667,6 @@
                         </div>
                     </div>
                     
-                    <!-- Phase 3 -->
                     <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
                         <div class="phase-number">3</div>
                         <div class="md:col-span-2">
@@ -698,91 +675,47 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- What to Expect Section -->
-        <section class="py-32 px-8 relative">
-            <div class="orb-small" style="left: 5%; bottom: 10%;"></div>
-            <div class="container mx-auto max-w-6xl">
-                <div class="mb-20 fade-in">
-                    <h2 class="text-4xl md:text-6xl blue-text mb-6">What to Expect</h2>
-                    <p class="text-xl text-gray-700">The contribution is not technical lighting design.<br>It is a decision-making framework that informs it.</p>
-                </div>
                 
-                <p class="text-lg text-gray-600 mb-12 fade-in">Depending on the stage of the project, the outcome includes:</p>
-                
-                <div class="space-y-12">
-                    <!-- Early Concept Stage -->
-                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
-                        <div class="md:col-span-1">
-                            <h3 class="text-2xl blue-text mb-2">Early Concept Stage</h3>
-                            <p class="text-gray-600">Defines the foundation of the experience.</p>
+                <!-- Integration Section -->
+                <div class="mt-32 fade-in">
+                    <h3 class="text-3xl blue-text mb-6">Integration</h3>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">We work together to define <strong>what lighting needs to do before it is designed</strong>.</p>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-10">Across the project, we implement <strong>a continuous layer of intent</strong>.</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 mb-12">
+                        <div class="contribution-card p-6 rounded-xl bg-white/10">
+                            <h4 class="text-xl blue-text mb-3">Beginning</h4>
+                            <p class="text-gray-700">Defining direction</p>
                         </div>
-                        <div class="md:col-span-2 space-y-3">
-                            <ul class="value-list text-gray-700">
-                                <li>What states the space should support (activation, connection, restoration)</li>
-                                <li>How these states relate to time of day</li>
-                                <li>The role of light in shaping them</li>
-                            </ul>
-                            <span class="output-tag">→ Output: Hormonal Lighting Strategy</span>
+                        
+                        <div class="contribution-card p-6 rounded-xl bg-white/10">
+                            <h4 class="text-xl blue-text mb-3">Development</h4>
+                            <p class="text-gray-700">Maintaining alignment</p>
+                        </div>
+                        
+                        <div class="contribution-card p-6 rounded-xl bg-white/10">
+                            <h4 class="text-xl blue-text mb-3">Before Execution</h4>
+                            <p class="text-gray-700">Identifying risks</p>
                         </div>
                     </div>
                     
-                    <!-- Design Development -->
-                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
-                        <div class="md:col-span-1">
-                            <h3 class="text-2xl blue-text mb-2">Design Development</h3>
-                            <p class="text-gray-600">Aligns the concept with spatial and lighting behavior.</p>
+                    <div class="bg-white/10 p-8 rounded-2xl border border-white/20">
+                        <h4 class="text-lg font-medium text-gray-800 mb-4">Working Alongside Existing Roles</h4>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-start gap-3">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 shrink-0"></span>
+                                <p class="text-gray-700"><strong>Architects</strong> define the space</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 shrink-0"></span>
+                                <p class="text-gray-700"><strong>Lighting designers</strong> define the system</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 shrink-0"></span>
+                                <p class="text-gray-700"><strong>Hospitality and wellness teams</strong> define the experience</p>
+                            </div>
                         </div>
-                        <div class="md:col-span-2 space-y-3">
-                            <ul class="value-list text-gray-700">
-                                <li>Translation of human states into lighting principles</li>
-                                <li>Clarification of how different zones should function</li>
-                                <li>Support in maintaining consistency across the project</li>
-                            </ul>
-                            <span class="output-tag">→ Output: Human State Mapping + Lighting Guidelines</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Pre-Final Lighting Review -->
-                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
-                        <div class="md:col-span-1">
-                            <h3 class="text-2xl blue-text mb-2">Pre-Final Lighting Review</h3>
-                            <p class="text-gray-600">Evaluates the proposal before implementation.</p>
-                        </div>
-                        <div class="md:col-span-2 space-y-3">
-                            <ul class="value-list text-gray-700">
-                                <li>Identification of overstimulation or insufficient contrast</li>
-                                <li>Detection of circadian disruption risks</li>
-                                <li>Alignment check between concept and lighting behavior</li>
-                            </ul>
-                            <span class="output-tag">→ Output: Hormonal Design Review</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- A layer of lighting strategy Section -->
-        <section class="py-32 px-8 relative">
-            <div class="container mx-auto max-w-6xl">
-                <div class="grid md:grid-cols-2 gap-16 items-start">
-                    <div class="fade-in">
-                        <h2 class="text-4xl md:text-5xl blue-text mb-8">A layer of<br>lighting strategy</h2>
-                        <p class="text-lg text-gray-700 leading-relaxed">This contribution works alongside existing roles.</p>
-                    </div>
-                    <div class="fade-in space-y-6">
-                        <div class="contribution-card p-6 rounded-xl bg-white/10">
-                            <p class="text-gray-800"><strong>Lighting designers</strong> — design and implementation</p>
-                        </div>
-                        <div class="contribution-card p-6 rounded-xl bg-white/10">
-                            <p class="text-gray-800"><strong>Architects & interior designers</strong> — spatial intent</p>
-                        </div>
-                        <div class="contribution-card p-6 rounded-xl bg-white/10">
-                            <p class="text-gray-800"><strong>Hospitality or wellness teams</strong> — user experience</p>
-                        </div>
-                        <p class="text-gray-600 mt-8 italic">The strategy provides a shared layer of biological intent that informs decisions across disciplines.</p>
+                        <p class="text-gray-600 italic border-t border-white/20 pt-4">Every decision — across disciplines — answers the same question: <span class="blue-text font-medium not-italic">What is the space doing to the human system?</span></p>
                     </div>
                 </div>
             </div>
@@ -791,53 +724,91 @@
         <!-- Applications Section -->
         <section id="applications" class="py-32 px-8 relative bg-gradient-to-b from-transparent to-white/10">
             <div class="container mx-auto max-w-6xl">
-                <div class="mb-12 fade-in">
+                <div class="mb-16 fade-in">
                     <h2 class="text-4xl md:text-5xl blue-text mb-8">Applications</h2>
-                    <p class="text-lg text-gray-700 leading-relaxed max-w-3xl">Here's how lighting can support the body to achieve high-end recovery experiences</p>
+                    <p class="text-lg text-gray-700 leading-relaxed max-w-3xl">Strategic lighting interventions that translate biological insight into measurable business outcomes.</p>
                 </div>
                 
-                <div class="fade-in p-10 rounded-3xl bg-white/20 backdrop-blur-sm">
-                    <h3 class="text-2xl blue-text mb-4">Jet Lag Recovery Hotel Room</h3>
-                    <p class="text-gray-700 mb-6">A room designed for overseas travellers who aim to enjoy their time visiting <em>to the fullest</em>.</p>
-                    <p class="text-gray-600 mb-6">The room uses light to guide the guest through faster circadian reset, improved rest and sleep, higher energy levels</p>
-                    
-                    <!-- Premium Stats Visual -->
-                    <div class="premium-stats-container">
-                        <div class="premium-stat-card">
-                            <div class="premium-amount">+$30</div>
-                            <div class="premium-label">
-                                <span class="premium-brand">Marriott Delos Stay Well</span>
-                                per night premium using expensive technology overlays
+                <div class="space-y-8">
+                    <!-- Card 1: Jet Lag Recovery -->
+                    <div class="fade-in p-8 md:p-10 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
+                        <div class="mb-6">
+                            <h3 class="text-2xl md:text-3xl blue-text mb-2">Lighting for Jet Lag Recovery in Hotels</h3>
+                            <p class="text-gray-600 text-sm">Jet lag recovery as a driver of revenue, satisfaction, and efficiency</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                            <div class="metric-compact">
+                                <div class="metric-compact-value">+5–15%</div>
+                                <div class="metric-compact-label">RevPAR uplift</div>
+                            </div>
+                            <div class="metric-compact">
+                                <div class="metric-compact-value">+20</div>
+                                <div class="metric-compact-label">NPS points</div>
+                            </div>
+                            <div class="metric-compact">
+                                <div class="metric-compact-value">–58%</div>
+                                <div class="metric-compact-label">energy costs</div>
+                            </div>
+                            <div class="metric-compact">
+                                <div class="metric-compact-value">&lt;2yr</div>
+                                <div class="metric-compact-label">payback</div>
                             </div>
                         </div>
-                        <div class="premium-stat-card">
-                            <div class="premium-amount">$1,700</div>
-                            <div class="premium-label">
-                                <span class="premium-brand">Equinox Hotels</span>
-                                per night for sleep optimization
+
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 border-t border-white/30">
+                            <div>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">Market Signal</span>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="text-lg font-bold blue-text" style="font-family: 'Space Grotesk', sans-serif;">$1.2B → $3.8B</span>
+                                    <span class="text-sm text-gray-600">by 2033</span>
+                                    <span class="cagr-badge-small">13.5% CAGR</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="premium-stat-card">
-                            <div class="premium-amount">+18-20%</div>
-                            <div class="premium-label">
-                                <span class="premium-brand">Wellness Hotels</span>
-                                higher average daily rates (ADR) with sleep enhancements
-                            </div>
+                            <a href="https://elixlight.substack.com/p/why-jet-lag-recovery-rooms-are-the" class="example-link text-sm md:text-base shrink-0">
+                                <span class="neon-highlight">Read full breakdown →</span>
+                            </a>
                         </div>
                     </div>
-                    
-                    <p class="text-gray-700 mb-6">Outcomes like that are achievable through strategic lighting — at lower implementation cost and higher margins.</p>
-                    
-                    <div class="mt-6">
-                        <a href="https://elixlight.substack.com/p/why-jet-lag-recovery-rooms-are-the" class="example-link">
-                            <span class="neon-highlight">Full Case Study⇥</span>
-                        </a>
+
+                    <!-- Card 2: Gap in Elite Architecture Standards -->
+                    <div class="fade-in p-8 md:p-10 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
+                        <div class="mb-6">
+                            <h3 class="text-2xl md:text-3xl blue-text mb-2">Gap in Elite Architecture Standards</h3>
+                            <p class="text-gray-600 text-sm">What the highest standards miss about human biology — and how to close it</p>
+                        </div>
+
+                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                            <div class="metric-compact">
+                                <div class="metric-compact-value">+25–40%</div>
+                                <div class="metric-compact-label">Hormonal Balance</div>
+                                <p class="text-xs text-gray-600 mt-2 leading-relaxed">Dynamic morning cool light peaks cortisol/melatonin alignment; evening warm dims fix delays</p>
+                                <a href="https://doi.org/10.3389/fnbeh.2025.1535124" class="doi-link mt-2 inline-block">DOI: 10.3389/fnbeh.2025.1535124</a>
+                            </div>
+                            <div class="metric-compact">
+                                <div class="metric-compact-value">+15–25%</div>
+                                <div class="metric-compact-label">Nervous System Regulation</div>
+                                <p class="text-xs text-gray-600 mt-2 leading-relaxed">Blue mornings boost sympathetic drive; amber evenings enhance vagal tone — 22% less distress</p>
+                                <span class="text-xs text-gray-500 mt-2 block">HRV gains</span>
+                            </div>
+                            <div class="metric-compact">
+                                <div class="metric-compact-value">+10–15%</div>
+                                <div class="metric-compact-label">Metabolism & Energy</div>
+                                <p class="text-xs text-gray-600 mt-2 leading-relaxed">Phase-aligned light stabilizes leptin/ghrelin, lifts glucose tolerance 12%</p>
+                                <span class="text-xs text-gray-500 mt-2 block">–40% crashes, +18% productivity</span>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-4 border-t border-white/30">
+                            <a href="https://elixlight.substack.com/p/what-the-highest-standards-in-architecture" class="example-link text-sm md:text-base">
+                                <span class="neon-highlight">Read full breakdown →</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Final Note Section -->
         <section class="py-32 px-8 relative">
             <div class="container mx-auto max-w-4xl text-center">
                 <div class="fade-in space-y-8 text-lg leading-relaxed text-gray-800">
@@ -848,7 +819,6 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
         <section id="contact" class="py-32 px-8 relative bg-gradient-to-b from-transparent to-white/20">
             <div class="hero-orb" style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; opacity: 0.4;"></div>
             <div class="container mx-auto max-w-4xl text-center relative z-10">
@@ -860,14 +830,12 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="py-12 px-8 text-center text-gray-600 text-sm">
             <p>© 2024 ELIXLIGHT. All rights reserved.</p>
         </footer>
     </div>
 
     <script>
-        // Intersection Observer for fade-in animations
         const observerOptions = {
             root: null,
             rootMargin: '0px',
@@ -884,7 +852,6 @@
 
         document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
 
-        // Smooth scroll for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 if (this.getAttribute('href') !== '#') {
@@ -900,11 +867,8 @@
             });
         });
 
-        // Mouse parallax for orbs
         document.addEventListener('mousemove', (e) => {
             const orbs = document.querySelectorAll('.hero-orb, .orb-small');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
             
             orbs.forEach((orb, index) => {
                 const speed = (index + 1) * 20;
@@ -914,14 +878,13 @@
             });
         });
 
-        // Active navigation state based on scroll position
         const sections = ['hero', 'work', 'framework', 'applications', 'contact'];
         const navLinks = document.querySelectorAll('.nav-link');
         
         function updateActiveNav() {
             const scrollPos = window.scrollY + window.innerHeight / 3;
             
-            sections.forEach((sectionId, index) => {
+            sections.forEach((sectionId) => {
                 const section = document.getElementById(sectionId);
                 if (section) {
                     const sectionTop = section.offsetTop;
@@ -939,12 +902,9 @@
             });
         }
         
-        // Update on scroll
         window.addEventListener('scroll', updateActiveNav);
-        // Initial call
         updateActiveNav();
 
-        // Contact button visibility on scroll
         const contactButton = document.getElementById('contactButton');
         
         function updateContactButtonVisibility() {
@@ -960,7 +920,6 @@
         
         window.addEventListener('scroll', updateContactButtonVisibility);
         
-        // Scroll to contact function
         function scrollToContact(event) {
             event.preventDefault();
             const contactSection = document.getElementById('contact');
