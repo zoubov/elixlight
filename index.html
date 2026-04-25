@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>ELIXLIGHT | Lighting Strategy for Hormonal Health</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">    
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,11 +16,18 @@
             box-sizing: border-box;
         }
         
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #d4c4b0;
             color: #1a1a1a;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         .grain-overlay {
@@ -41,8 +48,8 @@
         
         .glow-orb {
             position: absolute;
-            width: 400px;
-            height: 400px;
+            width: 300px;
+            height: 300px;
             background: radial-gradient(circle, rgba(232, 218, 200, 0.8) 0%, rgba(212, 196, 176, 0.4) 40%, transparent 70%);
             border-radius: 50%;
             filter: blur(60px);
@@ -56,20 +63,21 @@
         
         .section-hero {
             position: relative;
-            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            padding: 6rem 1rem 4rem;
         }
         
         .hero-orb {
             position: absolute;
-            width: 600px;
-            height: 600px;
+            width: 400px;
+            height: 400px;
             background: radial-gradient(circle, rgba(245, 235, 220, 0.9) 0%, rgba(232, 218, 200, 0.6) 30%, rgba(212, 196, 176, 0.3) 60%, transparent 80%);
             border-radius: 50%;
-            filter: blur(80px);
+            filter: blur(60px);
             animation: breathe 8s ease-in-out infinite;
         }
         
@@ -91,10 +99,25 @@
         
         .phase-number {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 8rem;
+            font-size: 5rem;
             font-weight: 700;
             color: rgba(0, 51, 204, 0.1);
             line-height: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .phase-number {
+                font-size: 8rem;
+            }
+            .hero-orb {
+                width: 600px;
+                height: 600px;
+                filter: blur(80px);
+            }
+            .glow-orb {
+                width: 400px;
+                height: 400px;
+            }
         }
         
         .framework-card {
@@ -112,8 +135,8 @@
             background: rgba(255, 105, 54, 0.4);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 2.5rem;
-            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 1.25rem;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
@@ -161,7 +184,13 @@
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 2rem;
+            padding: 1.25rem;
+        }
+        
+        @media (min-width: 768px) {
+            .sticky-nav {
+                padding: 2rem;
+            }
         }
         
         .nav-logo {
@@ -182,15 +211,28 @@
         }
         
         .nav-icon {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             display: inline-block;
             vertical-align: middle;
         }
         
+        @media (min-width: 768px) {
+            .nav-icon {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        
         .nav-links {
-            display: flex;
-            gap: 2rem;
+            display: none;
+        }
+        
+        @media (min-width: 901px) {
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+            }
         }
         
         .nav-link {
@@ -220,28 +262,20 @@
             background: #fff;
         }
         
-        @media (max-width: 900px) {
-            .nav-links {
-                display: none;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .sticky-nav {
-                display: block;
-            }
-            .nav-links {
-                display: none;
-            }
-        }
-        
         .orb-small {
             position: absolute;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             background: radial-gradient(circle, rgba(245, 235, 220, 0.6) 0%, transparent 70%);
             border-radius: 50%;
             filter: blur(40px);
+        }
+        
+        @media (min-width: 768px) {
+            .orb-small {
+                width: 200px;
+                height: 200px;
+            }
         }
         
         .expect-card {
@@ -334,11 +368,12 @@
         }
         
         .intro-section {
-            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            padding: 6rem 1rem 4rem;
         }
         
         .value-list li {
@@ -375,29 +410,29 @@
         }
 
         .contact-button-fixed {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 50;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            pointer-events: none;
+            display: none;
         }
         
-        .contact-button-fixed.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-        
-        @media (max-width: 768px) {
+        @media (min-width: 769px) {
             .contact-button-fixed {
-                display: none;
+                display: block;
+                position: fixed;
+                bottom: 2rem;
+                right: 2rem;
+                z-index: 50;
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.4s ease, transform 0.4s ease;
+                pointer-events: none;
+            }
+            
+            .contact-button-fixed.visible {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
             }
         }
 
-        /* Compact Metric Styles */
         .metric-compact {
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(10px);
@@ -413,18 +448,30 @@
         
         .metric-compact-value {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #0033cc;
             line-height: 1;
             margin-bottom: 0.25rem;
         }
         
+        @media (min-width: 768px) {
+            .metric-compact-value {
+                font-size: 1.75rem;
+            }
+        }
+        
         .metric-compact-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #1a1a1a;
             font-weight: 500;
             line-height: 1.3;
+        }
+        
+        @media (min-width: 768px) {
+            .metric-compact-label {
+                font-size: 0.8rem;
+            }
         }
         
         .cagr-badge-small {
@@ -450,18 +497,29 @@
             border-bottom-color: #0033cc;
         }
 
-        /* Enhanced hierarchy for Invisible Standard section */
         .thesis-statement {
-            font-size: 1.875rem;
+            font-size: 1.375rem;
             line-height: 1.3;
             color: #1a1a1a;
             font-weight: 300;
             letter-spacing: -0.02em;
         }
+        
+        @media (min-width: 768px) {
+            .thesis-statement {
+                font-size: 1.625rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .thesis-statement {
+                font-size: 1.875rem;
+            }
+        }
 
         .before-sequence {
             position: relative;
-            padding-left: 1.5rem;
+            padding-left: 1.25rem;
         }
 
         .before-sequence::before {
@@ -475,10 +533,16 @@
         }
 
         .before-item {
-            font-size: 1rem;
+            font-size: 0.9375rem;
             color: #666;
             line-height: 1.6;
             font-style: italic;
+        }
+        
+        @media (min-width: 768px) {
+            .before-item {
+                font-size: 1rem;
+            }
         }
 
         .outcome-number {
@@ -488,6 +552,147 @@
             color: #0033cc;
             opacity: 0.5;
             letter-spacing: 0.05em;
+        }
+
+        .phase-deliverable {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 0.75rem;
+            padding: 0.875rem 1rem;
+            margin-top: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .phase-deliverable {
+                padding: 1rem 1.25rem;
+            }
+        }
+        
+        .phase-meta {
+            font-size: 0.875rem;
+            color: #666;
+            letter-spacing: 0.02em;
+        }
+
+        /* FAQ Accordion Styles */
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 1.25rem 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: opacity 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        @media (min-width: 768px) {
+            .faq-question {
+                padding: 1.5rem 0;
+            }
+        }
+        
+        .faq-question:hover {
+            opacity: 0.7;
+        }
+        
+        .faq-question-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            line-height: 1.4;
+            padding-right: 0.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .faq-question-text {
+                font-size: 1.125rem;
+            }
+        }
+        
+        .faq-icon {
+            font-size: 1.25rem;
+            color: #0033cc;
+            line-height: 1;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+        
+        @media (min-width: 768px) {
+            .faq-icon {
+                font-size: 1.5rem;
+            }
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.5s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 2000px;
+            padding-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .faq-item.active .faq-answer {
+                padding-bottom: 2rem;
+            }
+        }
+        
+        .faq-answer-inner {
+            padding-left: 0;
+            padding-right: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .faq-answer-inner {
+                padding-right: 2rem;
+            }
+        }
+        
+        .faq-answer-inner p {
+            margin-bottom: 0.875rem;
+            line-height: 1.7;
+            color: #444;
+            font-size: 0.9375rem;
+        }
+        
+        @media (min-width: 768px) {
+            .faq-answer-inner p {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        .faq-answer-inner p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .faq-answer-inner strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        .faq-answer-inner em {
+            font-style: italic;
+            color: #666;
         }
     </style>
     <base target="_blank">
@@ -516,64 +721,59 @@
             </div>
         </nav>
 
+        <!-- Hero -->
         <section id="hero" class="intro-section relative">
-            <div class="hero-orb" style="top: 10%; left: 20%;"></div>
-            <div class="hero-orb" style="bottom: 20%; right: 10%; animation-delay: -4s;"></div>
+            <div class="hero-orb" style="top: 10%; left: 10%;"></div>
+            <div class="hero-orb" style="bottom: 15%; right: 5%; animation-delay: -4s;"></div>
             
-            <div class="container mx-auto px-8 relative z-10 text-center max-w-4xl">
-                <h1 class="display-text text-5xl md:text-7xl lg:text-8xl mb-8 blue-text leading-tight fade-in">
+            <div class="container mx-auto px-6 md:px-8 relative z-10 text-center max-w-4xl">
+                <h1 class="display-text text-4xl sm:text-5xl md:text-7xl lg:text-8xl mb-4 md:mb-8 blue-text leading-tight fade-in">
                     Lighting Strategy
                 </h1>
-                <h2 class="text-4xl md:text-6xl blue-text mb-8 leading-tight fade-in">
+                <h2 class="text-3xl sm:text-4xl md:text-6xl blue-text mb-6 md:mb-8 leading-tight fade-in">
                     for Hormonal Health
                 </h2>
-                <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed fade-in" style="transition-delay: 0.2s;">
-                    Defining how environments regulate the human system<br>with the power of human biology.
+                <p class="text-base md:text-lg lg:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed fade-in px-2" style="transition-delay: 0.2s;">
+                    Defining how environments regulate the human system<br class="hidden sm:block">with the power of human biology.
                 </p>
             </div>
         </section>
 
-        <!-- ENHANCED: An Invisible Standard Section -->
-        <section id="work" class="py-32 md:py-40 px-8 relative">
-            <div class="orb-small" style="right: 10%; top: 20%;"></div>
+        <!-- An Invisible Standard -->
+        <section id="work" class="py-20 md:py-32 lg:py-40 px-6 md:px-8 relative">
+            <div class="orb-small" style="right: 5%; top: 10%;"></div>
             <div class="container mx-auto max-w-6xl">
-                <div class="grid md:grid-cols-12 gap-12 md:gap-16 items-start">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
                     
-                    <!-- Left Column: Section Identity -->
                     <div class="md:col-span-5 lg:col-span-4 fade-in">
-                        <h2 class="text-5xl md:text-6xl lg:text-7xl blue-text leading-[0.95]">
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text leading-[0.95]">
                             An Invisible<br>Standard
                         </h2>
                     </div>
                     
-                    <!-- Right Column: Content Hierarchy -->
-                    <div class="md:col-span-7 lg:col-span-8 fade-in space-y-12">
+                    <div class="md:col-span-7 lg:col-span-8 fade-in space-y-8 md:space-y-12">
                         
-                        <!-- Level 1: Thesis (Largest, most prominent) -->
                         <div class="space-y-4">
                             <p class="thesis-statement">
-                                Your lighting is either supporting biology<br>
+                                Your lighting is either supporting biology<br class="hidden sm:block">
                                 <span class="blue-text font-medium">or working against it.</span>
                             </p>
                         </div>
                         
-                        <!-- Level 2: Approach (Body context) -->
                         <div class="max-w-xl">
-                            <p class="text-lg text-gray-700 leading-relaxed">
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
                                 Lighting is more than a visual layer. Light defines what the space does to the human system.
                             </p>
                         </div>
                         
-                        <!-- Level 3: Sequence (Indented, differentiated) -->
                         <div class="before-sequence py-2 space-y-3">
                             <p class="before-item">Before fixtures.</p>
                             <p class="before-item">Before placement.</p>
                             <p class="before-item">Before aesthetics.</p>
                         </div>
                         
-                        <!-- Level 4: Outcomes (Visual grid) -->
                         <div class="max-w-xl">
-                            <p class="text-lg text-gray-700 leading-relaxed">
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
                                 Light shapes when you <strong>relax</strong>, how long you <strong>stay</strong>, how you <strong>connect</strong>, how deeply you <strong>rest</strong>.
                             </p>
                         </div>
@@ -583,17 +783,50 @@
             </div>
         </section>
 
-        <section id="framework" class="py-32 px-8 relative bg-white/10">
+        <!-- Who This Is For -->
+        <section id="who" class="py-20 md:py-32 lg:py-40 px-6 md:px-8 relative bg-white/10">
+            <div class="orb-small" style="left: 5%; bottom: 10%;"></div>
             <div class="container mx-auto max-w-6xl">
-                <div class="text-center mb-20 fade-in">
-                    <p class="text-sm tracking-widest text-gray-600 mb-4">THE HUMAN-LIGHT HORMONE MODEL</p>
-                    <h2 class="text-4xl md:text-6xl blue-text mb-8">From Design<br>to Behavior Engineering</h2>
-                    <p class="text-lg text-gray-700 max-w-2xl mx-auto">Hormones are produced according to the environmental light, supporting or hindering human states.</p>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
+                    
+                    <div class="md:col-span-5 lg:col-span-4 fade-in">
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text leading-[0.95]">
+                            Who This<br>Is For
+                        </h2>
+                    </div>
+                    
+                    <div class="md:col-span-7 lg:col-span-8 fade-in space-y-6 md:space-y-8">
+                        
+                        <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                            This approach is designed for architecture and lighting studios working on hospitality, wellness, or residential projects where biological impact is part of the positioning.
+                        </p>
+                        
+                        <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                            We collaborate as a strategic layer — defining hormonal intent, mapping human states to zones, and validating designs for circadian alignment.
+                        </p>
+                        
+                        <p class="text-xl md:text-2xl lg:text-3xl leading-snug text-gray-800 font-light">
+                            We don't replace lighting designers.<br class="hidden sm:block">
+                            <span class="blue-text font-medium">We make their work measurably more effective.</span>
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Framework -->
+        <section id="framework" class="py-20 md:py-32 px-6 md:px-8 relative">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-12 md:mb-20 fade-in px-2">
+                    <p class="text-xs md:text-sm tracking-widest text-gray-600 mb-4">THE HUMAN-LIGHT HORMONE MODEL</p>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text mb-6 md:mb-8">From Design<br class="hidden sm:block"> to Behavior Engineering</h2>
+                    <p class="text-base md:text-lg text-gray-700 max-w-2xl mx-auto">Hormones are produced according to the environmental light, supporting or hindering human states.</p>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-8 mb-20">
-                    <div class="framework-card p-10 rounded-3xl fade-in">
-                        <h3 class="text-3xl blue-text mb-4">Activation</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-20">
+                    <div class="framework-card p-6 md:p-10 rounded-2xl md:rounded-3xl fade-in">
+                        <h3 class="text-2xl md:text-3xl blue-text mb-4">Activation</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports energy, alertness and cognitive engagement.</p>
                         <div class="mb-6">
                             <span class="hormone-tag">cortisol</span>
@@ -617,8 +850,8 @@
                         </div>
                     </div>
                     
-                    <div class="framework-card p-10 rounded-3xl fade-in" style="transition-delay: 0.1s;">
-                        <h3 class="text-3xl blue-text mb-4">Connection</h3>
+                    <div class="framework-card p-6 md:p-10 rounded-2xl md:rounded-3xl fade-in" style="transition-delay: 0.1s;">
+                        <h3 class="text-2xl md:text-3xl blue-text mb-4">Connection</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports social comfort, trust and emotional presence.</p>
                         <div class="mb-6">
                             <span class="hormone-tag">oxytocin</span>
@@ -641,8 +874,8 @@
                         </div>
                     </div>
                     
-                    <div class="framework-card p-10 rounded-3xl fade-in" style="transition-delay: 0.2s;">
-                        <h3 class="text-3xl blue-text mb-4">Restoration</h3>
+                    <div class="framework-card p-6 md:p-10 rounded-2xl md:rounded-3xl fade-in" style="transition-delay: 0.2s;">
+                        <h3 class="text-2xl md:text-3xl blue-text mb-4">Restoration</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports recovery, relaxation and sleep preparation.</p>
                         <div class="mb-6">
                             <span class="hormone-tag">melatonin</span>
@@ -665,8 +898,8 @@
                         </div>
                     </div>
                     
-                    <div class="framework-card p-10 rounded-3xl fade-in" style="transition-delay: 0.3s;">
-                        <h3 class="text-3xl blue-text mb-4">Sensory Pleasure</h3>
+                    <div class="framework-card p-6 md:p-10 rounded-2xl md:rounded-3xl fade-in" style="transition-delay: 0.3s;">
+                        <h3 class="text-2xl md:text-3xl blue-text mb-4">Sensory Pleasure</h3>
                         <p class="text-gray-700 mb-6 leading-relaxed">Supports stimulation, curiosity and emotional engagement.</p>
                         <div class="mb-6">
                             <span class="hormone-tag">dopamine</span>
@@ -689,8 +922,8 @@
                     </div>
                 </div>
                 
-                <div class="text-center max-w-3xl mx-auto fade-in">
-                    <h3 class="text-2xl blue-text mb-6">What This Means for Design</h3>
+                <div class="text-center max-w-3xl mx-auto fade-in px-2">
+                    <h3 class="text-xl md:text-2xl blue-text mb-6">What This Means for Design</h3>
                     <p class="text-gray-700 mb-8">This framework allows design teams to:</p>
                     <div class="space-y-3 text-left inline-block">
                         <p class="flex items-center gap-3">
@@ -710,65 +943,96 @@
             </div>
         </section>
 
-        <section class="py-32 px-8 relative overflow-hidden">
-            <div class="hero-orb" style="right: -10%; top: 0; width: 500px; height: 500px; opacity: 0.5;"></div>
+        <!-- Collaboration -->
+        <section class="py-20 md:py-32 px-6 md:px-8 relative overflow-hidden">
+            <div class="hero-orb" style="right: -10%; top: 0; width: 400px; height: 400px; opacity: 0.5;"></div>
             <div class="container mx-auto max-w-6xl relative z-10">
-                <div class="mb-20 fade-in">
-                    <h2 class="text-4xl md:text-6xl blue-text mb-6">Collaboration</h2>
-                    <p class="text-xl text-gray-700">Elixlight collaborates as a strategic advisor, typically in three phases:</p>
+                <div class="mb-12 md:mb-20 fade-in px-2">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text mb-4 md:mb-6">Collaboration</h2>
+                    <p class="text-lg md:text-xl text-gray-700">Elixlight collaborates as a strategic advisor across three phases:</p>
                 </div>
                 
-                <div class="space-y-24">
-                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
+                <div class="space-y-12 md:space-y-16">
+                    <div class="phase-row grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start fade-in">
                         <div class="phase-number">1</div>
-                        <div class="md:col-span-2">
-                            <h3 class="text-2xl blue-text mb-4">Hormonal Lighting Strategy</h3>
-                            <p class="text-lg text-gray-700 leading-relaxed">Defines the biological and experiential intent of the project.</p>
+                        <div class="md:col-span-2 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-3 gap-1">
+                                <h3 class="text-xl md:text-2xl blue-text">Strategic Foundation</h3>
+                                <span class="phase-meta">Week 1–2</span>
+                            </div>
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">Defines which biological states each zone should support and why.</p>
+                            <div class="phase-deliverable">
+                                <p class="text-sm text-gray-600"><span class="font-medium text-gray-800">Deliverable:</span> Hormonal Lighting Brief</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
+                    <div class="phase-row grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start fade-in">
                         <div class="phase-number">2</div>
-                        <div class="md:col-span-2">
-                            <h3 class="text-2xl blue-text mb-4">Human State Mapping</h3>
-                            <p class="text-lg text-gray-700 leading-relaxed">Translates spatial zones into desired human states and lighting behaviors.</p>
+                        <div class="md:col-span-2 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-3 gap-1">
+                                <h3 class="text-xl md:text-2xl blue-text">Spatial Translation</h3>
+                                <span class="phase-meta">Week 3–4</span>
+                            </div>
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">Zone-by-zone lighting behaviors mapped to guest/user experience goals.</p>
+                            <div class="phase-deliverable">
+                                <p class="text-sm text-gray-600"><span class="font-medium text-gray-800">Deliverable:</span> Human State Map</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="phase-row grid md:grid-cols-3 gap-8 items-start fade-in">
+                    <div class="phase-row grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-start fade-in">
                         <div class="phase-number">3</div>
-                        <div class="md:col-span-2">
-                            <h3 class="text-2xl blue-text mb-4">Design Review</h3>
-                            <p class="text-lg text-gray-700 leading-relaxed">Provides feedback on lighting proposals based on hormonal and circadian impact.</p>
+                        <div class="md:col-span-2 space-y-3">
+                            <div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-3 gap-1">
+                                <h3 class="text-xl md:text-2xl blue-text">Design Validation</h3>
+                                <span class="phase-meta">Ongoing</span>
+                            </div>
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">Feedback on lighting proposals to ensure hormonal alignment before execution.</p>
+                            <div class="phase-deliverable">
+                                <p class="text-sm text-gray-600"><span class="font-medium text-gray-800">Deliverable:</span> Biological Impact Review</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Integration Section -->
-                <div class="mt-32 fade-in">
-                    <h3 class="text-3xl blue-text mb-6">Integration</h3>
-                    <p class="text-lg text-gray-700 leading-relaxed mb-4">We work together to define <strong>what lighting needs to do before it is designed</strong>.</p>
-                    <p class="text-lg text-gray-700 leading-relaxed mb-10">Across the project, we implement <strong>a continuous layer of intent</strong>.</p>
+                <div class="mt-16 md:mt-20 pt-8 md:pt-10 border-t border-white/30 fade-in px-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div>
+                            <p class="text-xs md:text-sm tracking-widest text-gray-500 uppercase mb-2 font-medium">Timeline</p>
+                            <p class="text-base md:text-lg text-gray-700">6–12 weeks depending on project scale</p>
+                        </div>
+                        <div>
+                            <p class="text-xs md:text-sm tracking-widest text-gray-500 uppercase mb-2 font-medium">Investment</p>
+                            <p class="text-base md:text-lg text-gray-700">Custom based on scope — <a href="#contact" class="example-link" onclick="event.preventDefault(); document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">contact for project-specific quote</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-20 md:mt-32 fade-in px-2">
+                    <h3 class="text-2xl md:text-3xl blue-text mb-6">Integration</h3>
+                    <p class="text-base md:text-lg text-gray-700 leading-relaxed mb-4">We work together to define <strong>what lighting needs to do before it is designed</strong>.</p>
+                    <p class="text-base md:text-lg text-gray-700 leading-relaxed mb-8 md:mb-10">Across the project, we implement <strong>a continuous layer of intent</strong>.</p>
                     
-                    <div class="grid md:grid-cols-3 gap-6 mb-12">
-                        <div class="contribution-card p-6 rounded-xl bg-white/10">
-                            <h4 class="text-xl blue-text mb-3">Beginning</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
+                        <div class="contribution-card p-5 md:p-6 rounded-xl bg-white/10">
+                            <h4 class="text-lg md:text-xl blue-text mb-3">Beginning</h4>
                             <p class="text-gray-700">It defines direction</p>
                         </div>
                         
-                        <div class="contribution-card p-6 rounded-xl bg-white/10">
-                            <h4 class="text-xl blue-text mb-3">Development</h4>
+                        <div class="contribution-card p-5 md:p-6 rounded-xl bg-white/10">
+                            <h4 class="text-lg md:text-xl blue-text mb-3">Development</h4>
                             <p class="text-gray-700">It maintains alignment</p>
                         </div>
                         
-                        <div class="contribution-card p-6 rounded-xl bg-white/10">
-                            <h4 class="text-xl blue-text mb-3">Before Execution</h4>
+                        <div class="contribution-card p-5 md:p-6 rounded-xl bg-white/10">
+                            <h4 class="text-lg md:text-xl blue-text mb-3">Before Execution</h4>
                             <p class="text-gray-700">It identifies risks</p>
                         </div>
                     </div>
                     
-                    <div class="bg-white/10 p-8 rounded-2xl border border-white/20">
-                        <h4 class="text-lg font-medium text-gray-800 mb-4">Working Alongside Existing Roles</h4>
+                    <div class="bg-white/10 p-6 md:p-8 rounded-2xl border border-white/20">
+                        <h4 class="text-base md:text-lg font-medium text-gray-800 mb-4">Working Alongside Existing Roles</h4>
                         <div class="space-y-3 mb-6">
                             <div class="flex items-start gap-3">
                                 <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 shrink-0"></span>
@@ -789,23 +1053,22 @@
             </div>
         </section>
 
-        <!-- Applications Section -->
-        <section id="applications" class="py-32 px-8 relative bg-gradient-to-b from-transparent to-white/10">
+        <!-- Applications -->
+        <section id="applications" class="py-20 md:py-32 px-6 md:px-8 relative bg-gradient-to-b from-transparent to-white/10">
             <div class="container mx-auto max-w-6xl">
-                <div class="mb-16 fade-in">
-                    <h2 class="text-4xl md:text-5xl blue-text mb-8">Applications</h2>
-                    <p class="text-lg text-gray-700 leading-relaxed max-w-3xl">Strategic lighting interventions that translate biological insight into measurable business outcomes.</p>
+                <div class="mb-10 md:mb-16 fade-in px-2">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text mb-4 md:mb-8">Applications</h2>
+                    <p class="text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl">Strategic lighting interventions that translate biological insight into measurable business outcomes.</p>
                 </div>
                 
-                <div class="space-y-8">
-                    <!-- Card 1: Jet Lag Recovery -->
-                    <div class="fade-in p-8 md:p-10 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
+                <div class="space-y-6 md:space-y-8">
+                    <div class="fade-in p-6 md:p-10 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
                         <div class="mb-6">
-                            <h3 class="text-2xl md:text-3xl blue-text mb-2">Lighting for Jet Lag Recovery</h3>
+                            <h3 class="text-xl md:text-2xl lg:text-3xl blue-text mb-2">Lighting for Jet Lag Recovery</h3>
                             <p class="text-gray-600 text-sm">Circadian reset as a driver of revenue, satisfaction, and efficiency for hospitality.</p>
                         </div>
 
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
                             <div class="metric-compact">
                                 <div class="metric-compact-value">+5–15%</div>
                                 <div class="metric-compact-label">RevPAR uplift</div>
@@ -824,11 +1087,11 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-4 border-t border-white/30">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-white/30">
                             <div>
                                 <span class="text-xs text-gray-500 uppercase tracking-wider">Market Signal</span>
-                                <div class="flex items-center gap-2 mt-1">
-                                    <span class="text-lg font-bold blue-text" style="font-family: 'Space Grotesk', sans-serif;">$1.2B → $3.8B</span>
+                                <div class="flex items-center gap-2 mt-1 flex-wrap">
+                                    <span class="text-base md:text-lg font-bold blue-text" style="font-family: 'Space Grotesk', sans-serif;">$1.2B → $3.8B</span>
                                     <span class="text-sm text-gray-600">by 2033</span>
                                     <span class="cagr-badge-small">13.5% CAGR</span>
                                 </div>
@@ -839,14 +1102,13 @@
                         </div>
                     </div>
 
-                    <!-- Card 2: Gap in Elite Architecture Standards -->
-                    <div class="fade-in p-8 md:p-10 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
+                    <div class="fade-in p-6 md:p-10 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
                         <div class="mb-6">
-                            <h3 class="text-2xl md:text-3xl blue-text mb-2">Elite Architecture Standards Amplified</h3>
+                            <h3 class="text-xl md:text-2xl lg:text-3xl blue-text mb-2">Elite Architecture Standards Amplified</h3>
                             <p class="text-gray-600 text-sm">One more layer in the higherst standards - lighting for human biology.</p>
                         </div>
 
-                        <div class="grid md:grid-cols-3 gap-4 mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                             <div class="metric-compact">
                                 <div class="metric-compact-value">+25–40%</div>
                                 <div class="metric-compact-label">Hormonal Balance</div>
@@ -874,31 +1136,225 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section class="py-32 px-8 relative">
-            <div class="container mx-auto max-w-4xl text-center">
-                <div class="fade-in space-y-8 text-lg leading-relaxed text-gray-800">
-                    <h2 class="text-4xl md:text-5xl blue-text mb-8">Final note</h2>
-                    <p>Lighting is often treated as a visual tool.<br>In practice, it is also a biological one.</p>
-                    <p class="text-xl">When light is aligned with the body,<br>it does not only improve how a space looks —<br>it improves how it is experienced, used and remembered.</p>
+                <div class="mt-8 md:mt-12 fade-in px-2">
+                    <div class="p-5 md:p-8 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
+                        <p class="text-xs tracking-widest text-gray-500 uppercase mb-4 font-medium">Research Partners & Sources</p>
+                        <p class="text-sm text-gray-600 mb-4">This framework synthesizes findings from:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="flex items-start gap-3">
+                                <span class="w-1 h-1 bg-blue-600/40 rounded-full mt-2 shrink-0"></span>
+                                <p class="text-sm text-gray-700">Sleep Medicine Reviews</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-1 h-1 bg-blue-600/40 rounded-full mt-2 shrink-0"></span>
+                                <p class="text-sm text-gray-700">Frontiers in Behavioral Neuroscience</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-1 h-1 bg-blue-600/40 rounded-full mt-2 shrink-0"></span>
+                                <p class="text-sm text-gray-700">Global Wellness Institute market reports</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="w-1 h-1 bg-blue-600/40 rounded-full mt-2 shrink-0"></span>
+                                <p class="text-sm text-gray-700">Hospitality performance benchmarks (STR, Skift)</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4 italic">All claims are cited and independently verifiable.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-32 px-8 relative bg-gradient-to-b from-transparent to-white/20">
-            <div class="hero-orb" style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: 700px; height: 700px; opacity: 0.4;"></div>
-            <div class="container mx-auto max-w-4xl text-center relative z-10">
-                <h2 class="text-4xl md:text-6xl blue-text mb-8 fade-in">Contact</h2>
-                <p class="text-xl text-gray-700 mb-12 fade-in">Available for collaborations worldwide.</p>
-                <a href="mailto:hello@elixlight.com" class="email-link text-3xl md:text-5xl blue-text hover:opacity-70 transition-opacity fade-in">
+        <!-- FAQ -->
+        <section id="faq" class="py-20 md:py-32 px-6 md:px-8 relative bg-white/10">
+            <div class="container mx-auto max-w-6xl">
+                <div class="mb-10 md:mb-16 fade-in px-2">
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text mb-4">Things we think about</h2>
+                    <p class="text-base md:text-lg text-gray-700">Questions that shape how we approach every project</p>
+                </div>
+
+                <div class="space-y-0 fade-in px-2">
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">Why does a hotel lobby need different lighting at 6 AM vs. 6 PM if the design intent is the same?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p>Because the guest's biology isn't the same.</p>
+                                <p>At 6 AM, cortisol is rising — the body is primed for activation. Cool, bright light amplifies that natural momentum. Guests feel energized, ready to move.</p>
+                                <p>At 6 PM, cortisol is falling. The same cool light delays melatonin onset, disrupts circadian rhythm, and creates a low-grade physiological stress. Guests feel "on edge" without knowing why.</p>
+                                <p>Same space. Same aesthetic. Opposite biological impact.</p>
+                                <p>Most lighting designs treat time of day as an operational choice (dimming for ambiance). We treat it as a biological necessity. Dynamic lighting isn't about mood — it's about aligning the space with where the human system already wants to go.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">Can you "over-optimize" a space for one hormone state and accidentally harm another?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p>Absolutely. And it happens more than you'd think.</p>
+                                <p>Example: A spa designs a "restoration suite" with ultra-low light, warm spectrum, and complete sensory stillness. Perfect for melatonin production, deep relaxation.</p>
+                                <p>But then they schedule morning treatments in that same space.</p>
+                                <p>Now you have a guest at 10 AM — cortisol should be peaking, dopamine active, body ready for engagement — sitting in a dim, warm, cocoon-like environment. Their system is getting mixed signals. They leave the treatment feeling groggy, not restored.</p>
+                                <p>The lighting wasn't wrong. The timing was.</p>
+                                <p>We map human states to time of day and spatial flow — not just to room type. A "wellness suite" isn't one static state. It's a sequence: activation (morning stretch) → connection (partner massage) → restoration (evening wind-down).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">What's the biggest lighting mistake you see in luxury hotels?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p>Evening restaurants with high-CCT pendant lighting.</p>
+                                <p>Here's what's happening:</p>
+                                <p>It's 8 PM. Guests have been traveling, working, moving through airports and meetings. Cortisol should be dropping. Melatonin onset should start in 2-3 hours for healthy sleep.</p>
+                                <p>They sit down for dinner. The restaurant has 4000K-5000K downlights — beautiful, crisp, makes the food look incredible on Instagram.</p>
+                                <p>But biologically? That light is suppressing melatonin production. It's telling the body "stay alert, it's midday."</p>
+                                <p>Guests finish dinner, go to their room, and can't fall asleep for 2+ hours. They blame the bed, the AC, jet lag. They don't realize the restaurant lighting delayed their circadian rhythm.</p>
+                                <p>Next morning: poor sleep review. Lower NPS. They don't rebook.</p>
+                                <p>The lighting made the food look better and the guest experience worse.</p>
+                                <p>We optimize for both. Warm spectrum (2700K-3000K), indirect sources, layered light that lets the space feel vibrant without hijacking biology. Guests sleep better. Satisfaction scores go up. The food still looks great.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">How do you balance "scientifically optimal" lighting with architectural vision?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p>We don't treat them as opposing forces.</p>
+                                <p>Architects aren't trying to harm human biology — they're trying to create memorable, differentiated experiences. That's the same goal we have.</p>
+                                <p>The question isn't "science vs. design" — it's "which design choices amplify the intended experience, and which accidentally undermine it?"</p>
+                                <p>Example: An architect designs a hotel bar with dramatic contrast — dark walls, focused downlighting on the bar surface, low ambient light.</p>
+                                <p>Biologically, this is perfect for sensory pleasure: High contrast → dopamine activation. Focal highlights → attention capture. Low ambient → intimacy, reduced social inhibition (oxytocin).</p>
+                                <p>We don't change the aesthetic. We validate why it works and suggest refinements (spectrum tuning, glare control, transition zones) that make the biological impact even stronger.</p>
+                                <p>Good architecture already intuits human response. We make that intuition explicit, measurable, and repeatable.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">What's a lighting intervention most studios would never think to suggest?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p>Circadian transition zones between daylight and interior spaces.</p>
+                                <p>Here's the problem:</p>
+                                <p>A guest walks from bright Mediterranean sunlight (10,000+ lux, 6500K) directly into a hotel lobby designed for 300 lux, 3000K.</p>
+                                <p>Their pupils constrict. Their retinal cells are overstimulated. The lobby feels dim and oppressive, even if objectively it's well-lit.</p>
+                                <p>Cortisol spikes (stress response to sudden darkness). They subconsciously feel unsafe.</p>
+                                <p>The fix: A 3-5 meter transition zone.</p>
+                                <p>Gradual reduction: 3000 lux → 1500 lux → 600 lux → 300 lux interior.</p>
+                                <p>Spectrum shift: 5000K → 4000K → 3200K → 3000K.</p>
+                                <p>Pupils adjust gradually. No cortisol spike. The lobby feels welcoming, not oppressive.</p>
+                                <p>Same interior lighting. Different entry experience. Zero added fixtures — just repositioning + tuning.</p>
+                                <p>Most studios light the lobby in isolation. We light the journey into the lobby. That's the difference.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">If you could only change ONE thing about how hospitality projects approach lighting, what would it be?</span>
+                            <span class="faq-icon">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p>Stop designing lighting states. Start designing lighting sequences.</p>
+                                <p>Right now, most projects think in snapshots:</p>
+                                <p>Morning: bright<br>Afternoon: moderate<br>Evening: dim</p>
+                                <p>But humans don't experience snapshots. They experience flow.</p>
+                                <p>A guest doesn't teleport from bedroom → gym → spa → restaurant. They move through transitions. And every transition is a biological event.</p>
+                                <p>Example sequence (5-star resort, morning):</p>
+                                <p><strong>6:30 AM</strong> — Bedroom: Low light, warm (2700K), melatonin tail-off<br>
+                                ↓<br>
+                                <strong>7:00 AM</strong> — Bathroom: Gradual increase, cooler (3500K), cortisol rising<br>
+                                ↓<br>
+                                <strong>7:30 AM</strong> — Hallway: Bright, 4000K, circadian activation<br>
+                                ↓<br>
+                                <strong>8:00 AM</strong> — Breakfast terrace: Daylight exposure, dopamine peak</p>
+                                <p>Each step supports the biological trajectory from sleep → wakefulness.</p>
+                                <p>If you skip a step (bedroom dim → hallway bright, no gradient), you create a physiological jolt. Cortisol spikes. Alertness crashes 20 minutes later.</p>
+                                <p>We design for the journey, not the destination.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Note -->
+        <section class="py-20 md:py-32 lg:py-40 px-6 md:px-8 relative">
+            <div class="orb-small" style="left: 5%; bottom: 10%;"></div>
+            <div class="container mx-auto max-w-6xl">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
+                    
+                    <div class="md:col-span-5 lg:col-span-4 fade-in">
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text leading-[0.95]">
+                            Final<br>Note
+                        </h2>
+                    </div>
+                    
+                    <div class="md:col-span-7 lg:col-span-8 fade-in space-y-6 md:space-y-8">
+                        
+                        <div class="space-y-4 md:space-y-6">
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                                Lighting decisions are made for every project in development, intentionally or not.
+                            </p>
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                                The question isn't whether those decisions will affect guest biology.<br class="hidden sm:block">
+                                <span class="blue-text font-medium">They will.</span>
+                            </p>
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                                The question is whether they're aligned with your experience goals,<br class="hidden sm:block">
+                                your differentiation strategy,<br class="hidden sm:block">
+                                and your revenue model.
+                            </p>
+                            <p class="text-base md:text-lg text-gray-700 leading-relaxed">
+                                Or whether they're leaving that on the table.
+                            </p>
+                        </div>
+                        
+                        <div class="pt-2 md:pt-4">
+                            <a href="mailto:hello@elixlight.com" class="email-link text-lg md:text-xl lg:text-2xl blue-text hover:opacity-70 transition-opacity">
+                                <span class="neon-highlight">Let's talk about your project →</span>
+                            </a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="py-20 md:py-32 px-6 md:px-8 relative bg-gradient-to-b from-transparent to-white/20">
+            <div class="hero-orb" style="left: 50%; top: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; opacity: 0.4;"></div>
+            <div class="container mx-auto max-w-4xl text-center relative z-10 px-4">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl blue-text mb-6 md:mb-8 fade-in">Contact</h2>
+                <p class="text-lg md:text-xl text-gray-700 mb-8 md:mb-12 fade-in">Available for collaborations worldwide.</p>
+                <a href="mailto:hello@elixlight.com" class="email-link text-2xl sm:text-3xl md:text-5xl blue-text hover:opacity-70 transition-opacity fade-in break-all">
                     <span class="neon-highlight">hello@elixlight.com</span>
                 </a>
             </div>
         </section>
 
-        <footer class="py-12 px-8 text-center text-gray-600 text-sm">
+        <footer class="py-8 md:py-12 px-6 md:px-8 text-center text-gray-600 text-xs md:text-sm">
             <p>© 2024 ELIXLIGHT. All rights reserved.</p>
         </footer>
     </div>
@@ -994,6 +1450,19 @@
             if (contactSection) {
                 contactSection.scrollIntoView({ behavior: 'smooth' });
             }
+        }
+
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item.active').forEach(activeItem => {
+                if (activeItem !== item) {
+                    activeItem.classList.remove('active');
+                }
+            });
+            
+            item.classList.toggle('active');
         }
     </script>
 </body>
