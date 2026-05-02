@@ -910,85 +910,117 @@
        async function generatePDF() {
            const { jsPDF } = window.jspdf;
            const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-           
+
            const pageWidth = doc.internal.pageSize.getWidth();
+           const pageHeight = doc.internal.pageSize.getHeight();
            const margin = 40;
            const contentWidth = pageWidth - (margin * 2);
-           let y = margin;
-           
-           function addText(text, x, yPos, options = {}) {
-               const { size = 10, font = 'helvetica', style = 'normal', color = '#111111', align = 'left', maxWidth = contentWidth } = options;
-               doc.setFont(font, style);
+
+           // FIXED LAYOUT GRID: Every section has a predetermined Y position.
+           // This guarantees identical document height regardless of content.
+           const ROW = {
+               headerBg: 0,
+               headerLogo: 42,
+               headerTagline: 60,
+               title: 92,
+               date: 108,
+               divider1: 120,
+               clientLabel: 132,
+               clientName: 144,
+               clientCompany: 156,
+               clientEmail: 168,
+               clientProject: 180,
+               divider2: 194,
+               priceLabel: 208,
+               priceValue: 230,
+               divider3: 260,
+               breakdownLabel: 274,
+               breakdownRow1: 290,
+               breakdownRow2: 306,
+               breakdownRow3: 322,
+               breakdownRow4: 338,
+               breakdownRow5: 354,
+               divider4: 370,
+               includedLabel: 384,
+               includedRow1: 400,
+               includedRow2: 416,
+               includedRow3: 432,
+               includedRow4: 448,
+               includedRow5: 464,
+               divider5: 480,
+               timelineLabel: 494,
+               timelineValue: 510,
+               divider6: 526,
+               addonsLabel: 540,
+               addonsDesc: 552,
+               addonRow1: 568,
+               addonRow2: 588,
+               addonRow3: 608,
+               addonRow4: 628,
+               addonRow5: 648,
+               divider7: 668,
+               stepsLabel: 682,
+               stepRow1: 698,
+               stepRow2: 714,
+               stepRow3: 730,
+               footerBar: 792,
+               footerText1: 814,
+               footerText2: 826
+           };
+
+           function drawText(text, x, yPos, options = {}) {
+               const { size = 10, style = 'normal', color = '#111111', align = 'left' } = options;
+               doc.setFont('helvetica', style);
                doc.setFontSize(size);
                doc.setTextColor(color);
-               const lines = doc.splitTextToSize(text, maxWidth);
-               doc.text(lines, x, yPos, { align });
-               return yPos + (lines.length * size * 1.2);
+               doc.text(text || ' ', x, yPos, { align });
            }
-           
-           function addLine(yPos, color = '#e8e6e0') {
+
+           function drawDivider(yPos, color = '#e8e6e0') {
                doc.setDrawColor(color);
                doc.setLineWidth(0.5);
                doc.line(margin, yPos, pageWidth - margin, yPos);
-               return yPos + 12;
            }
-           
-// HEADER
+
+           function drawCheckmark(cx, cy) {
+               doc.setFillColor(200, 232, 136);
+               doc.circle(cx, cy, 2.5, 'F');
+           }
+
+           // === HEADER ===
            doc.setFillColor(200, 232, 136);
-           doc.rect(0, 0, pageWidth, 90, 'F');
-           
-           y = 42;
-           // Match website: Inter-like, semibold, tight tracking
-           doc.setFont('helvetica', 'bold');
-           doc.setFontSize(14);  // ~0.95rem equivalent
-           doc.setTextColor('#111111');
-           doc.text('ELIXLIGHT', margin, y);
-           
-           y += 18;
-           doc.setFont('helvetica', 'normal');
-           doc.setFontSize(9);
-           doc.setTextColor('#555555');
-           doc.text('Lighting Strategy for Hormonal Health', margin, y);
-           
-           // TITLE
-           y = addText('PROJECT PRICING QUOTE', margin, y, { size: 18, style: 'bold', color: '#111111' });
-           y += 8;
-           
+           doc.rect(0, 0, pageWidth, 78, 'F');
+           drawText('ELIXLIGHT', margin, ROW.headerLogo, { size: 14, style: 'bold' });
+           drawText('Lighting Strategy for Hormonal Health', margin, ROW.headerTagline, { size: 9, color: '#555555' });
+
+           // === TITLE ===
+           drawText('PROJECT PRICING QUOTE', margin, ROW.title, { size: 18, style: 'bold' });
            const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-           y = addText('Generated: ' + today, margin, y, { size: 9, color: '#888888' });
-           y += 16;
-           y = addLine(y);
-           y += 8;
-           
-           // CLIENT INFO
-           const name = document.getElementById('name').value;
-           const email = document.getElementById('email').value;
+           drawText('Generated: ' + today, margin, ROW.date, { size: 9, color: '#888888' });
+           drawDivider(ROW.divider1);
+
+           // === CLIENT (always 5 rows — blank string if missing) ===
+           const name = document.getElementById('name').value || '—';
+           const email = document.getElementById('email').value || '—';
            const company = document.getElementById('company').value;
            const project = document.getElementById('project').value;
-           
-           y = addText('CLIENT', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 4;
-           y = addText(name, margin, y, { size: 11, style: 'bold' });
-           if (company) y = addText(company, margin, y, { size: 10, color: '#555555' });
-           y = addText(email, margin, y, { size: 9, color: '#888888' });
-           if (project) {
-               y += 4;
-               y = addText('Project: ' + project, margin, y, { size: 9, color: '#555555' });
-           }
-           y += 12;
-           y = addLine(y);
-           y += 8;
-           
-            // PRICE
+
+           drawText('CLIENT', margin, ROW.clientLabel, { size: 8, style: 'bold', color: '#888888' });
+           drawText(name, margin, ROW.clientName, { size: 11, style: 'bold' });
+           drawText(company || ' ', margin, ROW.clientCompany, { size: 10, color: '#555555' });
+           drawText(email, margin, ROW.clientEmail, { size: 9, color: '#888888' });
+           drawText(project ? 'Project: ' + project : ' ', margin, ROW.clientProject, { size: 9, color: '#555555' });
+           drawDivider(ROW.divider2);
+
+           // === PRICE ===
            const priceText = document.getElementById('resultPrice').textContent;
-           y = addText('ESTIMATED INVESTMENT', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 16;  // increased from 6 to 16 for more breathing room
-           y = addText(priceText, margin, y, { size: 32, style: 'bold', color: '#111111' });
-           
-           // COMPLEXITY BREAKDOWN
-           y = addText('COMPLEXITY BREAKDOWN', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 10;
-           
+           drawText('ESTIMATED INVESTMENT', margin, ROW.priceLabel, { size: 8, style: 'bold', color: '#888888' });
+           drawText(priceText, margin, ROW.priceValue, { size: 32, style: 'bold' });
+           drawDivider(ROW.divider3);
+
+           // === COMPLEXITY BREAKDOWN (always 5 rows) ===
+           drawText('COMPLEXITY BREAKDOWN', margin, ROW.breakdownLabel, { size: 8, style: 'bold', color: '#888888' });
+
            const breakdownItems = [
                ['Project Stage', document.getElementById('resultStage').textContent],
                ['Scale', document.getElementById('resultScale').textContent],
@@ -996,34 +1028,27 @@
                ['Engagement Depth', document.getElementById('resultEngagement').textContent],
                ['Seasonal Complexity', document.getElementById('resultSeasonal').textContent]
            ];
-           
-           breakdownItems.forEach(([label, value]) => {
-               if (value && value !== '—') {
-                   doc.setFont('helvetica', 'normal');
-                   doc.setFontSize(9);
-                   doc.setTextColor('#555555');
-                   doc.text(label, margin, y);
-                   
-                   doc.setFont('helvetica', 'bold');
-                   doc.setTextColor('#111111');
-                   const valueWidth = doc.getTextWidth(value);
-                   doc.text(value, pageWidth - margin - valueWidth, y);
-                   
-                   y += 16;
-               }
+
+           breakdownItems.forEach(([label, value], i) => {
+               const y = ROW.breakdownRow1 + (i * 16);
+               const displayValue = (value && value !== '—') ? value : 'Not selected';
+
+               doc.setFont('helvetica', 'normal');
+               doc.setFontSize(9);
+               doc.setTextColor('#555555');
+               doc.text(label, margin, y);
+
+               doc.setFont('helvetica', 'bold');
+               doc.setTextColor('#111111');
+               const valueWidth = doc.getTextWidth(displayValue);
+               doc.text(displayValue, pageWidth - margin - valueWidth, y);
            });
-           
-           y += 4;
-           y = addLine(y);
-           y += 8;
-           
-           // WHAT'S INCLUDED
-           y = addText('WHAT\'S INCLUDED', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 10;
-           
+           drawDivider(ROW.divider4);
+
+           // === WHAT'S INCLUDED (always 5 rows) ===
+           drawText("WHAT'S INCLUDED", margin, ROW.includedLabel, { size: 8, style: 'bold', color: '#888888' });
+
            const deliverable = document.getElementById('resultDeliverable').textContent;
-           const timeline = document.getElementById('resultTimeline').textContent;
-           
            const included = [
                deliverable,
                '60-min kickoff (discuss zones, intent, constraints)',
@@ -1031,32 +1056,24 @@
                'Review cycles as selected',
                'Remote engagement — no site visits required'
            ];
-           
-           included.forEach(item => {
-               doc.setFillColor(200, 232, 136);
-               doc.circle(margin + 3, y - 3, 2, 'F');
-               y = addText(item, margin + 12, y, { size: 9, color: '#333333' });
-               y += 4;
+
+           included.forEach((item, i) => {
+               const y = ROW.includedRow1 + (i * 16);
+               drawCheckmark(margin + 3, y - 3);
+               drawText(item, margin + 12, y, { size: 9, color: '#333333' });
            });
-           
-           y += 4;
-           y = addLine(y);
-           y += 8;
-           
-           // TIMELINE
-           y = addText('TIMELINE', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 6;
-           y = addText(timeline, margin, y, { size: 11, style: 'bold' });
-           y += 16;
-           y = addLine(y);
-           y += 8;
-           
-           // ADDITIONAL SERVICES
-           y = addText('ADDITIONAL SERVICES', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 4;
-           y = addText('Optional services that may come up during the project.', margin, y, { size: 8, color: '#888888' });
-           y += 12;
-           
+           drawDivider(ROW.divider5);
+
+           // === TIMELINE ===
+           const timeline = document.getElementById('resultTimeline').textContent;
+           drawText('TIMELINE', margin, ROW.timelineLabel, { size: 8, style: 'bold', color: '#888888' });
+           drawText(timeline || '—', margin, ROW.timelineValue, { size: 11, style: 'bold' });
+           drawDivider(ROW.divider6);
+
+           // === ADDITIONAL SERVICES (always 5 rows) ===
+           drawText('ADDITIONAL SERVICES', margin, ROW.addonsLabel, { size: 8, style: 'bold', color: '#888888' });
+           drawText('Optional services that may come up during the project.', margin, ROW.addonsDesc, { size: 8, color: '#888888' });
+
            const addons = [
                ['Extra Presentations / Stakeholder Meetings', '€500–1,000 per session'],
                ['Site Visit Assessment', '€1,500–3,000'],
@@ -1064,52 +1081,43 @@
                ['Lighting Designer Liaison', '€1,000'],
                ['Post-Execution Support', '€2,000–5,000']
            ];
-           
-           addons.forEach(([service, price]) => {
+
+           addons.forEach(([service, price], i) => {
+               const y = ROW.addonRow1 + (i * 20);
+
                doc.setFont('helvetica', 'normal');
                doc.setFontSize(9);
                doc.setTextColor('#333333');
-               const serviceLines = doc.splitTextToSize(service, contentWidth - 120);
+               const serviceLines = doc.splitTextToSize(service, contentWidth - 140);
                doc.text(serviceLines, margin, y);
-               
+
                doc.setFont('helvetica', 'bold');
                doc.setTextColor('#111111');
                const priceWidth = doc.getTextWidth(price);
                doc.text(price, pageWidth - margin - priceWidth, y);
-               
-               y += Math.max(serviceLines.length * 11, 16);
            });
-           
-            y += 4;
-           y = addLine(y);
-           y += 24;  // increased from 12 to 24 for more space before Next Steps
-           
-           // NEXT STEPS
-           y = addText('NEXT STEPS', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 10;
-           
+           drawDivider(ROW.divider7);
+
+           // === NEXT STEPS (always 3 rows) ===
+           drawText('NEXT STEPS', margin, ROW.stepsLabel, { size: 8, style: 'bold', color: '#888888' });
+
            const steps = [
                '1. Review this quote at your own pace.',
                '2. Email hello@elixlight.com with questions.',
                '3. Reply to this quote or book a kickoff meeting to begin.'
            ];
-           
-           steps.forEach(step => {
-               y = addText(step, margin, y, { size: 9, color: '#333333' });
-               y += 6;  // slightly more space between steps
+
+           steps.forEach((step, i) => {
+               const y = ROW.stepRow1 + (i * 16);
+               drawText(step, margin, y, { size: 9, color: '#333333' });
            });
-           
-           y += 28;  // increased from 16 to 28 for more space before footer bar
-           
-           // FOOTER
+
+           // === FOOTER ===
            doc.setFillColor(17, 17, 17);
-           doc.rect(0, doc.internal.pageSize.getHeight() - 50, pageWidth, 50, 'F');
-           doc.setFont('helvetica', 'normal');
-           doc.setFontSize(8);
-           doc.setTextColor('#888888');
-           doc.text('© 2024 ELIXLIGHT. All rights reserved.', margin, doc.internal.pageSize.getHeight() - 22);
-           doc.text('hello@elixlight.com  |  elixlight.com', margin, doc.internal.pageSize.getHeight() - 10);
-           
+           doc.rect(0, ROW.footerBar, pageWidth, pageHeight - ROW.footerBar, 'F');
+           drawText('© 2024 ELIXLIGHT. All rights reserved.', margin, ROW.footerText1, { size: 8, color: '#888888' });
+           drawText('hello@elixlight.com  |  elixlight.com', margin, ROW.footerText2, { size: 8, color: '#888888' });
+
            // Save
            const filename = 'ELIXLIGHT-Quote-' + (project || name).replace(/\s+/g, '-') + '.pdf';
            doc.save(filename);
