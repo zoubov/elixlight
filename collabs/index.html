@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ELIXLIGHT | Project Pricing Calculator</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+   <script>
+       tailwind.config = {
+           theme: {
+               extend: {
+                   fontFamily: {
+                       sans: ['Inter', 'system-ui', 'sans-serif'],
+                   },
+                   colors: {
+                       stone: {
+                           page: '#b0ada6',
+                           container: '#d4d0c8',
+                           card: '#e8e6e0',
+                           border: 'rgba(0,0,0,0.08)',
+                       },
+                       lime: {
+                           brand: '#c8e888',
+                           dark: '#a8c868',
+                       }
+                   }
+               }
+           }
+       }
+   </script>
+   <style>
+       html { scroll-behavior: smooth; }
+       body {
+           font-family: 'Inter', sans-serif;
+           -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+       }
+       ::selection {
+           background: #c8e888;
+           color: #111;
+       }
+       .reveal {
+           opacity: 0;
+           transform: translateY(24px);
+           transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+       }
+       .reveal.visible {
+           opacity: 1;
+           transform: translateY(0);
+       }
+       .step-card {
+           background: rgba(0,0,0,0.03);
+           border: 1px solid rgba(0,0,0,0.06);
+           border-radius: 1rem;
+           padding: 2rem;
+       }
+       @media (min-width: 768px) {
+           .step-card { padding: 2.5rem; }
+       }
+       .option-btn {
+           width: 100%;
+           text-align: left;
+           padding: 1rem 1.25rem;
+           background: white;
+           border: 1.5px solid rgba(0,0,0,0.08);
+           border-radius: 0.75rem;
+           cursor: pointer;
+           transition: all 0.2s ease;
+           display: flex;
+           align-items: center;
+           gap: 0.75rem;
+       }
+       .option-btn:hover {
+           border-color: rgba(0,0,0,0.2);
+           transform: translateY(-1px);
+       }
+       .option-btn.selected {
+           border-color: #111;
+           background: #111;
+           color: white;
+       }
+       .option-btn.selected .option-label {
+           color: white;
+       }
+       .option-btn.selected .option-desc {
+           color: rgba(255,255,255,0.7);
+       }
+       .option-circle {
+           width: 20px;
+           height: 20px;
+           border: 2px solid rgba(0,0,0,0.2);
+           border-radius: 50%;
+           flex-shrink: 0;
+           transition: all 0.2s;
+       }
+       .option-btn.selected .option-circle {
+           border-color: #c8e888;
+           background: #c8e888;
+       }
+       .option-btn.selected .option-circle::after {
+           content: '';
+           display: block;
+           width: 8px;
+           height: 8px;
+           background: #111;
+           border-radius: 50%;
+           margin: 4px;
+       }
+       .checkbox-btn {
+           width: 100%;
+           text-align: left;
+           padding: 1rem 1.25rem;
+           background: white;
+           border: 1.5px solid rgba(0,0,0,0.08);
+           border-radius: 0.75rem;
+           cursor: pointer;
+           transition: all 0.2s ease;
+           display: flex;
+           align-items: center;
+           gap: 0.75rem;
+       }
+       .checkbox-btn:hover {
+           border-color: rgba(0,0,0,0.2);
+       }
+       .checkbox-btn.selected {
+           border-color: #111;
+           background: #111;
+           color: white;
+       }
+       .checkbox-box {
+           width: 20px;
+           height: 20px;
+           border: 2px solid rgba(0,0,0,0.2);
+           border-radius: 4px;
+           flex-shrink: 0;
+           transition: all 0.2s;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+       }
+       .checkbox-btn.selected .checkbox-box {
+           border-color: #c8e888;
+           background: #c8e888;
+       }
+       .checkbox-btn.selected .checkbox-box::after {
+           content: '✓';
+           color: #111;
+           font-size: 12px;
+           font-weight: 700;
+       }
+       .progress-bar {
+           height: 3px;
+           background: rgba(0,0,0,0.08);
+           border-radius: 2px;
+           overflow: hidden;
+       }
+       .progress-fill {
+           height: 100%;
+           background: #111;
+           transition: width 0.5s ease;
+       }
+       .step-num {
+           font-size: 3.5rem;
+           font-weight: 600;
+           line-height: 1;
+           color: rgba(0,0,0,0.06);
+           letter-spacing: -0.04em;
+       }
+       @media (min-width: 768px) {
+           .step-num { font-size: 5rem; }
+       }
+       .btn-pill {
+           transition: transform 0.2s ease, opacity 0.2s;
+       }
+       .btn-pill:hover {
+           transform: scale(1.02);
+           opacity: 0.85;
+       }
+       .link-underline {
+           position: relative;
+           display: inline-block;
+       }
+       .link-underline::after {
+           content: '';
+           position: absolute;
+           bottom: -2px;
+           left: 0;
+           width: 100%;
+           height: 1px;
+           background: currentColor;
+           transform: scaleX(0);
+           transform-origin: right;
+           transition: transform 0.3s ease;
+       }
+       .link-underline:hover::after {
+           transform: scaleX(1);
+           transform-origin: left;
+       }
+       .result-card {
+           background: #111;
+           border-radius: 1.25rem;
+           padding: 2.5rem;
+           color: white;
+       }
+       @media (min-width: 768px) {
+           .result-card { padding: 3.5rem; }
+       }
+       .breakdown-row {
+           display: flex;
+           justify-content: space-between;
+           align-items: center;
+           padding: 0.75rem 0;
+           border-bottom: 1px solid rgba(255,255,255,0.08);
+       }
+       .breakdown-row:last-child {
+           border-bottom: none;
+       }
+       .addon-card {
+           background: rgba(0,0,0,0.03);
+           border: 1px solid rgba(0,0,0,0.06);
+           border-radius: 0.75rem;
+           padding: 1.25rem;
+       }
+       ::-webkit-scrollbar { width: 8px; }
+       ::-webkit-scrollbar-track { background: #b0ada6; }
+       ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+       ::-webkit-scrollbar-thumb:hover { background: #666; }
+   </style>
+</head>
+<body class="bg-stone-page text-[#111]">
+
+   <div class="min-h-screen">
+       <div class="max-w-[1200px] mx-auto">
+
+           <nav class="sticky top-0 z-50 bg-stone-page/95 backdrop-blur-sm flex items-center justify-between px-6 md:px-10 py-5 md:py-6 border-b border-black/5">
+               <a href="../" class="text-[0.95rem] font-semibold tracking-tight text-white">
+                   ELIXLIGHT
+               </a>
+               <div class="hidden md:flex items-center gap-8">
+                   <a href="../#collaboration" class="text-[0.8rem] text-white hover:text-white/80 transition-colors">Collaboration</a>
+                   <a href="../#framework" class="text-[0.8rem] text-white hover:text-white/80 transition-colors">Framework</a>
+                   <a href="../#applications" class="text-[0.8rem] text-white hover:text-white/80 transition-colors">Case studies</a>
+               </div>
+               <a href="mailto:hello@elixlight.com" class="btn-pill bg-black text-white text-[0.75rem] font-medium px-5 py-2.5 rounded-full">
+                   Contact
+               </a>
+           </nav>
+
+           <!-- Hero -->
+           <section class="px-6 md:px-10 pt-16 md:pt-24 pb-12 md:pb-16">
+               <div class="max-w-2xl reveal">
+                   <p class="text-[0.7rem] uppercase tracking-[0.2em] text-[#888] mb-6 font-medium">Investment Calculator</p>
+                   <h1 class="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-medium leading-[0.9] tracking-tight mb-6">
+                       Project<br>Pricing
+                   </h1>
+                   <p class="text-[1rem] md:text-[1.15rem] text-[#555] leading-relaxed max-w-lg">
+                       Your fee depends on project complexity. We assess your specific situation — zones, human states, time variations, user needs — then give you a transparent breakdown.
+                   </p>
+                   <div class="mt-8 inline-flex items-center gap-3 bg-[#c8e888]/40 px-4 py-2.5 rounded-full">
+                       <span class="text-[0.8rem] font-semibold text-[#333]">Starting point: €3,500</span>
+                   </div>
+               </div>
+           </section>
+
+           <!-- Progress -->
+           <div class="px-6 md:px-10 mb-8">
+               <div class="progress-bar">
+                   <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+               </div>
+               <p class="text-[0.75rem] text-[#888] mt-2" id="progressText">Step 1 of 5</p>
+           </div>
+
+           <!-- Questionnaire -->
+           <div class="px-6 md:px-10 pb-20 md:pb-28">
+               <form id="pricingForm" onsubmit="return false;">
+
+                   <!-- STEP 1: Project Basics -->
+                   <div class="step-card mb-6 reveal" id="step1">
+                       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start mb-8">
+                           <div class="md:col-span-3">
+                               <span class="step-num">1</span>
+                           </div>
+                           <div class="md:col-span-9">
+                               <h2 class="text-[1.5rem] md:text-[2rem] font-medium leading-tight mb-2">Project Basics</h2>
+                               <p class="text-[0.85rem] text-[#888]">What type of project are we looking at?</p>
+                           </div>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto">
+                           <p class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] mb-3">Project Type</p>
+                           <button type="button" class="option-btn" data-group="type" data-value="new" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">New build</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Hospitality, residential, or wellness</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="type" data-value="renovation" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Renovation</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Existing space, significant changes</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="type" data-value="retrofit" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Retrofit</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Existing space, minimal changes</span>
+                               </div>
+                           </button>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto mt-8">
+                           <p class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] mb-3">Project Size</p>
+                           <button type="button" class="option-btn" data-group="size" data-value="small" data-multiplier="0.8" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">&lt; 500 sqm</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Small residential, boutique</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="size" data-value="medium" data-multiplier="1.0" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">500–2,000 sqm</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Standard residential, small hotel</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="size" data-value="large" data-multiplier="1.3" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">2,000–5,000 sqm</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Medium hotel, wellness center</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="size" data-value="xlarge" data-multiplier="1.6" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">5,000–10,000 sqm</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Large hotel, resort</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="size" data-value="xxlarge" data-multiplier="2.0" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">&gt; 10,000 sqm</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Complex, multi-use development</span>
+                               </div>
+                           </button>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto mt-8">
+                           <p class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] mb-3">Design Stage</p>
+                           <button type="button" class="option-btn" data-group="stage" data-value="early" data-multiplier="1.0" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Early design (0–20%)</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Concept / schematic phase</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="stage" data-value="mid" data-multiplier="1.2" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Mid-design (20–60%)</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Design development phase</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="stage" data-value="late" data-multiplier="1.5" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Late design (60%+)</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Design docs ready</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="stage" data-value="retrofit" data-multiplier="1.8" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Retrofit / Existing</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Maximum complexity</span>
+                               </div>
+                           </button>
+                       </div>
+                   </div>
+
+                   <!-- STEP 2: Complexity -->
+                   <div class="step-card mb-6 reveal" id="step2">
+                       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start mb-8">
+                           <div class="md:col-span-3">
+                               <span class="step-num">2</span>
+                           </div>
+                           <div class="md:col-span-9">
+                               <h2 class="text-[1.5rem] md:text-[2rem] font-medium leading-tight mb-2">Project Complexity</h2>
+                               <p class="text-[0.85rem] text-[#888]">How many distinct zones and human states?</p>
+                           </div>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto">
+                           <p class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] mb-3">Number of Zones</p>
+                           <button type="button" class="option-btn" data-group="zones" data-value="few" data-multiplier="0.7" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">1–3 zones</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Bedroom, living room, etc.</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="zones" data-value="standard" data-multiplier="1.0" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">4–8 zones</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Standard home or small hotel</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="zones" data-value="many" data-multiplier="1.3" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">9–15 zones</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Large home, medium hotel</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="zones" data-value="complex" data-multiplier="1.6" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">16+ zones</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Complex hotel, multi-level</span>
+                               </div>
+                           </button>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto mt-8">
+                           <p class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] mb-3">Human States (Check all that apply)</p>
+                           <button type="button" class="checkbox-btn" data-group="states" data-value="activation" onclick="toggleCheckbox(this)">
+                               <span class="checkbox-box"></span>
+                               <div>
+                                   <span class="text-[0.9rem] font-medium block">Activation</span>
+                                   <span class="text-[0.8rem] text-[#888]">Morning, energy, alertness</span>
+                               </div>
+                           </button>
+                           <button type="button" class="checkbox-btn" data-group="states" data-value="connection" onclick="toggleCheckbox(this)">
+                               <span class="checkbox-box"></span>
+                               <div>
+                                   <span class="text-[0.9rem] font-medium block">Connection</span>
+                                   <span class="text-[0.8rem] text-[#888]">Dining, social, comfort</span>
+                               </div>
+                           </button>
+                           <button type="button" class="checkbox-btn" data-group="states" data-value="restoration" onclick="toggleCheckbox(this)">
+                               <span class="checkbox-box"></span>
+                               <div>
+                                   <span class="text-[0.9rem] font-medium block">Restoration</span>
+                                   <span class="text-[0.8rem] text-[#888]">Sleep, recovery, relaxation</span>
+                               </div>
+                           </button>
+                           <button type="button" class="checkbox-btn" data-group="states" data-value="sensory" onclick="toggleCheckbox(this)">
+                               <span class="checkbox-box"></span>
+                               <div>
+                                   <span class="text-[0.9rem] font-medium block">Sensory Pleasure</span>
+                                   <span class="text-[0.8rem] text-[#888]">Mood, stimulation, engagement</span>
+                               </div>
+                           </button>
+                       </div>
+                   </div>
+
+                   <!-- STEP 3: Engagement -->
+                   <div class="step-card mb-6 reveal" id="step3">
+                       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start mb-8">
+                           <div class="md:col-span-3">
+                               <span class="step-num">3</span>
+                           </div>
+                           <div class="md:col-span-9">
+                               <h2 class="text-[1.5rem] md:text-[2rem] font-medium leading-tight mb-2">What You Need</h2>
+                               <p class="text-[0.85rem] text-[#888]">How deep should our engagement be?</p>
+                           </div>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto">
+                           <button type="button" class="option-btn" data-group="engagement" data-value="brief" data-multiplier="0.8" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Brief only</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Define biological strategy, no review</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="engagement" data-value="brief1" data-multiplier="1.0" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Brief + 1 review cycle</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Strategy + validate first specs</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="engagement" data-value="brief2" data-multiplier="1.3" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Brief + 2 review cycles</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Strategy + iterative validation</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="engagement" data-value="full" data-multiplier="1.6" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Full coordination</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">3+ cycles + studio liaison throughout</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="engagement" data-value="audit" data-multiplier="1.0" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Circadian Audit (Retrofits)</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Assessment + strategy + 1 review</span>
+                               </div>
+                           </button>
+                       </div>
+                   </div>
+
+                   <!-- STEP 4: Operational -->
+                   <div class="step-card mb-6 reveal" id="step4">
+                       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start mb-8">
+                           <div class="md:col-span-3">
+                               <span class="step-num">4</span>
+                           </div>
+                           <div class="md:col-span-9">
+                               <h2 class="text-[1.5rem] md:text-[2rem] font-medium leading-tight mb-2">Operational Needs</h2>
+                               <p class="text-[0.85rem] text-[#888]">How does the space change throughout the day or year?</p>
+                           </div>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto">
+                           <p class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] mb-3">Seasonal / Time Complexity</p>
+                           <button type="button" class="option-btn" data-group="seasonal" data-value="single" data-multiplier="0.8" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Single use</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">One primary state — bedrooms, offices</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="seasonal" data-value="dual" data-multiplier="1.0" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Dual use (day/night)</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Most residential spaces</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="seasonal" data-value="triple" data-multiplier="1.2" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Triple use (morning/day/evening)</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Full daily sequence</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="seasonal" data-value="seasonal" data-multiplier="1.3" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Seasonal shifts</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Summer/winter daylight changes</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="seasonal" data-value="multi" data-multiplier="1.4" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Multi-occupancy + seasonal</span>
+                                   <span class="option-desc text-[0.8rem] text-[#888]">Hotels with different user patterns</span>
+                               </div>
+                           </button>
+                       </div>
+
+                       <div class="space-y-3 max-w-2xl ml-auto mt-8">
+                           <p class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] mb-3">Timeline to Start</p>
+                           <button type="button" class="option-btn" data-group="timeline" data-value="2weeks" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">Within 2 weeks</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="timeline" data-value="4weeks" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">2–4 weeks</span>
+                               </div>
+                           </button>
+                           <button type="button" class="option-btn" data-group="timeline" data-value="flexible" onclick="selectOption(this)">
+                               <span class="option-circle"></span>
+                               <div>
+                                   <span class="option-label text-[0.9rem] font-medium block">4+ weeks / flexible</span>
+                               </div>
+                           </button>
+                       </div>
+                   </div>
+
+                   <!-- STEP 5: Contact + Results -->
+                   <div class="step-card mb-6 reveal" id="step5">
+                       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start mb-8">
+                           <div class="md:col-span-3">
+                               <span class="step-num">5</span>
+                           </div>
+                           <div class="md:col-span-9">
+                               <h2 class="text-[1.5rem] md:text-[2rem] font-medium leading-tight mb-2">Your Details</h2>
+                               <p class="text-[0.85rem] text-[#888]">Where should we send your pricing breakdown?</p>
+                           </div>
+                       </div>
+
+                       <div class="max-w-2xl ml-auto space-y-4">
+                           <div>
+                               <label class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] block mb-2">Name</label>
+                               <input type="text" id="name" class="w-full px-4 py-3 bg-white border border-black/10 rounded-lg text-[0.9rem] focus:outline-none focus:border-black transition-colors" placeholder="Your name">
+                           </div>
+                           <div>
+                               <label class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] block mb-2">Email</label>
+                               <input type="email" id="email" class="w-full px-4 py-3 bg-white border border-black/10 rounded-lg text-[0.9rem] focus:outline-none focus:border-black transition-colors" placeholder="you@studio.com">
+                           </div>
+                           <div>
+                               <label class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] block mb-2">Studio / Company</label>
+                               <input type="text" id="company" class="w-full px-4 py-3 bg-white border border-black/10 rounded-lg text-[0.9rem] focus:outline-none focus:border-black transition-colors" placeholder="Architecture studio or company">
+                           </div>
+                           <div>
+                               <label class="text-[0.75rem] uppercase tracking-[0.12em] font-semibold text-[#888] block mb-2">Project Name (optional)</label>
+                               <input type="text" id="project" class="w-full px-4 py-3 bg-white border border-black/10 rounded-lg text-[0.9rem] focus:outline-none focus:border-black transition-colors" placeholder="e.g. Hotel Meridian">
+                           </div>
+                       </div>
+
+                       <div class="max-w-2xl ml-auto mt-8">
+                           <button type="button" onclick="calculateAndShow()" class="btn-pill w-full bg-black text-white text-[0.9rem] font-medium px-6 py-4 rounded-full">
+                               Calculate My Project Cost →
+                           </button>
+                           <p class="text-[0.75rem] text-[#888] mt-3 text-center">Results emailed to you + us within 24 hours</p>
+                       </div>
+                   </div>
+
+                   <!-- RESULTS -->
+                   <div id="results" class="hidden">
+                       <div class="result-card mb-8">
+                           <div class="text-center mb-10">
+                               <p class="text-[0.7rem] uppercase tracking-[0.2em] text-white/50 mb-4 font-medium">Your Project Pricing</p>
+                               <h2 class="text-[3rem] md:text-[5rem] font-medium leading-[0.9] tracking-tight text-white mb-2" id="resultPrice">€0</h2>
+                               <p class="text-[0.9rem] text-white/60">Estimated investment</p>
+                           </div>
+
+                           <div class="space-y-0 mb-8">
+                               <div class="breakdown-row">
+                                   <span class="text-[0.85rem] text-white/70">Base fee</span>
+                                   <span class="text-[0.85rem] text-white font-medium">€3,500</span>
+                               </div>
+                               <div class="breakdown-row">
+                                   <span class="text-[0.85rem] text-white/70">Project Stage</span>
+                                   <span class="text-[0.85rem] text-white font-medium" id="resultStage">—</span>
+                               </div>
+                               <div class="breakdown-row">
+                                   <span class="text-[0.85rem] text-white/70">Scale</span>
+                                   <span class="text-[0.85rem] text-white font-medium" id="resultScale">—</span>
+                               </div>
+                               <div class="breakdown-row">
+                                   <span class="text-[0.85rem] text-white/70">Zone Complexity</span>
+                                   <span class="text-[0.85rem] text-white font-medium" id="resultZones">—</span>
+                               </div>
+                               <div class="breakdown-row">
+                                   <span class="text-[0.85rem] text-white/70">Engagement Depth</span>
+                                   <span class="text-[0.85rem] text-white font-medium" id="resultEngagement">—</span>
+                               </div>
+                               <div class="breakdown-row">
+                                   <span class="text-[0.85rem] text-white/70">Seasonal Complexity</span>
+                                   <span class="text-[0.85rem] text-white font-medium" id="resultSeasonal">—</span>
+                               </div>
+                           </div>
+
+                           <div class="border-t border-white/10 pt-6">
+                               <p class="text-[0.8rem] text-white/50 mb-3 uppercase tracking-[0.1em] font-semibold">What's Included</p>
+                               <ul class="space-y-2 text-[0.85rem] text-white/80">
+                                   <li class="flex items-start gap-2">
+                                       <span class="text-[#c8e888] mt-0.5">✓</span>
+                                       <span id="resultDeliverable">Strategic Brief</span>
+                                   </li>
+                                   <li class="flex items-start gap-2">
+                                       <span class="text-[#c8e888] mt-0.5">✓</span>
+                                       <span>60-min kickoff (discuss zones, intent, constraints)</span>
+                                   </li>
+                                   <li class="flex items-start gap-2">
+                                       <span class="text-[#c8e888] mt-0.5">✓</span>
+                                       <span>30-min delivery (present brief, align next steps)</span>
+                                   </li>
+                                   <li class="flex items-start gap-2" id="reviewLine1">
+                                       <span class="text-[#c8e888] mt-0.5">✓</span>
+                                       <span>Review cycles as selected</span>
+                                   </li>
+                               </ul>
+                           </div>
+
+                           <div class="border-t border-white/10 pt-6 mt-6">
+                               <p class="text-[0.8rem] text-white/50 mb-3 uppercase tracking-[0.1em] font-semibold">Timeline</p>
+                               <p class="text-[0.9rem] text-white/80" id="resultTimeline">2–3 weeks</p>
+                               <p class="text-[0.8rem] text-white/50 mt-1">Remote engagement — no site visits required</p>
+                           </div>
+                       </div>
+
+                       <!-- Additional Services -->
+                       <div class="mb-8">
+                           <h3 class="text-[1.15rem] font-medium mb-4">Additional Services</h3>
+                           <p class="text-[0.85rem] text-[#555] mb-4">These may come up during the project. Listed so you know what to expect.</p>
+                           <div class="space-y-3">
+                               <div class="addon-card">
+                                   <div class="flex justify-between items-start">
+                                       <div>
+                                           <p class="text-[0.85rem] font-medium text-black">Extra Presentations / Stakeholder Meetings</p>
+                                           <p class="text-[0.8rem] text-[#555]">If you need to present strategy to your client or team</p>
+                                       </div>
+                                       <span class="text-[0.85rem] font-semibold text-black shrink-0 ml-4">€500–1,000</span>
+                                   </div>
+                               </div>
+                               <div class="addon-card">
+                                   <div class="flex justify-between items-start">
+                                       <div>
+                                           <p class="text-[0.85rem] font-medium text-black">Site Visit Assessment</p>
+                                           <p class="text-[0.8rem] text-[#555]">If retrofit requires on-site analysis</p>
+                                       </div>
+                                       <span class="text-[0.85rem] font-semibold text-black shrink-0 ml-4">€1,500–3,000</span>
+                                   </div>
+                               </div>
+                               <div class="addon-card">
+                                   <div class="flex justify-between items-start">
+                                       <div>
+                                           <p class="text-[0.85rem] font-medium text-black">Extended Review Cycles</p>
+                                           <p class="text-[0.8rem] text-[#555]">Beyond the included cycles</p>
+                                       </div>
+                                       <span class="text-[0.85rem] font-semibold text-black shrink-0 ml-4">€2,500/cycle</span>
+                                   </div>
+                               </div>
+                               <div class="addon-card">
+                                   <div class="flex justify-between items-start">
+                                       <div>
+                                           <p class="text-[0.85rem] font-medium text-black">Lighting Designer Liaison</p>
+                                           <p class="text-[0.8rem] text-[#555]">We brief your lighting studio directly</p>
+                                       </div>
+                                       <span class="text-[0.85rem] font-semibold text-black shrink-0 ml-4">€1,000</span>
+                                   </div>
+                               </div>
+                               <div class="addon-card">
+                                   <div class="flex justify-between items-start">
+                                       <div>
+                                           <p class="text-[0.85rem] font-medium text-black">Post-Execution Support</p>
+                                           <p class="text-[0.8rem] text-[#555]">Adjustments after installation</p>
+                                       </div>
+                                       <span class="text-[0.85rem] font-semibold text-black shrink-0 ml-4">€2,000–5,000</span>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                       <!-- Next Steps -->
+                       <div class="bg-[#c8e888] rounded-2xl p-6 md:p-8">
+                           <h3 class="text-[1.25rem] font-medium mb-4 text-black">Next Steps</h3>
+                           <div class="space-y-4">
+                               <div class="flex items-start gap-3">
+                                   <span class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-[0.8rem] font-semibold shrink-0">1</span>
+                                   <div>
+                                       <p class="text-[0.9rem] font-medium text-black">Quote PDF emailed</p>
+                                       <p class="text-[0.8rem] text-black/70">Project summary, price breakdown, timeline, what's included</p>
+                                   </div>
+                               </div>
+                               <div class="flex items-start gap-3">
+                                   <span class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-[0.8rem] font-semibold shrink-0">2</span>
+                                   <div>
+                                       <p class="text-[0.9rem] font-medium text-black">Additional Services Menu</p>
+                                       <p class="text-[0.8rem] text-black/70">Optional services + fixed prices, when they typically come up</p>
+                                   </div>
+                               </div>
+                               <div class="flex items-start gap-3">
+                                   <span class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-[0.8rem] font-semibold shrink-0">3</span>
+                                   <div>
+                                       <p class="text-[0.9rem] font-medium text-black">Ready to start?</p>
+                                       <p class="text-[0.8rem] text-black/70">Reply to the email or book directly</p>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="mt-6 pt-6 border-t border-black/10 flex flex-col sm:flex-row gap-3">
+                               <a href="mailto:hello@elixlight.com?subject=Project%20Quote%20Ready" class="btn-pill inline-block bg-black text-white text-[0.8rem] font-medium px-6 py-3 rounded-full text-center">
+                                   Email hello@elixlight.com →
+                               </a>
+                               <a href="../#contact" class="btn-pill inline-block bg-white text-black text-[0.8rem] font-medium px-6 py-3 rounded-full text-center">
+                                   Book Kickoff Meeting →
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+               </form>
+           </div>
+
+           <footer class="px-6 md:px-10 py-8 border-t border-black/5 flex justify-center items-center">
+               <p class="text-[0.75rem] text-[#888]">© 2024 ELIXLIGHT. All rights reserved.</p>
+           </footer>
+       </div>
+   </div>
+
+   <script>
+       const selections = {};
+       const multipliers = {
+           stage: 1.0,
+           size: 1.0,
+           zones: 1.0,
+           engagement: 1.0,
+           seasonal: 1.0
+       };
+       const BASE_PRICE = 3500;
+
+       function selectOption(btn) {
+           const group = btn.dataset.group;
+           const value = btn.dataset.value;
+           const mult = parseFloat(btn.dataset.multiplier) || 1.0;
+
+           // Deselect others in group
+           document.querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
+           btn.classList.add('selected');
+
+           selections[group] = value;
+           multipliers[group] = mult;
+
+           updateProgress();
+       }
+
+       function toggleCheckbox(btn) {
+           const group = btn.dataset.group;
+           const value = btn.dataset.value;
+
+           btn.classList.toggle('selected');
+
+           if (!selections[group]) selections[group] = [];
+           const idx = selections[group].indexOf(value);
+           if (idx > -1) {
+               selections[group].splice(idx, 1);
+           } else {
+               selections[group].push(value);
+           }
+
+           updateProgress();
+       }
+
+       function updateProgress() {
+           const required = ['type', 'size', 'stage', 'zones', 'engagement', 'seasonal'];
+           let completed = 0;
+           required.forEach(r => {
+               if (selections[r] && (Array.isArray(selections[r]) ? selections[r].length > 0 : true)) {
+                   completed++;
+               }
+           });
+           const pct = (completed / required.length) * 100;
+           document.getElementById('progressFill').style.width = pct + '%';
+           document.getElementById('progressText').textContent = `Step ${Math.min(completed + 1, 5)} of 5`;
+       }
+
+       function calculateAndShow() {
+           const name = document.getElementById('name').value;
+           const email = document.getElementById('email').value;
+
+           if (!name || !email) {
+               alert('Please fill in your name and email to receive the quote.');
+               return;
+           }
+
+           // Check all required selections
+           const required = ['type', 'size', 'stage', 'zones', 'engagement', 'seasonal'];
+           for (let r of required) {
+               if (!selections[r] || (Array.isArray(selections[r]) && selections[r].length === 0)) {
+                   alert('Please complete all steps before calculating.');
+                   return;
+               }
+           }
+
+           const totalMult = multipliers.stage * multipliers.size * multipliers.zones * multipliers.engagement * multipliers.seasonal;
+           const price = Math.round(BASE_PRICE * totalMult);
+
+           // Labels for display
+           const stageLabels = { early: 'Early design (1.0x)', mid: 'Mid-design (1.2x)', late: 'Late design (1.5x)', retrofit: 'Retrofit (1.8x)' };
+           const sizeLabels = { small: '< 500 sqm (0.8x)', medium: '500–2,000 sqm (1.0x)', large: '2,000–5,000 sqm (1.3x)', xlarge: '5,000–10,000 sqm (1.6x)', xxlarge: '> 10,000 sqm (2.0x)' };
+           const zoneLabels = { few: '1–3 zones (0.7x)', standard: '4–8 zones (1.0x)', many: '9–15 zones (1.3x)', complex: '16+ zones (1.6x)' };
+           const engagementLabels = { brief: 'Brief only (0.8x)', brief1: 'Brief + 1 review (1.0x)', brief2: 'Brief + 2 reviews (1.3x)', full: 'Full coordination (1.6x)', audit: 'Circadian Audit (1.0x)' };
+           const seasonalLabels = { single: 'Single use (0.8x)', dual: 'Dual use (1.0x)', triple: 'Triple use (1.2x)', seasonal: 'Seasonal shifts (1.3x)', multi: 'Multi-occupancy (1.4x)' };
+
+           const deliverables = {
+               brief: 'Hormonal Lighting Brief',
+               brief1: 'Hormonal Lighting Brief + 1 Review Cycle',
+               brief2: 'Hormonal Lighting Brief + 2 Review Cycles',
+               full: 'Hormonal Lighting Brief + Full Coordination',
+               audit: 'Circadian Audit Report'
+           };
+
+           const timelines = {
+               brief: '1–2 weeks',
+               brief1: '2–3 weeks',
+               brief2: '3–4 weeks',
+               full: '4–6 weeks',
+               audit: '2–3 weeks'
+           };
+
+           document.getElementById('resultPrice').textContent = '€' + price.toLocaleString();
+           document.getElementById('resultStage').textContent = stageLabels[selections.stage] || '—';
+           document.getElementById('resultScale').textContent = sizeLabels[selections.size] || '—';
+           document.getElementById('resultZones').textContent = zoneLabels[selections.zones] || '—';
+           document.getElementById('resultEngagement').textContent = engagementLabels[selections.engagement] || '—';
+           document.getElementById('resultSeasonal').textContent = seasonalLabels[selections.seasonal] || '—';
+           document.getElementById('resultDeliverable').textContent = deliverables[selections.engagement] || 'Strategic Brief';
+           document.getElementById('resultTimeline').textContent = timelines[selections.engagement] || '2–3 weeks';
+
+           // Show results, hide form
+           document.getElementById('step5').style.display = 'none';
+           document.getElementById('progressFill').style.width = '100%';
+           document.getElementById('progressText').textContent = 'Complete';
+           
+           const results = document.getElementById('results');
+           results.classList.remove('hidden');
+           results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+           // In a real implementation, you would send the data to a form backend here
+           // e.g. fetch('https://formspree.io/f/YOUR_ID', { method: 'POST', body: JSON.stringify({...}) })
+           console.log('Quote ready:', { name, email, price, selections, multipliers });
+       }
+
+       // Scroll reveal
+       const observer = new IntersectionObserver((entries) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                   entry.target.classList.add('visible');
+               }
+           });
+       }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+   </script>
+</body>
+</html>'''
+
+# Save the file
+with open('/mnt/agents/output/collabs/index.html', 'w') as f:
+    f.write(collabs_html)
+
+print("collabs/index.html created successfully")
+print(f"File size: {len(collabs_html)} characters")
