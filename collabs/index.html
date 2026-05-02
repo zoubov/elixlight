@@ -936,22 +936,22 @@
                return yPos + 12;
            }
            
-           // HEADER
+// HEADER
            doc.setFillColor(200, 232, 136);
-           doc.rect(0, 0, pageWidth, 100, 'F');
+           doc.rect(0, 0, pageWidth, 90, 'F');
            
-           y = 45;
+           y = 42;
+           // Match website: Inter-like, semibold, tight tracking
            doc.setFont('helvetica', 'bold');
-           doc.setFontSize(24);
+           doc.setFontSize(14);  // ~0.95rem equivalent
            doc.setTextColor('#111111');
            doc.text('ELIXLIGHT', margin, y);
            
-           y += 22;
+           y += 18;
            doc.setFont('helvetica', 'normal');
-           doc.setFontSize(10);
+           doc.setFontSize(9);
+           doc.setTextColor('#555555');
            doc.text('Lighting Strategy for Hormonal Health', margin, y);
-           
-           y = 120;
            
            // TITLE
            y = addText('PROJECT PRICING QUOTE', margin, y, { size: 18, style: 'bold', color: '#111111' });
@@ -982,16 +982,11 @@
            y = addLine(y);
            y += 8;
            
-           // PRICE
+            // PRICE
            const priceText = document.getElementById('resultPrice').textContent;
            y = addText('ESTIMATED INVESTMENT', margin, y, { size: 8, style: 'bold', color: '#888888' });
-           y += 6;
+           y += 16;  // increased from 6 to 16 for more breathing room
            y = addText(priceText, margin, y, { size: 32, style: 'bold', color: '#111111' });
-           y += 8;
-           y = addText('Base fee €3,500 × complexity multipliers', margin, y, { size: 9, color: '#888888' });
-           y += 16;
-           y = addLine(y);
-           y += 8;
            
            // COMPLEXITY BREAKDOWN
            y = addText('COMPLEXITY BREAKDOWN', margin, y, { size: 8, style: 'bold', color: '#888888' });
@@ -1088,9 +1083,9 @@
                y += Math.max(serviceLines.length * 11, 16);
            });
            
-           y += 4;
+            y += 4;
            y = addLine(y);
-           y += 12;
+           y += 24;  // increased from 12 to 24 for more space before Next Steps
            
            // NEXT STEPS
            y = addText('NEXT STEPS', margin, y, { size: 8, style: 'bold', color: '#888888' });
@@ -1104,10 +1099,10 @@
            
            steps.forEach(step => {
                y = addText(step, margin, y, { size: 9, color: '#333333' });
-               y += 4;
+               y += 6;  // slightly more space between steps
            });
            
-           y += 16;
+           y += 28;  // increased from 16 to 28 for more space before footer bar
            
            // FOOTER
            doc.setFillColor(17, 17, 17);
