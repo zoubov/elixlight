@@ -915,54 +915,22 @@
            const pageHeight = doc.internal.pageSize.getHeight();
            const margin = 40;
            const contentWidth = pageWidth - (margin * 2);
+           const footerHeight = 50;
+           const safeBottom = pageHeight - footerHeight - 20;
 
-           const ROW = {
-               headerBg: 0,
-               headerLogo: 42,
-               headerTagline: 60,
-               title: 96,
-               date: 114,
-               divider1: 128,
-               clientLabel: 142,
-               clientName: 156,
-               clientCompany: 170,
-               clientEmail: 184,
-               clientProject: 198,
-               divider2: 214,
-               priceLabel: 234,
-               priceValue: 268,
-               divider3: 300,
-               breakdownLabel: 316,
-               breakdownRow1: 334,
-               breakdownRow2: 352,
-               breakdownRow3: 370,
-               breakdownRow4: 388,
-               breakdownRow5: 406,
-               divider4: 424,
-               includedLabel: 440,
-               includedRow1: 458,
-               includedRow2: 476,
-               includedRow3: 494,
-               includedRow4: 512,
-               includedRow5: 530,
-               divider5: 548,
-               timelineLabel: 564,
-               timelineValue: 582,
-               divider6: 600,
-               addonsLabel: 616,
-               addonsDesc: 630,
-               addonRow1: 648,
-               addonRow2: 668,
-               addonRow3: 688,
-               addonRow4: 708,
-               addonRow5: 728,
-               divider7: 748,
-               stepsLabel: 764,
-               stepRow1: 782,
-               stepRow2: 800,
-               stepRow3: 818,
-               footerBar: 842
-           };
+           let currentPage = 1;
+           let y = 0;
+
+           // Helper: check if we need a new page
+           function checkNewPage(requiredSpace = 60) {
+               if (y + requiredSpace > safeBottom) {
+                   doc.addPage();
+                   currentPage++;
+                   y = margin;
+                   return true;
+               }
+               return false;
+           }
 
            function drawText(text, x, yPos, options = {}) {
                const { size = 10, style = 'normal', color = '#111111', align = 'left' } = options;
@@ -983,39 +951,74 @@
                doc.circle(cx, cy, 2.5, 'F');
            }
 
-           // === HEADER ===
+           function drawFooter() {
+               const footerY = pageHeight - footerHeight;
+               doc.setFillColor(17, 17, 17);
+               doc.rect(0, footerY, pageWidth, footerHeight, 'F');
+               doc.setFont('helvetica', 'normal');
+               doc.setFontSize(8);
+               doc.setTextColor('#888888');
+               doc.text('© 2024 ELIXLIGHT. All rights reserved.', margin, footerY + 28);
+               doc.text('hello@elixlight.com  |  elixlight.com', margin, footerY + 40);
+               doc.text('Page ' + currentPage + ' of ' + totalPages, pageWidth - margin, footerY + 40, { align: 'right' });
+           }
+
+           // ===== PAGE 1: HEADER (green bar) + TITLE + CLIENT + PRICE =====
+
+           // Green header bar (only on page 1)
            doc.setFillColor(200, 232, 136);
            doc.rect(0, 0, pageWidth, 78, 'F');
-           drawText('ELIXLIGHT', margin, ROW.headerLogo, { size: 14, style: 'bold' });
-           drawText('Lighting Strategy for Hormonal Health', margin, ROW.headerTagline, { size: 9, color: '#555555' });
 
-           // === TITLE — below the green header ===
-           drawText('PROJECT PRICING QUOTE', margin, ROW.title, { size: 18, style: 'bold' });
+           drawText('ELIXLIGHT', margin, 42, { size: 14, style: 'bold' });
+           drawText('Lighting Strategy for Hormonal Health', margin, 60, { size: 9, color: '#555555' });
+
+           // Title BELOW the green section
+           y = 100;
+           drawText('PROJECT PRICING QUOTE', margin, y, { size: 18, style: 'bold' });
+           y += 18;
            const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-           drawText('Generated: ' + today, margin, ROW.date, { size: 9, color: '#888888' });
-           drawDivider(ROW.divider1);
+           drawText('Generated: ' + today, margin, y, { size: 9, color: '#888888' });
+           y += 16;
+           drawDivider(y);
+           y += 14;
 
-           // === CLIENT ===
+           // Client info
            const name = document.getElementById('name').value || '—';
            const email = document.getElementById('email').value || '—';
            const company = document.getElementById('company').value;
            const project = document.getElementById('project').value;
 
-           drawText('CLIENT', margin, ROW.clientLabel, { size: 8, style: 'bold', color: '#888888' });
-           drawText(name, margin, ROW.clientName, { size: 11, style: 'bold' });
-           drawText(company || ' ', margin, ROW.clientCompany, { size: 10, color: '#555555' });
-           drawText(email, margin, ROW.clientEmail, { size: 9, color: '#888888' });
-           drawText(project ? 'Project: ' + project : ' ', margin, ROW.clientProject, { size: 9, color: '#555555' });
-           drawDivider(ROW.divider2);
+           drawText('CLIENT', margin, y, { size: 8, style: 'bold', color: '#888888' });
+           y += 14;
+           drawText(name, margin, y, { size: 11, style: 'bold' });
+           y += 14;
+           if (company) {
+               drawText(company, margin, y, { size: 10, color: '#555555' });
+               y += 14;
+           }
+           drawText(email, margin, y, { size: 9, color: '#888888' });
+           y += 14;
+           if (project) {
+               drawText('Project: ' + project, margin, y, { size: 9, color: '#555555' });
+               y += 14;
+           }
+           y += 6;
+           drawDivider(y);
+           y += 20;
 
-           // === PRICE — extra breathing room between label and number ===
+           // Price section — MORE SPACE between label and number
+           drawText('ESTIMATED INVESTMENT', margin, y, { size: 8, style: 'bold', color: '#888888' });
+           y += 28;
            const priceText = document.getElementById('resultPrice').textContent;
-           drawText('ESTIMATED INVESTMENT', margin, ROW.priceLabel, { size: 8, style: 'bold', color: '#888888' });
-           drawText(priceText, margin, ROW.priceValue, { size: 32, style: 'bold' });
-           drawDivider(ROW.divider3);
+           drawText(priceText, margin, y, { size: 32, style: 'bold' });
+           y += 50;
+           drawDivider(y);
+           y += 18;
 
-           // === COMPLEXITY BREAKDOWN ===
-           drawText('COMPLEXITY BREAKDOWN', margin, ROW.breakdownLabel, { size: 8, style: 'bold', color: '#888888' });
+           // ===== COMPLEXITY BREAKDOWN =====
+           checkNewPage(140);
+           drawText('COMPLEXITY BREAKDOWN', margin, y, { size: 8, style: 'bold', color: '#888888' });
+           y += 18;
 
            const breakdownItems = [
                ['Project Stage', document.getElementById('resultStage').textContent],
@@ -1025,8 +1028,8 @@
                ['Seasonal Complexity', document.getElementById('resultSeasonal').textContent]
            ];
 
-           breakdownItems.forEach(([label, value], i) => {
-               const y = ROW.breakdownRow1 + (i * 18);
+           breakdownItems.forEach(([label, value]) => {
+               checkNewPage(30);
                const displayValue = (value && value !== '—') ? value : 'Not selected';
 
                doc.setFont('helvetica', 'normal');
@@ -1038,11 +1041,19 @@
                doc.setTextColor('#111111');
                const valueWidth = doc.getTextWidth(displayValue);
                doc.text(displayValue, pageWidth - margin - valueWidth, y);
-           });
-           drawDivider(ROW.divider4);
 
-           // === WHAT'S INCLUDED ===
-           drawText("WHAT'S INCLUDED", margin, ROW.includedLabel, { size: 8, style: 'bold', color: '#888888' });
+               y += 18;
+           });
+
+           y += 6;
+           checkNewPage(30);
+           drawDivider(y);
+           y += 18;
+
+           // ===== WHAT'S INCLUDED =====
+           checkNewPage(140);
+           drawText("WHAT'S INCLUDED", margin, y, { size: 8, style: 'bold', color: '#888888' });
+           y += 18;
 
            const deliverable = document.getElementById('resultDeliverable').textContent;
            const included = [
@@ -1053,22 +1064,35 @@
                'Remote engagement — no site visits required'
            ];
 
-           included.forEach((item, i) => {
-               const y = ROW.includedRow1 + (i * 18);
+           included.forEach((item) => {
+               checkNewPage(24);
                drawCheckmark(margin + 3, y - 3);
                drawText(item, margin + 12, y, { size: 9, color: '#333333' });
+               y += 18;
            });
-           drawDivider(ROW.divider5);
 
-           // === TIMELINE ===
+           y += 6;
+           checkNewPage(30);
+           drawDivider(y);
+           y += 18;
+
+           // ===== TIMELINE =====
+           checkNewPage(60);
            const timeline = document.getElementById('resultTimeline').textContent;
-           drawText('TIMELINE', margin, ROW.timelineLabel, { size: 8, style: 'bold', color: '#888888' });
-           drawText(timeline || '—', margin, ROW.timelineValue, { size: 11, style: 'bold' });
-           drawDivider(ROW.divider6);
+           drawText('TIMELINE', margin, y, { size: 8, style: 'bold', color: '#888888' });
+           y += 18;
+           drawText(timeline || '—', margin, y, { size: 11, style: 'bold' });
+           y += 30;
+           checkNewPage(30);
+           drawDivider(y);
+           y += 18;
 
-           // === ADDITIONAL SERVICES ===
-           drawText('ADDITIONAL SERVICES', margin, ROW.addonsLabel, { size: 8, style: 'bold', color: '#888888' });
-           drawText('Optional services that may come up during the project.', margin, ROW.addonsDesc, { size: 8, color: '#888888' });
+           // ===== ADDITIONAL SERVICES =====
+           checkNewPage(160);
+           drawText('ADDITIONAL SERVICES', margin, y, { size: 8, style: 'bold', color: '#888888' });
+           y += 12;
+           drawText('Optional services that may come up during the project.', margin, y, { size: 8, color: '#888888' });
+           y += 20;
 
            const addons = [
                ['Extra Presentations / Stakeholder Meetings', '€500–1,000 per session'],
@@ -1078,8 +1102,8 @@
                ['Post-Execution Support', '€2,000–5,000']
            ];
 
-           addons.forEach(([service, price], i) => {
-               const y = ROW.addonRow1 + (i * 20);
+           addons.forEach(([service, price]) => {
+               checkNewPage(40);
 
                doc.setFont('helvetica', 'normal');
                doc.setFontSize(9);
@@ -1091,11 +1115,19 @@
                doc.setTextColor('#111111');
                const priceWidth = doc.getTextWidth(price);
                doc.text(price, pageWidth - margin - priceWidth, y);
-           });
-           drawDivider(ROW.divider7);
 
-           // === NEXT STEPS ===
-           drawText('NEXT STEPS', margin, ROW.stepsLabel, { size: 8, style: 'bold', color: '#888888' });
+               y += Math.max(serviceLines.length * 11, 18) + 4;
+           });
+
+           y += 6;
+           checkNewPage(30);
+           drawDivider(y);
+           y += 18;
+
+           // ===== NEXT STEPS =====
+           checkNewPage(100);
+           drawText('NEXT STEPS', margin, y, { size: 8, style: 'bold', color: '#888888' });
+           y += 18;
 
            const steps = [
                '1. Review this quote at your own pace.',
@@ -1103,17 +1135,20 @@
                '3. Reply to this quote or book a kickoff meeting to begin.'
            ];
 
-           steps.forEach((step, i) => {
-               const y = ROW.stepRow1 + (i * 18);
+           steps.forEach((step) => {
+               checkNewPage(24);
                drawText(step, margin, y, { size: 9, color: '#333333' });
+               y += 18;
            });
 
-           // === FOOTER ===
-           doc.setFillColor(17, 17, 17);
-           doc.rect(0, ROW.footerBar, pageWidth, pageHeight - ROW.footerBar, 'F');
-           drawText('© 2024 ELIXLIGHT. All rights reserved.', margin, ROW.footerBar + 22, { size: 8, color: '#888888' });
-           drawText('hello@elixlight.com  |  elixlight.com', margin, ROW.footerBar + 36, { size: 8, color: '#888888' });
+           // Draw footer on every page (needs totalPages known)
+           const totalPages = currentPage;
+           for (let i = 1; i <= totalPages; i++) {
+               doc.setPage(i);
+               drawFooter();
+           }
 
+           // Save
            const filename = 'ELIXLIGHT-Quote-' + (project || name).replace(/\s+/g, '-') + '.pdf';
            doc.save(filename);
        }
