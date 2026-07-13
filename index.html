@@ -69,8 +69,8 @@
   /* ===== ARCHITECTURAL DRAWING ===== */
   .arch-container {
     position: relative;
-    width: 320px;
-    height: 380px;
+    width: 340px;
+    height: 420px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -103,34 +103,34 @@
 
   /* Plan view (top) */
   .arch-plan {
-    height: 200px;
+    height: 240px;
     border-radius: 8px;
   }
   .plan-room {
     position: absolute;
-    inset: 24px;
-    border: 1px solid rgba(232,228,223,0.2);
+    inset: 28px;
+    border: 1px solid rgba(232,228,223,0.18);
     border-radius: 4px;
   }
   .plan-wall {
     position: absolute;
     background: rgba(232,228,223,0.12);
   }
-  .plan-wall-thick { background: rgba(232,228,223,0.2); }
+  .plan-wall-thick { background: rgba(232,228,223,0.22); }
   .plan-window {
     position: absolute;
-    background: rgba(135,206,235,0.08);
-    border: 1px dashed rgba(135,206,235,0.25);
+    background: rgba(135,206,235,0.06);
+    border: 1px dashed rgba(135,206,235,0.2);
   }
   .plan-door {
     position: absolute;
-    background: rgba(232,228,223,0.06);
-    border: 1px solid rgba(232,228,223,0.15);
+    background: rgba(232,228,223,0.05);
+    border: 1px solid rgba(232,228,223,0.12);
   }
   .plan-bed {
     position: absolute;
-    background: rgba(232,228,223,0.06);
-    border: 1px solid rgba(232,228,223,0.12);
+    background: rgba(232,228,223,0.05);
+    border: 1px solid rgba(232,228,223,0.1);
     border-radius: 2px;
   }
   .plan-bed::after {
@@ -140,25 +140,25 @@
     left: 2px;
     right: 2px;
     height: 35%;
-    background: rgba(232,228,223,0.08);
+    background: rgba(232,228,223,0.07);
     border-radius: 1px;
   }
   .plan-fixture {
     position: absolute;
     border-radius: 50%;
-    transition: all 0.6s ease;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .plan-fixture.on {
     background: #E87B3C;
-    box-shadow: 0 0 12px rgba(232,123,60,0.4), 0 0 30px rgba(232,123,60,0.15);
+    box-shadow: 0 0 14px rgba(232,123,60,0.45), 0 0 36px rgba(232,123,60,0.18);
   }
   .plan-fixture.off {
-    background: rgba(232,228,223,0.1);
+    background: rgba(232,228,223,0.08);
     box-shadow: none;
   }
   .plan-fixture-dim {
-    background: rgba(232,123,60,0.3) !important;
-    box-shadow: 0 0 6px rgba(232,123,60,0.15) !important;
+    background: rgba(232,123,60,0.28) !important;
+    box-shadow: 0 0 7px rgba(232,123,60,0.12) !important;
   }
   .plan-fixture-label {
     position: absolute;
@@ -167,12 +167,14 @@
     white-space: nowrap;
     font-family: monospace;
     letter-spacing: 0.5px;
+    transition: color 1.2s ease;
   }
+  .plan-fixture-label.active { color: rgba(232,123,60,0.7); }
   .plan-light-beam {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(232,123,60,0.12) 0%, transparent 70%);
-    transition: all 0.6s ease;
+    background: radial-gradient(circle, rgba(232,123,60,0.14) 0%, transparent 70%);
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
   }
   .plan-dimension {
@@ -196,63 +198,63 @@
 
   /* Section view (side) */
   .arch-section {
-    height: 140px;
+    height: 160px;
     border-radius: 8px;
   }
   .sect-floor {
     position: absolute;
-    bottom: 24px;
-    left: 24px;
-    right: 24px;
+    bottom: 28px;
+    left: 28px;
+    right: 28px;
     height: 1px;
     background: rgba(232,228,223,0.2);
   }
   .sect-ceiling {
     position: absolute;
-    top: 24px;
-    left: 24px;
-    right: 24px;
+    top: 28px;
+    left: 28px;
+    right: 28px;
     height: 1px;
     background: rgba(232,228,223,0.15);
   }
   .sect-wall-left {
     position: absolute;
-    top: 24px;
-    bottom: 24px;
-    left: 24px;
+    top: 28px;
+    bottom: 28px;
+    left: 28px;
     width: 1px;
     background: rgba(232,228,223,0.15);
   }
   .sect-wall-right {
     position: absolute;
-    top: 24px;
-    bottom: 24px;
-    right: 24px;
+    top: 28px;
+    bottom: 28px;
+    right: 28px;
     width: 1px;
     background: rgba(232,228,223,0.15);
   }
   .sect-bed {
     position: absolute;
-    bottom: 25px;
+    bottom: 29px;
     left: 30%;
     width: 28%;
-    height: 28px;
+    height: 30px;
     background: rgba(232,228,223,0.05);
     border: 1px solid rgba(232,228,223,0.1);
     border-radius: 2px 2px 0 0;
   }
   .sect-bed-head {
     position: absolute;
-    bottom: 25px;
+    bottom: 29px;
     left: 30%;
     width: 4px;
-    height: 32px;
+    height: 34px;
     background: rgba(232,228,223,0.08);
     border-radius: 1px 0 0 0;
   }
   .sect-person {
     position: absolute;
-    bottom: 25px;
+    bottom: 29px;
     left: 38%;
     width: 14px;
     height: 22px;
@@ -261,7 +263,7 @@
   }
   .sect-person-head {
     position: absolute;
-    bottom: 48px;
+    bottom: 52px;
     left: 40%;
     width: 10px;
     height: 10px;
@@ -271,23 +273,23 @@
   .sect-fixture {
     position: absolute;
     border-radius: 2px;
-    transition: all 0.6s ease;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .sect-fixture.on {
     background: #E87B3C;
-    box-shadow: 0 0 8px rgba(232,123,60,0.3), 0 0 20px rgba(232,123,60,0.1);
+    box-shadow: 0 0 10px rgba(232,123,60,0.35), 0 0 24px rgba(232,123,60,0.12);
   }
   .sect-fixture.off {
-    background: rgba(232,228,223,0.1);
+    background: rgba(232,228,223,0.08);
     box-shadow: none;
   }
   .sect-fixture-dim {
-    background: rgba(232,123,60,0.25) !important;
-    box-shadow: 0 0 4px rgba(232,123,60,0.1) !important;
+    background: rgba(232,123,60,0.22) !important;
+    box-shadow: 0 0 5px rgba(232,123,60,0.08) !important;
   }
   .sect-light-cone {
     position: absolute;
-    transition: all 0.6s ease;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
   }
   .sect-light-cone.on {
@@ -322,11 +324,13 @@
     color: #E87B3C;
     letter-spacing: 2px;
     margin-bottom: 4px;
+    transition: color 1.2s ease;
   }
   .cycle-label {
     font-size: 11px;
     color: rgba(232,228,223,0.35);
     letter-spacing: 0.5px;
+    transition: color 1.2s ease;
   }
   .cycle-scene {
     font-size: 10px;
@@ -334,6 +338,24 @@
     margin-top: 2px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    transition: color 1.2s ease;
+  }
+
+  /* Progress bar */
+  .cycle-progress {
+    width: 200px;
+    height: 2px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 1px;
+    margin: 12px auto 0;
+    overflow: hidden;
+  }
+  .cycle-progress-fill {
+    height: 100%;
+    background: #E87B3C;
+    border-radius: 1px;
+    transition: width 0.1s linear;
+    width: 0%;
   }
 
   /* TOOLS LIST */
@@ -445,6 +467,7 @@
     background: #141210;
     border: 1px solid rgba(255,255,255,0.06);
     transition: all 0.2s;
+    cursor: pointer;
   }
   .explore-card:hover {
     border-color: rgba(255,255,255,0.15);
@@ -453,6 +476,55 @@
   .explore-icon { font-size: 20px; margin-bottom: 16px; }
   .explore-title { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
   .explore-desc { font-size: 13px; line-height: 1.6; color: rgba(232,228,223,0.5); }
+
+  /* HIDDEN PAGES */
+  .hidden-page {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+  .hidden-page.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header {
+    padding: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .page-header h2 {
+    font-size: 28px;
+    font-weight: 500;
+  }
+  .page-close {
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    background: transparent;
+    color: #E8E4DF;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .page-close:hover {
+    border-color: rgba(255,255,255,0.3);
+  }
+  .page-content {
+    padding: 48px;
+    max-width: 800px;
+  }
+  .page-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(232,228,223,0.7);
+    margin-bottom: 20px;
+  }
 
   /* PODCAST TABS */
   .podcast-tabs {
@@ -467,6 +539,12 @@
     text-decoration: none;
     border-bottom: 2px solid transparent;
     transition: all 0.2s;
+    cursor: pointer;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
   }
   .podcast-tab:hover { color: #E8E4DF; }
   .podcast-tab.active {
@@ -634,13 +712,14 @@
     .section-pad { padding: 48px 24px; }
     .podcast-hero, .episodes-wrap, .listen-bar, .subscribe-bar { padding-left: 24px; padding-right: 24px; }
     .about-wrap { padding: 0 24px; }
+    .page-header, .page-content { padding: 32px 24px; }
   }
   @media (max-width: 600px) {
     .explore-grid { grid-template-columns: 1fr; }
     .podcast-tabs { overflow-x: auto; }
     .podcast-tab { padding: 14px 16px; white-space: nowrap; }
     .footer { flex-direction: column; gap: 12px; text-align: center; }
-    .arch-container { transform: scale(0.75); }
+    .arch-container { transform: scale(0.72); }
   }
 </style>
 </head>
@@ -657,6 +736,9 @@
   </div>
 </nav>
 
+<!-- ==================== MAIN SITE ==================== -->
+<div id="main-site">
+
 <!-- HERO / TOOLS -->
 <section id="tools" class="section">
   <div class="hero-grid">
@@ -671,49 +753,37 @@
           <div class="arch-view-scale">1:50</div>
           <div class="plan-north"><span class="plan-north-arrow">➤</span> N</div>
 
-          <!-- Room outline -->
           <div class="plan-room"></div>
+          <div class="plan-wall plan-wall-thick" style="top:28px; left:28px; right:28px; height:2px;"></div>
+          <div class="plan-wall plan-wall-thick" style="bottom:28px; left:28px; right:28px; height:2px;"></div>
+          <div class="plan-wall plan-wall-thick" style="top:28px; left:28px; bottom:28px; width:2px;"></div>
+          <div class="plan-wall plan-wall-thick" style="top:28px; right:28px; bottom:28px; width:2px;"></div>
 
-          <!-- Walls -->
-          <div class="plan-wall plan-wall-thick" style="top:24px; left:24px; right:24px; height:2px;"></div>
-          <div class="plan-wall plan-wall-thick" style="bottom:24px; left:24px; right:24px; height:2px;"></div>
-          <div class="plan-wall plan-wall-thick" style="top:24px; left:24px; bottom:24px; width:2px;"></div>
-          <div class="plan-wall plan-wall-thick" style="top:24px; right:24px; bottom:24px; width:2px;"></div>
-
-          <!-- Window (top wall) -->
-          <div class="plan-window" style="top:23px; left:35%; width:30%; height:4px;"></div>
-
-          <!-- Door (right wall) -->
-          <div class="plan-door" style="top:40%; right:23px; width:4px; height:20%;"></div>
-
-          <!-- Bed -->
+          <div class="plan-window" style="top:27px; left:35%; width:30%; height:4px;"></div>
+          <div class="plan-door" style="top:40%; right:27px; width:4px; height:20%;"></div>
           <div class="plan-bed" style="bottom:28%; left:28%; width:22%; height:18%;"></div>
-
-          <!-- Nightstand -->
           <div class="plan-bed" style="bottom:28%; left:52%; width:6%; height:8%;"></div>
 
-          <!-- Light fixtures -->
           <div class="plan-fixture" id="plan-c1" style="top:18%; left:50%; width:10px; height:10px; transform:translateX(-50%);"></div>
-          <div class="plan-fixture-label" style="top:12%; left:52%;">C1</div>
+          <div class="plan-fixture-label" id="label-c1" style="top:12%; left:52%;">C1</div>
           <div class="plan-light-beam" id="beam-c1" style="top:18%; left:50%; width:80px; height:80px; transform:translate(-50%,-10%);"></div>
 
           <div class="plan-fixture" id="plan-c2" style="top:50%; left:18%; width:10px; height:10px; transform:translateX(-50%);"></div>
-          <div class="plan-fixture-label" style="top:48%; left:8%;">C2</div>
+          <div class="plan-fixture-label" id="label-c2" style="top:48%; left:8%;">C2</div>
           <div class="plan-light-beam" id="beam-c2" style="top:50%; left:18%; width:60px; height:60px; transform:translate(-50%,-10%);"></div>
 
           <div class="plan-fixture" id="plan-w1" style="top:50%; right:18%; width:8px; height:8px; transform:translateX(50%);"></div>
-          <div class="plan-fixture-label" style="top:48%; right:8%;">W1</div>
+          <div class="plan-fixture-label" id="label-w1" style="top:48%; right:8%;">W1</div>
           <div class="plan-light-beam" id="beam-w1" style="top:50%; right:18%; width:50px; height:50px; transform:translate(50%,-10%);"></div>
 
           <div class="plan-fixture" id="plan-b1" style="bottom:28%; left:55%; width:6px; height:6px; transform:translateX(-50%);"></div>
-          <div class="plan-fixture-label" style="bottom:24%; left:56%;">B1</div>
+          <div class="plan-fixture-label" id="label-b1" style="bottom:24%; left:56%;">B1</div>
           <div class="plan-light-beam" id="beam-b1" style="bottom:28%; left:55%; width:40px; height:40px; transform:translate(-50%,10%);"></div>
 
           <div class="plan-fixture" id="plan-t1" style="bottom:15%; left:30%; width:8px; height:8px; transform:translateX(-50%);"></div>
-          <div class="plan-fixture-label" style="bottom:10%; left:31%;">T1</div>
+          <div class="plan-fixture-label" id="label-t1" style="bottom:10%; left:31%;">T1</div>
           <div class="plan-light-beam" id="beam-t1" style="bottom:15%; left:30%; width:50px; height:50px; transform:translate(-50%,10%);"></div>
 
-          <!-- Dimensions -->
           <div class="plan-dimension" style="top:8px; left:50%; transform:translateX(-50%);">4.2m</div>
           <div class="plan-dimension" style="left:8px; top:50%; transform:translateY(-50%) rotate(-90deg);">3.6m</div>
         </div>
@@ -723,41 +793,32 @@
           <div class="arch-view-label">Section A-A</div>
           <div class="arch-view-scale">1:50</div>
 
-          <!-- Room boundaries -->
           <div class="sect-floor"></div>
           <div class="sect-ceiling"></div>
           <div class="sect-wall-left"></div>
           <div class="sect-wall-right"></div>
 
-          <!-- Height marks -->
-          <div class="sect-height-line" style="left:18px; top:24px; bottom:24px;"></div>
-          <div class="sect-height-mark" style="left:10px; top:22px;">2.7m</div>
-          <div class="sect-height-mark" style="left:10px; bottom:22px;">±0.00</div>
+          <div class="sect-height-line" style="left:22px; top:28px; bottom:28px;"></div>
+          <div class="sect-height-mark" style="left:14px; top:26px;">2.7m</div>
+          <div class="sect-height-mark" style="left:14px; bottom:26px;">±0.00</div>
 
-          <!-- Bed -->
           <div class="sect-bed"></div>
           <div class="sect-bed-head"></div>
-
-          <!-- Person lying -->
           <div class="sect-person"></div>
           <div class="sect-person-head"></div>
 
-          <!-- Ceiling fixtures -->
-          <div class="sect-fixture" id="sect-c1" style="top:24px; left:50%; width:14px; height:4px; transform:translateX(-50%);"></div>
-          <div class="sect-light-cone" id="cone-c1" style="top:28px; left:50%; width:100px; height:120px; transform:translateX(-50%);"></div>
+          <div class="sect-fixture" id="sect-c1" style="top:28px; left:50%; width:14px; height:4px; transform:translateX(-50%);"></div>
+          <div class="sect-light-cone" id="cone-c1" style="top:32px; left:50%; width:100px; height:120px; transform:translateX(-50%);"></div>
 
-          <div class="sect-fixture" id="sect-c2" style="top:24px; left:22%; width:10px; height:4px; transform:translateX(-50%);"></div>
-          <div class="sect-light-cone" id="cone-c2" style="top:28px; left:22%; width:70px; height:100px; transform:translateX(-50%);"></div>
+          <div class="sect-fixture" id="sect-c2" style="top:28px; left:22%; width:10px; height:4px; transform:translateX(-50%);"></div>
+          <div class="sect-light-cone" id="cone-c2" style="top:32px; left:22%; width:70px; height:100px; transform:translateX(-50%);"></div>
 
-          <!-- Wall fixture -->
-          <div class="sect-fixture" id="sect-w1" style="top:35%; right:24px; width:4px; height:10px; transform:translateX(50%);"></div>
-          <div class="sect-light-cone" id="cone-w1" style="top:35%; right:28px; width:50px; height:60px; transform:translate(0,-50%);"></div>
+          <div class="sect-fixture" id="sect-w1" style="top:35%; right:28px; width:4px; height:10px; transform:translateX(50%);"></div>
+          <div class="sect-light-cone" id="cone-w1" style="top:35%; right:32px; width:50px; height:60px; transform:translate(0,-50%);"></div>
 
-          <!-- Bedside -->
           <div class="sect-fixture" id="sect-b1" style="bottom:28%; left:55%; width:6px; height:6px;"></div>
           <div class="sect-light-cone" id="cone-b1" style="bottom:30%; left:55%; width:30px; height:30px; transform:translate(-50%,0);"></div>
 
-          <!-- Task -->
           <div class="sect-fixture" id="sect-t1" style="bottom:25%; left:28%; width:8px; height:4px;"></div>
           <div class="sect-light-cone" id="cone-t1" style="bottom:27%; left:28%; width:40px; height:40px; transform:translate(-50%,0);"></div>
         </div>
@@ -767,8 +828,11 @@
       <!-- Cycle info -->
       <div class="cycle-info">
         <div class="cycle-time" id="cycleTime">06:00</div>
-        <div class="cycle-label" id="cycleLabel">Morning activation — all ceiling lights at 100%</div>
+        <div class="cycle-label" id="cycleLabel">Morning activation — all ceiling lights at 100%, cool white 5600K</div>
         <div class="cycle-scene" id="cycleScene">Cortisol Awakening Response</div>
+        <div class="cycle-progress">
+          <div class="cycle-progress-fill" id="cycleProgress"></div>
+        </div>
       </div>
 
     </div>
@@ -840,38 +904,91 @@
 <section id="explore" class="section section-pad">
   <div class="section-label">Explore</div>
   <div class="explore-grid">
-    <a href="#" class="explore-card">
+    <div class="explore-card" onclick="showPage('science')">
       <div class="explore-icon">🧬</div>
       <div class="explore-title">the science</div>
       <div class="explore-desc">How light shapes hormones, sleep, and nervous system regulation</div>
-    </a>
-    <a href="#" class="explore-card">
+    </div>
+    <div class="explore-card" onclick="showPage('hotels')">
       <div class="explore-icon">🏨</div>
       <div class="explore-title">for hotels</div>
       <div class="explore-desc">How intentional light increases guest satisfaction and return rates</div>
-    </a>
-    <a href="#" class="explore-card">
+    </div>
+    <div class="explore-card" onclick="showPage('studios')">
       <div class="explore-icon">🎨</div>
       <div class="explore-title">for studios</div>
       <div class="explore-desc">How to embed biological strategy into your design process</div>
-    </a>
-    <a href="#podcast" class="explore-card">
+    </div>
+    <div class="explore-card" onclick="showPage('podcast')">
       <div class="explore-icon">🎙</div>
       <div class="explore-title">podcast</div>
       <div class="explore-desc">Short episodes on light, biology, and the spaces we inhabit</div>
-    </a>
+    </div>
   </div>
 </section>
 
+<!-- FOOTER -->
+<footer id="contact" class="footer">
+  <div class="footer-copy">© 2025<br>ELIXLIGHT</div>
+  <a href="mailto:hello@elixlight.com" class="footer-email">hello@elixlight.com</a>
+</footer>
+
+</div><!-- /main-site -->
+
+
+<!-- ==================== HIDDEN PAGES ==================== -->
+
+<!-- THE SCIENCE PAGE -->
+<div id="page-science" class="hidden-page section">
+  <div class="page-header">
+    <h2>🧬 The Science</h2>
+    <button class="page-close" onclick="hidePages()">← Back</button>
+  </div>
+  <div class="page-content">
+    <p>Light is not just illumination. It is a biological signal that travels through the eye to the suprachiasmatic nucleus — the master clock that coordinates every hormone, every sleep cycle, every metabolic process in your body.</p>
+    <p>The melanopsin-containing intrinsically photosensitive retinal ganglion cells (ipRGCs) respond most strongly to short-wavelength blue light around 480nm. This is the same wavelength that suppresses melatonin production and increases cortisol — whether the light comes from the sun or a smartphone screen.</p>
+    <p>When we design spaces without accounting for this biology, we create environments that actively fight the nervous systems of the people inside them. The result is measurable: disrupted sleep, elevated stress markers, reduced cognitive performance, and long-term metabolic consequences.</p>
+    <p>Biological lighting design starts with the question: what should this space tell the body right now?</p>
+  </div>
+</div>
+
+<!-- FOR HOTELS PAGE -->
+<div id="page-hotels" class="hidden-page section">
+  <div class="page-header">
+    <h2>🏨 For Hotels</h2>
+    <button class="page-close" onclick="hidePages()">← Back</button>
+  </div>
+  <div class="page-content">
+    <p>Guest satisfaction in luxury hospitality is increasingly tied to sleep quality — and sleep quality is increasingly tied to light. A guest who wakes rested remembers the stay differently. They rate higher, they return more often, and they tell others.</p>
+    <p>The problem: most hotel rooms are lit for inspection, not for biology. Bright, cool-white bathrooms at 11pm. Bedside reading lights that blast melanopic lux directly into the eye. Curtains that leak streetlight onto the pillow.</p>
+    <p>A biological lighting audit for hotels examines every light source a guest encounters from check-in to checkout: lobby transitions, corridor colour temperature, bathroom sequencing, bedroom blackout integrity, and morning wake-up light pathways.</p>
+    <p>The return is measurable. Properties that implement circadian-aware lighting see reductions in sleep-related complaints, increases in perceived room value, and stronger Net Promoter Scores.</p>
+  </div>
+</div>
+
+<!-- FOR STUDIOS PAGE -->
+<div id="page-studios" class="hidden-page section">
+  <div class="page-header">
+    <h2>🎨 For Studios</h2>
+    <button class="page-close" onclick="hidePages()">← Back</button>
+  </div>
+  <div class="page-content">
+    <p>Designers and architects already think about light aesthetically. The next layer is thinking about it biologically — without sacrificing the visual intent.</p>
+    <p>This means embedding circadian parameters into the design process from the first sketch: specifying CCT ranges by time of day, layering fixture types so biological and aesthetic functions are separable, and selecting dimming curves that follow natural light transitions rather than arbitrary percentages.</p>
+    <p>The deliverable is a Biological Lighting Specification — a document that sits alongside your electrical and lighting drawings, giving contractors and controls programmers the exact parameters needed to make the space support human biology.</p>
+    <p>For studios that want to differentiate, this is the edge. Clients are beginning to ask for it. The ones who can deliver it first will define the next standard.</p>
+  </div>
+</div>
+
 <!-- PODCAST PAGE -->
-<section id="podcast" class="section">
+<div id="page-podcast" class="hidden-page">
 
   <!-- Podcast Tabs -->
   <div class="podcast-tabs">
-    <a href="#" class="podcast-tab">🧬 the science</a>
-    <a href="#" class="podcast-tab">🏨 for hotels</a>
-    <a href="#" class="podcast-tab">🎨 for studios</a>
-    <a href="#podcast" class="podcast-tab active">🎙 podcast</a>
+    <button class="podcast-tab" onclick="showPage('science')">🧬 the science</button>
+    <button class="podcast-tab" onclick="showPage('hotels')">🏨 for hotels</button>
+    <button class="podcast-tab" onclick="showPage('studios')">🎨 for studios</button>
+    <button class="podcast-tab active">🎙 podcast</button>
   </div>
 
   <!-- Podcast Hero -->
@@ -982,21 +1099,37 @@
     <a href="#" class="subscribe-btn">Subscribe <span>↗</span></a>
   </div>
 
-</section>
+  <div style="padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.06);">
+    <button class="page-close" onclick="hidePages()">← Back to home</button>
+  </div>
 
-<!-- FOOTER -->
-<footer id="contact" class="footer">
-  <div class="footer-copy">© 2025<br>ELIXLIGHT</div>
-  <a href="mailto:hello@elixlight.com" class="footer-email">hello@elixlight.com</a>
-</footer>
+</div>
+
 
 <script>
-  /* LIGHTING SCENES — Architectural Drawing Cycle */
+  /* ========== PAGE NAVIGATION ========== */
+  function showPage(pageName) {
+    document.getElementById('main-site').style.display = 'none';
+    document.querySelectorAll('.hidden-page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + pageName);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function hidePages() {
+    document.querySelectorAll('.hidden-page').forEach(p => p.classList.remove('active'));
+    document.getElementById('main-site').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  /* ========== LIGHTING SCENES — Architectural Drawing Cycle ========== */
   const cycleTime = document.getElementById('cycleTime');
   const cycleLabel = document.getElementById('cycleLabel');
   const cycleScene = document.getElementById('cycleScene');
+  const cycleProgress = document.getElementById('cycleProgress');
 
-  // Fixture IDs
   const planFixtures = {
     c1: document.getElementById('plan-c1'),
     c2: document.getElementById('plan-c2'),
@@ -1010,6 +1143,13 @@
     w1: document.getElementById('beam-w1'),
     b1: document.getElementById('beam-b1'),
     t1: document.getElementById('beam-t1'),
+  };
+  const planLabels = {
+    c1: document.getElementById('label-c1'),
+    c2: document.getElementById('label-c2'),
+    w1: document.getElementById('label-w1'),
+    b1: document.getElementById('label-b1'),
+    t1: document.getElementById('label-t1'),
   };
   const sectFixtures = {
     c1: document.getElementById('sect-c1'),
@@ -1077,15 +1217,21 @@
     },
   ];
 
-  function setLightState(element, beam, state) {
+  const SCENE_DURATION = 5000; // 5 seconds per scene
+  const UPDATE_INTERVAL = 50;  // update progress every 50ms
+
+  function setLightState(element, beam, label, state) {
     element.classList.remove('on', 'off', 'dim');
     beam.classList.remove('on', 'off', 'dim');
+    if (label) label.classList.remove('active');
     if (state === 'on') {
       element.classList.add('on');
       beam.classList.add('on');
+      if (label) label.classList.add('active');
     } else if (state === 'dim') {
       element.classList.add('dim');
       beam.classList.add('dim');
+      if (label) label.classList.add('active');
     } else {
       element.classList.add('off');
       beam.classList.add('off');
@@ -1093,24 +1239,34 @@
   }
 
   let currentScene = 0;
+  let sceneStartTime = Date.now();
 
   function applyScene(index) {
     const s = scenes[index];
     cycleTime.textContent = s.time;
     cycleLabel.textContent = s.label;
     cycleScene.textContent = s.scene;
+    sceneStartTime = Date.now();
 
     Object.keys(s.lights).forEach(key => {
-      setLightState(planFixtures[key], planBeams[key], s.lights[key]);
-      setLightState(sectFixtures[key], sectCones[key], s.lights[key]);
+      setLightState(planFixtures[key], planBeams[key], planLabels[key], s.lights[key]);
+      setLightState(sectFixtures[key], sectCones[key], null, s.lights[key]);
     });
   }
 
+  function tick() {
+    const elapsed = Date.now() - sceneStartTime;
+    const progress = Math.min((elapsed / SCENE_DURATION) * 100, 100);
+    cycleProgress.style.width = progress + '%';
+
+    if (elapsed >= SCENE_DURATION) {
+      currentScene = (currentScene + 1) % scenes.length;
+      applyScene(currentScene);
+    }
+  }
+
   applyScene(0);
-  setInterval(() => {
-    currentScene = (currentScene + 1) % scenes.length;
-    applyScene(currentScene);
-  }, 4000);
+  setInterval(tick, UPDATE_INTERVAL);
 </script>
 
 </body>
