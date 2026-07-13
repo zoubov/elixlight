@@ -1,963 +1,658 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>ELIXLIGHT | Lighting Strategy for Hormonal Health</title>
-   <script src="https://cdn.tailwindcss.com"></script>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-   <script>
-       tailwind.config = {
-           theme: {
-               extend: {
-                   fontFamily: {
-                       sans: ['Inter', 'system-ui', 'sans-serif'],
-                   },
-                   colors: {
-                       stone: {
-                           page: '#b0ada6',
-                           container: '#d4d0c8',
-                           card: '#e8e6e0',
-                           border: 'rgba(0,0,0,0.08)',
-                       },
-                       lime: {
-                           brand: '#c8e888',
-                           dark: '#a8c868',
-                       }
-                   }
-               }
-           }
-       }
-   </script>
-   <style>
-       html { scroll-behavior: smooth; }
-       body {
-           font-family: 'Inter', sans-serif;
-           -webkit-font-smoothing: antialiased;
-           -moz-osx-font-smoothing: grayscale;
-       }
-       ::selection {
-           background: #c8e888;
-           color: #111;
-       }
-       .reveal {
-           opacity: 0;
-           transform: translateY(24px);
-           transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-       }
-       .reveal.visible {
-           opacity: 1;
-           transform: translateY(0);
-       }
-       .faq-item {
-           border-bottom: 1px solid rgba(0,0,0,0.08);
-       }
-       .faq-btn {
-           width: 100%;
-           text-align: left;
-           padding: 1.5rem 0;
-           background: none;
-           border: none;
-           cursor: pointer;
-           display: flex;
-           justify-content: space-between;
-           align-items: flex-start;
-           gap: 1rem;
-           transition: opacity 0.2s;
-       }
-       .faq-btn:hover { opacity: 0.6; }
-       .faq-icon {
-           width: 24px;
-           height: 24px;
-           border: 1.5px solid #111;
-           border-radius: 50%;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           font-size: 1rem;
-           line-height: 1;
-           flex-shrink: 0;
-           transition: transform 0.3s ease, background 0.3s;
-       }
-       .faq-item.active .faq-icon {
-           transform: rotate(45deg);
-           background: #111;
-           color: #d4d0c8;
-           border-color: #111;
-       }
-       .faq-body {
-           max-height: 0;
-           overflow: hidden;
-           transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.4s ease;
-       }
-       .faq-item.active .faq-body {
-           max-height: 2000px;
-           padding-bottom: 2rem;
-       }
-       .faq-body p {
-           margin-bottom: 1rem;
-           line-height: 1.7;
-           color: #444;
-           font-size: 0.9375rem;
-           max-width: 65ch;
-       }
-       .faq-body p:last-child { margin-bottom: 0; }
-       .faq-body strong { color: #111; font-weight: 600; }
-       .card-hover {
-           transition: transform 0.3s ease, box-shadow 0.3s ease;
-       }
-       .card-hover:hover {
-           transform: translateY(-2px);
-           box-shadow: 0 12px 32px rgba(0,0,0,0.06);
-       }
-       .btn-pill {
-           transition: transform 0.2s ease, opacity 0.2s;
-       }
-       .btn-pill:hover {
-           transform: scale(1.02);
-           opacity: 0.85;
-       }
-       .link-underline {
-           position: relative;
-           display: inline-block;
-       }
-       .link-underline::after {
-           content: '';
-           position: absolute;
-           bottom: -2px;
-           left: 0;
-           width: 100%;
-           height: 1px;
-           background: currentColor;
-           transform: scaleX(0);
-           transform-origin: right;
-           transition: transform 0.3s ease;
-       }
-       .link-underline:hover::after {
-           transform: scaleX(1);
-           transform-origin: left;
-       }
-       .hormone-pill {
-           display: inline-block;
-           padding: 0.2rem 0.6rem;
-           background: rgba(0,0,0,0.06);
-           color: #555;
-           font-size: 0.7rem;
-           letter-spacing: 0.05em;
-           text-transform: uppercase;
-           font-weight: 500;
-           border-radius: 999px;
-           margin: 0.2rem 0.2rem 0 0;
-       }
-       .article-card {
-           background: #c4c1ba;
-           border: 1px solid rgba(0,0,0,0.06);
-           border-radius: 1rem;
-           padding: 2rem;
-           transition: transform 0.3s ease, box-shadow 0.3s ease;
-       }
-       .article-card:hover {
-           transform: translateY(-3px);
-           box-shadow: 0 16px 40px rgba(0,0,0,0.06);
-       }
-       .integration-box {
-           background: rgba(0,0,0,0.03);
-           border: 1px solid rgba(0,0,0,0.06);
-           border-radius: 1rem;
-           padding: 2rem;
-       }
-       .phase-num {
-           font-size: 4.5rem;
-           font-weight: 600;
-           line-height: 1;
-           color: rgba(0,0,0,0.06);
-           letter-spacing: -0.04em;
-       }
-       @media (min-width: 768px) {
-           .phase-num { font-size: 6rem; }
-       }
-       ::-webkit-scrollbar { width: 8px; }
-       ::-webkit-scrollbar-track { background: #b0ada6; }
-       ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
-       ::-webkit-scrollbar-thumb:hover { background: #666; }
-       
-       /* Product card styles */
-       .product-card {
-           background: #c4c1ba;
-           border: 1px solid rgba(0,0,0,0.06);
-           border-radius: 1.25rem;
-           padding: 2.5rem;
-           display: flex;
-           flex-direction: column;
-           justify-content: center;
-           min-height: 420px;
-           transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.35s ease;
-       }
-       .product-card:hover {
-           transform: translateY(-4px);
-           box-shadow: 0 20px 48px rgba(0,0,0,0.08);
-       }
-       @media (min-width: 768px) {
-           .product-card {
-               min-height: 480px;
-               padding: 3rem;
-           }
-       }
-   </style>
-<base target="_blank">
-<base target="_blank">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELIXLIGHT — Biological Lighting Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #0A0A0A;
+    color: #E8E4DF;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .nav-logo { font-weight: 600; font-size: 16px; letter-spacing: 0.5px; }
+  .nav-links { display: flex; gap: 48px; font-size: 14px; color: rgba(232,228,223,0.6); }
+  .nav-links a { transition: color 0.2s; }
+  .nav-links a:hover { color: #E8E4DF; }
+
+  /* SECTIONS */
+  .section { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .section-pad { padding: 64px 48px; }
+  .section-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(232,228,223,0.4);
+    margin-bottom: 24px;
+  }
+
+  /* HERO / TOOLS */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 520px;
+  }
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 64px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+  .hero-bulb-wrap {
+    width: 120px;
+    height: 120px;
+    border-radius: 16px;
+    background: #1A1510;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .hero-bulb {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #E87B3C;
+    box-shadow: 0 0 40px rgba(232,123,60,0.3);
+  }
+  .hero-caption {
+    font-family: monospace;
+    font-size: 13px;
+    color: rgba(232,228,223,0.5);
+    letter-spacing: 1px;
+  }
+  .hero-tools {
+    padding: 64px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .tool-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: opacity 0.2s;
+  }
+  .tool-row:last-child { border-bottom: none; }
+  .tool-row:hover { opacity: 0.8; }
+  .tool-name { font-size: 16px; }
+  .tool-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(232,228,223,0.5);
+    font-size: 14px;
+  }
+  .tool-arrow { font-size: 18px; }
+
+  /* DID YOU KNOW */
+  .dyk-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    max-width: 900px;
+  }
+  .dyk-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #1A1510;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .dyk-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #E8E4DF;
+  }
+
+  /* ONE QUESTION */
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 700px;
+  }
+  .quiz-btn {
+    padding: 16px 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    background: transparent;
+    color: #E8E4DF;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .quiz-btn:hover {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.02);
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .about-photo {
+    width: 200px;
+    height: 260px;
+    border-radius: 16px;
+    background: #1A1510;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(232,228,223,0.3);
+    font-size: 13px;
+    object-fit: cover;
+  }
+  .about-name { font-size: 32px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
+  .about-role {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(232,228,223,0.4);
+    margin-bottom: 32px;
+  }
+  .about-bio {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: rgba(232,228,223,0.85);
+  }
+
+  /* EXPLORE */
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .explore-card {
+    display: block;
+    padding: 32px 24px;
+    border-radius: 16px;
+    background: #141210;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.2s;
+  }
+  .explore-card:hover {
+    border-color: rgba(255,255,255,0.15);
+    transform: translateY(-2px);
+  }
+  .explore-icon { font-size: 20px; margin-bottom: 16px; }
+  .explore-title { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
+  .explore-desc { font-size: 13px; line-height: 1.6; color: rgba(232,228,223,0.5); }
+
+  /* PODCAST TABS */
+  .podcast-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .podcast-tab {
+    padding: 16px 24px;
+    font-size: 14px;
+    color: rgba(232,228,223,0.5);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .podcast-tab:hover { color: #E8E4DF; }
+  .podcast-tab.active {
+    color: #E8E4DF;
+    border-bottom-color: #E87B3C;
+  }
+
+  /* PODCAST HERO */
+  .podcast-hero {
+    padding: 64px 48px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .podcast-title {
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: #E8E4DF;
+  }
+  .podcast-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(232,228,223,0.7);
+    margin-bottom: 24px;
+    max-width: 520px;
+  }
+  .podcast-meta { font-size: 14px; color: rgba(232,228,223,0.4); }
+  .podcast-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .podcast-art-inner {
+    width: 240px;
+    height: 240px;
+    border-radius: 20px;
+    background: #141210;
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .podcast-art-icon { font-size: 32px; }
+  .podcast-art-title { font-size: 18px; font-weight: 500; color: #E8E4DF; }
+  .podcast-art-sub { font-size: 13px; color: rgba(232,228,223,0.4); }
+
+  /* EPISODES */
+  .episodes-wrap {
+    padding: 0 48px 64px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .episode {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .episode:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+  .episode-num {
+    font-size: 14px;
+    color: rgba(232,228,223,0.3);
+    font-family: monospace;
+    padding-top: 4px;
+  }
+  .episode-title {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #E8E4DF;
+  }
+  .episode-desc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(232,228,223,0.6);
+    margin: 0 0 8px;
+  }
+  .episode-time { font-size: 12px; color: rgba(232,228,223,0.35); }
+
+  /* LISTEN ON */
+  .listen-bar {
+    padding: 32px 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .listen-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(232,228,223,0.4);
+  }
+  .listen-btn {
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: #E8E4DF;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .listen-btn:hover { border-color: rgba(255,255,255,0.3); }
+
+  /* SUBSCRIBE */
+  .subscribe-bar {
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .subscribe-text { font-size: 15px; color: rgba(232,228,223,0.7); }
+  .subscribe-btn {
+    padding: 12px 24px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: #E8E4DF;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .subscribe-btn:hover { border-color: rgba(255,255,255,0.3); }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-copy { font-size: 13px; color: rgba(232,228,223,0.4); }
+  .footer-email {
+    font-size: 14px;
+    color: #E8E4DF;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .footer-email:hover { opacity: 0.7; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav { padding: 20px 24px; }
+    .nav-links { gap: 24px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .about-grid { grid-template-columns: 1fr; text-align: center; }
+    .about-photo { margin: 0 auto; }
+    .explore-grid { grid-template-columns: 1fr 1fr; }
+    .podcast-hero { grid-template-columns: 1fr; }
+    .quiz-grid { grid-template-columns: 1fr; }
+    .section-pad { padding: 48px 24px; }
+    .podcast-hero, .episodes-wrap, .listen-bar, .subscribe-bar { padding-left: 24px; padding-right: 24px; }
+  }
+  @media (max-width: 600px) {
+    .explore-grid { grid-template-columns: 1fr; }
+    .podcast-tabs { overflow-x: auto; }
+    .podcast-tab { padding: 14px 16px; white-space: nowrap; }
+    .footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
 </head>
-<body class="bg-stone-page text-[#111]">
+<body>
 
-   <div class="min-h-screen">
-       <div class="max-w-[1200px] mx-auto">
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">ELIXLIGHT</div>
+  <div class="nav-links">
+    <a href="#tools">tools</a>
+    <a href="#about">about</a>
+    <a href="#explore">explore</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
 
-           <nav class="sticky top-0 z-50 bg-stone-page/95 backdrop-blur-sm flex items-center justify-between px-6 md:px-10 py-5 md:py-6 border-b border-black/5">
-               <a href="#" class="text-[0.95rem] font-semibold tracking-tight text-white">
-                   ELIXLIGHT
-               </a>
-               <div class="hidden md:flex items-center gap-8">
-                   <a href="#collaboration" class="text-[0.8rem] text-white hover:text-white/80 transition-colors">Collaboration</a>
-                   <a href="#framework" class="text-[0.8rem] text-white hover:text-white/80 transition-colors">Framework</a>
-                   <a href="#applications" class="text-[0.8rem] text-white hover:text-white/80 transition-colors">Case studies</a>
-               </div>
-               <a href="#contact" class="btn-pill bg-black text-white text-[0.75rem] font-medium px-5 py-2.5 rounded-full">
-                   Contact
-               </a>
-           </nav>
+<!-- HERO / TOOLS -->
+<section id="tools" class="section">
+  <div class="hero-grid">
+    <div class="hero-visual">
+      <div class="hero-bulb-wrap">
+        <div class="hero-bulb"></div>
+      </div>
+      <div class="hero-caption">00:00 · sleep — complete darkness</div>
+    </div>
+    <div class="hero-tools">
+      <div class="section-label">Tools for Light</div>
+      <a href="#" class="tool-row">
+        <span class="tool-name">read your space</span>
+        <span class="tool-price">€29 <span class="tool-arrow">→</span></span>
+      </a>
+      <a href="#" class="tool-row">
+        <span class="tool-name">reset your sleep</span>
+        <span class="tool-price">€297 <span class="tool-arrow">→</span></span>
+      </a>
+      <a href="#" class="tool-row">
+        <span class="tool-name">audit your hotel</span>
+        <span class="tool-price">from €3,500 <span class="tool-arrow">→</span></span>
+      </a>
+      <a href="#" class="tool-row">
+        <span class="tool-name">brief your designer</span>
+        <span class="tool-price">from €8,000 <span class="tool-arrow">→</span></span>
+      </a>
+      <a href="#" class="tool-row">
+        <span class="tool-name">validate your specs</span>
+        <span class="tool-price">from €4,000 <span class="tool-arrow">→</span></span>
+      </a>
+      <a href="#" class="tool-row">
+        <span class="tool-name">design your home</span>
+        <span class="tool-price">€19 <span class="tool-arrow">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
 
-           <section id="hero" class="px-6 md:px-10 pt-20 md:pt-32 pb-24 md:pb-40">
-               <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-end">
-                   <div class="md:col-span-10 md:col-start-2 reveal">
-                       <p class="text-[0.7rem] uppercase tracking-[0.2em] text-[#888] mb-6 font-medium">Elixlight</p>
-                       <h1 class="text-[3rem] md:text-[5rem] lg:text-[6.5rem] font-medium leading-[0.9] tracking-tight mb-8">
-                           Lighting Strategy<br>
-                           <span class="text-[#555]">for Hormonal Health</span>
-                       </h1>
-                       <p class="text-[0.95rem] text-[#333] leading-relaxed max-w-lg">
-                           <span class="bg-[#c8e888]/60 px-1" style="box-decoration-break: clone; -webkit-box-decoration-break: clone;">Redefining how spaces affect humans.</span>
-                       </p>
-                   </div>
-               </div>
-           </section>
+<!-- DID YOU KNOW -->
+<section class="section section-pad">
+  <div class="dyk-wrap">
+    <div class="dyk-icon">🧠</div>
+    <div>
+      <div class="section-label">Did You Know</div>
+      <p class="dyk-text">The bathroom is the most biologically dangerous room in your home — it's designed for morning light and used at night, right when your body is trying to fall asleep.</p>
+    </div>
+  </div>
+</section>
 
-           <section id="work" class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5 bg-white/[0.4]">
-               <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
-                   <div class="md:col-span-5 reveal">
-                       <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight">
-                           An Invisible<br>Standard
-                       </h2>
-                   </div>
-                   <div class="md:col-span-7 reveal space-y-8">
-                       <p class="text-[1.25rem] md:text-[1.5rem] leading-[1.35] font-light text-[#222]">
-                           Your lighting is either supporting biology <span class="font-medium text-black">or working against it.</span>
-                       </p>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed max-w-lg">
-                           Lighting is more than a visual layer. Light defines what the space does to the human system.
-                       </p>
-                       <div class="pl-5 border-l-2 border-black space-y-2 py-1">
-                           <p class="text-[0.85rem] text-[#777] italic">Before fixtures.</p>
-                           <p class="text-[0.85rem] text-[#777] italic">Before placement.</p>
-                           <p class="text-[0.85rem] text-[#777] italic">Before aesthetics.</p>
-                       </div>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed max-w-lg">
-                           Light shapes when you <strong class="text-black">relax</strong>, how long you <strong class="text-black">stay</strong>, how you <strong class="text-black">connect</strong>, how deeply you <strong class="text-black">rest</strong>.
-                       </p>
-                   </div>
-               </div>
-           </section>
+<!-- ONE QUESTION -->
+<section class="section section-pad">
+  <div class="section-label">One Question</div>
+  <h2 style="font-size:28px; font-weight:500; margin-bottom:32px; color:#E8E4DF;">What does your bedroom light think it is right now?</h2>
+  <div class="quiz-grid">
+    <button class="quiz-btn">Early afternoon — bright and cool</button>
+    <button class="quiz-btn">Late evening — warm and dim</button>
+    <button class="quiz-btn">Midday — overhead and intense</button>
+    <button class="quiz-btn">Night — no light at all</button>
+  </div>
+</section>
 
-           <section id="one-night" class="px-6 md:px-10 py-20 md:py-28 border-t border-white/10" style="background: rgba(0, 0, 0, 0.45);">
-               <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
-                   <div class="md:col-span-5 reveal">
-                       <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight text-white">
-                           One<br>Night
-                       </h2>
-                   </div>
-                   <div class="md:col-span-7 reveal space-y-10">
-                       <div class="space-y-4">
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               A guest sits under bright ceiling light at 9 PM. Their brain reads it as midday. Melatonin doesn't rise.
-                           </p>
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               They shower in the bathroom — brighter than the living room. Their brain reads it as morning. Cortisol spikes.
-                           </p>
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               They get into bed unable to sleep. Toss and turn. Blame the mattress.
-                           </p>
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               They slept 8 hours. Their melatonin only started rising 1.5 hours after they closed their eyes. They rested 6.5 hours instead.
-                           </p>
-                           <p class="text-[0.9rem] text-white font-medium leading-relaxed">
-                               The lighting wasn't bad. It was unintentional.
-                           </p>
-                       </div>
+<!-- ABOUT -->
+<section id="about" class="section" style="padding:80px 48px;">
+  <div class="about-grid">
+    <div class="about-photo">your photo here</div>
+    <div>
+      <h2 class="about-name">Elisavet Zioga</h2>
+      <div class="about-role">Biological Lighting Strategist</div>
+      <p class="about-bio">I work at the intersection of circadian biology and architectural design. My work translates neuroscience into lighting strategy — so the spaces people live, sleep, and work in support their biology rather than fight it.</p>
+      <p class="about-bio">Light is one of the most powerful tools we have for nervous system regulation. Most spaces use it by accident. I help design it with intention.</p>
+      <p class="about-bio">The transformation is yours. I just make sure the environment supports it.</p>
+    </div>
+  </div>
+</section>
 
-                       <div class="space-y-4 pt-6 border-t border-white/10">
-                           <p class="text-[0.75rem] uppercase tracking-[0.12em] text-white/50 font-semibold">What Actually Happens</p>
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               Bright evening light suppresses melatonin release by 30-50% in just 30 minutes. The body never receives the signal to prepare for rest. Sleep onset delays. Deep sleep is cut short. Heart rate stays elevated. Hormonal sequence is broken.
-                           </p>
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               The guest wakes tired. Lower mood. They don't know why. They blame everything except the light.
-                           </p>
-                       </div>
+<!-- EXPLORE -->
+<section id="explore" class="section section-pad">
+  <div class="section-label">Explore</div>
+  <div class="explore-grid">
+    <a href="#" class="explore-card">
+      <div class="explore-icon">🧬</div>
+      <div class="explore-title">the science</div>
+      <div class="explore-desc">How light shapes hormones, sleep, and nervous system regulation</div>
+    </a>
+    <a href="#" class="explore-card">
+      <div class="explore-icon">🏨</div>
+      <div class="explore-title">for hotels</div>
+      <div class="explore-desc">How intentional light increases guest satisfaction and return rates</div>
+    </a>
+    <a href="#" class="explore-card">
+      <div class="explore-icon">🎨</div>
+      <div class="explore-title">for studios</div>
+      <div class="explore-desc">How to embed biological strategy into your design process</div>
+    </a>
+    <a href="#podcast" class="explore-card">
+      <div class="explore-icon">🎙</div>
+      <div class="explore-title">podcast</div>
+      <div class="explore-desc">Short episodes on light, biology, and the spaces we inhabit</div>
+    </a>
+  </div>
+</section>
 
-                       <div class="space-y-4 pt-6 border-t border-white/10">
-                           <p class="text-[0.75rem] uppercase tracking-[0.12em] text-white/50 font-semibold">What Changes</p>
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               When light is designed intentionally — not just aesthetically — biology aligns with the guest's actual schedule instead of working against it.
-                           </p>
-                           <div class="pl-5 border-l-2 border-white/20 space-y-2 py-1">
-                               <p class="text-[0.85rem] text-white/70">The living room supports winding down <span class="text-white/40">(warm, low intensity)</span>.</p>
-                               <p class="text-[0.85rem] text-white/70">The bathroom supports the transition <span class="text-white/40">(progressively dimmer, warmer)</span>.</p>
-                               <p class="text-[0.85rem] text-white/70">The bedroom supports deep sleep <span class="text-white/40">(minimal light, optimized spectrum)</span>.</p>
-                           </div>
-                           <p class="text-[0.9rem] text-white/70 leading-relaxed">
-                               The guest's hormonal sequence flows naturally. They sleep deeply. They wake restored.
-                           </p>
-                           <p class="text-[1.1rem] md:text-[1.25rem] leading-[1.4] font-light text-white/90 mt-4">
-                               This is behavior design. <span class="font-medium text-white">Light as the tool. Experience as the outcome.</span>
-                           </p>
-                       </div>
-                   </div>
-               </div>
-           </section>
+<!-- PODCAST PAGE -->
+<section id="podcast" class="section">
 
-           <section id="strategy" class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5">
-               <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
-                   <div class="md:col-span-5 reveal">
-                       <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight">
-                           Light as<br>Strategy
-                       </h2>
-                   </div>
-                   <div class="md:col-span-7 reveal space-y-8">
-                       <p class="text-[1.25rem] md:text-[1.5rem] leading-[1.35] font-light text-[#222]">
-                           Light orchestrates the body's biological rhythm. Every wavelength, intensity, and timing triggers hormonal responses — <span class="font-medium text-black">cortisol, melatonin, oxytocin, dopamine.</span>
-                       </p>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed max-w-lg">
-                           High-end experiences happen when biology and aesthetics work together. A restaurant that looks vibrant and makes guests feel connected. A bedroom that looks serene and actually lets guests sleep.
-                       </p>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed max-w-lg">
-                           This isn't about replacing your lighting designer. It's about elevating their work with biological intent. When light is designed purposefully, the aesthetic becomes more powerful.
-                       </p>
-                       <p class="text-[1.1rem] md:text-[1.25rem] leading-[1.4] font-light text-[#222]">
-                           <span class="font-medium text-black">The space feels exactly like it looks.</span>
-                       </p>
-                   </div>
-               </div>
-           </section>
+  <!-- Podcast Tabs -->
+  <div class="podcast-tabs">
+    <a href="#" class="podcast-tab">🧬 the science</a>
+    <a href="#" class="podcast-tab">🏨 for hotels</a>
+    <a href="#" class="podcast-tab">🎨 for studios</a>
+    <a href="#podcast" class="podcast-tab active">🎙 podcast</a>
+  </div>
 
-           <section id="framework" class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5 bg-white/[0.4]">
-               <div class="mb-14 md:mb-20 reveal">
-                   <p class="text-[0.7rem] uppercase tracking-[0.15em] text-white mb-4 font-medium">The Human-Light Hormone Model</p>
-                   <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight max-w-2xl">
-                       Light as Behavior Engineering
-                   </h2>
-                   <p class="text-[0.9rem] text-[#555] leading-relaxed mt-4 max-w-xl">
-                       Hormones are produced according to the environmental light, supporting or hindering human states.
-                   </p>
-               </div>
+  <!-- Podcast Hero -->
+  <div class="podcast-hero">
+    <div>
+      <div class="section-label">Podcast</div>
+      <h2 class="podcast-title">Short episodes on light, biology,<br>and the spaces we live in.</h2>
+      <p class="podcast-desc">Each episode takes one thing your nervous system already does — and connects it to the space you're sitting in right now. No jargon. No performance. Just the intersection of how biology works and why design matters.</p>
+      <p class="podcast-meta">Episodes: 8–12 minutes. New episodes monthly.</p>
+    </div>
+    <div class="podcast-art">
+      <div class="podcast-art-inner">
+        <div class="podcast-art-icon">🎙</div>
+        <div class="podcast-art-title">ELIXLIGHT</div>
+        <div class="podcast-art-sub">light · biology · space</div>
+      </div>
+    </div>
+  </div>
 
-               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-16">
-                   <div class="bg-stone-card rounded-2xl p-6 md:p-8 border border-black/5 card-hover reveal">
-                       <h3 class="text-[1.35rem] font-medium mb-2">Activation</h3>
-                       <p class="text-[0.85rem] text-[#555] mb-5 leading-relaxed">Supports energy, alertness and cognitive engagement.</p>
-                       <div class="mb-5">
-                           <span class="hormone-pill">cortisol</span>
-                           <span class="hormone-pill">dopamine</span>
-                       </div>
-                       <div class="space-y-4 text-[0.8rem] text-[#555]">
-                           <div>
-                               <p class="font-medium text-black mb-1">Used in</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>workspaces</li>
-                                   <li>kitchens</li>
-                                   <li>gyms</li>
-                                   <li>morning environments</li>
-                               </ul>
-                           </div>
-                           <div>
-                               <p class="font-medium text-black mb-1">Lighting principles</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>higher intensity</li>
-                                   <li>cooler spectrum</li>
-                                   <li>directional light</li>
-                                   <li>dynamic transitions</li>
-                               </ul>
-                           </div>
-                       </div>
-                   </div>
+  <!-- Episodes -->
+  <div class="episodes-wrap">
+    <div class="section-label">Episodes</div>
 
-                   <div class="bg-stone-card rounded-2xl p-6 md:p-8 border border-black/5 card-hover reveal" style="transition-delay: 0.05s">
-                       <h3 class="text-[1.35rem] font-medium mb-2">Connection</h3>
-                       <p class="text-[0.85rem] text-[#555] mb-5 leading-relaxed">Supports social comfort, trust and emotional presence.</p>
-                       <div class="mb-5">
-                           <span class="hormone-pill">oxytocin</span>
-                           <span class="hormone-pill">serotonin</span>
-                       </div>
-                       <div class="space-y-4 text-[0.8rem] text-[#555]">
-                           <div>
-                               <p class="font-medium text-black mb-1">Used in</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>dining areas</li>
-                                   <li>living rooms</li>
-                                   <li>hospitality spaces</li>
-                               </ul>
-                           </div>
-                           <div>
-                               <p class="font-medium text-black mb-1">Lighting principles</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>warm tones</li>
-                                   <li>eye-level light sources</li>
-                                   <li>reduced glare</li>
-                                   <li>balanced contrast</li>
-                               </ul>
-                           </div>
-                       </div>
-                   </div>
+    <div class="episode">
+      <div class="episode-num">01</div>
+      <div>
+        <div class="episode-title">The best sleep you didn't have</div>
+        <p class="episode-desc">You slept eight hours. You woke up tired. Here's exactly what happened in the 90 minutes before you closed your eyes — and why the light in the room was the main character.</p>
+        <div class="episode-time">9 min</div>
+      </div>
+    </div>
 
-                   <div class="bg-stone-card rounded-2xl p-6 md:p-8 border border-black/5 card-hover reveal" style="transition-delay: 0.1s">
-                       <h3 class="text-[1.35rem] font-medium mb-2">Restoration</h3>
-                       <p class="text-[0.85rem] text-[#555] mb-5 leading-relaxed">Supports recovery, relaxation and sleep preparation.</p>
-                       <div class="mb-5">
-                           <span class="hormone-pill">melatonin</span>
-                           <span class="hormone-pill">growth hormone</span>
-                       </div>
-                       <div class="space-y-4 text-[0.8rem] text-[#555]">
-                           <div>
-                               <p class="font-medium text-black mb-1">Used in</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>bedrooms</li>
-                                   <li>wellness spaces</li>
-                                   <li>spas</li>
-                               </ul>
-                           </div>
-                           <div>
-                               <p class="font-medium text-black mb-1">Lighting principles</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>low intensity</li>
-                                   <li>warm spectrum</li>
-                                   <li>indirect light</li>
-                                   <li>minimal overhead exposure</li>
-                               </ul>
-                           </div>
-                       </div>
-                   </div>
+    <div class="episode">
+      <div class="episode-num">02</div>
+      <div>
+        <div class="episode-title">Your bathroom is lying to you</div>
+        <p class="episode-desc">The bathroom is designed for the morning version of you. The problem is you also use it at night. What's happening to your nervous system in those three minutes before bed — and one change that makes a measurable difference.</p>
+        <div class="episode-time">8 min</div>
+      </div>
+    </div>
 
-                   <div class="bg-stone-card rounded-2xl p-6 md:p-8 border border-black/5 card-hover reveal" style="transition-delay: 0.15s">
-                       <h3 class="text-[1.35rem] font-medium mb-2">Sensory Pleasure</h3>
-                       <p class="text-[0.85rem] text-[#555] mb-5 leading-relaxed">Supports stimulation, curiosity and emotional engagement.</p>
-                       <div class="mb-5">
-                           <span class="hormone-pill">dopamine</span>
-                           <span class="hormone-pill">endorphins</span>
-                       </div>
-                       <div class="space-y-4 text-[0.8rem] text-[#555]">
-                           <div>
-                               <p class="font-medium text-black mb-1">Used in</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>bars</li>
-                                   <li>lounges</li>
-                                   <li>experiential environments</li>
-                               </ul>
-                           </div>
-                           <div>
-                               <p class="font-medium text-black mb-1">Lighting principles</p>
-                               <ul class="space-y-0.5 ml-4 list-disc marker:text-[#999]">
-                                   <li>contrast and depth</li>
-                                   <li>focal highlights</li>
-                                   <li>visual rhythm</li>
-                               </ul>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </section>
+    <div class="episode">
+      <div class="episode-num">03</div>
+      <div>
+        <div class="episode-title">What a hotel room knows about you</div>
+        <p class="episode-desc">Luxury hotels are increasingly designing for biology, not just aesthetics. What's the difference between a room that looks calming and a room that actually calms your nervous system — and how do you tell which one you're in?</p>
+        <div class="episode-time">11 min</div>
+      </div>
+    </div>
 
-           <!-- Services -->
-           <section id="services" class="px-6 md:px-10 py-20 md:py-28 border-t border-white/10" style="background: rgba(0, 0, 0, 0.45);">
-               <div class="mb-14 md:mb-20 reveal">
-                   <p class="text-[0.7rem] uppercase tracking-[0.15em] text-white/50 mb-4 font-medium">What We Offer</p>
-                   <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight text-white">Services</h2>
-                   <p class="text-[0.9rem] text-white/70 leading-relaxed mt-4 max-w-xl">
-                       Three ways to bring biological intent into your lighting decisions.
-                   </p>
-               </div>
+    <div class="episode">
+      <div class="episode-num">04</div>
+      <div>
+        <div class="episode-title">Cortisol and the ceiling light</div>
+        <p class="episode-desc">Overhead light mimics the midday sun. Your body doesn't ask for permission before responding. A short look at why the single most common lighting choice in homes and offices is also the one with the most biological consequences.</p>
+        <div class="episode-time">9 min</div>
+      </div>
+    </div>
 
-               <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                   <article class="product-card reveal" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-                       <div class="text-center">
-                           <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/[0.08] mb-6">
-                               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/70">
-                                   <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                   <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                               </svg>
-                           </div>
-                           <p class="text-[0.65rem] uppercase tracking-[0.12em] font-semibold text-white/50 mb-4">Strategy</p>
-                           <h3 class="text-[1.5rem] md:text-[1.75rem] font-medium leading-tight mb-4 text-white">
-                               Strategic<br>Intent
-                           </h3>
-                           <p class="text-[0.85rem] text-white/70 leading-relaxed mb-6 max-w-[26ch] mx-auto">
-                               Biological strategy your designer uses as a target. Every decision made with purpose.
-                           </p>
-                           <div class="pt-5 border-t border-white/10">
-                               <p class="text-[0.7rem] text-white/50 mb-1">Deliverable</p>
-                               <p class="text-[0.85rem] font-semibold text-white">Hormonal Lighting Brief</p>
-                           </div>
-                       </div>
-                   </article>
+    <div class="episode">
+      <div class="episode-num">05</div>
+      <div>
+        <div class="episode-title">The dinner table and melatonin</div>
+        <p class="episode-desc">Restaurant lighting is optimized to make food look beautiful. It's also, quite often, suppressing your melatonin at exactly the moment your body wants to start winding down. What a good restaurant would do differently — and why almost none of them do.</p>
+        <div class="episode-time">10 min</div>
+      </div>
+    </div>
 
-                   <article class="product-card reveal" style="transition-delay: 0.05s; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-                       <div class="text-center">
-                           <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/[0.08] mb-6">
-                               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/70">
-                                   <path d="M12 20h9"></path>
-                                   <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                               </svg>
-                           </div>
-                           <p class="text-[0.65rem] uppercase tracking-[0.12em] font-semibold text-white/50 mb-4">Validation</p>
-                           <h3 class="text-[1.5rem] md:text-[1.75rem] font-medium leading-tight mb-4 text-white">
-                               Human State<br>Mapping
-                           </h3>
-                           <p class="text-[0.85rem] text-white/70 leading-relaxed mb-6 max-w-[26ch] mx-auto">
-                               Biological validation of proposed specs mid-design. Coherent and intentional.
-                           </p>
-                           <div class="pt-5 border-t border-white/10">
-                               <p class="text-[0.7rem] text-white/50 mb-1">Deliverable</p>
-                               <p class="text-[0.85rem] font-semibold text-white">Human State Map</p>
-                           </div>
-                       </div>
-                   </article>
+    <div class="episode">
+      <div class="episode-num">06</div>
+      <div>
+        <div class="episode-title">What Mediterranean light does to a Mediterranean body</div>
+        <p class="episode-desc">Greece has 3,000 hours of sunlight a year. Moving indoors into artificial light creates a specific kind of biological confusion that Northern European design research hasn't fully accounted for. What designing for this climate actually means.</p>
+        <div class="episode-time">12 min</div>
+      </div>
+    </div>
 
-                   <article class="product-card reveal" style="transition-delay: 0.1s; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08);">
-                       <div class="text-center">
-                           <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/[0.08] mb-6">
-                               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/70">
-                                   <circle cx="12" cy="12" r="10"></circle>
-                                   <polyline points="12 6 12 12 16 14"></polyline>
-                               </svg>
-                           </div>
-                           <p class="text-[0.65rem] uppercase tracking-[0.12em] font-semibold text-white/50 mb-4">Assessment</p>
-                           <h3 class="text-[1.5rem] md:text-[1.75rem] font-medium leading-tight mb-4 text-white">
-                               Circadian<br>Audit
-                           </h3>
-                           <p class="text-[0.85rem] text-white/70 leading-relaxed mb-6 max-w-[26ch] mx-auto">
-                               Assessment of biological impact with ranked opportunities within real constraints.
-                           </p>
-                           <div class="pt-5 border-t border-white/10">
-                               <p class="text-[0.7rem] text-white/50 mb-1">Deliverable</p>
-                               <p class="text-[0.85rem] font-semibold text-white">Circadian Audit Report</p>
-                           </div>
-                       </div>
-                   </article>
-               </div>
-           </section>
+    <div class="episode">
+      <div class="episode-num">07</div>
+      <div>
+        <div class="episode-title">A regulated nervous system — what it actually feels like</div>
+        <p class="episode-desc">Not a metaphor. Not a wellness claim. What regulation means biologically: HRV, cortisol curve, melatonin onset timing. And what it feels like when your environment is supporting it rather than disrupting it.</p>
+        <div class="episode-time">10 min</div>
+      </div>
+    </div>
 
-           <section id="who" class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5">
-               <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
-                   <div class="md:col-span-5 reveal">
-                       <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight">
-                           Who This<br>Is For
-                       </h2>
-                   </div>
-                   <div class="md:col-span-7 reveal space-y-6">
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed">
-                           This approach is designed for architecture and lighting studios working on hospitality, wellness, or residential projects where biological impact is part of the positioning.
-                       </p>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed">
-                           We collaborate as a strategic layer — defining hormonal intent, mapping human states to zones, and validating designs for circadian alignment.
-                       </p>
-                       <p class="text-[1.25rem] md:text-[1.5rem] leading-[1.35] font-light text-[#222] mt-8">
-                           We don't replace lighting designers.<br>
-                           <span class="font-medium text-black">We make their work measurably more effective.</span>
-                       </p>
-                   </div>
-               </div>
-           </section>
+    <div class="episode">
+      <div class="episode-num">08</div>
+      <div>
+        <div class="episode-title">Darkness as a design element</div>
+        <p class="episode-desc">We've become very good at adding light. We've forgotten how to design absence. What complete darkness does to the sleeping body — and why the hotel that masters blackout will outperform every hotel that masters ambiance.</p>
+        <div class="episode-time">8 min</div>
+      </div>
+    </div>
+  </div>
 
-           <div class="px-6 md:px-10">
-               <div class="h-px bg-black/5 w-full"></div>
-           </div>
+  <!-- Listen On -->
+  <div class="listen-bar">
+    <div class="listen-label">Listen On</div>
+    <a href="#" class="listen-btn">Spotify</a>
+    <a href="#" class="listen-btn">Apple Podcasts</a>
+    <a href="#" class="listen-btn">YouTube</a>
+  </div>
 
-           <section id="collaboration" class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5 bg-white/[0.4]">
-               <div class="mb-14 md:mb-20 reveal">
-                   <p class="text-[0.7rem] uppercase tracking-[0.15em] text-white mb-4 font-medium">How Architects Use This</p>
-                   <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight">Collaboration</h2>
-                   <p class="text-[0.9rem] text-[#555] leading-relaxed mt-4 max-w-xl">
-                       You define the space. Your lighting designer executes the technical and aesthetic vision. We embed biological intent throughout — so every decision serves the experience, not just the aesthetic.
-                   </p>
-               </div>
+  <!-- Subscribe -->
+  <div class="subscribe-bar">
+    <span class="subscribe-text">Want to be notified when new episodes drop?</span>
+    <a href="#" class="subscribe-btn">Subscribe <span>↗</span></a>
+  </div>
 
-               <div class="space-y-10 md:space-y-14">
-                   <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start reveal">
-                       <div class="md:col-span-3">
-                           <span class="phase-num">1</span>
-                       </div>
-                       <div class="md:col-span-9 space-y-2">
-                           <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
-                               <h3 class="text-[1.15rem] md:text-[1.35rem] font-medium">Early Design</h3>
-                               <span class="text-[0.8rem] text-[#888]">Define strategy before specs lock</span>
-                           </div>
-                           <p class="text-[0.85rem] text-[#555] leading-relaxed max-w-lg">
-                               You get: <strong class="text-black">Hormonal Lighting Brief</strong> (what each zone should do biologically)
-                           </p>
-                           <p class="text-[0.85rem] text-[#555] leading-relaxed max-w-lg">
-                               Your designer uses this as their target
-                           </p>
-                       </div>
-                   </div>
+</section>
 
-                   <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start reveal">
-                       <div class="md:col-span-3">
-                           <span class="phase-num">2</span>
-                       </div>
-                       <div class="md:col-span-9 space-y-2">
-                           <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
-                               <h3 class="text-[1.15rem] md:text-[1.35rem] font-medium">Mid-Design</h3>
-                               <span class="text-[0.8rem] text-[#888]">Validate specs are hitting biological targets</span>
-                           </div>
-                           <p class="text-[0.85rem] text-[#555] leading-relaxed max-w-lg">
-                               You get: <strong class="text-black">Human State Map</strong> (zone-by-zone validation + adjustments)
-                           </p>
-                           <p class="text-[0.85rem] text-[#555] leading-relaxed max-w-lg">
-                               Your designer refines before ordering fixtures
-                           </p>
-                       </div>
-                   </div>
+<!-- FOOTER -->
+<footer id="contact" class="footer">
+  <div class="footer-copy">© 2025<br>ELIXLIGHT</div>
+  <a href="mailto:hello@elixlight.com" class="footer-email">hello@elixlight.com</a>
+</footer>
 
-                   <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-start reveal">
-                       <div class="md:col-span-3">
-                           <span class="phase-num">3</span>
-                       </div>
-                       <div class="md:col-span-9 space-y-2">
-                           <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
-                               <h3 class="text-[1.15rem] md:text-[1.35rem] font-medium">Existing Space</h3>
-                               <span class="text-[0.8rem] text-[#888]">Understand impact, identify opportunities</span>
-                           </div>
-                           <p class="text-[0.85rem] text-[#555] leading-relaxed max-w-lg">
-                               You get: <strong class="text-black">Circadian Audit Report</strong> (current state + ranked improvements)
-                           </p>
-                           <p class="text-[0.85rem] text-[#555] leading-relaxed max-w-lg">
-                               You know what's possible before investing in changes
-                           </p>
-                       </div>
-                   </div>
-               </div>
-
-               <div class="mt-16 pt-8 border-t border-black/5 reveal">
-                   <p class="text-[0.9rem] text-[#555] leading-relaxed max-w-xl">
-                       All work is remote. No on-site visits. No coordination overhead.
-                   </p>
-               </div>
-           </section>
-
-           <section id="applications" class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5">
-               <div class="mb-14 md:mb-20 reveal">
-                   <p class="text-[0.7rem] uppercase tracking-[0.15em] text-white mb-4 font-medium">The Business Perspective</p>
-                   <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight">Case studies</h2>
-                   <p class="text-[0.9rem] text-[#555] leading-relaxed mt-4 max-w-xl">
-                       Strategic lighting interventions that translate biological insight into measurable business outcomes.
-                   </p>
-               </div>
-
-               <div class="space-y-5">
-                   <article class="article-card reveal">
-                       <div class="flex flex-wrap gap-2 mb-3">
-                           <span class="text-[0.65rem] uppercase tracking-[0.1em] font-semibold text-[#888]">Case Study · Hospitality</span>
-                       </div>
-                       <h3 class="text-[1.35rem] md:text-[1.65rem] font-medium leading-tight mb-3 text-black">
-                           Lighting for Jet Lag Recovery
-                       </h3>
-                       <p class="text-[0.85rem] text-[#555] leading-relaxed mb-6 max-w-2xl">
-                           Circadian reset is becoming a revenue driver, not just a wellness perk. Hotels that engineer light-dark cycles for arriving guests see measurable gains in satisfaction scores, energy savings, and repeat bookings. We break down the biological mechanism, the fixture strategy, and the business case for dedicated recovery environments.
-                       </p>
-                       
-                       <div class="flex flex-wrap gap-2 mb-6">
-                           <span class="inline-flex items-baseline gap-1 bg-black/[0.04] px-2.5 py-1 rounded-md">
-                               <span class="text-[0.8rem] font-semibold text-black">+5–15%</span>
-                               <span class="text-[0.7rem] text-[#555]">RevPAR</span>
-                           </span>
-                           <span class="inline-flex items-baseline gap-1 bg-black/[0.04] px-2.5 py-1 rounded-md">
-                               <span class="text-[0.8rem] font-semibold text-black">+20</span>
-                               <span class="text-[0.7rem] text-[#555]">NPS points</span>
-                           </span>
-                           <span class="inline-flex items-baseline gap-1 bg-black/[0.04] px-2.5 py-1 rounded-md">
-                               <span class="text-[0.8rem] font-semibold text-black">–58%</span>
-                               <span class="text-[0.7rem] text-[#555]">energy</span>
-                           </span>
-                           <span class="inline-flex items-baseline gap-1 bg-black/[0.04] px-2.5 py-1 rounded-md">
-                               <span class="text-[0.8rem] font-semibold text-black">&lt;2yr</span>
-                               <span class="text-[0.7rem] text-[#555]">payback</span>
-                           </span>
-                       </div>
-
-                       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-5 border-t border-black/5">
-                           <span class="text-[0.75rem] text-[#888]">Market growing $1.2B → $3.8B by 2033 · 13.5% CAGR</span>
-                           <a href="https://elixlight.substack.com/p/why-jet-lag-recovery-rooms-are-the" class="link-underline text-[0.8rem] font-medium text-black">
-                               Read full breakdown →
-                           </a>
-                       </div>
-                   </article>
-
-                   <article class="article-card reveal" style="transition-delay: 0.05s">
-                       <div class="flex flex-wrap gap-2 mb-3">
-                           <span class="text-[0.65rem] uppercase tracking-[0.1em] font-semibold text-[#888]">Research · Architecture</span>
-                       </div>
-                       <h3 class="text-[1.35rem] md:text-[1.65rem] font-medium leading-tight mb-3 text-black">
-                           Elite Architecture Standards Amplified
-                       </h3>
-                       <p class="text-[0.85rem] text-[#555] leading-relaxed mb-6 max-w-2xl">
-                           The world's most rigorous building standards address air, water, and materials. But light remains an under-leveraged layer. We look at how circadian lighting protocols stack on top of WELL, LEED, and Passivhaus to produce gains in hormonal balance, nervous system regulation, and metabolic stability that static standards miss.
-                       </p>
-                       
-                       <div class="flex flex-wrap gap-2 mb-6">
-                           <span class="inline-flex items-baseline gap-1 bg-black/[0.04] px-2.5 py-1 rounded-md">
-                               <span class="text-[0.8rem] font-semibold text-black">+25–40%</span>
-                               <span class="text-[0.7rem] text-[#555]">Hormonal Balance</span>
-                           </span>
-                           <span class="inline-flex items-baseline gap-1 bg-black/[0.04] px-2.5 py-1 rounded-md">
-                               <span class="text-[0.8rem] font-semibold text-black">+15–25%</span>
-                               <span class="text-[0.7rem] text-[#555]">Nervous System</span>
-                           </span>
-                           <span class="inline-flex items-baseline gap-1 bg-black/[0.04] px-2.5 py-1 rounded-md">
-                               <span class="text-[0.8rem] font-semibold text-black">+10–15%</span>
-                               <span class="text-[0.7rem] text-[#555]">Metabolism</span>
-                           </span>
-                       </div>
-
-                       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-5 border-t border-black/5">
-                           <span class="text-[0.75rem] text-[#888]">Sources: Sleep Medicine Reviews, Frontiers in Behavioral Neuroscience</span>
-                           <a href="https://elixlight.substack.com/p/what-the-highest-standards-in-architecture" class="link-underline text-[0.8rem] font-medium text-black">
-                               Read full breakdown →
-                           </a>
-                       </div>
-                   </article>
-               </div>
-           </section>
-
-           <section id="faq" class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5 bg-white/[0.4]">
-               <div class="mb-12 md:mb-16 reveal">
-                   <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight mb-4">Frequently Asked Questions</h2>
-               </div>
-
-               <div class="max-w-3xl reveal">
-                   <div class="faq-item">
-                       <button class="faq-btn" onclick="toggleFaq(this)">
-                           <span class="text-[0.9rem] md:text-[1rem] font-medium pr-4">Why does a hotel lobby need different lighting at 6 AM vs. 6 PM if the design intent is the same?</span>
-                           <span class="faq-icon">+</span>
-                       </button>
-                       <div class="faq-body">
-                           <div class="faq-body-inner">
-                               <p>Because the guest's biology isn't the same.</p>
-                               <p>At 6 AM, cortisol is rising — the body is primed for activation. Cool, bright light amplifies that natural momentum. Guests feel energized, ready to move.</p>
-                               <p>At 6 PM, cortisol is falling. The same cool light delays melatonin onset, disrupts circadian rhythm, and creates a low-grade physiological stress. Guests feel "on edge" without knowing why.</p>
-                               <p>Same space. Same aesthetic. Opposite biological impact.</p>
-                               <p>Most lighting designs treat time of day as an operational choice (dimming for ambiance). We treat it as a biological necessity. Dynamic lighting isn't about mood — it's about aligning the space with where the human system already wants to go.</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="faq-item">
-                       <button class="faq-btn" onclick="toggleFaq(this)">
-                           <span class="text-[0.9rem] md:text-[1rem] font-medium pr-4">Can you "over-optimize" a space for one hormone state and accidentally harm another?</span>
-                           <span class="faq-icon">+</span>
-                       </button>
-                       <div class="faq-body">
-                           <div class="faq-body-inner">
-                               <p>Absolutely. And it happens more than you'd think.</p>
-                               <p>Example: A spa designs a "restoration suite" with ultra-low light, warm spectrum, and complete sensory stillness. Perfect for melatonin production, deep relaxation.</p>
-                               <p>But then they schedule morning treatments in that same space.</p>
-                               <p>Now you have a guest at 10 AM — cortisol should be peaking, dopamine active, body ready for engagement — sitting in a dim, warm, cocoon-like environment. Their system is getting mixed signals. They leave the treatment feeling groggy, not restored.</p>
-                               <p>The lighting wasn't wrong. The timing was.</p>
-                               <p>We map human states to time of day and spatial flow — not just to room type. A "wellness suite" isn't one static state. It's a sequence: activation (morning stretch) → connection (partner massage) → restoration (evening wind-down).</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="faq-item">
-                       <button class="faq-btn" onclick="toggleFaq(this)">
-                           <span class="text-[0.9rem] md:text-[1rem] font-medium pr-4">What's the biggest lighting mistake you see in luxury hotels?</span>
-                           <span class="faq-icon">+</span>
-                       </button>
-                       <div class="faq-body">
-                           <div class="faq-body-inner">
-                               <p>Evening restaurants with high-CCT pendant lighting.</p>
-                               <p>Here's what's happening:</p>
-                               <p>It's 8 PM. Guests have been traveling, working, moving through airports and meetings. Cortisol should be dropping. Melatonin onset should start in 2-3 hours for healthy sleep.</p>
-                               <p>They sit down for dinner. The restaurant has 4000K-5000K downlights — beautiful, crisp, makes the food look incredible on Instagram.</p>
-                               <p>But biologically? That light is suppressing melatonin production. It's telling the body "stay alert, it's midday."</p>
-                               <p>Guests finish dinner, go to their room, and can't fall asleep for 2+ hours. They blame the bed, the AC, jet lag. They don't realize the restaurant lighting delayed their circadian rhythm.</p>
-                               <p>Next morning: poor sleep review. Lower NPS. They don't rebook.</p>
-                               <p>The lighting made the food look better and the guest experience worse.</p>
-                               <p>We optimize for both. Warm spectrum (2700K-3000K), indirect sources, layered light that lets the space feel vibrant without hijacking biology. Guests sleep better. Satisfaction scores go up. The food still looks great.</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="faq-item">
-                       <button class="faq-btn" onclick="toggleFaq(this)">
-                           <span class="text-[0.9rem] md:text-[1rem] font-medium pr-4">How do you balance "scientifically optimal" lighting with architectural vision?</span>
-                           <span class="faq-icon">+</span>
-                       </button>
-                       <div class="faq-body">
-                           <div class="faq-body-inner">
-                               <p>We don't treat them as opposing forces.</p>
-                               <p>Architects aren't trying to harm human biology — they're trying to create memorable, differentiated experiences. That's the same goal we have.</p>
-                               <p>The question isn't "science vs. design" — it's "which design choices amplify the intended experience, and which accidentally undermine it?"</p>
-                               <p>Example: An architect designs a hotel bar with dramatic contrast — dark walls, focused downlighting on the bar surface, low ambient light.</p>
-                               <p>Biologically, this is perfect for sensory pleasure: High contrast → dopamine activation. Focal highlights → attention capture. Low ambient → intimacy, reduced social inhibition (oxytocin).</p>
-                               <p>We don't change the aesthetic. We validate why it works and suggest refinements (spectrum tuning, glare control, transition zones) that make the biological impact even stronger.</p>
-                               <p>Good architecture already intuits human response. We make that intuition explicit, measurable, and repeatable.</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="faq-item">
-                       <button class="faq-btn" onclick="toggleFaq(this)">
-                           <span class="text-[0.9rem] md:text-[1rem] font-medium pr-4">What's a lighting intervention most studios would never think to suggest?</span>
-                           <span class="faq-icon">+</span>
-                       </button>
-                       <div class="faq-body">
-                           <div class="faq-body-inner">
-                               <p>Circadian transition zones between daylight and interior spaces.</p>
-                               <p>Here's the problem:</p>
-                               <p>A guest walks from bright Mediterranean sunlight (10,000+ lux, 6500K) directly into a hotel lobby designed for 300 lux, 3000K.</p>
-                               <p>Their pupils constrict. Their retinal cells are overstimulated. The lobby feels dim and oppressive, even if objectively it's well-lit.</p>
-                               <p>Cortisol spikes (stress response to sudden darkness). They subconsciously feel unsafe.</p>
-                               <p>The fix: A 3-5 meter transition zone.</p>
-                               <p>Gradual reduction: 3000 lux → 1500 lux → 600 lux → 300 lux interior.</p>
-                               <p>Spectrum shift: 5000K → 4000K → 3200K → 3000K.</p>
-                               <p>Pupils adjust gradually. No cortisol spike. The lobby feels welcoming, not oppressive.</p>
-                               <p>Same interior lighting. Different entry experience. Zero added fixtures — just repositioning + tuning.</p>
-                               <p>Most studios light the lobby in isolation. We light the journey into the lobby. That's the difference.</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="faq-item">
-                       <button class="faq-btn" onclick="toggleFaq(this)">
-                           <span class="text-[0.9rem] md:text-[1rem] font-medium pr-4">If you could only change ONE thing about how hospitality projects approach lighting, what would it be?</span>
-                           <span class="faq-icon">+</span>
-                       </button>
-                       <div class="faq-body">
-                           <div class="faq-body-inner">
-                               <p>Stop designing lighting states. Start designing lighting sequences.</p>
-                               <p>Right now, most projects think in snapshots:</p>
-                               <p>Morning: bright<br>Afternoon: moderate<br>Evening: dim</p>
-                               <p>But humans don't experience snapshots. They experience flow.</p>
-                               <p>A guest doesn't teleport from bedroom → gym → spa → restaurant. They move through transitions. And every transition is a biological event.</p>
-                               <p>Example sequence (5-star resort, morning):</p>
-                               <p><strong>6:30 AM</strong> — Bedroom: Low light, warm (2700K), melatonin tail-off<br>
-                               ↓<br>
-                               <strong>7:00 AM</strong> — Bathroom: Gradual increase, cooler (3500K), cortisol rising<br>
-                               ↓<br>
-                               <strong>7:30 AM</strong> — Hallway: Bright, 4000K, circadian activation<br>
-                               ↓<br>
-                               <strong>8:00 AM</strong> — Breakfast terrace: Daylight exposure, dopamine peak</p>
-                               <p>Each step supports the biological trajectory from sleep → wakefulness.</p>
-                               <p>If you skip a step (bedroom dim → hallway bright, no gradient), you create a physiological jolt. Cortisol spikes. Alertness crashes 20 minutes later.</p>
-                               <p>We design for the journey, not the destination.</p>
-                           </div>
-                       </div>
-                   </div>
-
-                   <div class="pt-10 mt-4 border-t border-black/5">
-                       <a href="mailto:hello@elixlight.com" class="link-underline text-[1rem] md:text-[1.15rem] font-medium text-black">
-                           Let's talk about your project →
-                       </a>
-                   </div>
-               </div>
-           </section>
-
-           <section class="px-6 md:px-10 py-20 md:py-28 border-t border-black/5">
-               <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
-                   <div class="md:col-span-5 reveal">
-                       <h2 class="text-[2rem] md:text-[3rem] font-medium leading-[1.05] tracking-tight">
-                           Final<br>Note
-                       </h2>
-                   </div>
-                   <div class="md:col-span-7 reveal space-y-6">
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed">
-                           Lighting decisions are made for every project in development, intentionally or not.
-                       </p>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed">
-                           The question isn't whether those decisions will affect guest biology.
-                           <span class="block text-black font-medium mt-1">They will.</span>
-                       </p>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed">
-                           The question is whether they're aligned with your experience goals, your differentiation strategy, and your revenue model.
-                       </p>
-                       <p class="text-[0.9rem] text-[#555] leading-relaxed">
-                           Or whether they're leaving that on the table.
-                       </p>
-                   </div>
-               </div>
-           </section>
-
-           <section id="contact" class="bg-lime-brand px-6 md:px-10 py-20 md:py-28">
-               <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 items-start">
-                   <div class="md:col-span-7 reveal">
-                       <h2 class="text-[2rem] md:text-[3.5rem] font-medium leading-[1.05] tracking-tight mb-6">
-                           Let's talk
-                       </h2>
-                       <p class="text-[0.9rem] text-black/70 leading-relaxed max-w-md">
-                           Reach out for any questions, visions or upcoming projects to explore how we can craft an exquisite path forward together.
-                       </p>
-                   </div>
-                   <div class="md:col-span-5 reveal space-y-6" style="transition-delay: 0.1s">
-                       <a href="collabs/" class="btn-pill inline-block bg-black text-white text-[0.8rem] font-medium px-6 py-3 rounded-full">
-                           Get a Quote →
-                        </a>
-                       <p class="text-[0.75rem] text-black/50">
-                           Or reach us directly at <a href="mailto:hello@elixlight.com" class="link-underline font-medium text-black/70">hello@elixlight.com</a>
-                       </p>
-                   </div>
-               </div>
-           </section>
-
-           <footer class="px-6 md:px-10 py-8 border-t border-black/5 flex justify-center items-center">
-               <p class="text-[0.75rem] text-[#888]">© 2024 ELIXLIGHT. All rights reserved.</p>
-           </footer>
-       </div>
-   </div>
-
-   <script>
-       const observer = new IntersectionObserver((entries) => {
-           entries.forEach(entry => {
-               if (entry.isIntersecting) {
-                   entry.target.classList.add('visible');
-               }
-           });
-       }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-       document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {
-           anchor.addEventListener('click', function (e) {
-               if (this.getAttribute('href') !== '#') {
-                   e.preventDefault();
-                   const target = document.querySelector(this.getAttribute('href'));
-                   if (target) {
-                       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                   }
-               }
-           });
-       });
-
-       function toggleFaq(button) {
-           const item = button.parentElement;
-           const wasActive = item.classList.contains('active');
-           
-           document.querySelectorAll('.faq-item.active').forEach(activeItem => {
-               activeItem.classList.remove('active');
-           });
-           
-           if (!wasActive) {
-               item.classList.add('active');
-           }
-       }
-   </script>
 </body>
-</html>
+</html>'''
+
+with open('/mnt/agents/output/elixlight.html', 'w', encoding='utf-8') as f:
+    f.write(html_code)
+
+print("Saved to /mnt/agents/output/elixlight.html")
+print(f"File size: {len(html_code)} characters")
