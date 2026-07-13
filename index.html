@@ -59,181 +59,282 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 64px;
+    padding: 48px;
     border-right: 1px solid rgba(255,255,255,0.06);
     position: relative;
     overflow: hidden;
+    gap: 24px;
   }
 
-  /* DAY/NIGHT CYCLE */
-  .cycle-container {
+  /* ===== ARCHITECTURAL DRAWING ===== */
+  .arch-container {
     position: relative;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
+    width: 320px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .arch-view {
+    position: relative;
+    border: 1px solid rgba(232,228,223,0.15);
+    background: rgba(20,18,16,0.6);
     overflow: hidden;
-    background: #0d1b2a;
-    box-shadow: 0 0 60px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,0,0,0.3);
   }
-  .sky {
+  .arch-view-label {
     position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    transition: background 2s ease;
+    top: 6px;
+    left: 8px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(232,228,223,0.3);
+    z-index: 10;
   }
-  .sky::after {
+  .arch-view-scale {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-size: 9px;
+    color: rgba(232,228,223,0.2);
+    z-index: 10;
+    font-family: monospace;
+  }
+
+  /* Plan view (top) */
+  .arch-plan {
+    height: 200px;
+    border-radius: 8px;
+  }
+  .plan-room {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid rgba(232,228,223,0.2);
+    border-radius: 4px;
+  }
+  .plan-wall {
+    position: absolute;
+    background: rgba(232,228,223,0.12);
+  }
+  .plan-wall-thick { background: rgba(232,228,223,0.2); }
+  .plan-window {
+    position: absolute;
+    background: rgba(135,206,235,0.08);
+    border: 1px dashed rgba(135,206,235,0.25);
+  }
+  .plan-door {
+    position: absolute;
+    background: rgba(232,228,223,0.06);
+    border: 1px solid rgba(232,228,223,0.15);
+  }
+  .plan-bed {
+    position: absolute;
+    background: rgba(232,228,223,0.06);
+    border: 1px solid rgba(232,228,223,0.12);
+    border-radius: 2px;
+  }
+  .plan-bed::after {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(0,0,0,0.4) 100%);
-  }
-  .sun-moon {
-    position: absolute;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    transition: all 2s ease;
-    z-index: 2;
-  }
-  .sun-moon.glow {
-    box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
-  }
-  .stars {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 2s ease;
-    z-index: 1;
-  }
-  .star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0.8;
-  }
-  .clouds {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    opacity: 0;
-    transition: opacity 2s ease;
-    z-index: 1;
-  }
-  .cloud {
-    position: absolute;
-    background: rgba(255,255,255,0.15);
-    border-radius: 50px;
-    transition: opacity 2s ease;
-  }
-  .horizon-line {
-    position: absolute;
-    bottom: 35%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: rgba(255,255,255,0.08);
-    z-index: 2;
-  }
-  .landscape {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    top: 2px;
+    left: 2px;
+    right: 2px;
     height: 35%;
-    background: linear-gradient(to top, #0a0a0a 0%, transparent 100%);
-    z-index: 3;
-    border-radius: 0 0 50% 50% / 0 0 20% 20%;
+    background: rgba(232,228,223,0.08);
+    border-radius: 1px;
   }
-  .landscape::before {
-    content: '';
+  .plan-fixture {
     position: absolute;
-    bottom: 0;
-    left: -20%;
-    width: 60%;
-    height: 60%;
-    background: #0f0f0f;
-    border-radius: 50% 50% 0 0;
-    transform: translateY(20%);
+    border-radius: 50%;
+    transition: all 0.6s ease;
   }
-  .landscape::after {
-    content: '';
+  .plan-fixture.on {
+    background: #E87B3C;
+    box-shadow: 0 0 12px rgba(232,123,60,0.4), 0 0 30px rgba(232,123,60,0.15);
+  }
+  .plan-fixture.off {
+    background: rgba(232,228,223,0.1);
+    box-shadow: none;
+  }
+  .plan-fixture-dim {
+    background: rgba(232,123,60,0.3) !important;
+    box-shadow: 0 0 6px rgba(232,123,60,0.15) !important;
+  }
+  .plan-fixture-label {
     position: absolute;
-    bottom: 0;
-    right: -10%;
-    width: 50%;
-    height: 45%;
-    background: #0c0c0c;
-    border-radius: 50% 50% 0 0;
-    transform: translateY(15%);
+    font-size: 8px;
+    color: rgba(232,228,223,0.35);
+    white-space: nowrap;
+    font-family: monospace;
+    letter-spacing: 0.5px;
   }
-  .time-display {
-    margin-top: 32px;
+  .plan-light-beam {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,123,60,0.12) 0%, transparent 70%);
+    transition: all 0.6s ease;
+    pointer-events: none;
+  }
+  .plan-dimension {
+    position: absolute;
+    font-size: 8px;
+    color: rgba(232,228,223,0.2);
+    font-family: monospace;
+  }
+  .plan-north {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 10px;
+    color: rgba(232,228,223,0.25);
+  }
+  .plan-north-arrow {
+    display: inline-block;
+    transform: rotate(-45deg);
+    margin-right: 2px;
+  }
+
+  /* Section view (side) */
+  .arch-section {
+    height: 140px;
+    border-radius: 8px;
+  }
+  .sect-floor {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: rgba(232,228,223,0.2);
+  }
+  .sect-ceiling {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    right: 24px;
+    height: 1px;
+    background: rgba(232,228,223,0.15);
+  }
+  .sect-wall-left {
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    left: 24px;
+    width: 1px;
+    background: rgba(232,228,223,0.15);
+  }
+  .sect-wall-right {
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    right: 24px;
+    width: 1px;
+    background: rgba(232,228,223,0.15);
+  }
+  .sect-bed {
+    position: absolute;
+    bottom: 25px;
+    left: 30%;
+    width: 28%;
+    height: 28px;
+    background: rgba(232,228,223,0.05);
+    border: 1px solid rgba(232,228,223,0.1);
+    border-radius: 2px 2px 0 0;
+  }
+  .sect-bed-head {
+    position: absolute;
+    bottom: 25px;
+    left: 30%;
+    width: 4px;
+    height: 32px;
+    background: rgba(232,228,223,0.08);
+    border-radius: 1px 0 0 0;
+  }
+  .sect-person {
+    position: absolute;
+    bottom: 25px;
+    left: 38%;
+    width: 14px;
+    height: 22px;
+    background: rgba(232,228,223,0.08);
+    border-radius: 7px 7px 2px 2px;
+  }
+  .sect-person-head {
+    position: absolute;
+    bottom: 48px;
+    left: 40%;
+    width: 10px;
+    height: 10px;
+    background: rgba(232,228,223,0.1);
+    border-radius: 50%;
+  }
+  .sect-fixture {
+    position: absolute;
+    border-radius: 2px;
+    transition: all 0.6s ease;
+  }
+  .sect-fixture.on {
+    background: #E87B3C;
+    box-shadow: 0 0 8px rgba(232,123,60,0.3), 0 0 20px rgba(232,123,60,0.1);
+  }
+  .sect-fixture.off {
+    background: rgba(232,228,223,0.1);
+    box-shadow: none;
+  }
+  .sect-fixture-dim {
+    background: rgba(232,123,60,0.25) !important;
+    box-shadow: 0 0 4px rgba(232,123,60,0.1) !important;
+  }
+  .sect-light-cone {
+    position: absolute;
+    transition: all 0.6s ease;
+    pointer-events: none;
+  }
+  .sect-light-cone.on {
+    background: linear-gradient(180deg, rgba(232,123,60,0.15) 0%, rgba(232,123,60,0.03) 100%);
+  }
+  .sect-light-cone.off {
+    background: transparent;
+  }
+  .sect-light-cone-dim {
+    background: linear-gradient(180deg, rgba(232,123,60,0.06) 0%, transparent 100%) !important;
+  }
+  .sect-height-mark {
+    position: absolute;
+    font-size: 8px;
+    color: rgba(232,228,223,0.2);
+    font-family: monospace;
+  }
+  .sect-height-line {
+    position: absolute;
+    width: 1px;
+    background: rgba(232,228,223,0.1);
+  }
+
+  /* Cycle info below drawing */
+  .cycle-info {
+    text-align: center;
+    margin-top: 8px;
+  }
+  .cycle-time {
     font-family: 'SF Mono', monospace;
     font-size: 13px;
-    color: rgba(232,228,223,0.5);
+    color: #E87B3C;
     letter-spacing: 2px;
-    text-align: center;
-    transition: color 2s ease;
+    margin-bottom: 4px;
   }
-  .time-label {
-    margin-top: 6px;
+  .cycle-label {
     font-size: 11px;
-    color: rgba(232,228,223,0.3);
+    color: rgba(232,228,223,0.35);
+    letter-spacing: 0.5px;
+  }
+  .cycle-scene {
+    font-size: 10px;
+    color: rgba(232,228,223,0.25);
+    margin-top: 2px;
+    text-transform: uppercase;
     letter-spacing: 1px;
   }
-
-  /* Time states */
-  .time-dawn .sky { background: linear-gradient(180deg, #4a3b52 0%, #c97b5a 40%, #e8a87c 70%, #f4d03f 100%); }
-  .time-dawn .sun-moon { background: #ff9a56; color: #ff9a56; top: 55%; left: 15%; }
-  .time-dawn .stars { opacity: 0; }
-  .time-dawn .clouds { opacity: 0.4; }
-  .time-dawn .time-display { color: #e8a87c; }
-
-  .time-morning .sky { background: linear-gradient(180deg, #5b9bd5 0%, #87ceeb 40%, #b8e6f0 70%, #fff8dc 100%); }
-  .time-morning .sun-moon { background: #ffd700; color: #ffd700; top: 20%; left: 35%; }
-  .time-morning .stars { opacity: 0; }
-  .time-morning .clouds { opacity: 0.6; }
-  .time-morning .time-display { color: #87ceeb; }
-
-  .time-midday .sky { background: linear-gradient(180deg, #1e90ff 0%, #5b9bd5 40%, #87ceeb 70%, #e0f6ff 100%); }
-  .time-midday .sun-moon { background: #fff5e6; color: #fff5e6; top: 8%; left: 50%; transform: translateX(-50%); }
-  .time-midday .stars { opacity: 0; }
-  .time-midday .clouds { opacity: 0.5; }
-  .time-midday .time-display { color: #87ceeb; }
-
-  .time-afternoon .sky { background: linear-gradient(180deg, #4a90d9 0%, #7eb8da 40%, #f0d78c 70%, #f4a460 100%); }
-  .time-afternoon .sun-moon { background: #ffa500; color: #ffa500; top: 25%; left: 65%; }
-  .time-afternoon .stars { opacity: 0; }
-  .time-afternoon .clouds { opacity: 0.3; }
-  .time-afternoon .time-display { color: #f0d78c; }
-
-  .time-sunset .sky { background: linear-gradient(180deg, #2d1b4e 0%, #8b4513 30%, #e85d04 55%, #ff6b35 75%, #ffb347 100%); }
-  .time-sunset .sun-moon { background: #ff4500; color: #ff4500; top: 50%; left: 80%; }
-  .time-sunset .stars { opacity: 0.2; }
-  .time-sunset .clouds { opacity: 0.2; }
-  .time-sunset .time-display { color: #ff6b35; }
-
-  .time-evening .sky { background: linear-gradient(180deg, #0f0f23 0%, #1a1a3e 30%, #2d1b4e 55%, #4a1c40 80%, #1a0a2e 100%); }
-  .time-evening .sun-moon { background: #c0c0c0; color: #c0c0c0; top: 15%; left: 70%; width: 28px; height: 28px; }
-  .time-evening .stars { opacity: 0.6; }
-  .time-evening .clouds { opacity: 0; }
-  .time-evening .time-display { color: #9b7cb6; }
-
-  .time-night .sky { background: linear-gradient(180deg, #050508 0%, #0a0a1a 30%, #0f0f2d 60%, #1a0a2e 100%); }
-  .time-night .sun-moon { background: #e8e8e8; color: #e8e8e8; top: 12%; left: 75%; width: 24px; height: 24px; }
-  .time-night .stars { opacity: 1; }
-  .time-night .clouds { opacity: 0; }
-  .time-night .time-display { color: rgba(232,228,223,0.4); }
-
-  .time-late .sky { background: linear-gradient(180deg, #020204 0%, #050510 40%, #08081a 70%, #0d0d2a 100%); }
-  .time-late .sun-moon { background: #f0f0f0; color: #f0f0f0; top: 8%; left: 60%; width: 22px; height: 22px; }
-  .time-late .stars { opacity: 1; }
-  .time-late .clouds { opacity: 0; }
-  .time-late .time-display { color: rgba(232,228,223,0.3); }
 
   /* TOOLS LIST */
   .hero-tools {
@@ -526,7 +627,7 @@
     .nav-links { gap: 24px; }
     .hero-grid { grid-template-columns: 1fr; }
     .hero-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 48px 24px; }
-    .cycle-container { width: 240px; height: 240px; }
+    .arch-container { transform: scale(0.9); }
     .explore-grid { grid-template-columns: 1fr 1fr; }
     .podcast-hero { grid-template-columns: 1fr; }
     .quiz-grid { grid-template-columns: 1fr; }
@@ -539,7 +640,7 @@
     .podcast-tabs { overflow-x: auto; }
     .podcast-tab { padding: 14px 16px; white-space: nowrap; }
     .footer { flex-direction: column; gap: 12px; text-align: center; }
-    .cycle-container { width: 200px; height: 200px; }
+    .arch-container { transform: scale(0.75); }
   }
 </style>
 </head>
@@ -560,16 +661,116 @@
 <section id="tools" class="section">
   <div class="hero-grid">
     <div class="hero-visual">
-      <div class="cycle-container time-dawn" id="cycle">
-        <div class="sky"></div>
-        <div class="stars" id="stars"></div>
-        <div class="clouds" id="clouds"></div>
-        <div class="sun-moon glow" id="celestial"></div>
-        <div class="horizon-line"></div>
-        <div class="landscape"></div>
+
+      <!-- Architectural Drawing -->
+      <div class="arch-container">
+
+        <!-- Plan View (Top) -->
+        <div class="arch-view arch-plan">
+          <div class="arch-view-label">Plan</div>
+          <div class="arch-view-scale">1:50</div>
+          <div class="plan-north"><span class="plan-north-arrow">➤</span> N</div>
+
+          <!-- Room outline -->
+          <div class="plan-room"></div>
+
+          <!-- Walls -->
+          <div class="plan-wall plan-wall-thick" style="top:24px; left:24px; right:24px; height:2px;"></div>
+          <div class="plan-wall plan-wall-thick" style="bottom:24px; left:24px; right:24px; height:2px;"></div>
+          <div class="plan-wall plan-wall-thick" style="top:24px; left:24px; bottom:24px; width:2px;"></div>
+          <div class="plan-wall plan-wall-thick" style="top:24px; right:24px; bottom:24px; width:2px;"></div>
+
+          <!-- Window (top wall) -->
+          <div class="plan-window" style="top:23px; left:35%; width:30%; height:4px;"></div>
+
+          <!-- Door (right wall) -->
+          <div class="plan-door" style="top:40%; right:23px; width:4px; height:20%;"></div>
+
+          <!-- Bed -->
+          <div class="plan-bed" style="bottom:28%; left:28%; width:22%; height:18%;"></div>
+
+          <!-- Nightstand -->
+          <div class="plan-bed" style="bottom:28%; left:52%; width:6%; height:8%;"></div>
+
+          <!-- Light fixtures -->
+          <div class="plan-fixture" id="plan-c1" style="top:18%; left:50%; width:10px; height:10px; transform:translateX(-50%);"></div>
+          <div class="plan-fixture-label" style="top:12%; left:52%;">C1</div>
+          <div class="plan-light-beam" id="beam-c1" style="top:18%; left:50%; width:80px; height:80px; transform:translate(-50%,-10%);"></div>
+
+          <div class="plan-fixture" id="plan-c2" style="top:50%; left:18%; width:10px; height:10px; transform:translateX(-50%);"></div>
+          <div class="plan-fixture-label" style="top:48%; left:8%;">C2</div>
+          <div class="plan-light-beam" id="beam-c2" style="top:50%; left:18%; width:60px; height:60px; transform:translate(-50%,-10%);"></div>
+
+          <div class="plan-fixture" id="plan-w1" style="top:50%; right:18%; width:8px; height:8px; transform:translateX(50%);"></div>
+          <div class="plan-fixture-label" style="top:48%; right:8%;">W1</div>
+          <div class="plan-light-beam" id="beam-w1" style="top:50%; right:18%; width:50px; height:50px; transform:translate(50%,-10%);"></div>
+
+          <div class="plan-fixture" id="plan-b1" style="bottom:28%; left:55%; width:6px; height:6px; transform:translateX(-50%);"></div>
+          <div class="plan-fixture-label" style="bottom:24%; left:56%;">B1</div>
+          <div class="plan-light-beam" id="beam-b1" style="bottom:28%; left:55%; width:40px; height:40px; transform:translate(-50%,10%);"></div>
+
+          <div class="plan-fixture" id="plan-t1" style="bottom:15%; left:30%; width:8px; height:8px; transform:translateX(-50%);"></div>
+          <div class="plan-fixture-label" style="bottom:10%; left:31%;">T1</div>
+          <div class="plan-light-beam" id="beam-t1" style="bottom:15%; left:30%; width:50px; height:50px; transform:translate(-50%,10%);"></div>
+
+          <!-- Dimensions -->
+          <div class="plan-dimension" style="top:8px; left:50%; transform:translateX(-50%);">4.2m</div>
+          <div class="plan-dimension" style="left:8px; top:50%; transform:translateY(-50%) rotate(-90deg);">3.6m</div>
+        </div>
+
+        <!-- Section View (Side) -->
+        <div class="arch-view arch-section">
+          <div class="arch-view-label">Section A-A</div>
+          <div class="arch-view-scale">1:50</div>
+
+          <!-- Room boundaries -->
+          <div class="sect-floor"></div>
+          <div class="sect-ceiling"></div>
+          <div class="sect-wall-left"></div>
+          <div class="sect-wall-right"></div>
+
+          <!-- Height marks -->
+          <div class="sect-height-line" style="left:18px; top:24px; bottom:24px;"></div>
+          <div class="sect-height-mark" style="left:10px; top:22px;">2.7m</div>
+          <div class="sect-height-mark" style="left:10px; bottom:22px;">±0.00</div>
+
+          <!-- Bed -->
+          <div class="sect-bed"></div>
+          <div class="sect-bed-head"></div>
+
+          <!-- Person lying -->
+          <div class="sect-person"></div>
+          <div class="sect-person-head"></div>
+
+          <!-- Ceiling fixtures -->
+          <div class="sect-fixture" id="sect-c1" style="top:24px; left:50%; width:14px; height:4px; transform:translateX(-50%);"></div>
+          <div class="sect-light-cone" id="cone-c1" style="top:28px; left:50%; width:100px; height:120px; transform:translateX(-50%);"></div>
+
+          <div class="sect-fixture" id="sect-c2" style="top:24px; left:22%; width:10px; height:4px; transform:translateX(-50%);"></div>
+          <div class="sect-light-cone" id="cone-c2" style="top:28px; left:22%; width:70px; height:100px; transform:translateX(-50%);"></div>
+
+          <!-- Wall fixture -->
+          <div class="sect-fixture" id="sect-w1" style="top:35%; right:24px; width:4px; height:10px; transform:translateX(50%);"></div>
+          <div class="sect-light-cone" id="cone-w1" style="top:35%; right:28px; width:50px; height:60px; transform:translate(0,-50%);"></div>
+
+          <!-- Bedside -->
+          <div class="sect-fixture" id="sect-b1" style="bottom:28%; left:55%; width:6px; height:6px;"></div>
+          <div class="sect-light-cone" id="cone-b1" style="bottom:30%; left:55%; width:30px; height:30px; transform:translate(-50%,0);"></div>
+
+          <!-- Task -->
+          <div class="sect-fixture" id="sect-t1" style="bottom:25%; left:28%; width:8px; height:4px;"></div>
+          <div class="sect-light-cone" id="cone-t1" style="bottom:27%; left:28%; width:40px; height:40px; transform:translate(-50%,0);"></div>
+        </div>
+
       </div>
-      <div class="time-display" id="timeDisplay">05:47 · dawn</div>
-      <div class="time-label" id="timeLabel">light as a biological signal</div>
+
+      <!-- Cycle info -->
+      <div class="cycle-info">
+        <div class="cycle-time" id="cycleTime">06:00</div>
+        <div class="cycle-label" id="cycleLabel">Morning activation — all ceiling lights at 100%</div>
+        <div class="cycle-scene" id="cycleScene">Cortisol Awakening Response</div>
+      </div>
+
     </div>
     <div class="hero-tools">
       <div class="section-label">Tools for Light</div>
@@ -790,63 +991,126 @@
 </footer>
 
 <script>
-  /* DAY/NIGHT CYCLE */
-  const cycle = document.getElementById('cycle');
-  const timeDisplay = document.getElementById('timeDisplay');
-  const timeLabel = document.getElementById('timeLabel');
-  const starsContainer = document.getElementById('stars');
-  const cloudsContainer = document.getElementById('clouds');
+  /* LIGHTING SCENES — Architectural Drawing Cycle */
+  const cycleTime = document.getElementById('cycleTime');
+  const cycleLabel = document.getElementById('cycleLabel');
+  const cycleScene = document.getElementById('cycleScene');
 
-  const phases = [
-    { class: 'time-dawn',      time: '05:47', label: 'dawn — cortisol awakening response',      duration: 3000 },
-    { class: 'time-morning',   time: '08:15', label: 'morning — peak alertness',                duration: 3000 },
-    { class: 'time-midday',    time: '12:30', label: 'midday — maximum melanopic lux',          duration: 3000 },
-    { class: 'time-afternoon', time: '15:45', label: 'afternoon — sustained performance',       duration: 3000 },
-    { class: 'time-sunset',    time: '18:20', label: 'sunset — melatonin onset begins',         duration: 3000 },
-    { class: 'time-evening',   time: '21:00', label: 'evening — wind-down phase',               duration: 3000 },
-    { class: 'time-night',     time: '23:15', label: 'night — circadian nadir',                 duration: 3000 },
-    { class: 'time-late',      time: '02:00', label: 'deep night — complete darkness',          duration: 3000 },
+  // Fixture IDs
+  const planFixtures = {
+    c1: document.getElementById('plan-c1'),
+    c2: document.getElementById('plan-c2'),
+    w1: document.getElementById('plan-w1'),
+    b1: document.getElementById('plan-b1'),
+    t1: document.getElementById('plan-t1'),
+  };
+  const planBeams = {
+    c1: document.getElementById('beam-c1'),
+    c2: document.getElementById('beam-c2'),
+    w1: document.getElementById('beam-w1'),
+    b1: document.getElementById('beam-b1'),
+    t1: document.getElementById('beam-t1'),
+  };
+  const sectFixtures = {
+    c1: document.getElementById('sect-c1'),
+    c2: document.getElementById('sect-c2'),
+    w1: document.getElementById('sect-w1'),
+    b1: document.getElementById('sect-b1'),
+    t1: document.getElementById('sect-t1'),
+  };
+  const sectCones = {
+    c1: document.getElementById('cone-c1'),
+    c2: document.getElementById('cone-c2'),
+    w1: document.getElementById('cone-w1'),
+    b1: document.getElementById('cone-b1'),
+    t1: document.getElementById('cone-t1'),
+  };
+
+  const scenes = [
+    {
+      time: '06:00',
+      label: 'Morning activation — all ceiling lights at 100%, cool white 5600K',
+      scene: 'Cortisol Awakening Response',
+      lights: { c1: 'on', c2: 'on', w1: 'off', b1: 'off', t1: 'off' },
+    },
+    {
+      time: '09:30',
+      label: 'Focused work — task light on, ceiling reduced to 60%',
+      scene: 'Sustained Attention Phase',
+      lights: { c1: 'dim', c2: 'dim', w1: 'off', b1: 'off', t1: 'on' },
+    },
+    {
+      time: '13:00',
+      label: 'Midday peak — maximum melanopic lux, all overhead at 100%',
+      scene: 'Circadian Entrainment',
+      lights: { c1: 'on', c2: 'on', w1: 'off', b1: 'off', t1: 'off' },
+    },
+    {
+      time: '17:00',
+      label: 'Late afternoon — warm shift begins, wall wash at 40%',
+      scene: 'Melanopic Transition',
+      lights: { c1: 'dim', c2: 'dim', w1: 'dim', b1: 'off', t1: 'off' },
+    },
+    {
+      time: '20:00',
+      label: 'Evening wind-down — only wall and bedside, 2200K amber',
+      scene: 'Melatonin Onset Window',
+      lights: { c1: 'off', c2: 'off', w1: 'on', b1: 'on', t1: 'off' },
+    },
+    {
+      time: '22:30',
+      label: 'Pre-sleep — bedside only at 5%, all else off',
+      scene: 'Adenosine Buildup',
+      lights: { c1: 'off', c2: 'off', w1: 'off', b1: 'dim', t1: 'off' },
+    },
+    {
+      time: '00:00',
+      label: 'Sleep — complete darkness, zero lux at eye level',
+      scene: 'Circadian Nadir',
+      lights: { c1: 'off', c2: 'off', w1: 'off', b1: 'off', t1: 'off' },
+    },
+    {
+      time: '03:00',
+      label: 'Deep night — blackout maintained, no light intrusion',
+      scene: 'Growth Hormone Peak',
+      lights: { c1: 'off', c2: 'off', w1: 'off', b1: 'off', t1: 'off' },
+    },
   ];
 
-  // Generate stars
-  for (let i = 0; i < 40; i++) {
-    const star = document.createElement('div');
-    star.className = 'star';
-    star.style.left = Math.random() * 100 + '%';
-    star.style.top = Math.random() * 60 + '%';
-    star.style.opacity = Math.random() * 0.6 + 0.2;
-    star.style.width = Math.random() > 0.8 ? '3px' : '2px';
-    star.style.height = star.style.width;
-    starsContainer.appendChild(star);
+  function setLightState(element, beam, state) {
+    element.classList.remove('on', 'off', 'dim');
+    beam.classList.remove('on', 'off', 'dim');
+    if (state === 'on') {
+      element.classList.add('on');
+      beam.classList.add('on');
+    } else if (state === 'dim') {
+      element.classList.add('dim');
+      beam.classList.add('dim');
+    } else {
+      element.classList.add('off');
+      beam.classList.add('off');
+    }
   }
 
-  // Generate clouds
-  for (let i = 0; i < 5; i++) {
-    const cloud = document.createElement('div');
-    cloud.className = 'cloud';
-    cloud.style.width = (40 + Math.random() * 60) + 'px';
-    cloud.style.height = (12 + Math.random() * 16) + 'px';
-    cloud.style.left = (Math.random() * 80) + '%';
-    cloud.style.top = (20 + Math.random() * 30) + '%';
-    cloudsContainer.appendChild(cloud);
+  let currentScene = 0;
+
+  function applyScene(index) {
+    const s = scenes[index];
+    cycleTime.textContent = s.time;
+    cycleLabel.textContent = s.label;
+    cycleScene.textContent = s.scene;
+
+    Object.keys(s.lights).forEach(key => {
+      setLightState(planFixtures[key], planBeams[key], s.lights[key]);
+      setLightState(sectFixtures[key], sectCones[key], s.lights[key]);
+    });
   }
 
-  let currentPhase = 0;
-
-  function setPhase(index) {
-    const phase = phases[index];
-    cycle.className = 'cycle-container ' + phase.class;
-    timeDisplay.textContent = phase.time + ' · ' + phase.class.replace('time-', '');
-    timeLabel.textContent = phase.label;
-  }
-
-  function nextPhase() {
-    currentPhase = (currentPhase + 1) % phases.length;
-    setPhase(currentPhase);
-  }
-
-  setPhase(0);
-  setInterval(nextPhase, 4000);
+  applyScene(0);
+  setInterval(() => {
+    currentScene = (currentScene + 1) % scenes.length;
+    applyScene(currentScene);
+  }, 4000);
 </script>
 
 </body>
