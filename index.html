@@ -61,30 +61,181 @@
     align-items: center;
     padding: 64px;
     border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
   }
-  .hero-bulb-wrap {
-    width: 120px;
-    height: 120px;
-    border-radius: 16px;
-    background: #1A1510;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-  .hero-bulb {
-    width: 48px;
-    height: 48px;
+
+  /* DAY/NIGHT CYCLE */
+  .cycle-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
-    background: #E87B3C;
-    box-shadow: 0 0 40px rgba(232,123,60,0.3);
+    overflow: hidden;
+    background: #0d1b2a;
+    box-shadow: 0 0 60px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,0,0,0.3);
   }
-  .hero-caption {
-    font-family: monospace;
+  .sky {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    transition: background 2s ease;
+  }
+  .sky::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 30%, transparent 40%, rgba(0,0,0,0.4) 100%);
+  }
+  .sun-moon {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: all 2s ease;
+    z-index: 2;
+  }
+  .sun-moon.glow {
+    box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+  }
+  .stars {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: 1;
+  }
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+  .clouds {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: 1;
+  }
+  .cloud {
+    position: absolute;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50px;
+    transition: opacity 2s ease;
+  }
+  .horizon-line {
+    position: absolute;
+    bottom: 35%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    z-index: 2;
+  }
+  .landscape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background: linear-gradient(to top, #0a0a0a 0%, transparent 100%);
+    z-index: 3;
+    border-radius: 0 0 50% 50% / 0 0 20% 20%;
+  }
+  .landscape::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -20%;
+    width: 60%;
+    height: 60%;
+    background: #0f0f0f;
+    border-radius: 50% 50% 0 0;
+    transform: translateY(20%);
+  }
+  .landscape::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: -10%;
+    width: 50%;
+    height: 45%;
+    background: #0c0c0c;
+    border-radius: 50% 50% 0 0;
+    transform: translateY(15%);
+  }
+  .time-display {
+    margin-top: 32px;
+    font-family: 'SF Mono', monospace;
     font-size: 13px;
     color: rgba(232,228,223,0.5);
+    letter-spacing: 2px;
+    text-align: center;
+    transition: color 2s ease;
+  }
+  .time-label {
+    margin-top: 6px;
+    font-size: 11px;
+    color: rgba(232,228,223,0.3);
     letter-spacing: 1px;
   }
+
+  /* Time states */
+  .time-dawn .sky { background: linear-gradient(180deg, #4a3b52 0%, #c97b5a 40%, #e8a87c 70%, #f4d03f 100%); }
+  .time-dawn .sun-moon { background: #ff9a56; color: #ff9a56; top: 55%; left: 15%; }
+  .time-dawn .stars { opacity: 0; }
+  .time-dawn .clouds { opacity: 0.4; }
+  .time-dawn .time-display { color: #e8a87c; }
+
+  .time-morning .sky { background: linear-gradient(180deg, #5b9bd5 0%, #87ceeb 40%, #b8e6f0 70%, #fff8dc 100%); }
+  .time-morning .sun-moon { background: #ffd700; color: #ffd700; top: 20%; left: 35%; }
+  .time-morning .stars { opacity: 0; }
+  .time-morning .clouds { opacity: 0.6; }
+  .time-morning .time-display { color: #87ceeb; }
+
+  .time-midday .sky { background: linear-gradient(180deg, #1e90ff 0%, #5b9bd5 40%, #87ceeb 70%, #e0f6ff 100%); }
+  .time-midday .sun-moon { background: #fff5e6; color: #fff5e6; top: 8%; left: 50%; transform: translateX(-50%); }
+  .time-midday .stars { opacity: 0; }
+  .time-midday .clouds { opacity: 0.5; }
+  .time-midday .time-display { color: #87ceeb; }
+
+  .time-afternoon .sky { background: linear-gradient(180deg, #4a90d9 0%, #7eb8da 40%, #f0d78c 70%, #f4a460 100%); }
+  .time-afternoon .sun-moon { background: #ffa500; color: #ffa500; top: 25%; left: 65%; }
+  .time-afternoon .stars { opacity: 0; }
+  .time-afternoon .clouds { opacity: 0.3; }
+  .time-afternoon .time-display { color: #f0d78c; }
+
+  .time-sunset .sky { background: linear-gradient(180deg, #2d1b4e 0%, #8b4513 30%, #e85d04 55%, #ff6b35 75%, #ffb347 100%); }
+  .time-sunset .sun-moon { background: #ff4500; color: #ff4500; top: 50%; left: 80%; }
+  .time-sunset .stars { opacity: 0.2; }
+  .time-sunset .clouds { opacity: 0.2; }
+  .time-sunset .time-display { color: #ff6b35; }
+
+  .time-evening .sky { background: linear-gradient(180deg, #0f0f23 0%, #1a1a3e 30%, #2d1b4e 55%, #4a1c40 80%, #1a0a2e 100%); }
+  .time-evening .sun-moon { background: #c0c0c0; color: #c0c0c0; top: 15%; left: 70%; width: 28px; height: 28px; }
+  .time-evening .stars { opacity: 0.6; }
+  .time-evening .clouds { opacity: 0; }
+  .time-evening .time-display { color: #9b7cb6; }
+
+  .time-night .sky { background: linear-gradient(180deg, #050508 0%, #0a0a1a 30%, #0f0f2d 60%, #1a0a2e 100%); }
+  .time-night .sun-moon { background: #e8e8e8; color: #e8e8e8; top: 12%; left: 75%; width: 24px; height: 24px; }
+  .time-night .stars { opacity: 1; }
+  .time-night .clouds { opacity: 0; }
+  .time-night .time-display { color: rgba(232,228,223,0.4); }
+
+  .time-late .sky { background: linear-gradient(180deg, #020204 0%, #050510 40%, #08081a 70%, #0d0d2a 100%); }
+  .time-late .sun-moon { background: #f0f0f0; color: #f0f0f0; top: 8%; left: 60%; width: 22px; height: 22px; }
+  .time-late .stars { opacity: 1; }
+  .time-late .clouds { opacity: 0; }
+  .time-late .time-display { color: rgba(232,228,223,0.3); }
+
+  /* TOOLS LIST */
   .hero-tools {
     padding: 64px 48px;
     display: flex;
@@ -159,20 +310,11 @@
     background: rgba(255,255,255,0.02);
   }
 
-  /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 48px;
-    max-width: 900px;
+  /* ABOUT — NO PHOTO */
+  .about-wrap {
+    max-width: 700px;
     margin: 0 auto;
-  }
-  .about-photo {
-    width: 200px;
-    height: 260px;
-    border-radius: 16px;
-    object-fit: cover;
-    display: block;
+    text-align: center;
   }
   .about-name { font-size: 32px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
   .about-role {
@@ -180,7 +322,7 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     color: rgba(232,228,223,0.4);
-    margin-bottom: 32px;
+    margin-bottom: 40px;
   }
   .about-bio {
     font-size: 16px;
@@ -383,20 +525,21 @@
     .nav { padding: 20px 24px; }
     .nav-links { gap: 24px; }
     .hero-grid { grid-template-columns: 1fr; }
-    .hero-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .about-grid { grid-template-columns: 1fr; text-align: center; }
-    .about-photo { margin: 0 auto; }
+    .hero-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 48px 24px; }
+    .cycle-container { width: 240px; height: 240px; }
     .explore-grid { grid-template-columns: 1fr 1fr; }
     .podcast-hero { grid-template-columns: 1fr; }
     .quiz-grid { grid-template-columns: 1fr; }
     .section-pad { padding: 48px 24px; }
     .podcast-hero, .episodes-wrap, .listen-bar, .subscribe-bar { padding-left: 24px; padding-right: 24px; }
+    .about-wrap { padding: 0 24px; }
   }
   @media (max-width: 600px) {
     .explore-grid { grid-template-columns: 1fr; }
     .podcast-tabs { overflow-x: auto; }
     .podcast-tab { padding: 14px 16px; white-space: nowrap; }
     .footer { flex-direction: column; gap: 12px; text-align: center; }
+    .cycle-container { width: 200px; height: 200px; }
   }
 </style>
 </head>
@@ -417,10 +560,16 @@
 <section id="tools" class="section">
   <div class="hero-grid">
     <div class="hero-visual">
-      <div class="hero-bulb-wrap">
-        <div class="hero-bulb"></div>
+      <div class="cycle-container time-dawn" id="cycle">
+        <div class="sky"></div>
+        <div class="stars" id="stars"></div>
+        <div class="clouds" id="clouds"></div>
+        <div class="sun-moon glow" id="celestial"></div>
+        <div class="horizon-line"></div>
+        <div class="landscape"></div>
       </div>
-      <div class="hero-caption">00:00 · sleep — complete darkness</div>
+      <div class="time-display" id="timeDisplay">05:47 · dawn</div>
+      <div class="time-label" id="timeLabel">light as a biological signal</div>
     </div>
     <div class="hero-tools">
       <div class="section-label">Tools for Light</div>
@@ -475,17 +624,14 @@
   </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ABOUT — NO PHOTO -->
 <section id="about" class="section" style="padding:80px 48px;">
-  <div class="about-grid">
-    <img src="images/elisavet.jpg" alt="Elisavet Zioga" class="about-photo">
-    <div>
-      <h2 class="about-name">Elisavet Zioga</h2>
-      <div class="about-role">Biological Lighting Strategist</div>
-      <p class="about-bio">I work at the intersection of circadian biology and architectural design. My work translates neuroscience into lighting strategy — so the spaces people live, sleep, and work in support their biology rather than fight it.</p>
-      <p class="about-bio">Light is one of the most powerful tools we have for nervous system regulation. Most spaces use it by accident. I help design it with intention.</p>
-      <p class="about-bio">The transformation is yours. I just make sure the environment supports it.</p>
-    </div>
+  <div class="about-wrap">
+    <h2 class="about-name">Elisavet Zioga</h2>
+    <div class="about-role">Biological Lighting Strategist</div>
+    <p class="about-bio">I work at the intersection of circadian biology and architectural design. My work translates neuroscience into lighting strategy — so the spaces people live, sleep, and work in support their biology rather than fight it.</p>
+    <p class="about-bio">Light is one of the most powerful tools we have for nervous system regulation. Most spaces use it by accident. I help design it with intention.</p>
+    <p class="about-bio">The transformation is yours. I just make sure the environment supports it.</p>
   </div>
 </section>
 
@@ -642,6 +788,66 @@
   <div class="footer-copy">© 2025<br>ELIXLIGHT</div>
   <a href="mailto:hello@elixlight.com" class="footer-email">hello@elixlight.com</a>
 </footer>
+
+<script>
+  /* DAY/NIGHT CYCLE */
+  const cycle = document.getElementById('cycle');
+  const timeDisplay = document.getElementById('timeDisplay');
+  const timeLabel = document.getElementById('timeLabel');
+  const starsContainer = document.getElementById('stars');
+  const cloudsContainer = document.getElementById('clouds');
+
+  const phases = [
+    { class: 'time-dawn',      time: '05:47', label: 'dawn — cortisol awakening response',      duration: 3000 },
+    { class: 'time-morning',   time: '08:15', label: 'morning — peak alertness',                duration: 3000 },
+    { class: 'time-midday',    time: '12:30', label: 'midday — maximum melanopic lux',          duration: 3000 },
+    { class: 'time-afternoon', time: '15:45', label: 'afternoon — sustained performance',       duration: 3000 },
+    { class: 'time-sunset',    time: '18:20', label: 'sunset — melatonin onset begins',         duration: 3000 },
+    { class: 'time-evening',   time: '21:00', label: 'evening — wind-down phase',               duration: 3000 },
+    { class: 'time-night',     time: '23:15', label: 'night — circadian nadir',                 duration: 3000 },
+    { class: 'time-late',      time: '02:00', label: 'deep night — complete darkness',          duration: 3000 },
+  ];
+
+  // Generate stars
+  for (let i = 0; i < 40; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 60 + '%';
+    star.style.opacity = Math.random() * 0.6 + 0.2;
+    star.style.width = Math.random() > 0.8 ? '3px' : '2px';
+    star.style.height = star.style.width;
+    starsContainer.appendChild(star);
+  }
+
+  // Generate clouds
+  for (let i = 0; i < 5; i++) {
+    const cloud = document.createElement('div');
+    cloud.className = 'cloud';
+    cloud.style.width = (40 + Math.random() * 60) + 'px';
+    cloud.style.height = (12 + Math.random() * 16) + 'px';
+    cloud.style.left = (Math.random() * 80) + '%';
+    cloud.style.top = (20 + Math.random() * 30) + '%';
+    cloudsContainer.appendChild(cloud);
+  }
+
+  let currentPhase = 0;
+
+  function setPhase(index) {
+    const phase = phases[index];
+    cycle.className = 'cycle-container ' + phase.class;
+    timeDisplay.textContent = phase.time + ' · ' + phase.class.replace('time-', '');
+    timeLabel.textContent = phase.label;
+  }
+
+  function nextPhase() {
+    currentPhase = (currentPhase + 1) % phases.length;
+    setPhase(currentPhase);
+  }
+
+  setPhase(0);
+  setInterval(nextPhase, 4000);
+</script>
 
 </body>
 </html>
