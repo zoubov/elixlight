@@ -168,13 +168,12 @@
     margin: 0 auto;
   }
   .about-photo {
-  width: 200px;
-  height: 260px;
-  border-radius: 16px;
-  object-fit: cover;
-  display: block;
-  object-fit: cover
-}
+    width: 200px;
+    height: 260px;
+    border-radius: 16px;
+    object-fit: cover;
+    display: block;
+  }
   .about-name { font-size: 32px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
   .about-role {
     font-size: 12px;
@@ -386,7 +385,7 @@
     .hero-grid { grid-template-columns: 1fr; }
     .hero-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .about-grid { grid-template-columns: 1fr; text-align: center; }
-   .about-photo { margin: 0 auto; }
+    .about-photo { margin: 0 auto; }
     .explore-grid { grid-template-columns: 1fr 1fr; }
     .podcast-hero { grid-template-columns: 1fr; }
     .quiz-grid { grid-template-columns: 1fr; }
@@ -479,10 +478,7 @@
 <!-- ABOUT -->
 <section id="about" class="section" style="padding:80px 48px;">
   <div class="about-grid">
-    
-     <img src="images/elisavet.jpg" alt="Elisavet Zioga" class="about-photo">
-    
-   
+    <img src="images/elisavet.jpg" alt="Elisavet Zioga" class="about-photo">
     <div>
       <h2 class="about-name">Elisavet Zioga</h2>
       <div class="about-role">Biological Lighting Strategist</div>
@@ -648,10 +644,4 @@
 </footer>
 
 </body>
-</html>'''
-
-with open('/mnt/agents/output/elixlight.html', 'w', encoding='utf-8') as f:
-    f.write(html_code)
-
-print("Saved to /mnt/agents/output/elixlight.html")
-print(f"File size: {len(html_code)} characters")
+</html>
