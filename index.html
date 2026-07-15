@@ -10,7 +10,7 @@
   :root {
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
     --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-    --radius: 8px;
+    --radius: 6px;
     --surface-0: #0A0A0A;
     --surface-1: #11100E;
     --surface-2: #1A1814;
@@ -23,6 +23,7 @@
     --border-stronger: #5A5450;
     --accent: #E87B3C;
     --accent-dim: rgba(232,123,60,0.12);
+    --dot-glow: rgba(255,255,255,0.08);
   }
 
   @media (prefers-color-scheme: light) {
@@ -39,6 +40,7 @@
       --border-stronger: #A09A90;
       --accent: #D4692A;
       --accent-dim: rgba(212,105,42,0.10);
+      --dot-glow: rgba(0,0,0,0.06);
     }
   }
 
@@ -55,6 +57,7 @@
   }
 
   a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
 
   .w { max-width: 1000px; margin: 0 auto; }
 
@@ -72,9 +75,9 @@
   /* ========== HERO ========== */
   .hero {
     display: grid;
-    grid-template-columns: 220px 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     border-bottom: 0.5px solid var(--border);
-    min-height: 420px;
+    min-height: 520px;
   }
   .hero-visual {
     border-right: 0.5px solid var(--border);
@@ -82,15 +85,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2.5rem;
-    gap: 1.25rem;
+    padding: 3rem 2rem;
+    gap: 1.5rem;
     background: var(--surface-1);
   }
   .room-box {
     position: relative;
-    width: 160px;
-    height: 160px;
-    border: 1.5px solid var(--text-muted);
+    width: 180px;
+    height: 180px;
+    border: 1.5px solid var(--border-strong);
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -98,64 +101,25 @@
     transition: background 1.2s ease;
   }
   .ldot {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     transition: background 1.2s ease, box-shadow 1.2s ease;
   }
   .tline {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-muted);
     letter-spacing: 0.1em;
     font-family: var(--font-mono);
   }
   .slabel {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--text-secondary);
     text-align: center;
   }
 
-  /* Hero quiz */
-  .hero-quiz {
-    border-right: 0.5px solid var(--border);
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1.25rem;
-  }
-  .hq-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
-  .hq-q { font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-primary); }
-  .hq-opts { display: flex; flex-direction: column; gap: 0.5rem; }
-  .hq-opt {
-    text-align: left;
-    padding: 0.65rem 0.9rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 13px;
-    color: var(--text-primary);
-    background: var(--surface-2);
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    font-family: inherit;
-  }
-  .hq-opt:hover { border-color: var(--border-strong); background: var(--surface-1); }
-  .hq-opt.picked { border-color: var(--border-stronger); background: var(--surface-1); }
-  .hq-reveal {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    padding: 0.9rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
-    display: none;
-  }
-  .hq-reveal.show { display: block; }
-
-  /* Hero services */
   .hero-services {
-    padding: 2.5rem;
+    padding: 3rem 2.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -165,70 +129,94 @@
     font-size: 10px;
     color: var(--text-muted);
     letter-spacing: 0.12em;
-    padding: 0.75rem 0 0.4rem;
+    padding: 1rem 0 0.5rem;
     border-top: 0.5px solid var(--border);
     margin-top: 0.75rem;
+    text-transform: uppercase;
   }
   .sg-label:first-child { border-top: none; margin-top: 0; padding-top: 0; }
   .svc {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0.55rem 0;
+    align-items: flex-start;
+    padding: 0.75rem 0;
     cursor: pointer;
     transition: padding-left 0.15s;
+    gap: 1rem;
   }
   .svc:hover { padding-left: 0.35rem; }
-  .svc-name { font-size: 13px; color: var(--text-primary); }
-  .svc-price { font-size: 12px; color: var(--text-muted); }
+  .svc-name { font-size: 14px; color: var(--text-primary); line-height: 1.4; flex: 1; }
+  .svc-price { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
 
-  /* ========== BELIEF / QUIZ SECTION ========== */
-  .belief {
-    padding: 3rem 1.5rem;
+  /* ========== TRUE OR FALSE ========== */
+  .truefalse {
+    padding: 4rem 1.5rem;
     border-bottom: 0.5px solid var(--border);
+    text-align: center;
   }
-  .bl-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
-  .bl-q { font-size: 22px; font-weight: 500; line-height: 1.3; margin-bottom: 1.75rem; max-width: 560px; }
-  .bl-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; max-width: 540px; margin-bottom: 1rem; }
-  .bl-opt {
-    padding: 0.75rem 1rem;
-    border: 0.5px solid var(--border);
+  .tf-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .tf-q {
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 2.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .tf-opts {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .tf-btn {
+    padding: 0.75rem 2rem;
+    border: 0.5px solid var(--border-strong);
     border-radius: var(--radius);
-    font-size: 13px;
-    color: var(--text-primary);
-    background: var(--surface-2);
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    text-align: left;
-    font-family: inherit;
-  }
-  .bl-opt:hover { border-color: var(--border-strong); background: var(--surface-1); }
-  .bl-opt.correct { border-color: var(--border-stronger); }
-  .bl-opt.wrong { opacity: 0.5; }
-  .bl-reveal {
     font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-    max-width: 600px;
-    display: none;
-    padding: 1.25rem;
+    color: var(--text-primary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tf-btn:hover { border-color: var(--border-stronger); background: var(--surface-1); }
+  .tf-btn.correct { border-color: var(--border-stronger); background: var(--surface-1); }
+  .tf-btn.wrong { opacity: 0.5; }
+  .tf-reveal {
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    padding: 1.5rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface-1);
-  }
-  .bl-reveal.show { display: block; }
-  .bl-next {
-    margin-top: 1rem;
-    font-size: 13px;
+    font-size: 15px;
+    line-height: 1.8;
     color: var(--text-secondary);
-    cursor: pointer;
-    background: none;
-    border: none;
-    text-decoration: underline;
-    padding: 0;
-    font-family: inherit;
+    text-align: left;
+    display: none;
   }
-  .bl-next:hover { color: var(--text-primary); }
+  .tf-reveal.show { display: block; }
+  .tf-next {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .tf-next:hover { border-color: var(--border-stronger); background: var(--surface-1); }
 
   /* ========== DID YOU KNOW ========== */
   .did-you-know {
@@ -242,7 +230,7 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; font-size: 18px;
   }
-  .dyk-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .dyk-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
   .dyk-text { font-size: 16px; line-height: 1.6; color: var(--text-primary); }
 
   /* ========== ABOUT ========== */
@@ -273,7 +261,7 @@
     padding: 3rem 1.5rem;
     border-bottom: 0.5px solid var(--border);
   }
-  .explore-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .explore-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
   .explore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
   .explore-card {
     display: block; padding: 1.5rem;
@@ -306,7 +294,7 @@
     display: grid; grid-template-columns: 1fr 260px; gap: 3rem;
     max-width: 900px; margin: 0 auto;
   }
-  .podcast-hero .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.25rem; }
+  .podcast-hero .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.25rem; }
   .podcast-hero h2 { font-size: 32px; font-weight: 500; line-height: 1.2; margin-bottom: 1.25rem; }
   .podcast-hero p { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 1rem; max-width: 480px; }
   .podcast-hero .meta { font-size: 13px; color: var(--text-muted); }
@@ -323,7 +311,7 @@
   .podcast-cover-inner .subtitle { font-size: 12px; color: var(--text-muted); }
 
   .episodes { padding: 0 1.5rem 3rem; max-width: 900px; margin: 0 auto; }
-  .episodes .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .episodes .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
   .episode-list { border-top: 0.5px solid var(--border); }
   .episode {
     display: grid; grid-template-columns: 48px 1fr; gap: 1.25rem;
@@ -338,7 +326,7 @@
     padding: 1.5rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
     display: flex; align-items: center; gap: 1rem;
   }
-  .listen-on .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
+  .listen-on .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
   .listen-btn {
     padding: 0.5rem 1rem; border: 0.5px solid var(--border); border-radius: 6px;
     color: var(--text-primary); font-size: 13px; transition: all 0.2s;
@@ -369,19 +357,21 @@
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; }
     .hero-visual { border-right: none; border-bottom: 0.5px solid var(--border); }
-    .hero-quiz { border-right: none; border-bottom: 0.5px solid var(--border); }
     .about-inner { grid-template-columns: 1fr; }
     .about-photo { margin: 0 auto; }
     .explore-grid { grid-template-columns: 1fr 1fr; }
     .podcast-hero { grid-template-columns: 1fr; }
     .podcast-cover { order: -1; }
-    .bl-opts { grid-template-columns: 1fr; }
+    .tf-opts { flex-direction: column; align-items: center; }
+    .tf-opts .tf-btn { width: 200px; }
   }
   @media (max-width: 560px) {
     .explore-grid { grid-template-columns: 1fr; }
     .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
     .podcast-tabs a { padding: 1rem 0.75rem; font-size: 12px; }
     .subscribe-cta { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    .tf-q { font-size: 20px; }
+    .hero-services { padding: 2rem 1.5rem; }
   }
 </style>
 </head>
@@ -403,50 +393,55 @@
     <div class="room-box" id="box">
       <div class="ldot" id="dot"></div>
     </div>
-    <div class="tline" id="tl">05:47</div>
-    <div class="slabel" id="sl">dawn — cortisol awakening response</div>
-  </div>
-
-  <!-- Quiz -->
-  <div class="hero-quiz">
-    <p class="hq-label">ONE QUESTION</p>
-    <p class="hq-q">What time does your body start preparing for sleep?</p>
-    <div class="hq-opts">
-      <button class="hq-opt" onclick="hqAnswer(this,'wrong')">When you feel tired</button>
-      <button class="hq-opt" onclick="hqAnswer(this,'wrong')">When you get into bed</button>
-      <button class="hq-opt" onclick="hqAnswer(this,'right')">2–3 hours before you sleep</button>
-      <button class="hq-opt" onclick="hqAnswer(this,'wrong')">When you turn off the lights</button>
-    </div>
-    <div class="hq-reveal" id="hq-rev">
-      Your body begins releasing melatonin 2–3 hours before your habitual sleep time — whether or not the lights are off. The light you sit under during that window determines how well you sleep. Most people spend those hours in the brightest, coolest light of their entire day.
-    </div>
+    <div class="tline" id="tl">19:00</div>
+    <div class="slabel" id="sl">evening — melatonin begins</div>
   </div>
 
   <!-- Services -->
   <div class="hero-services">
-    <p class="sg-label">FOR YOUR HOME</p>
-    <div class="svc"><span class="svc-name">learn how your home light affects you</span><span class="svc-price">€19 →</span></div>
-    <div class="svc"><span class="svc-name">find out what your space is doing to you</span><span class="svc-price">€29 →</span></div>
-    <p class="sg-label">FOR YOUR HOTEL</p>
-    <div class="svc"><span class="svc-name">fix your guest rooms in 48 hours</span><span class="svc-price">€297 →</span></div>
-    <div class="svc"><span class="svc-name">assess what's possible and what it costs</span><span class="svc-price">from €3,500 →</span></div>
+    <p class="sg-label">FOR YOURSELF</p>
+    <div class="svc">
+      <span class="svc-name">discover what your light is doing to you</span>
+      <span class="svc-price">€29 →</span>
+    </div>
+    <div class="svc">
+      <span class="svc-name">learn to design your own space</span>
+      <span class="svc-price">€19 →</span>
+    </div>
+
+    <p class="sg-label">FOR YOUR HOME OR HOTEL</p>
+    <div class="svc">
+      <span class="svc-name">reset your sleep in 48 hours</span>
+      <span class="svc-price">€297 →</span>
+    </div>
+    <div class="svc">
+      <span class="svc-name">understand what's happening in your space</span>
+      <span class="svc-price">from €3,500 →</span>
+    </div>
+
     <p class="sg-label">FOR YOUR PROJECT</p>
-    <div class="svc"><span class="svc-name">define the biological intent before design starts</span><span class="svc-price">from €8,000 →</span></div>
-    <div class="svc"><span class="svc-name">confirm your specs hit biological targets</span><span class="svc-price">from €4,000 →</span></div>
+    <div class="svc">
+      <span class="svc-name">give your design a biological intent</span>
+      <span class="svc-price">from €8,000 →</span>
+    </div>
+    <div class="svc">
+      <span class="svc-name">validate your specs before you build</span>
+      <span class="svc-price">from €4,000 →</span>
+    </div>
   </div>
 
 </section>
 
-<!-- ========== BELIEF / QUIZ SECTION ========== -->
-<section class="belief">
-  <p class="bl-label" id="bl-counter">QUESTION 1 OF 5</p>
-  <p class="bl-q" id="bl-q">Does dimming your lights at night prepare your body for sleep?</p>
-  <div class="bl-opts" id="bl-opts">
-    <button class="bl-opt" onclick="blAnswer(this,true)">Yes — less light means better sleep</button>
-    <button class="bl-opt" onclick="blAnswer(this,false)">Not quite — there's more to it</button>
+<!-- ========== TRUE OR FALSE ========== -->
+<section class="truefalse" id="truefalse">
+  <p class="tf-label" id="tf-counter">TRUE OR FALSE?</p>
+  <h2 class="tf-q" id="tf-q">"A dark bedroom just means turning the lights off."</h2>
+  <div class="tf-opts" id="tf-opts">
+    <button class="tf-btn" onclick="tfAnswer(this,true)">True</button>
+    <button class="tf-btn" onclick="tfAnswer(this,false)">False</button>
   </div>
-  <div class="bl-reveal" id="bl-rev"></div>
-  <button class="bl-next" id="bl-next" style="display:none" onclick="nextBelief()">Next question →</button>
+  <div class="tf-reveal" id="tf-rev"></div>
+  <button class="tf-next" id="tf-next" style="display:none" onclick="nextTF()">Try another →</button>
 </section>
 
 <!-- ========== DID YOU KNOW ========== -->
@@ -620,13 +615,13 @@
 <script>
 // ========== CIRCADIAN LIGHT ANIMATION ==========
 const states = [
-  { t: "05:47", l: "dawn — cortisol awakening response",      b: "#1A1008", d: "#FFB347", g: "0 0 22px 9px rgba(255,179,71,0.55)" },
-  { t: "08:15", l: "morning — peak alertness",               b: "#121820", d: "#87CEEB", g: "0 0 26px 11px rgba(135,206,235,0.50)" },
-  { t: "12:30", l: "midday — maximum melanopic lux",          b: "#181A12", d: "#FFFFFF", g: "0 0 32px 14px rgba(255,255,255,0.60)" },
-  { t: "15:45", l: "afternoon — sustained performance",       b: "#1A1810", d: "#F0E68C", g: "0 0 28px 12px rgba(240,230,140,0.40)" },
-  { t: "18:20", l: "sunset — melatonin onset begins",         b: "#1A0E08", d: "#FF6B35", g: "0 0 24px 10px rgba(255,107,53,0.50)" },
-  { t: "21:00", l: "evening — wind-down phase",              b: "#140A06", d: "#8B4513", g: "0 0 16px 6px rgba(139,69,19,0.40)" },
-  { t: "23:15", l: "night — circadian nadir",                b: "#0C0604", d: "#2C1810", g: "0 0 10px 3px rgba(44,24,16,0.35)" },
+  { t: "05:47", l: "dawn — cortisol awakening response",        b: "#1A1008", d: "#FFB347", g: "0 0 22px 9px rgba(255,179,71,0.55)" },
+  { t: "08:15", l: "morning — peak alertness",                 b: "#121820", d: "#87CEEB", g: "0 0 26px 11px rgba(135,206,235,0.50)" },
+  { t: "12:30", l: "midday — maximum melanopic lux",           b: "#181A12", d: "#FFFFFF", g: "0 0 32px 14px rgba(255,255,255,0.60)" },
+  { t: "15:45", l: "afternoon — sustained performance",        b: "#1A1810", d: "#F0E68C", g: "0 0 28px 12px rgba(240,230,140,0.40)" },
+  { t: "18:20", l: "sunset — melatonin onset begins",          b: "#1A0E08", d: "#FF6B35", g: "0 0 24px 10px rgba(255,107,53,0.50)" },
+  { t: "21:00", l: "evening — wind-down phase",               b: "#140A06", d: "#8B4513", g: "0 0 16px 6px rgba(139,69,19,0.40)" },
+  { t: "23:15", l: "night — circadian nadir",                 b: "#0C0604", d: "#2C1810", g: "0 0 10px 3px rgba(44,24,16,0.35)" },
   { t: "02:00", l: "late night — complete darkness",          b: "#080604", d: "#0A0A0A", g: "none" },
 ];
 
@@ -638,95 +633,84 @@ function applyState(s) {
   document.getElementById("tl").textContent = s.t;
   document.getElementById("sl").textContent = s.l;
 }
-applyState(states[0]);
+applyState(states[4]); // Start at evening (matching screenshot)
 setInterval(() => { si = (si + 1) % states.length; applyState(states[si]); }, 1500);
 
-// ========== HERO QUIZ ==========
-let hqDone = false;
-function hqAnswer(btn, type) {
-  if (hqDone) return;
-  hqDone = true;
-  document.querySelectorAll('.hq-opt').forEach(b => {
-    b.style.opacity = b === btn ? '1' : '0.45';
-  });
-  document.getElementById('hq-rev').classList.add('show');
-}
-
-// ========== BELIEF QUIZ ==========
-const beliefs = [
+// ========== TRUE OR FALSE QUIZ ==========
+const tfQuestions = [
   {
-    q: "Does dimming your lights at night prepare your body for sleep?",
-    yes: "Yes — less light means better sleep",
-    no: "Not quite — there's more to it",
+    q: '"A dark bedroom just means turning the lights off."',
+    trueText: "True",
+    falseText: "False",
+    correct: false,
+    reveal: "Even 5 lux of light through closed eyelids — a hallway light under the door, a standby LED, thin curtains — measurably suppresses melatonin. The sleeping body is not less sensitive to light. In some ways, it's more."
+  },
+  {
+    q: '"Dimming your lights at night is enough to prepare your body for sleep."',
+    trueText: "True",
+    falseText: "False",
     correct: false,
     reveal: "Dimming helps, but it's not enough on its own. A dimmed cool-white light still emits the blue wavelengths that suppress melatonin. Colour temperature matters more than brightness — a dim 5000K bulb can delay your sleep onset longer than a bright 2200K one."
   },
   {
-    q: "Is your phone screen the main reason you can't sleep at night?",
-    yes: "Yes — screens are the biggest problem",
-    no: "No — something else matters more",
+    q: '"Your phone screen is the main reason you can't sleep at night."',
+    trueText: "True",
+    falseText: "False",
     correct: false,
     reveal: "Your phone contributes, but it's rarely the main culprit. The overhead light you've sat under for hours before bed suppresses far more melatonin. The screen is the last thing your body reacts to — the room is the problem that started hours earlier."
   },
   {
-    q: "Does a warm, cosy atmosphere mean the lighting is good for your sleep?",
-    yes: "Yes — if it feels warm, it must be right",
-    no: "No — feeling and biology are different things",
+    q: '"A warm, cosy atmosphere means the lighting is good for your sleep."',
+    trueText: "True",
+    falseText: "False",
     correct: false,
     reveal: "A space can feel warm and still be biologically activating. Warm colour temperature in the right position supports sleep. The same warmth overhead, at high brightness, still signals daytime to your brain. The feeling of cosiness and the hormonal effect of light are two different things."
   },
   {
-    q: "Can your body adapt to bad lighting and learn to sleep well anyway?",
-    yes: "Yes — the body adjusts with time",
-    no: "No — some responses don't adapt",
+    q: '"Your body can adapt to bad lighting and learn to sleep well anyway."',
+    trueText: "True",
+    falseText: "False",
     correct: false,
     reveal: "Your circadian system doesn't adapt to light the way your eyes adapt to darkness. No matter how many years you sleep under the wrong light, the hormonal response remains the same. You may stop noticing the light — but your melatonin still does."
   },
-  {
-    q: "Is the bedroom the most important room to get right for sleep?",
-    yes: "Yes — that's where sleep happens",
-    no: "No — another room matters more",
-    correct: false,
-    reveal: "The living room and bathroom matter more. By the time you reach the bedroom, your melatonin should already be rising — or not. What happens in the 2 hours before bed, where you sit and what you're lit by, determines your sleep quality more than the bedroom itself."
-  },
 ];
 
-let bi = 0, blDone = false;
-function renderBelief() {
-  const b = beliefs[bi];
-  blDone = false;
-  document.getElementById('bl-counter').textContent = `QUESTION ${bi + 1} OF ${beliefs.length}`;
-  document.getElementById('bl-q').textContent = b.q;
-  document.getElementById('bl-opts').innerHTML = `
-    <button class="bl-opt" onclick="blAnswer(this,true)">${b.yes}</button>
-    <button class="bl-opt" onclick="blAnswer(this,false)">${b.no}</button>
+let tfi = 0, tfDone = false;
+function renderTF() {
+  const q = tfQuestions[tfi];
+  tfDone = false;
+  document.getElementById('tf-counter').textContent = 'TRUE OR FALSE?';
+  document.getElementById('tf-q').textContent = q.q;
+  document.getElementById('tf-opts').innerHTML = `
+    <button class="tf-btn" onclick="tfAnswer(this,true)">${q.trueText}</button>
+    <button class="tf-btn" onclick="tfAnswer(this,false)">${q.falseText}</button>
   `;
-  document.getElementById('bl-rev').classList.remove('show');
-  document.getElementById('bl-rev').textContent = '';
-  document.getElementById('bl-next').style.display = 'none';
+  document.getElementById('tf-rev').classList.remove('show');
+  document.getElementById('tf-rev').textContent = '';
+  document.getElementById('tf-next').style.display = 'none';
 }
 
-function blAnswer(btn, wasYes) {
-  if (blDone) return;
-  blDone = true;
-  const b = beliefs[bi];
-  document.querySelectorAll('.bl-opt').forEach(el => {
-    const elYes = el.textContent === b.yes;
-    if (elYes === b.correct) el.classList.add('correct');
+function tfAnswer(btn, wasTrue) {
+  if (tfDone) return;
+  tfDone = true;
+  const q = tfQuestions[tfi];
+  document.querySelectorAll('.tf-btn').forEach(el => {
+    const elTrue = el.textContent === q.trueText;
+    if (elTrue === q.correct) el.classList.add('correct');
     else el.classList.add('wrong');
   });
-  const rev = document.getElementById('bl-rev');
-  rev.textContent = b.reveal;
+  const rev = document.getElementById('tf-rev');
+  rev.textContent = q.reveal;
   rev.classList.add('show');
-  document.getElementById('bl-next').style.display = bi < beliefs.length - 1 ? 'inline' : 'none';
+  document.getElementById('tf-next').style.display = 'inline-block';
 }
 
-function nextBelief() {
-  bi = (bi + 1) % beliefs.length;
-  renderBelief();
+function nextTF() {
+  tfi = (tfi + 1) % tfQuestions.length;
+  renderTF();
 }
 
-renderBelief();
+renderTF();
 
 // ========== SMOOTH SCROLL ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
