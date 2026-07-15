@@ -218,19 +218,6 @@
 
   /* ========== PODCAST ========== */
   .podcast { border-bottom: 0.5px solid var(--border); }
-  .podcast-tabs {
-    display: flex; gap: 0;
-    border-bottom: 0.5px solid var(--border);
-    overflow-x: auto;
-  }
-  .podcast-tabs a {
-    padding: 1rem 1.25rem; font-size: 13px; color: var(--text-muted);
-    text-decoration: none; border-bottom: 2px solid transparent;
-    transition: all 0.2s; white-space: nowrap;
-  }
-  .podcast-tabs a:hover { color: var(--text-primary); }
-  .podcast-tabs a.active { color: var(--text-primary); border-bottom-color: var(--accent); }
-
   .podcast-hero {
     padding: 3rem 1.5rem;
     display: grid; grid-template-columns: 1fr 260px; gap: 3rem;
@@ -306,7 +293,6 @@
   }
   @media (max-width: 560px) {
     .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .podcast-tabs a { padding: 1rem 0.75rem; font-size: 12px; }
     .subscribe-cta { flex-direction: column; gap: 1rem; align-items: flex-start; }
     .tf-q { font-size: 20px; }
     .hero-services { padding: 2rem 1.5rem; }
@@ -386,12 +372,6 @@
 
 <!-- ========== PODCAST ========== -->
 <section class="podcast" id="podcast">
-  <div class="podcast-tabs">
-    <a href="#">🧬 the science</a>
-    <a href="#">🏨 for hotels</a>
-    <a href="#">🎨 for studios</a>
-    <a href="#podcast" class="active">🎙 podcast</a>
-  </div>
 
   <div class="podcast-hero">
     <div>
@@ -519,7 +499,7 @@ function applyState(s) {
   document.getElementById("tl").textContent = s.t;
   document.getElementById("sl").textContent = s.l;
 }
-applyState(states[4]); // Start at evening
+applyState(states[4]);
 setInterval(() => { si = (si + 1) % states.length; applyState(states[si]); }, 1500);
 
 // ========== TRUE OR FALSE QUIZ ==========
