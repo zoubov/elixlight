@@ -1,69 +1,414 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELIXLIGHT — Designing Light for Your True Nature</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans);color:var(--text-primary);background:var(--surface-0)}
-.w{max-width:1000px;margin:0 auto}
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-.nav{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 1.5rem;border-bottom:0.5px solid var(--border)}
-.nav-logo{font-size:14px;font-weight:500;letter-spacing:0.08em}
-.nav-quote{font-size:12px;color:var(--text-muted);font-style:italic;letter-spacing:0.02em}
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    --radius: 8px;
+    --surface-0: #0A0A0A;
+    --surface-1: #11100E;
+    --surface-2: #1A1814;
+    --surface-3: #24201A;
+    --text-primary: #E8E4DF;
+    --text-secondary: #A09A90;
+    --text-muted: #6B6560;
+    --border: #22201C;
+    --border-strong: #3A3630;
+    --border-stronger: #5A5450;
+    --accent: #E87B3C;
+    --accent-dim: rgba(232,123,60,0.12);
+  }
 
-.hero{display:grid;grid-template-columns:1fr 1fr;border-bottom:0.5px solid var(--border);min-height:420px}
-.hero-visual{border-right:0.5px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;gap:1.25rem;background:var(--surface-1)}
-.room-box{position:relative;width:160px;height:160px;border:1.5px solid var(--text-muted);border-radius:4px;display:flex;align-items:center;justify-content:center;transition:background 1.2s ease}
-.ldot{width:28px;height:28px;border-radius:50%;transition:background 1.2s ease,box-shadow 1.2s ease}
-.tline{font-size:11px;color:var(--text-muted);letter-spacing:0.1em;font-family:var(--font-mono)}
-.slabel{font-size:12px;color:var(--text-secondary)}
+  @media (prefers-color-scheme: light) {
+    :root {
+      --surface-0: #F7F5F2;
+      --surface-1: #EDEAE5;
+      --surface-2: #E5E1DB;
+      --surface-3: #D9D4CD;
+      --text-primary: #1A1814;
+      --text-secondary: #5A5550;
+      --text-muted: #9A958F;
+      --border: #D9D4CD;
+      --border-strong: #C0BBB4;
+      --border-stronger: #A09A90;
+      --accent: #D4692A;
+      --accent-dim: rgba(212,105,42,0.10);
+    }
+  }
 
-.hero-quiz{padding:2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1.25rem}
-.hq-label{font-size:11px;color:var(--text-muted);letter-spacing:0.1em}
-.hq-q{font-size:16px;font-weight:500;line-height:1.4;color:var(--text-primary)}
-.hq-opts{display:flex;flex-direction:column;gap:0.5rem}
-.hq-opt{text-align:left;padding:0.65rem 0.9rem;border:0.5px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--text-primary);background:var(--surface-2);cursor:pointer;transition:border-color 0.15s,background 0.15s}
-.hq-opt:hover{border-color:var(--border-strong);background:var(--surface-1)}
-.hq-opt.picked{border-color:var(--border-stronger);background:var(--surface-1)}
-.hq-reveal{font-size:13px;color:var(--text-secondary);line-height:1.7;padding:0.9rem;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--surface-1);display:none}
-.hq-reveal.show{display:block}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background: var(--surface-0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
 
-.hero-services{padding:2.5rem;border-left:0.5px solid var(--border);display:flex;flex-direction:column;justify-content:center;gap:0}
-.sg-label{font-size:10px;color:var(--text-muted);letter-spacing:0.12em;padding:0.75rem 0 0.4rem;border-top:0.5px solid var(--border);margin-top:0.75rem}
-.sg-label:first-child{border-top:none;margin-top:0;padding-top:0}
-.svc{display:flex;justify-content:space-between;align-items:center;padding:0.55rem 0;cursor:pointer;transition:padding-left 0.15s}
-.svc:hover{padding-left:0.35rem}
-.svc-name{font-size:13px;color:var(--text-primary)}
-.svc-price{font-size:12px;color:var(--text-muted)}
+  a { color: inherit; text-decoration: none; }
 
-.belief{padding:3rem 1.5rem;border-bottom:0.5px solid var(--border)}
-.bl-label{font-size:11px;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:1.5rem}
-.bl-q{font-size:22px;font-weight:500;line-height:1.3;margin-bottom:1.75rem;max-width:560px}
-.bl-opts{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;max-width:540px;margin-bottom:1rem}
-.bl-opt{padding:0.75rem 1rem;border:0.5px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--text-primary);background:var(--surface-2);cursor:pointer;transition:border-color 0.15s,background 0.15s;text-align:left}
-.bl-opt:hover{border-color:var(--border-strong);background:var(--surface-1)}
-.bl-opt.correct{border-color:var(--border-stronger)}
-.bl-opt.wrong{opacity:0.5}
-.bl-reveal{font-size:14px;color:var(--text-secondary);line-height:1.8;max-width:600px;display:none;padding:1.25rem;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--surface-1)}
-.bl-reveal.show{display:block}
-.bl-next{margin-top:1rem;font-size:13px;color:var(--text-secondary);cursor:pointer;background:none;border:none;text-decoration:underline;padding:0}
+  .w { max-width: 1000px; margin: 0 auto; }
+
+  /* ========== NAV ========== */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; }
+  .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; letter-spacing: 0.02em; }
+
+  /* ========== HERO ========== */
+  .hero {
+    display: grid;
+    grid-template-columns: 220px 1fr 1fr;
+    border-bottom: 0.5px solid var(--border);
+    min-height: 420px;
+  }
+  .hero-visual {
+    border-right: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    gap: 1.25rem;
+    background: var(--surface-1);
+  }
+  .room-box {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border: 1.5px solid var(--text-muted);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 1.2s ease;
+  }
+  .ldot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: background 1.2s ease, box-shadow 1.2s ease;
+  }
+  .tline {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+  }
+  .slabel {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+
+  /* Hero quiz */
+  .hero-quiz {
+    border-right: 0.5px solid var(--border);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+  .hq-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
+  .hq-q { font-size: 16px; font-weight: 500; line-height: 1.4; color: var(--text-primary); }
+  .hq-opts { display: flex; flex-direction: column; gap: 0.5rem; }
+  .hq-opt {
+    text-align: left;
+    padding: 0.65rem 0.9rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--surface-2);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    font-family: inherit;
+  }
+  .hq-opt:hover { border-color: var(--border-strong); background: var(--surface-1); }
+  .hq-opt.picked { border-color: var(--border-stronger); background: var(--surface-1); }
+  .hq-reveal {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding: 0.9rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-1);
+    display: none;
+  }
+  .hq-reveal.show { display: block; }
+
+  /* Hero services */
+  .hero-services {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+  .sg-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    padding: 0.75rem 0 0.4rem;
+    border-top: 0.5px solid var(--border);
+    margin-top: 0.75rem;
+  }
+  .sg-label:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+  .svc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.55rem 0;
+    cursor: pointer;
+    transition: padding-left 0.15s;
+  }
+  .svc:hover { padding-left: 0.35rem; }
+  .svc-name { font-size: 13px; color: var(--text-primary); }
+  .svc-price { font-size: 12px; color: var(--text-muted); }
+
+  /* ========== BELIEF / QUIZ SECTION ========== */
+  .belief {
+    padding: 3rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .bl-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .bl-q { font-size: 22px; font-weight: 500; line-height: 1.3; margin-bottom: 1.75rem; max-width: 560px; }
+  .bl-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; max-width: 540px; margin-bottom: 1rem; }
+  .bl-opt {
+    padding: 0.75rem 1rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--text-primary);
+    background: var(--surface-2);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+    font-family: inherit;
+  }
+  .bl-opt:hover { border-color: var(--border-strong); background: var(--surface-1); }
+  .bl-opt.correct { border-color: var(--border-stronger); }
+  .bl-opt.wrong { opacity: 0.5; }
+  .bl-reveal {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    max-width: 600px;
+    display: none;
+    padding: 1.25rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-1);
+  }
+  .bl-reveal.show { display: block; }
+  .bl-next {
+    margin-top: 1rem;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    padding: 0;
+    font-family: inherit;
+  }
+  .bl-next:hover { color: var(--text-primary); }
+
+  /* ========== DID YOU KNOW ========== */
+  .did-you-know {
+    padding: 3rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .dyk-inner { display: flex; align-items: flex-start; gap: 1.25rem; max-width: 800px; }
+  .dyk-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--surface-2); border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 18px;
+  }
+  .dyk-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .dyk-text { font-size: 16px; line-height: 1.6; color: var(--text-primary); }
+
+  /* ========== ABOUT ========== */
+  .about {
+    padding: 4rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .about-photo {
+    width: 180px; height: 240px; border-radius: 12px;
+    background: var(--surface-2); border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 12px;
+  }
+  .about h2 { font-size: 28px; font-weight: 500; margin-bottom: 0.5rem; }
+  .about-role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .about p { font-size: 15px; line-height: 1.75; color: var(--text-secondary); margin-bottom: 1rem; }
+
+  /* ========== EXPLORE ========== */
+  .explore {
+    padding: 3rem 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .explore-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .explore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+  .explore-card {
+    display: block; padding: 1.5rem;
+    border-radius: var(--radius);
+    background: var(--surface-1); border: 0.5px solid var(--border);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .explore-card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+  .explore-card .emoji { font-size: 18px; margin-bottom: 0.75rem; }
+  .explore-card .title { font-size: 14px; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-primary); }
+  .explore-card .desc { font-size: 12px; line-height: 1.6; color: var(--text-muted); }
+
+  /* ========== PODCAST ========== */
+  .podcast { border-bottom: 0.5px solid var(--border); }
+  .podcast-tabs {
+    display: flex; gap: 0;
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto;
+  }
+  .podcast-tabs a {
+    padding: 1rem 1.25rem; font-size: 13px; color: var(--text-muted);
+    text-decoration: none; border-bottom: 2px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .podcast-tabs a:hover { color: var(--text-primary); }
+  .podcast-tabs a.active { color: var(--text-primary); border-bottom-color: var(--accent); }
+
+  .podcast-hero {
+    padding: 3rem 1.5rem;
+    display: grid; grid-template-columns: 1fr 260px; gap: 3rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .podcast-hero .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.25rem; }
+  .podcast-hero h2 { font-size: 32px; font-weight: 500; line-height: 1.2; margin-bottom: 1.25rem; }
+  .podcast-hero p { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 1rem; max-width: 480px; }
+  .podcast-hero .meta { font-size: 13px; color: var(--text-muted); }
+  .podcast-cover {
+    display: flex; align-items: center; justify-content: center;
+  }
+  .podcast-cover-inner {
+    width: 220px; height: 220px; border-radius: 16px;
+    background: var(--surface-1); border: 0.5px solid var(--border);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  }
+  .podcast-cover-inner .emoji { font-size: 28px; }
+  .podcast-cover-inner .title { font-size: 16px; font-weight: 500; }
+  .podcast-cover-inner .subtitle { font-size: 12px; color: var(--text-muted); }
+
+  .episodes { padding: 0 1.5rem 3rem; max-width: 900px; margin: 0 auto; }
+  .episodes .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .episode-list { border-top: 0.5px solid var(--border); }
+  .episode {
+    display: grid; grid-template-columns: 48px 1fr; gap: 1.25rem;
+    padding: 1.5rem 0; border-bottom: 0.5px solid var(--border);
+  }
+  .episode .num { font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); padding-top: 2px; }
+  .episode .title { font-size: 15px; font-weight: 500; margin-bottom: 0.4rem; }
+  .episode .desc { font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin: 0 0 0.4rem; }
+  .episode .duration { font-size: 11px; color: var(--text-muted); }
+
+  .listen-on {
+    padding: 1.5rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .listen-on .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; }
+  .listen-btn {
+    padding: 0.5rem 1rem; border: 0.5px solid var(--border); border-radius: 6px;
+    color: var(--text-primary); font-size: 13px; transition: all 0.2s;
+  }
+  .listen-btn:hover { border-color: var(--border-strong); background: var(--surface-1); }
+
+  .subscribe-cta {
+    padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;
+  }
+  .subscribe-cta span { font-size: 14px; color: var(--text-secondary); }
+  .subscribe-btn {
+    padding: 0.6rem 1.25rem; border: 0.5px solid var(--border); border-radius: 6px;
+    color: var(--text-primary); font-size: 13px; display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+  }
+  .subscribe-btn:hover { border-color: var(--border-strong); background: var(--surface-1); }
+
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;
+    border-top: 0.5px solid var(--border);
+  }
+  footer .copy { font-size: 12px; color: var(--text-muted); }
+  footer a { font-size: 13px; color: var(--text-primary); }
+  footer a:hover { color: var(--accent); }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .hero-quiz { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .about-inner { grid-template-columns: 1fr; }
+    .about-photo { margin: 0 auto; }
+    .explore-grid { grid-template-columns: 1fr 1fr; }
+    .podcast-hero { grid-template-columns: 1fr; }
+    .podcast-cover { order: -1; }
+    .bl-opts { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .explore-grid { grid-template-columns: 1fr; }
+    .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .podcast-tabs a { padding: 1rem 0.75rem; font-size: 12px; }
+    .subscribe-cta { flex-direction: column; gap: 1rem; align-items: flex-start; }
+  }
 </style>
+</head>
+<body>
 
 <div class="w">
 
+<!-- ========== NAV ========== -->
 <nav class="nav">
   <span class="nav-logo">ELIXLIGHT</span>
   <span class="nav-quote">designing light for your true nature</span>
 </nav>
 
-<section class="hero" style="grid-template-columns:220px 1fr 1fr">
+<!-- ========== HERO ========== -->
+<section class="hero">
 
+  <!-- Visual: Animated circadian light -->
   <div class="hero-visual">
     <div class="room-box" id="box">
       <div class="ldot" id="dot"></div>
     </div>
-    <div class="tline" id="tl">06:00</div>
-    <div class="slabel" id="sl">dawn — cortisol rising</div>
+    <div class="tline" id="tl">05:47</div>
+    <div class="slabel" id="sl">dawn — cortisol awakening response</div>
   </div>
 
-  <div class="hero-quiz" style="border-right:0.5px solid var(--border)">
+  <!-- Quiz -->
+  <div class="hero-quiz">
     <p class="hq-label">ONE QUESTION</p>
     <p class="hq-q">What time does your body start preparing for sleep?</p>
     <div class="hq-opts">
@@ -77,6 +422,7 @@ body{font-family:var(--font-sans);color:var(--text-primary);background:var(--sur
     </div>
   </div>
 
+  <!-- Services -->
   <div class="hero-services">
     <p class="sg-label">FOR YOUR HOME</p>
     <div class="svc"><span class="svc-name">learn how your home light affects you</span><span class="svc-price">€19 →</span></div>
@@ -91,6 +437,7 @@ body{font-family:var(--font-sans);color:var(--text-primary);background:var(--sur
 
 </section>
 
+<!-- ========== BELIEF / QUIZ SECTION ========== -->
 <section class="belief">
   <p class="bl-label" id="bl-counter">QUESTION 1 OF 5</p>
   <p class="bl-q" id="bl-q">Does dimming your lights at night prepare your body for sleep?</p>
@@ -102,102 +449,294 @@ body{font-family:var(--font-sans);color:var(--text-primary);background:var(--sur
   <button class="bl-next" id="bl-next" style="display:none" onclick="nextBelief()">Next question →</button>
 </section>
 
-</div>
+<!-- ========== DID YOU KNOW ========== -->
+<section class="did-you-know">
+  <div class="dyk-inner">
+    <div class="dyk-icon">🧠</div>
+    <div>
+      <div class="dyk-label">DID YOU KNOW</div>
+      <div class="dyk-text">The bathroom is the most biologically dangerous room in your home — it's designed for morning light and used at night, right when your body is trying to fall asleep.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-photo">your photo here</div>
+    <div>
+      <h2>Elisavet Zioga</h2>
+      <div class="about-role">Biological Lighting Strategist</div>
+      <p>I work at the intersection of circadian biology and architectural design. My work translates neuroscience into lighting strategy — so the spaces people live, sleep, and work in support their biology rather than fight it.</p>
+      <p>Light is one of the most powerful tools we have for nervous system regulation. Most spaces use it by accident. I help design it with intention.</p>
+      <p>The transformation is yours. I just make sure the environment supports it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EXPLORE ========== -->
+<section class="explore" id="explore">
+  <div class="explore-label">EXPLORE</div>
+  <div class="explore-grid">
+    <a href="#" class="explore-card">
+      <div class="emoji">🧬</div>
+      <div class="title">the science</div>
+      <div class="desc">How light shapes hormones, sleep, and nervous system regulation</div>
+    </a>
+    <a href="#" class="explore-card">
+      <div class="emoji">🏨</div>
+      <div class="title">for hotels</div>
+      <div class="desc">How intentional light increases guest satisfaction and return rates</div>
+    </a>
+    <a href="#" class="explore-card">
+      <div class="emoji">🎨</div>
+      <div class="title">for studios</div>
+      <div class="desc">How to embed biological strategy into your design process</div>
+    </a>
+    <a href="#podcast" class="explore-card">
+      <div class="emoji">🎙</div>
+      <div class="title">podcast</div>
+      <div class="desc">Short episodes on light, biology, and the spaces we inhabit</div>
+    </a>
+  </div>
+</section>
+
+</div><!-- /w -->
+
+<!-- ========== PODCAST ========== -->
+<section class="podcast" id="podcast">
+  <div class="podcast-tabs">
+    <a href="#">🧬 the science</a>
+    <a href="#">🏨 for hotels</a>
+    <a href="#">🎨 for studios</a>
+    <a href="#podcast" class="active">🎙 podcast</a>
+  </div>
+
+  <div class="podcast-hero">
+    <div>
+      <div class="label">PODCAST</div>
+      <h2>Short episodes on light, biology, and the spaces we live in.</h2>
+      <p>Each episode takes one thing your nervous system already does — and connects it to the space you're sitting in right now. No jargon. No performance. Just the intersection of how biology works and why design matters.</p>
+      <div class="meta">Episodes: 8–12 minutes. New episodes monthly.</div>
+    </div>
+    <div class="podcast-cover">
+      <div class="podcast-cover-inner">
+        <div class="emoji">🎙</div>
+        <div class="title">ELIXLIGHT</div>
+        <div class="subtitle">light · biology · space</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="episodes">
+    <div class="label">EPISODES</div>
+    <div class="episode-list">
+      <div class="episode">
+        <div class="num">01</div>
+        <div>
+          <div class="title">The best sleep you didn't have</div>
+          <p class="desc">You slept eight hours. You woke up tired. Here's exactly what happened in the 90 minutes before you closed your eyes — and why the light in the room was the main character.</p>
+          <div class="duration">9 min</div>
+        </div>
+      </div>
+      <div class="episode">
+        <div class="num">02</div>
+        <div>
+          <div class="title">Your bathroom is lying to you</div>
+          <p class="desc">The bathroom is designed for the morning version of you. The problem is you also use it at night. What's happening to your nervous system in those three minutes before bed — and one change that makes a measurable difference.</p>
+          <div class="duration">8 min</div>
+        </div>
+      </div>
+      <div class="episode">
+        <div class="num">03</div>
+        <div>
+          <div class="title">What a hotel room knows about you</div>
+          <p class="desc">Luxury hotels are increasingly designing for biology, not just aesthetics. What's the difference between a room that looks calming and a room that actually calms your nervous system — and how do you tell which one you're in?</p>
+          <div class="duration">11 min</div>
+        </div>
+      </div>
+      <div class="episode">
+        <div class="num">04</div>
+        <div>
+          <div class="title">Cortisol and the ceiling light</div>
+          <p class="desc">Overhead light mimics the midday sun. Your body doesn't ask for permission before responding. A short look at why the single most common lighting choice in homes and offices is also the one with the most biological consequences.</p>
+          <div class="duration">9 min</div>
+        </div>
+      </div>
+      <div class="episode">
+        <div class="num">05</div>
+        <div>
+          <div class="title">The dinner table and melatonin</div>
+          <p class="desc">Restaurant lighting is optimized to make food look beautiful. It's also, quite often, suppressing your melatonin at exactly the moment your body wants to start winding down. What a good restaurant would do differently — and why almost none of them do.</p>
+          <div class="duration">10 min</div>
+        </div>
+      </div>
+      <div class="episode">
+        <div class="num">06</div>
+        <div>
+          <div class="title">What Mediterranean light does to a Mediterranean body</div>
+          <p class="desc">Greece has 3,000 hours of sunlight a year. Moving indoors into artificial light creates a specific kind of biological confusion that Northern European design research hasn't fully accounted for. What designing for this climate actually means.</p>
+          <div class="duration">12 min</div>
+        </div>
+      </div>
+      <div class="episode">
+        <div class="num">07</div>
+        <div>
+          <div class="title">A regulated nervous system — what it actually feels like</div>
+          <p class="desc">Not a metaphor. Not a wellness claim. What regulation means biologically: HRV, cortisol curve, melatonin onset timing. And what it feels like when your environment is supporting it rather than disrupting it.</p>
+          <div class="duration">10 min</div>
+        </div>
+      </div>
+      <div class="episode">
+        <div class="num">08</div>
+        <div>
+          <div class="title">Darkness as a design element</div>
+          <p class="desc">We've become very good at adding light. We've forgotten how to design absence. What complete darkness does to the sleeping body — and why the hotel that masters blackout will outperform every hotel that masters ambiance.</p>
+          <div class="duration">8 min</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="listen-on">
+    <div class="label">LISTEN ON</div>
+    <a href="#" class="listen-btn">Spotify</a>
+    <a href="#" class="listen-btn">Apple Podcasts</a>
+    <a href="#" class="listen-btn">YouTube</a>
+  </div>
+
+  <div class="subscribe-cta">
+    <span>Want to be notified when new episodes drop?</span>
+    <a href="#" class="subscribe-btn">Subscribe ↗</a>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer id="contact">
+  <div class="copy">© 2025<br>ELIXLIGHT</div>
+  <a href="mailto:hello@elixlight.com">hello@elixlight.com</a>
+</footer>
 
 <script>
-const states=[
-  {t:"06:00",l:"dawn — cortisol rising",b:"#1a1008",d:"#e8822a",g:"0 0 22px 9px rgba(220,110,30,0.55)"},
-  {t:"09:00",l:"morning — full activation",b:"#221a0e",d:"#f5c060",g:"0 0 26px 11px rgba(240,180,60,0.45)"},
-  {t:"13:00",l:"afternoon — sustained focus",b:"#1e1810",d:"#f0d090",g:"0 0 30px 13px rgba(240,210,130,0.35)"},
-  {t:"19:00",l:"evening — melatonin begins",b:"#180e06",d:"#d05820",g:"0 0 18px 7px rgba(200,80,20,0.5)"},
-  {t:"22:00",l:"pre-sleep — deep restoration",b:"#100804",d:"#a03010",g:"0 0 12px 4px rgba(160,40,10,0.4)"},
-  {t:"00:00",l:"sleep — complete darkness",b:"#080604",d:"#1a0e06",g:"none"},
+// ========== CIRCADIAN LIGHT ANIMATION ==========
+const states = [
+  { t: "05:47", l: "dawn — cortisol awakening response",      b: "#1A1008", d: "#FFB347", g: "0 0 22px 9px rgba(255,179,71,0.55)" },
+  { t: "08:15", l: "morning — peak alertness",               b: "#121820", d: "#87CEEB", g: "0 0 26px 11px rgba(135,206,235,0.50)" },
+  { t: "12:30", l: "midday — maximum melanopic lux",          b: "#181A12", d: "#FFFFFF", g: "0 0 32px 14px rgba(255,255,255,0.60)" },
+  { t: "15:45", l: "afternoon — sustained performance",       b: "#1A1810", d: "#F0E68C", g: "0 0 28px 12px rgba(240,230,140,0.40)" },
+  { t: "18:20", l: "sunset — melatonin onset begins",         b: "#1A0E08", d: "#FF6B35", g: "0 0 24px 10px rgba(255,107,53,0.50)" },
+  { t: "21:00", l: "evening — wind-down phase",              b: "#140A06", d: "#8B4513", g: "0 0 16px 6px rgba(139,69,19,0.40)" },
+  { t: "23:15", l: "night — circadian nadir",                b: "#0C0604", d: "#2C1810", g: "0 0 10px 3px rgba(44,24,16,0.35)" },
+  { t: "02:00", l: "late night — complete darkness",          b: "#080604", d: "#0A0A0A", g: "none" },
 ];
-let si=0;
-function applyState(s){
-  document.getElementById("box").style.background=s.b;
-  document.getElementById("dot").style.background=s.d;
-  document.getElementById("dot").style.boxShadow=s.g;
-  document.getElementById("tl").textContent=s.t;
-  document.getElementById("sl").textContent=s.l;
+
+let si = 0;
+function applyState(s) {
+  document.getElementById("box").style.background = s.b;
+  document.getElementById("dot").style.background = s.d;
+  document.getElementById("dot").style.boxShadow = s.g;
+  document.getElementById("tl").textContent = s.t;
+  document.getElementById("sl").textContent = s.l;
 }
 applyState(states[0]);
-setInterval(()=>{si=(si+1)%states.length;applyState(states[si]);},2200);
+setInterval(() => { si = (si + 1) % states.length; applyState(states[si]); }, 1500);
 
-let hqDone=false;
-function hqAnswer(btn,type){
-  if(hqDone)return;
-  hqDone=true;
-  document.querySelectorAll('.hq-opt').forEach(b=>b.style.opacity=b===btn?'1':'0.45');
+// ========== HERO QUIZ ==========
+let hqDone = false;
+function hqAnswer(btn, type) {
+  if (hqDone) return;
+  hqDone = true;
+  document.querySelectorAll('.hq-opt').forEach(b => {
+    b.style.opacity = b === btn ? '1' : '0.45';
+  });
   document.getElementById('hq-rev').classList.add('show');
 }
 
-const beliefs=[
+// ========== BELIEF QUIZ ==========
+const beliefs = [
   {
-    q:"Does dimming your lights at night prepare your body for sleep?",
-    yes:"Yes — less light means better sleep",
-    no:"Not quite — there's more to it",
-    correct:false,
-    reveal:"Dimming helps, but it's not enough on its own. A dimmed cool-white light still emits the blue wavelengths that suppress melatonin. Colour temperature matters more than brightness — a dim 5000K bulb can delay your sleep onset longer than a bright 2200K one."
+    q: "Does dimming your lights at night prepare your body for sleep?",
+    yes: "Yes — less light means better sleep",
+    no: "Not quite — there's more to it",
+    correct: false,
+    reveal: "Dimming helps, but it's not enough on its own. A dimmed cool-white light still emits the blue wavelengths that suppress melatonin. Colour temperature matters more than brightness — a dim 5000K bulb can delay your sleep onset longer than a bright 2200K one."
   },
   {
-    q:"Is your phone screen the main reason you can't sleep at night?",
-    yes:"Yes — screens are the biggest problem",
-    no:"No — something else matters more",
-    correct:false,
-    reveal:"Your phone contributes, but it's rarely the main culprit. The overhead light you've sat under for hours before bed suppresses far more melatonin. The screen is the last thing your body reacts to — the room is the problem that started hours earlier."
+    q: "Is your phone screen the main reason you can't sleep at night?",
+    yes: "Yes — screens are the biggest problem",
+    no: "No — something else matters more",
+    correct: false,
+    reveal: "Your phone contributes, but it's rarely the main culprit. The overhead light you've sat under for hours before bed suppresses far more melatonin. The screen is the last thing your body reacts to — the room is the problem that started hours earlier."
   },
   {
-    q:"Does a warm, cosy atmosphere mean the lighting is good for your sleep?",
-    yes:"Yes — if it feels warm, it must be right",
-    no:"No — feeling and biology are different things",
-    correct:false,
-    reveal:"A space can feel warm and still be biologically activating. Warm colour temperature in the right position supports sleep. The same warmth overhead, at high brightness, still signals daytime to your brain. The feeling of cosiness and the hormonal effect of light are two different things."
+    q: "Does a warm, cosy atmosphere mean the lighting is good for your sleep?",
+    yes: "Yes — if it feels warm, it must be right",
+    no: "No — feeling and biology are different things",
+    correct: false,
+    reveal: "A space can feel warm and still be biologically activating. Warm colour temperature in the right position supports sleep. The same warmth overhead, at high brightness, still signals daytime to your brain. The feeling of cosiness and the hormonal effect of light are two different things."
   },
   {
-    q:"Can your body adapt to bad lighting and learn to sleep well anyway?",
-    yes:"Yes — the body adjusts with time",
-    no:"No — some responses don't adapt",
-    correct:false,
-    reveal:"Your circadian system doesn't adapt to light the way your eyes adapt to darkness. No matter how many years you sleep under the wrong light, the hormonal response remains the same. You may stop noticing the light — but your melatonin still does."
+    q: "Can your body adapt to bad lighting and learn to sleep well anyway?",
+    yes: "Yes — the body adjusts with time",
+    no: "No — some responses don't adapt",
+    correct: false,
+    reveal: "Your circadian system doesn't adapt to light the way your eyes adapt to darkness. No matter how many years you sleep under the wrong light, the hormonal response remains the same. You may stop noticing the light — but your melatonin still does."
   },
   {
-    q:"Is the bedroom the most important room to get right for sleep?",
-    yes:"Yes — that's where sleep happens",
-    no:"No — another room matters more",
-    correct:false,
-    reveal:"The living room and bathroom matter more. By the time you reach the bedroom, your melatonin should already be rising — or not. What happens in the 2 hours before bed, where you sit and what you're lit by, determines your sleep quality more than the bedroom itself."
+    q: "Is the bedroom the most important room to get right for sleep?",
+    yes: "Yes — that's where sleep happens",
+    no: "No — another room matters more",
+    correct: false,
+    reveal: "The living room and bathroom matter more. By the time you reach the bedroom, your melatonin should already be rising — or not. What happens in the 2 hours before bed, where you sit and what you're lit by, determines your sleep quality more than the bedroom itself."
   },
 ];
-let bi=0,blDone=false;
-function renderBelief(){
-  const b=beliefs[bi];
-  blDone=false;
-  document.getElementById('bl-counter').textContent=`QUESTION ${bi+1} OF ${beliefs.length}`;
-  document.getElementById('bl-q').textContent=b.q;
-  document.getElementById('bl-opts').innerHTML=`
+
+let bi = 0, blDone = false;
+function renderBelief() {
+  const b = beliefs[bi];
+  blDone = false;
+  document.getElementById('bl-counter').textContent = `QUESTION ${bi + 1} OF ${beliefs.length}`;
+  document.getElementById('bl-q').textContent = b.q;
+  document.getElementById('bl-opts').innerHTML = `
     <button class="bl-opt" onclick="blAnswer(this,true)">${b.yes}</button>
     <button class="bl-opt" onclick="blAnswer(this,false)">${b.no}</button>
   `;
   document.getElementById('bl-rev').classList.remove('show');
-  document.getElementById('bl-rev').textContent='';
-  document.getElementById('bl-next').style.display='none';
+  document.getElementById('bl-rev').textContent = '';
+  document.getElementById('bl-next').style.display = 'none';
 }
-function blAnswer(btn,wasYes){
-  if(blDone)return;
-  blDone=true;
-  const b=beliefs[bi];
-  const isCorrect=wasYes===b.correct;
-  document.querySelectorAll('.bl-opt').forEach(el=>{
-    const elYes=el.textContent===b.yes;
-    if(elYes===b.correct)el.classList.add('correct');
+
+function blAnswer(btn, wasYes) {
+  if (blDone) return;
+  blDone = true;
+  const b = beliefs[bi];
+  document.querySelectorAll('.bl-opt').forEach(el => {
+    const elYes = el.textContent === b.yes;
+    if (elYes === b.correct) el.classList.add('correct');
     else el.classList.add('wrong');
   });
-  const rev=document.getElementById('bl-rev');
-  rev.textContent=b.reveal;
+  const rev = document.getElementById('bl-rev');
+  rev.textContent = b.reveal;
   rev.classList.add('show');
-  document.getElementById('bl-next').style.display=bi<beliefs.length-1?'inline':'none';
+  document.getElementById('bl-next').style.display = bi < beliefs.length - 1 ? 'inline' : 'none';
 }
-function nextBelief(){bi=(bi+1)%beliefs.length;renderBelief();}
+
+function nextBelief() {
+  bi = (bi + 1) % beliefs.length;
+  renderBelief();
+}
+
 renderBelief();
+
+// ========== SMOOTH SCROLL ==========
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
 </script>
+
+</body>
+</html>
