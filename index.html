@@ -3,322 +3,344 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELIXLIGHT — Biological Lighting Strategy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>ELIXLIGHT — Light as Behavior Engineering</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  :root {
+    --bg: #0A0A0A;
+    --fg: #E8E4DF;
+    --fg-muted: rgba(232,228,223,0.6);
+    --fg-faint: rgba(232,228,223,0.4);
+    --fg-ghost: rgba(232,228,223,0.12);
+    --accent: #E87B3C;
+    --card-bg: #141210;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.15);
+  }
+
+  /* Day mode */
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #F5F2EE;
+      --fg: #1A1510;
+      --fg-muted: rgba(26,21,16,0.6);
+      --fg-faint: rgba(26,21,16,0.4);
+      --fg-ghost: rgba(26,21,16,0.12);
+      --accent: #D46A2E;
+      --card-bg: #FFFFFF;
+      --border: rgba(0,0,0,0.08);
+      --border-hover: rgba(0,0,0,0.2);
+    }
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background: #0A0A0A;
-    color: #E8E4DF;
+    background: var(--bg);
+    color: var(--fg);
     -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
+    line-height:1.6;
   }
-  a { color: inherit; text-decoration: none; }
 
-  .nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 24px 48px; border-bottom: 1px solid rgba(255,255,255,0.06);
-    position: sticky; top: 0; background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(12px); z-index: 100;
+  a { color:inherit; text-decoration:none; }
+
+  /* NAV */
+  nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:24px 48px; border-bottom:1px solid var(--border);
+    position:sticky; top:0; background:var(--bg); z-index:100;
+    backdrop-filter:blur(12px);
   }
-  .nav-logo { font-weight: 600; font-size: 16px; letter-spacing: 0.5px; }
-  .nav-links { display: flex; gap: 48px; font-size: 14px; color: rgba(232,228,223,0.6); }
-  .nav-links a { transition: color 0.2s; }
-  .nav-links a:hover { color: #E8E4DF; }
+  .logo { font-weight:600; font-size:16px; letter-spacing:0.5px; }
+  .nav-links { display:flex; gap:48px; font-size:14px; color:var(--fg-faint); }
+  .nav-links a:hover { color:var(--fg); }
 
-  .section { border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .section-pad { padding: 64px 48px; }
+  /* HERO */
+  .hero {
+    display:grid; grid-template-columns:1fr 1fr; min-height:520px;
+    border-bottom:1px solid var(--border);
+  }
+  .hero-left {
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    padding:64px; border-right:1px solid var(--border); position:relative; overflow:hidden;
+  }
+  .light-orb-container {
+    width:200px; height:200px; border-radius:50%;
+    position:relative; display:flex; align-items:center; justify-content:center;
+  }
+  .light-orb {
+    width:120px; height:120px; border-radius:50%;
+    position:absolute;
+    filter: blur(20px);
+    animation: orbCycle 12s ease-in-out infinite;
+  }
+  .light-orb-core {
+    width:80px; height:80px; border-radius:50%;
+    position:absolute;
+    filter: blur(8px);
+    animation: orbCoreCycle 12s ease-in-out infinite;
+  }
+  .light-orb-glow {
+    width:160px; height:160px; border-radius:50%;
+    position:absolute;
+    filter: blur(40px);
+    opacity:0.5;
+    animation: orbGlowCycle 12s ease-in-out infinite;
+  }
+  .time-label {
+    font-family:monospace; font-size:13px; color:var(--fg-faint); letter-spacing:1px;
+    margin-top:32px; text-align:center; min-height:40px;
+  }
+  .time-label .phase { color:var(--fg); font-weight:500; }
+
+  @keyframes orbCycle {
+    0%   { background:#1a0a2e; box-shadow:0 0 60px #1a0a2e; } /* Late night */
+    10%  { background:#2d1b4e; box-shadow:0 0 60px #2d1b4e; } /* Night */
+    20%  { background:#4a2c7a; box-shadow:0 0 60px #4a2c7a; } /* Dawn start */
+    25%  { background:#ff7e5f; box-shadow:0 0 80px #ff7e5f; } /* Dawn */
+    30%  { background:#feb47b; box-shadow:0 0 80px #feb47b; } /* Morning */
+    40%  { background:#87CEEB; box-shadow:0 0 100px #87CEEB; } /* Midday */
+    50%  { background:#98D8E8; box-shadow:0 0 100px #98D8E8; } /* Afternoon */
+    60%  { background:#F4A460; box-shadow:0 0 80px #F4A460; } /* Sunset */
+    70%  { background:#8B4513; box-shadow:0 0 60px #8B4513; } /* Evening */
+    80%  { background:#2d1b4e; box-shadow:0 0 60px #2d1b4e; } /* Night */
+    90%  { background:#1a0a2e; box-shadow:0 0 60px #1a0a2e; } /* Late night */
+    100% { background:#1a0a2e; box-shadow:0 0 60px #1a0a2e; }
+  }
+  @keyframes orbCoreCycle {
+    0%   { background:#0d0520; }
+    10%  { background:#1a0f33; }
+    20%  { background:#3d1f6b; }
+    25%  { background:#ff9a76; }
+    30%  { background:#ffd4a3; }
+    40%  { background:#b0e0e6; }
+    50%  { background:#c0e8f0; }
+    60%  { background:#f5c080; }
+    70%  { background:#a0522d; }
+    80%  { background:#1a0f33; }
+    90%  { background:#0d0520; }
+    100% { background:#0d0520; }
+  }
+  @keyframes orbGlowCycle {
+    0%   { background:#1a0a2e; }
+    10%  { background:#2d1b4e; }
+    20%  { background:#5a3c8a; }
+    25%  { background:#ff9a76; }
+    30%  { background:#ffd4a3; }
+    40%  { background:#a8d8ea; }
+    50%  { background:#b8e0ec; }
+    60%  { background:#f0b070; }
+    70%  { background:#8B4513; }
+    80%  { background:#2d1b4e; }
+    90%  { background:#1a0a2e; }
+    100% { background:#1a0a2e; }
+  }
+
+  .hero-right {
+    padding:64px 48px; display:flex; flex-direction:column; justify-content:center;
+  }
   .section-label {
-    font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
-    color: rgba(232,228,223,0.4); margin-bottom: 24px;
+    font-size:12px; text-transform:uppercase; letter-spacing:2px;
+    color:var(--fg-faint); margin-bottom:32px;
   }
-
-  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 520px; }
-  .hero-visual {
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    padding: 48px; border-right: 1px solid rgba(255,255,255,0.06);
-    position: relative; overflow: hidden; gap: 20px;
-  }
-
-  /* ===== ARCHITECTURAL DRAWING ===== */
-  .arch-wrapper {
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-  }
-  .arch-view-title {
-    font-size: 11px; text-transform: uppercase; letter-spacing: 2px;
-    color: rgba(232,228,223,0.3); text-align: center;
-  }
-  .arch-view-sub {
-    font-size: 10px; color: rgba(232,228,223,0.2);
-    font-family: monospace; text-align: center; margin-top: 2px;
-  }
-  .arch-view {
-    position: relative; border: 1px solid rgba(232,228,223,0.18);
-    background: rgba(14,13,12,0.7); overflow: hidden;
-  }
-
-  /* --- PLAN VIEW --- */
-  .arch-plan { width: 340px; height: 260px; border-radius: 3px; }
-
-  /* Walls */
-  .p-wall-o { position: absolute; background: rgba(232,228,223,0.22); }
-  .p-wall-i { position: absolute; background: rgba(232,228,223,0.08); }
-
-  /* Window */
-  .p-win { position: absolute; background: rgba(135,206,235,0.05); border: 1px dashed rgba(135,206,235,0.25); }
-  .p-win-frame { position: absolute; background: rgba(135,206,235,0.12); }
-
-  /* Door */
-  .p-door { position: absolute; background: rgba(232,228,223,0.04); border: 1px solid rgba(232,228,223,0.12); }
-  .p-door-swing { position: absolute; border: 1px dashed rgba(232,228,223,0.1); border-radius: 0 0 0 100%; }
-
-  /* Furniture */
-  .p-bed { position: absolute; background: rgba(232,228,223,0.03); border: 1px solid rgba(232,228,223,0.1); border-radius: 1px; }
-  .p-bed-pillow { position: absolute; background: rgba(232,228,223,0.05); border-radius: 1px; }
-  .p-bed-fold { position: absolute; background: rgba(232,228,223,0.05); }
-  .p-headboard { position: absolute; background: rgba(232,228,223,0.12); }
-  .p-nightstand { position: absolute; background: rgba(232,228,223,0.03); border: 1px solid rgba(232,228,223,0.08); }
-  .p-wardrobe { position: absolute; background: rgba(232,228,223,0.04); border-right: 1px solid rgba(232,228,223,0.08); }
-  .p-desk { position: absolute; background: rgba(232,228,223,0.03); border: 1px solid rgba(232,228,223,0.08); }
-  .p-chair { position: absolute; background: rgba(232,228,223,0.03); border: 1px solid rgba(232,228,223,0.06); border-radius: 50%; }
-
-  /* Fixtures */
-  .p-fix {
-    position: absolute; border-radius: 50%;
-    transition: all 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .p-fix.on { background: #E87B3C; box-shadow: 0 0 14px rgba(232,123,60,0.5), 0 0 36px rgba(232,123,60,0.2); }
-  .p-fix.off { background: rgba(232,228,223,0.06); box-shadow: none; }
-  .p-fix.dim { background: rgba(232,123,60,0.3) !important; box-shadow: 0 0 7px rgba(232,123,60,0.15) !important; }
-
-  .p-fix-label {
-    position: absolute; font-size: 8px; font-family: monospace; letter-spacing: 0.5px;
-    transition: color 1.4s ease; white-space: nowrap;
-  }
-  .p-fix-label.on { color: rgba(232,123,60,0.7); }
-  .p-fix-label.off { color: rgba(232,228,223,0.22); }
-
-  .p-beam {
-    position: absolute; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(circle, rgba(232,123,60,0.14) 0%, transparent 70%);
-    transition: all 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .p-beam.off { opacity: 0; transform: scale(0.6); }
-  .p-beam.dim { opacity: 0.4; transform: scale(0.8); }
-
-  /* Dimensions & annotations */
-  .p-dim-line { position: absolute; background: rgba(232,228,223,0.08); }
-  .p-dim-tick { position: absolute; background: rgba(232,228,223,0.14); }
-  .p-dim-text { position: absolute; font-size: 8px; color: rgba(232,228,223,0.2); font-family: monospace; }
-  .p-north { position: absolute; font-size: 9px; color: rgba(232,228,223,0.2); }
-  .p-cut { position: absolute; font-size: 7px; color: rgba(232,228,223,0.18); font-family: monospace; }
-  .p-cut-line { position: absolute; border-top: 1px dashed rgba(232,228,223,0.1); }
-
-  /* --- SECTION VIEW --- */
-  .arch-sect { width: 340px; height: 160px; border-radius: 3px; }
-
-  .s-slab { position: absolute; background: rgba(232,228,223,0.16); }
-  .s-slab-line { position: absolute; background: rgba(232,228,223,0.05); }
-  .s-wall { position: absolute; background: rgba(232,228,223,0.18); }
-  .s-wall-inner { position: absolute; background: rgba(232,228,223,0.05); }
-  .s-dim-v { position: absolute; background: rgba(232,228,223,0.07); }
-  .s-dim-tick { position: absolute; background: rgba(232,228,223,0.12); }
-  .s-dim-text { position: absolute; font-size: 8px; color: rgba(232,228,223,0.18); font-family: monospace; white-space: nowrap; }
-  .s-level { position: absolute; font-size: 8px; color: rgba(232,228,223,0.16); font-family: monospace; }
-
-  .s-bed { position: absolute; background: rgba(232,228,223,0.03); border: 1px solid rgba(232,228,223,0.08); border-radius: 1px 1px 0 0; }
-  .s-bed-head { position: absolute; background: rgba(232,228,223,0.1); border-radius: 1px 0 0 0; }
-  .s-mattress { position: absolute; background: rgba(232,228,223,0.04); }
-  .s-person { position: absolute; background: rgba(232,228,223,0.05); border-radius: 8px 8px 2px 2px; }
-  .s-person-head { position: absolute; background: rgba(232,228,223,0.08); border-radius: 50%; }
-  .s-nightstand { position: absolute; background: rgba(232,228,223,0.03); border: 1px solid rgba(232,228,223,0.06); }
-
-  .s-fix {
-    position: absolute; border-radius: 0 0 2px 2px;
-    transition: all 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .s-fix.on { background: #E87B3C; box-shadow: 0 0 10px rgba(232,123,60,0.4), 0 0 24px rgba(232,123,60,0.12); }
-  .s-fix.off { background: rgba(232,228,223,0.06); box-shadow: none; }
-  .s-fix.dim { background: rgba(232,123,60,0.25) !important; box-shadow: 0 0 5px rgba(232,123,60,0.1) !important; }
-
-  .s-cone {
-    position: absolute; pointer-events: none; border-radius: 0 0 50% 50%;
-    transition: all 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .s-cone.on { background: linear-gradient(180deg, rgba(232,123,60,0.14) 0%, rgba(232,123,60,0.02) 100%); }
-  .s-cone.off { opacity: 0; transform: scaleY(0.3); }
-  .s-cone.dim { opacity: 0.35; transform: scaleY(0.7); }
-
-  .s-hatch {
-    position: absolute;
-    background: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(232,228,223,0.03) 3px, rgba(232,228,223,0.03) 4px);
-  }
-
-  /* Cycle info */
-  .cycle-info { text-align: center; margin-top: 4px; }
-  .cycle-time {
-    font-family: monospace; font-size: 14px; color: #E87B3C;
-    letter-spacing: 3px; margin-bottom: 6px;
-  }
-  .cycle-label { font-size: 11px; color: rgba(232,228,223,0.35); letter-spacing: 0.3px; }
-  .cycle-scene {
-    font-size: 10px; color: rgba(232,228,223,0.22); margin-top: 3px;
-    text-transform: uppercase; letter-spacing: 1.5px;
-  }
-  .cycle-progress {
-    width: 180px; height: 2px; background: rgba(255,255,255,0.05);
-    border-radius: 1px; margin: 14px auto 0; overflow: hidden;
-  }
-  .cycle-progress-fill {
-    height: 100%; background: #E87B3C; border-radius: 1px;
-    width: 0%; transition: width 0.05s linear;
-  }
-
-  /* TOOLS */
-  .hero-tools { padding: 64px 48px; display: flex; flex-direction: column; justify-content: center; }
   .tool-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
-    transition: opacity 0.2s;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; border-bottom:1px solid var(--border);
+    color:inherit; transition:all 0.2s;
   }
-  .tool-row:last-child { border-bottom: none; }
-  .tool-row:hover { opacity: 0.8; }
-  .tool-name { font-size: 16px; }
-  .tool-price { display: flex; align-items: center; gap: 8px; color: rgba(232,228,223,0.5); font-size: 14px; }
-  .tool-arrow { font-size: 18px; }
+  .tool-row:hover { border-color:var(--border-hover); }
+  .tool-row:last-child { border-bottom:none; }
+  .tool-name { font-size:16px; }
+  .tool-price {
+    display:flex; align-items:center; gap:8px;
+    color:var(--fg-faint); font-size:14px;
+  }
+  .tool-arrow { font-size:18px; transition:transform 0.2s; }
+  .tool-row:hover .tool-arrow { transform:translateX(4px); }
 
   /* DID YOU KNOW */
-  .dyk-wrap { display: flex; align-items: flex-start; gap: 24px; max-width: 900px; }
+  .did-you-know {
+    padding:64px 48px; border-bottom:1px solid var(--border);
+  }
+  .dyk-inner {
+    display:flex; align-items:flex-start; gap:24px; max-width:900px;
+  }
   .dyk-icon {
-    width: 48px; height: 48px; border-radius: 12px; background: #1A1510;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px;
+    width:48px; height:48px; border-radius:12px;
+    background:var(--card-bg); display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; font-size:20px;
   }
-  .dyk-text { font-size: 18px; line-height: 1.6; color: #E8E4DF; }
+  .dyk-text { font-size:18px; line-height:1.6; margin:0; }
 
-  /* QUIZ */
-  .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 700px; }
-  .quiz-btn {
-    padding: 16px 20px; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
-    background: transparent; color: #E8E4DF; font-size: 15px; text-align: left;
-    cursor: pointer; transition: all 0.2s; font-family: inherit;
+  /* ONE QUESTION */
+  .one-question {
+    padding:64px 48px; border-bottom:1px solid var(--border);
   }
-  .quiz-btn:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.02); }
+  .oq-title { font-size:28px; font-weight:500; margin-bottom:32px; }
+  .oq-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:700px;
+  }
+  .oq-btn {
+    padding:16px 20px; border:1px solid var(--fg-ghost); border-radius:10px;
+    background:transparent; color:var(--fg); font-size:15px;
+    text-align:left; cursor:pointer; transition:all 0.2s;
+  }
+  .oq-btn:hover { border-color:var(--border-hover); background:var(--card-bg); }
 
   /* ABOUT */
-  .about-wrap { max-width: 700px; margin: 0 auto; text-align: center; }
-  .about-name { font-size: 32px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
-  .about-role { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: rgba(232,228,223,0.4); margin-bottom: 40px; }
-  .about-bio { font-size: 16px; line-height: 1.7; margin-bottom: 20px; color: rgba(232,228,223,0.85); }
+  .about {
+    padding:80px 48px; border-bottom:1px solid var(--border);
+  }
+  .about-inner {
+    display:grid; grid-template-columns:200px 1fr; gap:48px;
+    max-width:900px; margin:0 auto;
+  }
+  .about-photo {
+    width:200px; height:260px; border-radius:16px;
+    background:var(--card-bg); display:flex; align-items:center; justify-content:center;
+    color:var(--fg-faint); font-size:13px;
+  }
+  .about-name { font-size:32px; font-weight:500; margin-bottom:8px; }
+  .about-role {
+    font-size:12px; text-transform:uppercase; letter-spacing:2px;
+    color:var(--fg-faint); margin-bottom:32px;
+  }
+  .about-bio {
+    font-size:16px; line-height:1.7; margin-bottom:20px;
+    color:var(--fg-muted);
+  }
 
   /* EXPLORE */
-  .explore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .explore {
+    padding:64px 48px; border-bottom:1px solid var(--border);
+  }
+  .explore-grid {
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;
+  }
   .explore-card {
-    display: block; padding: 32px 24px; border-radius: 16px; background: #141210;
-    border: 1px solid rgba(255,255,255,0.06); transition: all 0.2s; cursor: pointer;
+    display:block; padding:32px 24px; border-radius:16px;
+    background:var(--card-bg); border:1px solid var(--border);
+    color:inherit; transition:all 0.2s;
   }
-  .explore-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); }
-  .explore-icon { font-size: 20px; margin-bottom: 16px; }
-  .explore-title { font-size: 16px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
-  .explore-desc { font-size: 13px; line-height: 1.6; color: rgba(232,228,223,0.5); }
-
-  /* HIDDEN PAGES */
-  .hidden-page { display: none; animation: fadeIn 0.4s ease; }
-  .hidden-page.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  .page-header {
-    padding: 48px; border-bottom: 1px solid rgba(255,255,255,0.06);
-    display: flex; justify-content: space-between; align-items: center;
+  .explore-card:hover { border-color:var(--border-hover); transform:translateY(-2px); }
+  .explore-card-icon { font-size:20px; margin-bottom:16px; }
+  .explore-card-title { font-size:16px; font-weight:500; margin-bottom:8px; }
+  .explore-card-desc {
+    font-size:13px; line-height:1.6; color:var(--fg-faint);
   }
-  .page-header h2 { font-size: 28px; font-weight: 500; }
-  .page-close {
-    padding: 8px 16px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px;
-    background: transparent; color: #E8E4DF; font-size: 13px; cursor: pointer;
-    font-family: inherit; transition: all 0.2s;
-  }
-  .page-close:hover { border-color: rgba(255,255,255,0.3); }
-  .page-content { padding: 48px; max-width: 800px; }
-  .page-content p { font-size: 16px; line-height: 1.7; color: rgba(232,228,223,0.7); margin-bottom: 20px; }
 
-  /* PODCAST */
-  .podcast-tabs { display: flex; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  /* PODCAST TABS */
+  .podcast-tabs {
+    display:flex; gap:0; border-bottom:1px solid var(--border);
+    overflow-x:auto;
+  }
   .podcast-tab {
-    padding: 16px 24px; font-size: 14px; color: rgba(232,228,223,0.5);
-    border-bottom: 2px solid transparent; transition: all 0.2s; cursor: pointer;
-    background: none; border-top: none; border-left: none; border-right: none; font-family: inherit;
+    padding:16px 24px; font-size:14px; color:var(--fg-faint);
+    text-decoration:none; border-bottom:2px solid transparent;
+    white-space:nowrap; transition:all 0.2s;
   }
-  .podcast-tab:hover { color: #E8E4DF; }
-  .podcast-tab.active { color: #E8E4DF; border-bottom-color: #E87B3C; }
+  .podcast-tab:hover { color:var(--fg); }
+  .podcast-tab.active { color:var(--fg); border-bottom-color:var(--accent); }
 
-  .podcast-hero { padding: 64px 48px; display: grid; grid-template-columns: 1fr 300px; gap: 48px; max-width: 1100px; margin: 0 auto; }
-  .podcast-title { font-size: 36px; font-weight: 500; line-height: 1.2; margin-bottom: 24px; color: #E8E4DF; }
-  .podcast-desc { font-size: 16px; line-height: 1.7; color: rgba(232,228,223,0.7); margin-bottom: 24px; max-width: 520px; }
-  .podcast-meta { font-size: 14px; color: rgba(232,228,223,0.4); }
-  .podcast-art { display: flex; align-items: center; justify-content: center; }
-  .podcast-art-inner {
-    width: 240px; height: 240px; border-radius: 20px; background: #141210;
-    border: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 16px;
+  /* PODCAST HERO */
+  .podcast-hero {
+    padding:64px 48px;
+    display:grid; grid-template-columns:1fr 300px; gap:48px;
+    max-width:1100px; margin:0 auto;
   }
-  .podcast-art-icon { font-size: 32px; }
-  .podcast-art-title { font-size: 18px; font-weight: 500; color: #E8E4DF; }
-  .podcast-art-sub { font-size: 13px; color: rgba(232,228,223,0.4); }
-
-  .episodes-wrap { padding: 0 48px 64px; max-width: 1100px; margin: 0 auto; }
-  .episode { display: grid; grid-template-columns: 60px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-  .episode:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
-  .episode-num { font-size: 14px; color: rgba(232,228,223,0.3); font-family: monospace; padding-top: 4px; }
-  .episode-title { font-size: 17px; font-weight: 500; margin-bottom: 8px; color: #E8E4DF; }
-  .episode-desc { font-size: 14px; line-height: 1.6; color: rgba(232,228,223,0.6); margin: 0 0 8px; }
-  .episode-time { font-size: 12px; color: rgba(232,228,223,0.35); }
-
-  .listen-bar { padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-  .listen-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: rgba(232,228,223,0.4); }
-  .listen-btn { padding: 10px 20px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #E8E4DF; text-decoration: none; font-size: 14px; transition: all 0.2s; }
-  .listen-btn:hover { border-color: rgba(255,255,255,0.3); }
-
-  .subscribe-bar { padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-  .subscribe-text { font-size: 15px; color: rgba(232,228,223,0.7); }
-  .subscribe-btn { padding: 12px 24px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #E8E4DF; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
-  .subscribe-btn:hover { border-color: rgba(255,255,255,0.3); }
-
-  .footer { padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); }
-  .footer-copy { font-size: 13px; color: rgba(232,228,223,0.4); }
-  .footer-email { font-size: 14px; color: #E8E4DF; text-decoration: none; transition: opacity 0.2s; }
-  .footer-email:hover { opacity: 0.7; }
-
-  @media (max-width: 900px) {
-    .nav { padding: 20px 24px; } .nav-links { gap: 24px; }
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 48px 24px; }
-    .explore-grid { grid-template-columns: 1fr 1fr; }
-    .podcast-hero { grid-template-columns: 1fr; }
-    .quiz-grid { grid-template-columns: 1fr; }
-    .section-pad { padding: 48px 24px; }
-    .podcast-hero, .episodes-wrap, .listen-bar, .subscribe-bar { padding-left: 24px; padding-right: 24px; }
-    .about-wrap { padding: 0 24px; }
-    .page-header, .page-content { padding: 32px 24px; }
-    .arch-plan, .arch-sect { width: 300px; }
-    .arch-plan { height: 230px; }
+  .podcast-hero-title {
+    font-size:36px; font-weight:500; line-height:1.2; margin-bottom:24px;
   }
-  @media (max-width: 600px) {
-    .explore-grid { grid-template-columns: 1fr; }
-    .podcast-tabs { overflow-x: auto; }
-    .podcast-tab { padding: 14px 16px; white-space: nowrap; }
-    .footer { flex-direction: column; gap: 12px; text-align: center; }
-    .arch-plan, .arch-sect { width: 280px; }
-    .arch-plan { height: 215px; }
+  .podcast-hero-desc {
+    font-size:16px; line-height:1.7; color:var(--fg-muted);
+    margin-bottom:24px; max-width:520px;
+  }
+  .podcast-hero-meta { font-size:14px; color:var(--fg-faint); }
+  .podcast-cover {
+    width:240px; height:240px; border-radius:20px;
+    background:var(--card-bg); border:1px solid var(--border);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+    margin:0 auto;
+  }
+  .podcast-cover-icon { font-size:32px; }
+  .podcast-cover-title { font-size:18px; font-weight:500; }
+  .podcast-cover-sub { font-size:13px; color:var(--fg-faint); }
+
+  /* EPISODES */
+  .episodes { padding:0 48px 64px; max-width:1100px; margin:0 auto; }
+  .episode {
+    display:grid; grid-template-columns:60px 1fr; gap:24px;
+    padding:28px 0; border-bottom:1px solid var(--border);
+  }
+  .episode-num {
+    font-size:14px; color:var(--fg-ghost); font-family:monospace; padding-top:4px;
+  }
+  .episode-title { font-size:17px; font-weight:500; margin-bottom:8px; }
+  .episode-desc {
+    font-size:14px; line-height:1.6; color:var(--fg-muted); margin:0 0 8px;
+  }
+  .episode-duration { font-size:12px; color:var(--fg-faint); }
+
+  /* LISTEN ON */
+  .listen-on {
+    padding:32px 48px; border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+  }
+  .listen-btn {
+    padding:10px 20px; border:1px solid var(--fg-ghost); border-radius:8px;
+    color:var(--fg); text-decoration:none; font-size:14px;
+    transition:all 0.2s;
+  }
+  .listen-btn:hover { border-color:var(--border-hover); background:var(--card-bg); }
+
+  /* SUBSCRIBE */
+  .subscribe-bar {
+    padding:32px 48px; display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .subscribe-btn {
+    padding:12px 24px; border:1px solid var(--fg-ghost); border-radius:8px;
+    color:var(--fg); text-decoration:none; font-size:14px;
+    display:flex; align-items:center; gap:8px; transition:all 0.2s;
+  }
+  .subscribe-btn:hover { border-color:var(--border-hover); background:var(--card-bg); }
+
+  /* FOOTER */
+  footer {
+    padding:32px 48px; display:flex; justify-content:space-between;
+    align-items:center; border-top:1px solid var(--border);
+  }
+  .footer-copy { font-size:13px; color:var(--fg-faint); }
+  .footer-email { font-size:14px; color:var(--fg); }
+  .footer-email:hover { text-decoration:underline; }
+
+  /* RESPONSIVE */
+  @media (max-width:900px) {
+    .hero { grid-template-columns:1fr; }
+    .hero-left { border-right:none; border-bottom:1px solid var(--border); min-height:400px; }
+    .about-inner { grid-template-columns:1fr; text-align:center; }
+    .about-photo { margin:0 auto; }
+    .explore-grid { grid-template-columns:1fr 1fr; }
+    .podcast-hero { grid-template-columns:1fr; }
+    .oq-grid { grid-template-columns:1fr; }
+    nav { padding:20px 24px; }
+    .nav-links { gap:24px; }
+    .hero-right, .did-you-know, .one-question, .about, .explore,
+    .podcast-hero, .episodes, .listen-on, .subscribe-bar, footer {
+      padding-left:24px; padding-right:24px;
+    }
+  }
+  @media (max-width:600px) {
+    .explore-grid { grid-template-columns:1fr; }
+    .podcast-hero-title { font-size:28px; }
   }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-logo">ELIXLIGHT</div>
+<nav>
+  <div class="logo">ELIXLIGHT</div>
   <div class="nav-links">
     <a href="#tools">tools</a>
     <a href="#about">about</a>
@@ -327,191 +349,50 @@
   </div>
 </nav>
 
-<!-- ==================== MAIN SITE ==================== -->
-<div id="main-site">
-
-<section id="tools" class="section">
-  <div class="hero-grid">
-    <div class="hero-visual">
-
-      <div class="arch-wrapper">
-
-        <!-- PLAN VIEW -->
-        <div>
-          <div class="arch-view-title">Plan</div>
-          <div class="arch-view-sub">1:50 · Bedroom · 4200 × 3600</div>
-          <div class="arch-view arch-plan" style="margin-top:8px;">
-
-            <!-- Outer walls -->
-            <div class="p-wall-o" style="top:24px;left:24px;right:24px;height:2px;"></div>
-            <div class="p-wall-o" style="bottom:24px;left:24px;right:24px;height:2px;"></div>
-            <div class="p-wall-o" style="top:24px;left:24px;bottom:24px;width:2px;"></div>
-            <div class="p-wall-o" style="top:24px;right:24px;bottom:24px;width:2px;"></div>
-
-            <!-- Inner wall lines -->
-            <div class="p-wall-i" style="top:28px;left:28px;right:28px;height:1px;"></div>
-            <div class="p-wall-i" style="bottom:28px;left:28px;right:28px;height:1px;"></div>
-            <div class="p-wall-i" style="top:28px;left:28px;bottom:28px;width:1px;"></div>
-            <div class="p-wall-i" style="top:28px;right:28px;bottom:28px;width:1px;"></div>
-
-            <!-- Window (top wall) -->
-            <div class="p-win" style="top:23px;left:35%;width:30%;height:4px;"></div>
-            <div class="p-win-frame" style="top:20px;left:35%;width:30%;height:1px;"></div>
-            <div class="p-win-frame" style="top:34px;left:35%;width:30%;height:1px;"></div>
-            <div class="p-win-frame" style="top:18px;left:35%;width:1px;height:14px;"></div>
-            <div class="p-win-frame" style="top:18px;left:65%;width:1px;height:14px;"></div>
-
-            <!-- Door (right wall) -->
-            <div class="p-door" style="top:40%;right:23px;width:4px;height:20%;"></div>
-            <div class="p-door-swing" style="top:40%;right:27px;width:36px;height:36px;"></div>
-
-            <!-- Bed -->
-            <div class="p-bed" style="bottom:28%;left:26%;width:24%;height:16%;">
-              <div class="p-bed-pillow" style="top:2px;left:2px;right:2px;height:28%;"></div>
-              <div class="p-bed-fold" style="top:35%;left:0;right:0;height:1px;"></div>
-            </div>
-            <div class="p-headboard" style="bottom:28%;left:25.5%;width:2px;height:18%;"></div>
-
-            <!-- Nightstand -->
-            <div class="p-nightstand" style="bottom:28%;left:52%;width:7%;height:7%;"></div>
-
-            <!-- Wardrobe -->
-            <div class="p-wardrobe" style="top:32%;left:28px;width:3px;height:34%;"></div>
-
-            <!-- Desk + chair -->
-            <div class="p-desk" style="bottom:28%;right:28px;width:14%;height:8%;"></div>
-            <div class="p-chair" style="bottom:28%;right:44%;width:5%;height:5%;"></div>
-
-            <!-- FIXTURES -->
-            <div class="p-fix" id="p-c1" style="top:18%;left:50%;width:10px;height:10px;transform:translateX(-50%);"></div>
-            <div class="p-fix-label" id="l-c1" style="top:11%;left:53%;">C1</div>
-            <div class="p-beam" id="pb-c1" style="top:18%;left:50%;width:80px;height:80px;transform:translate(-50%,-10%);"></div>
-
-            <div class="p-fix" id="p-c2" style="top:50%;left:17%;width:9px;height:9px;transform:translateX(-50%);"></div>
-            <div class="p-fix-label" id="l-c2" style="top:47%;left:7%;">C2</div>
-            <div class="p-beam" id="pb-c2" style="top:50%;left:17%;width:60px;height:60px;transform:translate(-50%,-10%);"></div>
-
-            <div class="p-fix" id="p-w1" style="top:50%;right:17%;width:7px;height:7px;transform:translateX(50%);"></div>
-            <div class="p-fix-label" id="l-w1" style="top:47%;right:7%;">W1</div>
-            <div class="p-beam" id="pb-w1" style="top:50%;right:17%;width:50px;height:50px;transform:translate(50%,-10%);"></div>
-
-            <div class="p-fix" id="p-b1" style="bottom:28%;left:56%;width:5px;height:5px;transform:translateX(-50%);"></div>
-            <div class="p-fix-label" id="l-b1" style="bottom:24%;left:57%;">B1</div>
-            <div class="p-beam" id="pb-b1" style="bottom:28%;left:56%;width:36px;height:36px;transform:translate(-50%,10%);"></div>
-
-            <div class="p-fix" id="p-t1" style="bottom:18%;left:30%;width:7px;height:7px;transform:translateX(-50%);"></div>
-            <div class="p-fix-label" id="l-t1" style="bottom:14%;left:31%;">T1</div>
-            <div class="p-beam" id="pb-t1" style="bottom:18%;left:30%;width:46px;height:46px;transform:translate(-50%,10%);"></div>
-
-            <!-- Dimensions -->
-            <div class="p-dim-line" style="top:10px;left:24px;right:24px;height:1px;"></div>
-            <div class="p-dim-tick" style="top:6px;left:24px;width:1px;height:8px;"></div>
-            <div class="p-dim-tick" style="top:6px;right:24px;width:1px;height:8px;"></div>
-            <div class="p-dim-text" style="top:3px;left:50%;transform:translateX(-50%);">4200</div>
-
-            <div class="p-dim-line" style="top:24px;bottom:24px;left:10px;width:1px;"></div>
-            <div class="p-dim-tick" style="top:24px;left:6px;width:8px;height:1px;"></div>
-            <div class="p-dim-tick" style="bottom:24px;left:6px;width:8px;height:1px;"></div>
-            <div class="p-dim-text" style="top:50%;left:1px;transform:translateY(-50%) rotate(-90deg);">3600</div>
-
-            <!-- North arrow -->
-            <div class="p-north" style="bottom:6px;left:8px;"><span style="display:inline-block;transform:rotate(-45deg);margin-right:2px;">➤</span>N</div>
-
-            <!-- Section cut line A-A -->
-            <div class="p-cut-line" style="top:50%;left:24px;right:24px;"></div>
-            <div class="p-cut" style="top:48%;left:28px;">A</div>
-            <div class="p-cut" style="top:48%;right:28px;">A</div>
-
-          </div>
-        </div>
-
-        <!-- SECTION VIEW -->
-        <div>
-          <div class="arch-view-title">Section A-A</div>
-          <div class="arch-view-sub">1:50 · Looking East</div>
-          <div class="arch-view arch-sect" style="margin-top:8px;">
-
-            <!-- Floor slab -->
-            <div class="s-slab" style="bottom:24px;left:24px;right:24px;height:3px;"></div>
-            <div class="s-slab-line" style="bottom:20px;left:24px;right:24px;height:1px;"></div>
-            <div class="s-hatch" style="bottom:20px;left:24px;right:24px;height:4px;"></div>
-
-            <!-- Ceiling slab -->
-            <div class="s-slab" style="top:24px;left:24px;right:24px;height:3px;"></div>
-            <div class="s-slab-line" style="top:20px;left:24px;right:24px;height:1px;"></div>
-
-            <!-- Walls -->
-            <div class="s-wall" style="top:24px;bottom:24px;left:24px;width:2px;"></div>
-            <div class="s-wall-inner" style="top:24px;bottom:24px;left:28px;width:1px;"></div>
-            <div class="s-wall" style="top:24px;bottom:24px;right:24px;width:2px;"></div>
-            <div class="s-wall-inner" style="top:24px;bottom:24px;right:28px;width:1px;"></div>
-
-            <!-- Height dimension -->
-            <div class="s-dim-v" style="top:24px;bottom:24px;left:16px;width:1px;"></div>
-            <div class="s-dim-tick" style="top:22px;left:12px;width:8px;height:1px;"></div>
-            <div class="s-dim-tick" style="bottom:22px;left:12px;width:8px;height:1px;"></div>
-            <div class="s-dim-text" style="top:50%;left:4px;transform:translateY(-50%) rotate(-90deg);">2700</div>
-
-            <!-- Floor level -->
-            <div class="s-level" style="bottom:20px;left:50%;transform:translateX(-50%);">±0.00</div>
-
-            <!-- Bed -->
-            <div class="s-bed" style="bottom:27px;left:28%;width:26%;height:22px;"></div>
-            <div class="s-bed-head" style="bottom:27px;left:28%;width:3px;height:28px;"></div>
-            <div class="s-mattress" style="bottom:38px;left:29%;width:24%;height:1px;"></div>
-
-            <!-- Person -->
-            <div class="s-person" style="bottom:27px;left:36%;width:15px;height:18px;"></div>
-            <div class="s-person-head" style="bottom:46px;left:38%;width:9px;height:9px;"></div>
-
-            <!-- Nightstand -->
-            <div class="s-nightstand" style="bottom:27px;left:56%;width:12px;height:12px;"></div>
-
-            <!-- FIXTURES -->
-            <div class="s-fix" id="s-c1" style="top:24px;left:50%;width:14px;height:5px;transform:translateX(-50%);"></div>
-            <div class="s-cone" id="sc-c1" style="top:29px;left:50%;width:100px;height:110px;transform:translateX(-50%);"></div>
-
-            <div class="s-fix" id="s-c2" style="top:24px;left:20%;width:10px;height:4px;transform:translateX(-50%);"></div>
-            <div class="s-cone" id="sc-c2" style="top:28px;left:20%;width:65px;height:85px;transform:translateX(-50%);"></div>
-
-            <div class="s-fix" id="s-w1" style="top:38%;right:24px;width:4px;height:10px;transform:translateX(50%);"></div>
-            <div class="s-cone" id="sc-w1" style="top:38%;right:28px;width:45px;height:55px;transform:translate(0,-50%);"></div>
-
-            <div class="s-fix" id="s-b1" style="bottom:39px;left:58%;width:5px;height:5px;"></div>
-            <div class="s-cone" id="sc-b1" style="bottom:41px;left:58%;width:28px;height:28px;transform:translate(-50%,0);"></div>
-
-            <div class="s-fix" id="s-t1" style="top:24px;left:74%;width:10px;height:4px;"></div>
-            <div class="s-cone" id="sc-t1" style="top:28px;left:74%;width:50px;height:60px;transform:translate(-50%,0);"></div>
-
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Cycle info -->
-      <div class="cycle-info">
-        <div class="cycle-time" id="cycleTime">06:00</div>
-        <div class="cycle-label" id="cycleLabel">Morning activation — all ceiling lights at 100%, cool white 5600K</div>
-        <div class="cycle-scene" id="cycleScene">Cortisol Awakening Response</div>
-        <div class="cycle-progress"><div class="cycle-progress-fill" id="cycleProgress"></div></div>
-      </div>
-
+<!-- HERO / TOOLS -->
+<section id="tools" class="hero">
+  <div class="hero-left">
+    <div class="light-orb-container">
+      <div class="light-orb-glow"></div>
+      <div class="light-orb"></div>
+      <div class="light-orb-core"></div>
     </div>
-    <div class="hero-tools">
-      <div class="section-label">Tools for Light</div>
-      <a href="#" class="tool-row"><span class="tool-name">read your space</span><span class="tool-price">€29 <span class="tool-arrow">→</span></span></a>
-      <a href="#" class="tool-row"><span class="tool-name">reset your sleep</span><span class="tool-price">€297 <span class="tool-arrow">→</span></span></a>
-      <a href="#" class="tool-row"><span class="tool-name">audit your hotel</span><span class="tool-price">from €3,500 <span class="tool-arrow">→</span></span></a>
-      <a href="#" class="tool-row"><span class="tool-name">brief your designer</span><span class="tool-price">from €8,000 <span class="tool-arrow">→</span></span></a>
-      <a href="#" class="tool-row"><span class="tool-name">validate your specs</span><span class="tool-price">from €4,000 <span class="tool-arrow">→</span></span></a>
-      <a href="#" class="tool-row"><span class="tool-name">design your home</span><span class="tool-price">€19 <span class="tool-arrow">→</span></span></a>
+    <div class="time-label" id="timeLabel">
+      <span class="phase">00:00</span> · sleep — complete darkness
     </div>
+  </div>
+  <div class="hero-right">
+    <div class="section-label">Tools for Light</div>
+    <a href="#" class="tool-row">
+      <span class="tool-name">read your space</span>
+      <span class="tool-price">€29 <span class="tool-arrow">→</span></span>
+    </a>
+    <a href="#" class="tool-row">
+      <span class="tool-name">reset your sleep</span>
+      <span class="tool-price">€297 <span class="tool-arrow">→</span></span>
+    </a>
+    <a href="#" class="tool-row">
+      <span class="tool-name">audit your hotel</span>
+      <span class="tool-price">from €3,500 <span class="tool-arrow">→</span></span>
+    </a>
+    <a href="#" class="tool-row">
+      <span class="tool-name">brief your designer</span>
+      <span class="tool-price">from €8,000 <span class="tool-arrow">→</span></span>
+    </a>
+    <a href="#" class="tool-row">
+      <span class="tool-name">validate your specs</span>
+      <span class="tool-price">from €4,000 <span class="tool-arrow">→</span></span>
+    </a>
+    <a href="#" class="tool-row">
+      <span class="tool-name">design your home</span>
+      <span class="tool-price">€19 <span class="tool-arrow">→</span></span>
+    </a>
   </div>
 </section>
 
 <!-- DID YOU KNOW -->
-<section class="section section-pad">
-  <div class="dyk-wrap">
+<section class="did-you-know">
+  <div class="dyk-inner">
     <div class="dyk-icon">🧠</div>
     <div>
       <div class="section-label">Did You Know</div>
@@ -521,217 +402,200 @@
 </section>
 
 <!-- ONE QUESTION -->
-<section class="section section-pad">
+<section class="one-question">
   <div class="section-label">One Question</div>
-  <h2 style="font-size:28px; font-weight:500; margin-bottom:32px; color:#E8E4DF;">What does your bedroom light think it is right now?</h2>
-  <div class="quiz-grid">
-    <button class="quiz-btn">Early afternoon — bright and cool</button>
-    <button class="quiz-btn">Late evening — warm and dim</button>
-    <button class="quiz-btn">Midday — overhead and intense</button>
-    <button class="quiz-btn">Night — no light at all</button>
+  <h2 class="oq-title">What does your bedroom light think it is right now?</h2>
+  <div class="oq-grid">
+    <button class="oq-btn">Early afternoon — bright and cool</button>
+    <button class="oq-btn">Late evening — warm and dim</button>
+    <button class="oq-btn">Midday — overhead and intense</button>
+    <button class="oq-btn">Night — no light at all</button>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="section" style="padding:80px 48px;">
-  <div class="about-wrap">
-    <h2 class="about-name">Elisavet Zioga</h2>
-    <div class="about-role">Biological Lighting Strategist</div>
-    <p class="about-bio">I work at the intersection of circadian biology and architectural design. My work translates neuroscience into lighting strategy — so the spaces people live, sleep, and work in support their biology rather than fight it.</p>
-    <p class="about-bio">Light is one of the most powerful tools we have for nervous system regulation. Most spaces use it by accident. I help design it with intention.</p>
-    <p class="about-bio">The transformation is yours. I just make sure the environment supports it.</p>
+<section id="about" class="about">
+  <div class="about-inner">
+    <div class="about-photo">your photo here</div>
+    <div>
+      <h2 class="about-name">Elisavet Zioga</h2>
+      <div class="about-role">Biological Lighting Strategist</div>
+      <p class="about-bio">I work at the intersection of circadian biology and architectural design. My work translates neuroscience into lighting strategy — so the spaces people live, sleep, and work in support their biology rather than fight it.</p>
+      <p class="about-bio">Light is one of the most powerful tools we have for nervous system regulation. Most spaces use it by accident. I help design it with intention.</p>
+      <p class="about-bio">The transformation is yours. I just make sure the environment supports it.</p>
+    </div>
   </div>
 </section>
 
 <!-- EXPLORE -->
-<section id="explore" class="section section-pad">
+<section id="explore" class="explore">
   <div class="section-label">Explore</div>
   <div class="explore-grid">
-    <div class="explore-card" onclick="showPage('science')"><div class="explore-icon">🧬</div><div class="explore-title">the science</div><div class="explore-desc">How light shapes hormones, sleep, and nervous system regulation</div></div>
-    <div class="explore-card" onclick="showPage('hotels')"><div class="explore-icon">🏨</div><div class="explore-title">for hotels</div><div class="explore-desc">How intentional light increases guest satisfaction and return rates</div></div>
-    <div class="explore-card" onclick="showPage('studios')"><div class="explore-icon">🎨</div><div class="explore-title">for studios</div><div class="explore-desc">How to embed biological strategy into your design process</div></div>
-    <div class="explore-card" onclick="showPage('podcast')"><div class="explore-icon">🎙</div><div class="explore-title">podcast</div><div class="explore-desc">Short episodes on light, biology, and the spaces we inhabit</div></div>
+    <a href="#" class="explore-card">
+      <div class="explore-card-icon">🧬</div>
+      <div class="explore-card-title">the science</div>
+      <div class="explore-card-desc">How light shapes hormones, sleep, and nervous system regulation</div>
+    </a>
+    <a href="#" class="explore-card">
+      <div class="explore-card-icon">🏨</div>
+      <div class="explore-card-title">for hotels</div>
+      <div class="explore-card-desc">How intentional light increases guest satisfaction and return rates</div>
+    </a>
+    <a href="#" class="explore-card">
+      <div class="explore-card-icon">🎨</div>
+      <div class="explore-card-title">for studios</div>
+      <div class="explore-card-desc">How to embed biological strategy into your design process</div>
+    </a>
+    <a href="#podcast" class="explore-card">
+      <div class="explore-card-icon">🎙</div>
+      <div class="explore-card-title">podcast</div>
+      <div class="explore-card-desc">Short episodes on light, biology, and the spaces we inhabit</div>
+    </a>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer id="contact" class="footer">
-  <div class="footer-copy">© 2025<br>ELIXLIGHT</div>
-  <a href="mailto:hello@elixlight.com" class="footer-email">hello@elixlight.com</a>
-</footer>
-
-</div><!-- /main-site -->
-
-<!-- ==================== HIDDEN PAGES ==================== -->
-
-<div id="page-science" class="hidden-page section">
-  <div class="page-header"><h2>🧬 The Science</h2><button class="page-close" onclick="hidePages()">← Back</button></div>
-  <div class="page-content">
-    <p>Light is not just illumination. It is a biological signal that travels through the eye to the suprachiasmatic nucleus — the master clock that coordinates every hormone, every sleep cycle, every metabolic process in your body.</p>
-    <p>The melanopsin-containing intrinsically photosensitive retinal ganglion cells (ipRGCs) respond most strongly to short-wavelength blue light around 480nm. This is the same wavelength that suppresses melatonin production and increases cortisol — whether the light comes from the sun or a smartphone screen.</p>
-    <p>When we design spaces without accounting for this biology, we create environments that actively fight the nervous systems of the people inside them. The result is measurable: disrupted sleep, elevated stress markers, reduced cognitive performance, and long-term metabolic consequences.</p>
-    <p>Biological lighting design starts with the question: what should this space tell the body right now?</p>
-  </div>
-</div>
-
-<div id="page-hotels" class="hidden-page section">
-  <div class="page-header"><h2>🏨 For Hotels</h2><button class="page-close" onclick="hidePages()">← Back</button></div>
-  <div class="page-content">
-    <p>Guest satisfaction in luxury hospitality is increasingly tied to sleep quality — and sleep quality is increasingly tied to light. A guest who wakes rested remembers the stay differently. They rate higher, they return more often, and they tell others.</p>
-    <p>The problem: most hotel rooms are lit for inspection, not for biology. Bright, cool-white bathrooms at 11pm. Bedside reading lights that blast melanopic lux directly into the eye. Curtains that leak streetlight onto the pillow.</p>
-    <p>A biological lighting audit for hotels examines every light source a guest encounters from check-in to checkout: lobby transitions, corridor colour temperature, bathroom sequencing, bedroom blackout integrity, and morning wake-up light pathways.</p>
-    <p>The return is measurable. Properties that implement circadian-aware lighting see reductions in sleep-related complaints, increases in perceived room value, and stronger Net Promoter Scores.</p>
-  </div>
-</div>
-
-<div id="page-studios" class="hidden-page section">
-  <div class="page-header"><h2>🎨 For Studios</h2><button class="page-close" onclick="hidePages()">← Back</button></div>
-  <div class="page-content">
-    <p>Designers and architects already think about light aesthetically. The next layer is thinking about it biologically — without sacrificing the visual intent.</p>
-    <p>This means embedding circadian parameters into the design process from the first sketch: specifying CCT ranges by time of day, layering fixture types so biological and aesthetic functions are separable, and selecting dimming curves that follow natural light transitions rather than arbitrary percentages.</p>
-    <p>The deliverable is a Biological Lighting Specification — a document that sits alongside your electrical and lighting drawings, giving contractors and controls programmers the exact parameters needed to make the space support human biology.</p>
-    <p>For studios that want to differentiate, this is the edge. Clients are beginning to ask for it. The ones who can deliver it first will define the next standard.</p>
-  </div>
-</div>
-
-<div id="page-podcast" class="hidden-page">
+<!-- PODCAST PAGE -->
+<section id="podcast">
   <div class="podcast-tabs">
-    <button class="podcast-tab" onclick="showPage('science')">🧬 the science</button>
-    <button class="podcast-tab" onclick="showPage('hotels')">🏨 for hotels</button>
-    <button class="podcast-tab" onclick="showPage('studios')">🎨 for studios</button>
-    <button class="podcast-tab active">🎙 podcast</button>
+    <a href="#" class="podcast-tab">🧬 the science</a>
+    <a href="#" class="podcast-tab">🏨 for hotels</a>
+    <a href="#" class="podcast-tab">🎨 for studios</a>
+    <a href="#podcast" class="podcast-tab active">🎙 podcast</a>
   </div>
+
   <div class="podcast-hero">
     <div>
       <div class="section-label">Podcast</div>
-      <h2 class="podcast-title">Short episodes on light, biology,<br>and the spaces we live in.</h2>
-      <p class="podcast-desc">Each episode takes one thing your nervous system already does — and connects it to the space you're sitting in right now. No jargon. No performance. Just the intersection of how biology works and why design matters.</p>
-      <p class="podcast-meta">Episodes: 8–12 minutes. New episodes monthly.</p>
+      <h2 class="podcast-hero-title">Short episodes on light, biology,<br>and the spaces we live in.</h2>
+      <p class="podcast-hero-desc">Each episode takes one thing your nervous system already does — and connects it to the space you're sitting in right now. No jargon. No performance. Just the intersection of how biology works and why design matters.</p>
+      <p class="podcast-hero-meta">Episodes: 8–12 minutes. New episodes monthly.</p>
     </div>
-    <div class="podcast-art">
-      <div class="podcast-art-inner">
-        <div class="podcast-art-icon">🎙</div>
-        <div class="podcast-art-title">ELIXLIGHT</div>
-        <div class="podcast-art-sub">light · biology · space</div>
+    <div class="podcast-cover">
+      <div class="podcast-cover-icon">🎙</div>
+      <div class="podcast-cover-title">ELIXLIGHT</div>
+      <div class="podcast-cover-sub">light · biology · space</div>
+    </div>
+  </div>
+
+  <div class="episodes">
+    <div class="section-label">Episodes</div>
+
+    <div class="episode">
+      <div class="episode-num">01</div>
+      <div>
+        <div class="episode-title">The best sleep you didn't have</div>
+        <p class="episode-desc">You slept eight hours. You woke up tired. Here's exactly what happened in the 90 minutes before you closed your eyes — and why the light in the room was the main character.</p>
+        <div class="episode-duration">9 min</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-num">02</div>
+      <div>
+        <div class="episode-title">Your bathroom is lying to you</div>
+        <p class="episode-desc">The bathroom is designed for the morning version of you. The problem is you also use it at night. What's happening to your nervous system in those three minutes before bed — and one change that makes a measurable difference.</p>
+        <div class="episode-duration">8 min</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-num">03</div>
+      <div>
+        <div class="episode-title">What a hotel room knows about you</div>
+        <p class="episode-desc">Luxury hotels are increasingly designing for biology, not just aesthetics. What's the difference between a room that looks calming and a room that actually calms your nervous system — and how do you tell which one you're in?</p>
+        <div class="episode-duration">11 min</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-num">04</div>
+      <div>
+        <div class="episode-title">Cortisol and the ceiling light</div>
+        <p class="episode-desc">Overhead light mimics the midday sun. Your body doesn't ask for permission before responding. A short look at why the single most common lighting choice in homes and offices is also the one with the most biological consequences.</p>
+        <div class="episode-duration">9 min</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-num">05</div>
+      <div>
+        <div class="episode-title">The dinner table and melatonin</div>
+        <p class="episode-desc">Restaurant lighting is optimized to make food look beautiful. It's also, quite often, suppressing your melatonin at exactly the moment your body wants to start winding down. What a good restaurant would do differently — and why almost none of them do.</p>
+        <div class="episode-duration">10 min</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-num">06</div>
+      <div>
+        <div class="episode-title">What Mediterranean light does to a Mediterranean body</div>
+        <p class="episode-desc">Greece has 3,000 hours of sunlight a year. Moving indoors into artificial light creates a specific kind of biological confusion that Northern European design research hasn't fully accounted for. What designing for this climate actually means.</p>
+        <div class="episode-duration">12 min</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-num">07</div>
+      <div>
+        <div class="episode-title">A regulated nervous system — what it actually feels like</div>
+        <p class="episode-desc">Not a metaphor. Not a wellness claim. What regulation means biologically: HRV, cortisol curve, melatonin onset timing. And what it feels like when your environment is supporting it rather than disrupting it.</p>
+        <div class="episode-duration">10 min</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-num">08</div>
+      <div>
+        <div class="episode-title">Darkness as a design element</div>
+        <p class="episode-desc">We've become very good at adding light. We've forgotten how to design absence. What complete darkness does to the sleeping body — and why the hotel that masters blackout will outperform every hotel that masters ambiance.</p>
+        <div class="episode-duration">8 min</div>
       </div>
     </div>
   </div>
-  <div class="episodes-wrap">
-    <div class="section-label">Episodes</div>
-    <div class="episode"><div class="episode-num">01</div><div><div class="episode-title">The best sleep you didn't have</div><p class="episode-desc">You slept eight hours. You woke up tired. Here's exactly what happened in the 90 minutes before you closed your eyes — and why the light in the room was the main character.</p><div class="episode-time">9 min</div></div></div>
-    <div class="episode"><div class="episode-num">02</div><div><div class="episode-title">Your bathroom is lying to you</div><p class="episode-desc">The bathroom is designed for the morning version of you. The problem is you also use it at night. What's happening to your nervous system in those three minutes before bed — and one change that makes a measurable difference.</p><div class="episode-time">8 min</div></div></div>
-    <div class="episode"><div class="episode-num">03</div><div><div class="episode-title">What a hotel room knows about you</div><p class="episode-desc">Luxury hotels are increasingly designing for biology, not just aesthetics. What's the difference between a room that looks calming and a room that actually calms your nervous system — and how do you tell which one you're in?</p><div class="episode-time">11 min</div></div></div>
-    <div class="episode"><div class="episode-num">04</div><div><div class="episode-title">Cortisol and the ceiling light</div><p class="episode-desc">Overhead light mimics the midday sun. Your body doesn't ask for permission before responding. A short look at why the single most common lighting choice in homes and offices is also the one with the most biological consequences.</p><div class="episode-time">9 min</div></div></div>
-    <div class="episode"><div class="episode-num">05</div><div><div class="episode-title">The dinner table and melatonin</div><p class="episode-desc">Restaurant lighting is optimized to make food look beautiful. It's also, quite often, suppressing your melatonin at exactly the moment your body wants to start winding down. What a good restaurant would do differently — and why almost none of them do.</p><div class="episode-time">10 min</div></div></div>
-    <div class="episode"><div class="episode-num">06</div><div><div class="episode-title">What Mediterranean light does to a Mediterranean body</div><p class="episode-desc">Greece has 3,000 hours of sunlight a year. Moving indoors into artificial light creates a specific kind of biological confusion that Northern European design research hasn't fully accounted for. What designing for this climate actually means.</p><div class="episode-time">12 min</div></div></div>
-    <div class="episode"><div class="episode-num">07</div><div><div class="episode-title">A regulated nervous system — what it actually feels like</div><p class="episode-desc">Not a metaphor. Not a wellness claim. What regulation means biologically: HRV, cortisol curve, melatonin onset timing. And what it feels like when your environment is supporting it rather than disrupting it.</p><div class="episode-time">10 min</div></div></div>
-    <div class="episode"><div class="episode-num">08</div><div><div class="episode-title">Darkness as a design element</div><p class="episode-desc">We've become very good at adding light. We've forgotten how to design absence. What complete darkness does to the sleeping body — and why the hotel that masters blackout will outperform every hotel that masters ambiance.</p><div class="episode-time">8 min</div></div></div>
-  </div>
-  <div class="listen-bar">
-    <div class="listen-label">Listen On</div>
+
+  <div class="listen-on">
+    <div class="section-label" style="margin:0;">Listen On</div>
     <a href="#" class="listen-btn">Spotify</a>
     <a href="#" class="listen-btn">Apple Podcasts</a>
     <a href="#" class="listen-btn">YouTube</a>
   </div>
+
   <div class="subscribe-bar">
-    <span class="subscribe-text">Want to be notified when new episodes drop?</span>
+    <span style="font-size:15px; color:var(--fg-muted);">Want to be notified when new episodes drop?</span>
     <a href="#" class="subscribe-btn">Subscribe <span>↗</span></a>
   </div>
-  <div style="padding: 32px 48px; border-top: 1px solid rgba(255,255,255,0.06);">
-    <button class="page-close" onclick="hidePages()">← Back to home</button>
-  </div>
-</div>
+</section>
+
+<footer id="contact">
+  <div class="footer-copy">© 2025<br>ELIXLIGHT</div>
+  <a href="mailto:hello@elixlight.com" class="footer-email">hello@elixlight.com</a>
+</footer>
 
 <script>
-  function showPage(name) {
-    document.getElementById('main-site').style.display = 'none';
-    document.querySelectorAll('.hidden-page').forEach(p => p.classList.remove('active'));
-    const t = document.getElementById('page-' + name);
-    if (t) { t.classList.add('active'); window.scrollTo(0, 0); }
-  }
-  function hidePages() {
-    document.querySelectorAll('.hidden-page').forEach(p => p.classList.remove('active'));
-    document.getElementById('main-site').style.display = 'block';
-    window.scrollTo(0, 0);
-  }
-
-  /* ===== LIGHTING CYCLE ===== */
-  const cycleTime = document.getElementById('cycleTime');
-  const cycleLabel = document.getElementById('cycleLabel');
-  const cycleScene = document.getElementById('cycleScene');
-  const cycleProgress = document.getElementById('cycleProgress');
-
-  const pFix = {
-    c1: document.getElementById('p-c1'), c2: document.getElementById('p-c2'),
-    w1: document.getElementById('p-w1'), b1: document.getElementById('p-b1'), t1: document.getElementById('p-t1')
-  };
-  const pBeam = {
-    c1: document.getElementById('pb-c1'), c2: document.getElementById('pb-c2'),
-    w1: document.getElementById('pb-w1'), b1: document.getElementById('pb-b1'), t1: document.getElementById('pb-t1')
-  };
-  const pLabel = {
-    c1: document.getElementById('l-c1'), c2: document.getElementById('l-c2'),
-    w1: document.getElementById('l-w1'), b1: document.getElementById('l-b1'), t1: document.getElementById('l-t1')
-  };
-  const sFix = {
-    c1: document.getElementById('s-c1'), c2: document.getElementById('s-c2'),
-    w1: document.getElementById('s-w1'), b1: document.getElementById('s-b1'), t1: document.getElementById('s-t1')
-  };
-  const sCone = {
-    c1: document.getElementById('sc-c1'), c2: document.getElementById('sc-c2'),
-    w1: document.getElementById('sc-w1'), b1: document.getElementById('sc-b1'), t1: document.getElementById('sc-t1')
-  };
-
-  const scenes = [
-    { time: '06:00', label: 'Morning activation — all ceiling lights at 100%, cool white 5600K', scene: 'Cortisol Awakening Response', lights: { c1:'on', c2:'on', w1:'off', b1:'off', t1:'off' } },
-    { time: '09:30', label: 'Focused work — task light on, ceiling reduced to 60%', scene: 'Sustained Attention Phase', lights: { c1:'dim', c2:'dim', w1:'off', b1:'off', t1:'on' } },
-    { time: '13:00', label: 'Midday peak — maximum melanopic lux, all overhead at 100%', scene: 'Circadian Entrainment', lights: { c1:'on', c2:'on', w1:'off', b1:'off', t1:'off' } },
-    { time: '17:00', label: 'Late afternoon — warm shift begins, wall wash at 40%', scene: 'Melanopic Transition', lights: { c1:'dim', c2:'dim', w1:'dim', b1:'off', t1:'off' } },
-    { time: '20:00', label: 'Evening wind-down — only wall and bedside, 2200K amber', scene: 'Melatonin Onset Window', lights: { c1:'off', c2:'off', w1:'on', b1:'on', t1:'off' } },
-    { time: '22:30', label: 'Pre-sleep — bedside only at 5%, all else off', scene: 'Adenosine Buildup', lights: { c1:'off', c2:'off', w1:'off', b1:'dim', t1:'off' } },
-    { time: '00:00', label: 'Sleep — complete darkness, zero lux at eye level', scene: 'Circadian Nadir', lights: { c1:'off', c2:'off', w1:'off', b1:'off', t1:'off' } },
-    { time: '03:00', label: 'Deep night — blackout maintained, no light intrusion', scene: 'Growth Hormone Peak', lights: { c1:'off', c2:'off', w1:'off', b1:'off', t1:'off' } },
+  const phases = [
+    { time: "02:00", label: "Late night", desc: "complete darkness" },
+    { time: "05:47", label: "Dawn", desc: "cortisol awakening response" },
+    { time: "08:15", label: "Morning", desc: "peak alertness" },
+    { time: "12:30", label: "Midday", desc: "maximum melanopic lux" },
+    { time: "15:45", label: "Afternoon", desc: "sustained performance" },
+    { time: "18:20", label: "Sunset", desc: "melatonin onset begins" },
+    { time: "21:00", label: "Evening", desc: "wind-down phase" },
+    { time: "23:15", label: "Night", desc: "circadian nadir" },
+    { time: "02:00", label: "Late night", desc: "complete darkness" }
   ];
 
-  const SCENE_DURATION = 5000;
-  const UPDATE_INTERVAL = 50;
+  const timeLabel = document.getElementById('timeLabel');
+  const animDuration = 12; // seconds for full cycle
 
-  function setState(el, beam, label, state) {
-    el.classList.remove('on','off','dim');
-    beam.classList.remove('on','off','dim');
-    if (label) { label.classList.remove('on','off'); }
-    const s = state === 'on' ? 'on' : state === 'dim' ? 'dim' : 'off';
-    el.classList.add(s);
-    beam.classList.add(s);
-    if (label) { label.classList.add(s === 'off' ? 'off' : 'on'); }
+  function updateLabel() {
+    const now = performance.now() / 1000;
+    const progress = (now % animDuration) / animDuration;
+    const idx = Math.floor(progress * (phases.length - 1));
+    const phase = phases[idx];
+    timeLabel.innerHTML = `<span class="phase">${phase.time}</span> · ${phase.label} — ${phase.desc}`;
+    requestAnimationFrame(updateLabel);
   }
-
-  let currentScene = 0;
-  let sceneStart = Date.now();
-
-  function applyScene(i) {
-    const sc = scenes[i];
-    cycleTime.textContent = sc.time;
-    cycleLabel.textContent = sc.label;
-    cycleScene.textContent = sc.scene;
-    sceneStart = Date.now();
-    Object.keys(sc.lights).forEach(k => {
-      setState(pFix[k], pBeam[k], pLabel[k], sc.lights[k]);
-      setState(sFix[k], sCone[k], null, sc.lights[k]);
-    });
-  }
-
-  function tick() {
-    const elapsed = Date.now() - sceneStart;
-    cycleProgress.style.width = Math.min((elapsed / SCENE_DURATION) * 100, 100) + '%';
-    if (elapsed >= SCENE_DURATION) {
-      currentScene = (currentScene + 1) % scenes.length;
-      applyScene(currentScene);
-    }
-  }
-
-  applyScene(0);
-  setInterval(tick, UPDATE_INTERVAL);
+  updateLabel();
 </script>
 
 </body>
