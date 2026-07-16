@@ -57,7 +57,7 @@
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; }
 
-  .w { max-width: 640px; margin: 0 auto; padding: 0 1.5rem; }
+  .w { max-width: 720px; margin: 0 auto; }
 
   /* ========== NAV ========== */
   .nav {
@@ -66,215 +66,273 @@
     align-items: center;
     padding: 1.25rem 1.5rem;
     border-bottom: 0.5px solid var(--border);
-    max-width: 640px;
-    margin: 0 auto;
   }
   .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; }
   .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; letter-spacing: 0.02em; }
 
-  /* ========== HERO ========== */
-  .hero {
-    padding: 3rem 0 2rem;
-    border-bottom: 0.5px solid var(--border);
+  /* ========== PAGE HEADER ========== */
+  .page-header {
+    padding: 3rem 1.5rem 2rem;
     text-align: center;
+    border-bottom: 0.5px solid var(--border);
   }
-  .hero h1 {
-    font-size: 28px;
+  .page-header h1 {
+    font-size: 32px;
     font-weight: 500;
-    margin-bottom: 0.75rem;
-  }
-  .hero .subtitle {
-    font-size: 14px;
-    color: var(--text-muted);
+    letter-spacing: -0.02em;
   }
 
-  /* ========== PATH SELECTOR ========== */
-  .path-select {
-    padding: 2rem 0;
+  /* ========== ENTRY PATHS ========== */
+  .entry-section {
+    padding: 2.5rem 1.5rem;
     border-bottom: 0.5px solid var(--border);
   }
-  .path-label {
+  .entry-label {
     font-size: 11px;
     color: var(--text-muted);
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
   }
-  .path-grid {
-    display: flex;
-    flex-direction: column;
+  .entry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
   }
-  .path-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.25rem;
+  .entry-card {
+    padding: 1.5rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface-1);
     cursor: pointer;
     transition: all 0.2s;
+    text-align: left;
   }
-  .path-card:hover {
+  .entry-card:hover {
     border-color: var(--border-strong);
-    padding-left: 1.5rem;
+    background: var(--surface-2);
   }
-  .path-card.active {
+  .entry-card.active {
     border-color: var(--accent);
     background: var(--accent-dim);
   }
-  .path-card .name {
+  .entry-card .title {
     font-size: 14px;
     font-weight: 500;
+    margin-bottom: 0.5rem;
     color: var(--text-primary);
   }
-  .path-card .meta {
+  .entry-card .price {
     font-size: 12px;
     color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .entry-card .desc {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-secondary);
   }
 
-  /* ========== FORM ========== */
-  .form-section {
-    padding: 2rem 0;
-    border-bottom: 0.5px solid var(--border);
+  /* ========== QUESTIONNAIRE ========== */
+  .quiz-section {
+    padding: 2.5rem 1.5rem;
+    display: none;
   }
-  .form-section:last-of-type { border-bottom: none; }
-  .section-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 1.25rem;
-  }
+  .quiz-section.show { display: block; }
 
   .q-block {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid var(--border);
   }
-  .q-block:last-child { margin-bottom: 0; }
+  .q-block:last-of-type { border-bottom: none; }
   .q-label {
-    font-size: 14px;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .q-text {
+    font-size: 16px;
     font-weight: 500;
+    margin-bottom: 1rem;
     color: var(--text-primary);
-    margin-bottom: 0.6rem;
-    display: block;
   }
-  .q-hint {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 0.6rem;
-    line-height: 1.5;
-  }
-  .q-hint.flag {
-    color: var(--accent);
-    border-left: 2px solid var(--accent);
-    padding-left: 0.75rem;
-  }
-
-  /* Inputs */
-  input[type="text"],
-  input[type="email"],
-  input[type="number"],
-  textarea,
-  select {
-    width: 100%;
-    padding: 0.7rem 0.9rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
-    color: var(--text-primary);
-    font-size: 14px;
-    font-family: inherit;
-    transition: border-color 0.2s;
-    outline: none;
-  }
-  input:focus, textarea:focus, select:focus {
-    border-color: var(--border-stronger);
-  }
-  input::placeholder, textarea::placeholder {
-    color: var(--text-muted);
-  }
-  textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-  select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6560' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.9rem center;
-    padding-right: 2.5rem;
-  }
-
-  /* Radio / checkbox groups */
-  .opt-group {
+  .q-opts {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.5rem;
   }
-  .opt-btn {
+  .q-opt {
     text-align: left;
-    padding: 0.65rem 0.9rem;
+    padding: 0.75rem 1rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-primary);
-    background: var(--surface-1);
+    background: var(--surface-2);
     cursor: pointer;
     transition: all 0.15s;
     font-family: inherit;
   }
-  .opt-btn:hover { border-color: var(--border-strong); }
-  .opt-btn.selected {
+  .q-opt:hover { border-color: var(--border-strong); background: var(--surface-1); }
+  .q-opt.selected {
     border-color: var(--border-stronger);
+    background: var(--surface-1);
+  }
+
+  /* Free input */
+  .q-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--text-primary);
     background: var(--surface-2);
+    font-family: inherit;
+    transition: border-color 0.15s;
   }
+  .q-input:focus {
+    outline: none;
+    border-color: var(--border-stronger);
+  }
+  .q-input::placeholder { color: var(--text-muted); }
 
-  /* Inline options (horizontal) */
-  .opt-row {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+  /* Flag message */
+  .flag-msg {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-1);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    display: none;
   }
-  .opt-row .opt-btn {
-    flex: 1;
-    min-width: 100px;
-    text-align: center;
-  }
+  .flag-msg.show { display: block; }
+  .flag-msg a { color: var(--accent); text-decoration: underline; cursor: pointer; }
 
-  /* ========== GENERATE BUTTON ========== */
-  .generate-wrap {
-    padding: 2rem 0 4rem;
-    text-align: center;
+  /* ========== UNIVERSAL QUESTIONS ========== */
+  .universal-section {
+    padding: 2.5rem 1.5rem;
+    border-top: 0.5px solid var(--border);
+    display: none;
   }
+  .universal-section.show { display: block; }
+
+  /* ========== GENERATE QUOTE ========== */
+  .generate-section {
+    padding: 2rem 1.5rem 4rem;
+    text-align: center;
+    display: none;
+  }
+  .generate-section.show { display: block; }
   .generate-btn {
+    padding: 1rem 2.5rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .generate-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .generate-note {
+    margin-top: 1.25rem;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ========== QUOTE RESULT ========== */
+  .result-section {
+    padding: 2.5rem 1.5rem;
+    display: none;
+  }
+  .result-section.show { display: block; }
+  .result-box {
+    padding: 2rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-1);
+    margin-bottom: 2rem;
+  }
+  .result-service {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .result-price {
+    font-size: 42px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+  }
+  .result-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+  .result-details {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-muted);
+  }
+  .result-details p { margin-bottom: 0.25rem; }
+
+  .download-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.9rem 2rem;
-    border: none;
+    padding: 0.875rem 1.75rem;
+    border: 0.5px solid var(--border-strong);
     border-radius: var(--radius);
-    background: var(--accent);
-    color: #fff;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 1.5rem;
+  }
+  .download-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .next-steps {
+    padding: 1.5rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-1);
+  }
+  .next-steps h3 {
     font-size: 14px;
     font-weight: 500;
-    cursor: pointer;
-    transition: opacity 0.2s;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
   }
-  .generate-btn:hover { opacity: 0.9; }
-  .generate-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  .next-steps p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
   }
-  .generate-note {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 1rem;
-  }
+  .next-steps a { color: var(--accent); }
 
   /* ========== FOOTER ========== */
   footer {
@@ -283,97 +341,302 @@
     justify-content: space-between;
     align-items: center;
     border-top: 0.5px solid var(--border);
-    max-width: 640px;
-    margin: 0 auto;
   }
   footer .copy { font-size: 12px; color: var(--text-muted); }
   footer a { font-size: 13px; color: var(--text-primary); }
   footer a:hover { color: var(--accent); }
 
   /* ========== RESPONSIVE ========== */
-  @media (max-width: 560px) {
-    .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .hero h1 { font-size: 24px; }
-    .path-card { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
-    .opt-row .opt-btn { min-width: 80px; }
+  @media (max-width: 640px) {
+    .entry-grid { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 26px; }
+    .result-price { font-size: 32px; }
+    footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
 
+<div class="w">
+
 <!-- ========== NAV ========== -->
 <nav class="nav">
-  <a href="/" class="nav-logo">ELIXLIGHT</a>
+  <span class="nav-logo">ELIXLIGHT</span>
   <span class="nav-quote">designing light for your true nature</span>
 </nav>
 
-<div class="w">
-
-<!-- ========== HERO ========== -->
-<section class="hero">
+<!-- ========== PAGE HEADER ========== -->
+<div class="page-header">
   <h1>Get a quote</h1>
-  <p class="subtitle">Three ways to work together. Choose the one that fits where you are.</p>
-</section>
+</div>
 
-<!-- ========== PATH SELECTOR ========== -->
-<section class="path-select" id="pathSelect">
-  <p class="path-label">Choose your path</p>
-  <div class="path-grid">
-    <div class="path-card" data-path="A" onclick="selectPath('A')">
-      <span class="name">Understand your space</span>
-      <span class="meta">from €3,500 →</span>
+<!-- ========== ENTRY PATHS ========== -->
+<section class="entry-section" id="entrySection">
+  <p class="entry-label">Choose your starting point</p>
+  <div class="entry-grid">
+    <div class="entry-card" onclick="selectPath('audit')">
+      <div class="title">Understand your space</div>
+      <div class="price">from €3,500</div>
+      <div class="desc">Understand the impact of your lighting. A full circadian audit of your existing space.</div>
     </div>
-    <div class="path-card" data-path="B" onclick="selectPath('B')">
-      <span class="name">Give your design a biological intent</span>
-      <span class="meta">from €8,000 →</span>
+    <div class="entry-card" onclick="selectPath('brief')">
+      <div class="title">Give your design intent</div>
+      <div class="price">from €8,000</div>
+      <div class="desc">Include biological strategy in your project. For studios and developers at any stage.</div>
     </div>
-    <div class="path-card" data-path="C" onclick="selectPath('C')">
-      <span class="name">Validate your specs</span>
-      <span class="meta">from €4,000 →</span>
+    <div class="entry-card" onclick="selectPath('validate')">
+      <div class="title">Validate your specs</div>
+      <div class="price">from €4,000</div>
+      <div class="desc">Review the biological impact of your specs before you build. Fast, specific, final.</div>
     </div>
   </div>
 </section>
 
-<!-- ========== DYNAMIC FORM ========== -->
-<form id="quoteForm" onsubmit="event.preventDefault(); generatePDF();">
-  <div id="formFields"></div>
-
-  <!-- Always-asked questions -->
-  <section class="form-section" id="commonFields" style="display:none;">
-    <p class="section-label">About you</p>
-
-    <div class="q-block">
-      <label class="q-label">Your name</label>
-      <input type="text" id="qName" placeholder="Full name" required>
+<!-- ========== PATH A: CIRCADIAN AUDIT ========== -->
+<section class="quiz-section" id="pathAudit">
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">What type of project is this?</p>
+    <div class="q-opts" data-key="projectType">
+      <button class="q-opt" onclick="selectOpt(this,'projectType','hotel')">Hotel</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','residential')">Residential</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','wellness')">Wellness</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','other')">Other</button>
     </div>
-
-    <div class="q-block">
-      <label class="q-label">Email</label>
-      <input type="email" id="qEmail" placeholder="you@company.com" required>
-    </div>
-
-    <div class="q-block">
-      <label class="q-label">Project name or description</label>
-      <p class="q-hint">One line is enough — it personalises your quote.</p>
-      <input type="text" id="qProject" placeholder="e.g. Boutique hotel in Lisbon, 12 rooms" required>
-    </div>
-
-    <div class="q-block">
-      <label class="q-label">Preferred start date</label>
-      <p class="q-hint">Sets timeline expectations for both sides.</p>
-      <input type="text" id="qDate" placeholder="e.g. September 2025 or Q4 2025" required>
-    </div>
-  </section>
-
-  <div class="generate-wrap" id="generateWrap" style="display:none;">
-    <button type="submit" class="generate-btn" id="genBtn">
-      Generate quote PDF ↓
-    </button>
-    <p class="generate-note">
-      Review your PDF, then send it to <a href="mailto:collabs@elixlight.com" style="color:var(--accent);">collabs@elixlight.com</a> to start.
-    </p>
   </div>
-</form>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">What is the approximate scale?</p>
+    <input type="text" class="q-input" placeholder="e.g. 2,400 sqm" data-key="scale" onchange="saveInput(this,'scale')">
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">Is this a new build or a retrofit?</p>
+    <div class="q-opts" data-key="buildType">
+      <button class="q-opt" onclick="selectOpt(this,'buildType','retrofit'); showFlag('auditRetrofit')">Retrofit</button>
+      <button class="q-opt" onclick="selectOpt(this,'buildType','newbuild'); showFlag('auditNewbuild')">New build</button>
+    </div>
+    <div class="flag-msg" id="auditRetrofit"></div>
+    <div class="flag-msg" id="auditNewbuild">
+      For new builds, a <a onclick="switchPath('brief')">Strategic Brief</a> or <a onclick="switchPath('validate')">Design Validation</a> is usually more appropriate. You can continue with an audit, but the scope will differ.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">How many distinct zones need assessment?</p>
+    <div class="q-opts" data-key="zones">
+      <button class="q-opt" onclick="selectOpt(this,'zones','1-3')">1–3 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','4-8')">4–8 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','9-15')">9–15 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','16+')">16+ zones</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">Does the space change significantly across seasons?</p>
+    <div class="q-opts" data-key="seasonal">
+      <button class="q-opt" onclick="selectOpt(this,'seasonal','minimal')">Minimal change</button>
+      <button class="q-opt" onclick="selectOpt(this,'seasonal','moderate')">Moderate — some spaces shift use</button>
+      <button class="q-opt" onclick="selectOpt(this,'seasonal','significant')">Significant — dedicated seasonal programming needed</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Deliverables</p>
+    <p class="q-text">What do you need?</p>
+    <div class="q-opts" data-key="deliverable">
+      <button class="q-opt" onclick="selectOpt(this,'deliverable','audit')">Audit only — findings and recommendations</button>
+      <button class="q-opt" onclick="selectOpt(this,'deliverable','audit+strategy')">Audit + strategy — findings plus implementation roadmap</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PATH B: STRATEGIC BRIEF ========== -->
+<section class="quiz-section" id="pathBrief">
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">What type of project is this?</p>
+    <div class="q-opts" data-key="projectType">
+      <button class="q-opt" onclick="selectOpt(this,'projectType','hotel')">Hotel</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','residential')">Residential</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','wellness')">Wellness</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','other')">Other</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">What stage is the project at?</p>
+    <div class="q-opts" data-key="projectStage">
+      <button class="q-opt" onclick="selectOpt(this,'projectStage','concept')">Concept / pre-design</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectStage','schematic')">Schematic design</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectStage','designDev'); showFlag('briefLate')">Design development</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectStage','construction'); showFlag('briefLate')">Construction documents / built</button>
+    </div>
+    <div class="flag-msg" id="briefLate">
+      At this stage, a <a onclick="switchPath('validate')">Design Validation</a> may be more practical than a full strategic brief. You can continue, but the value shifts from shaping to confirming.
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">What is the approximate scale?</p>
+    <input type="text" class="q-input" placeholder="e.g. 2,400 sqm" data-key="scale" onchange="saveInput(this,'scale')">
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">How many distinct zones need biological definition?</p>
+    <div class="q-opts" data-key="zones">
+      <button class="q-opt" onclick="selectOpt(this,'zones','1-3')">1–3 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','4-8')">4–8 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','9-15')">9–15 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','16+')">16+ zones</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">Which human states need to be supported?</p>
+    <div class="q-opts" data-key="humanStates">
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','sleep')">Sleep and restoration</button>
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','alertness')">Alertness and focus</button>
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','both')">Both — circadian rhythm across the day</button>
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','specific')">Specific clinical or performance outcomes</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">Does the space change significantly across seasons?</p>
+    <div class="q-opts" data-key="seasonal">
+      <button class="q-opt" onclick="selectOpt(this,'seasonal','minimal')">Minimal change</button>
+      <button class="q-opt" onclick="selectOpt(this,'seasonal','moderate')">Moderate — some spaces shift use</button>
+      <button class="q-opt" onclick="selectOpt(this,'seasonal','significant')">Significant — dedicated seasonal programming needed</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Deliverables</p>
+    <p class="q-text">What do you need?</p>
+    <div class="q-opts" data-key="deliverable">
+      <button class="q-opt" onclick="selectOpt(this,'deliverable','brief')">Brief only — biological intent document</button>
+      <button class="q-opt" onclick="selectOpt(this,'deliverable','brief+reviews')">Brief + design reviews — intent plus checkpoint validation</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PATH C: DESIGN VALIDATION ========== -->
+<section class="quiz-section" id="pathValidate">
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">What type of project is this?</p>
+    <div class="q-opts" data-key="projectType">
+      <button class="q-opt" onclick="selectOpt(this,'projectType','hotel')">Hotel</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','residential')">Residential</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','wellness')">Wellness</button>
+      <button class="q-opt" onclick="selectOpt(this,'projectType','other')">Other</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">How many distinct zones need validation?</p>
+    <div class="q-opts" data-key="zones">
+      <button class="q-opt" onclick="selectOpt(this,'zones','1-3')">1–3 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','4-8')">4–8 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','9-15')">9–15 zones</button>
+      <button class="q-opt" onclick="selectOpt(this,'zones','16+')">16+ zones</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Project context</p>
+    <p class="q-text">Which human states need to be validated?</p>
+    <div class="q-opts" data-key="humanStates">
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','sleep')">Sleep and restoration</button>
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','alertness')">Alertness and focus</button>
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','both')">Both — circadian rhythm across the day</button>
+      <button class="q-opt" onclick="selectOpt(this,'humanStates','specific')">Specific clinical or performance outcomes</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Deliverables</p>
+    <p class="q-text">How many review cycles do you anticipate?</p>
+    <div class="q-opts" data-key="reviewCycles">
+      <button class="q-opt" onclick="selectOpt(this,'reviewCycles','1')">One round — single-pass validation</button>
+      <button class="q-opt" onclick="selectOpt(this,'reviewCycles','2')">Two rounds — initial + revision check</button>
+      <button class="q-opt" onclick="selectOpt(this,'reviewCycles','3+')">Three or more — iterative refinement</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== UNIVERSAL QUESTIONS ========== -->
+<section class="universal-section" id="universalSection">
+  <div class="q-block">
+    <p class="q-label">About you</p>
+    <p class="q-text">Your name</p>
+    <input type="text" class="q-input" placeholder="Full name" data-key="name" onchange="saveInput(this,'name')">
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">About you</p>
+    <p class="q-text">Your email</p>
+    <input type="email" class="q-input" placeholder="you@company.com" data-key="email" onchange="saveInput(this,'email')">
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">About you</p>
+    <p class="q-text">Your role or organisation</p>
+    <input type="text" class="q-input" placeholder="e.g. Architect, Studio Name" data-key="org" onchange="saveInput(this,'org')">
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Timeline</p>
+    <p class="q-text">When do you need this completed?</p>
+    <div class="q-opts" data-key="timeline">
+      <button class="q-opt" onclick="selectOpt(this,'timeline','asap')">ASAP — within 2 weeks</button>
+      <button class="q-opt" onclick="selectOpt(this,'timeline','1month')">Within 1 month</button>
+      <button class="q-opt" onclick="selectOpt(this,'timeline','flexible')">Flexible — aligning with project milestones</button>
+    </div>
+  </div>
+
+  <div class="q-block">
+    <p class="q-label">Anything else</p>
+    <p class="q-text">Is there anything else we should know?</p>
+    <input type="text" class="q-input" placeholder="Optional — constraints, prior work, specific concerns..." data-key="notes" onchange="saveInput(this,'notes')">
+  </div>
+</section>
+
+<!-- ========== GENERATE QUOTE ========== -->
+<section class="generate-section" id="generateSection">
+  <button class="generate-btn" onclick="generateQuote()">Generate quote</button>
+  <p class="generate-note">This will produce a PDF quote document you can download, review, and send to <strong>collabs@elixlight.com</strong> to start your project.</p>
+</section>
+
+<!-- ========== QUOTE RESULT ========== -->
+<section class="result-section" id="resultSection">
+  <div class="result-box">
+    <p class="result-service" id="resultService">CIRCADIAN AUDIT</p>
+    <p class="result-price" id="resultPrice">€4,200</p>
+    <p class="result-desc" id="resultDesc">A full circadian audit of your existing space, with findings and an implementation roadmap.</p>
+    <div class="result-details" id="resultDetails"></div>
+  </div>
+
+  <button class="download-btn" onclick="downloadPDF()">
+    <span>↓</span> Download quote as PDF
+  </button>
+
+  <div class="next-steps">
+    <h3>What happens next</h3>
+    <p>Review your quote. When you're ready, send it to <a href="mailto:collabs@elixlight.com">collabs@elixlight.com</a> and we'll schedule a call to confirm scope and timeline within 48 hours.</p>
+  </div>
+</section>
 
 </div><!-- /w -->
 
@@ -385,374 +648,322 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-// ========== PATH CONFIGURATION ==========
-const paths = {
-  A: {
+const { jsPDF } = window.jspdf;
+
+let currentPath = null;
+let answers = {};
+
+const pathConfig = {
+  audit: {
     name: 'Circadian Audit',
-    price: 'from €3,500',
-    fields: [
-      { id: 'projType', label: 'What type of project is this?', type: 'select', options: ['Hotel','Residential','Wellness','Other'] },
-      { id: 'projScale', label: 'Approximate scale (sqm)', type: 'number', placeholder: 'e.g. 450' },
-      { id: 'buildType', label: 'New build or retrofit?', type: 'radio', options: ['New build','Retrofit'], flag: { value:'New build', msg:'For new builds, a Strategic Brief or Design Validation is usually more appropriate. An audit measures what already exists. Consider switching paths, or continue if you\'re auditing an existing reference space.' } },
-      { id: 'numZones', label: 'How many distinct lighting zones?', type: 'number', placeholder: 'e.g. 5' },
-      { id: 'seasonal', label: 'Does the project have seasonal complexity?', type: 'radio', options: ['Yes — variable daylight, seasonal use','No — consistent year-round'] },
-      { id: 'deliverable', label: 'What do you need?', type: 'radio', options: ['Audit only','Audit + strategy'] },
-    ]
+    basePrice: 3500,
+    zoneMultipliers: { '1-3': 1, '4-8': 1.4, '9-15': 2, '16+': 2.8 },
+    seasonalMultipliers: { minimal: 1, moderate: 1.15, significant: 1.3 },
+    deliverableMultipliers: { audit: 1, 'audit+strategy': 1.35 },
+    desc: 'A full circadian audit of your existing space, measuring light exposure across zones and times of day against biological targets.',
+    descStrategy: ' Includes a detailed implementation roadmap with prioritised recommendations and fixture specifications.',
+    pdfTitle: 'Circadian Audit Quote',
+    pdfBody: `This quote covers a comprehensive circadian lighting audit of your space. We measure melanopic lux, colour temperature, and spectral distribution across all zones at multiple times of day. The deliverable is a findings report with biological impact assessment and prioritised remediation recommendations.`
   },
-  B: {
+  brief: {
     name: 'Strategic Brief',
-    price: 'from €8,000',
-    fields: [
-      { id: 'projType', label: 'What type of project is this?', type: 'select', options: ['Hotel','Residential','Wellness','Mixed-use','Other'] },
-      { id: 'projStage', label: 'What stage is the project at?', type: 'radio', options: ['Concept / early design','Schematic design','Design development','Construction docs / late stage'], flag: { value:'Construction docs / late stage', msg:'At this stage, specs are likely already fixed. A Design Validation will give you faster, more targeted feedback on whether your current specs hit biological targets. Consider switching paths, or continue if you\'re open to revisiting design decisions.' } },
-      { id: 'projScale', label: 'Approximate scale (sqm)', type: 'number', placeholder: 'e.g. 1200' },
-      { id: 'numZones', label: 'How many distinct lighting zones?', type: 'number', placeholder: 'e.g. 8' },
-      { id: 'humanStates', label: 'Which human states does the lighting need to support?', type: 'text', placeholder: 'e.g. Sleep, focus, social, transition' },
-      { id: 'seasonal', label: 'Does the project have seasonal complexity?', type: 'radio', options: ['Yes — variable daylight, seasonal use','No — consistent year-round'] },
-      { id: 'deliverable', label: 'What do you need?', type: 'radio', options: ['Brief only','Brief + design reviews'] },
-    ]
+    basePrice: 8000,
+    zoneMultipliers: { '1-3': 1, '4-8': 1.3, '9-15': 1.7, '16+': 2.2 },
+    seasonalMultipliers: { minimal: 1, moderate: 1.1, significant: 1.25 },
+    deliverableMultipliers: { brief: 1, 'brief+reviews': 1.4 },
+    desc: 'A biological lighting strategy document that defines intent, targets, and design principles for your project before fixtures are specified.',
+    descStrategy: ' Includes two design review checkpoints to validate that specifications meet biological targets.',
+    pdfTitle: 'Strategic Brief Quote',
+    pdfBody: `This quote covers the creation of a biological lighting strategy document for your project. We define circadian intent, set measurable targets for each zone and time of day, and establish design principles that your lighting designer can implement. The brief becomes a binding reference for all subsequent design decisions.`
   },
-  C: {
+  validate: {
     name: 'Design Validation',
-    price: 'from €4,000',
-    fields: [
-      { id: 'projType', label: 'What type of project is this?', type: 'select', options: ['Hotel','Residential','Wellness','Mixed-use','Other'] },
-      { id: 'numZones', label: 'How many distinct lighting zones?', type: 'number', placeholder: 'e.g. 6' },
-      { id: 'humanStates', label: 'Which human states do the specs need to support?', type: 'text', placeholder: 'e.g. Sleep, morning activation, evening wind-down' },
-      { id: 'reviewCycles', label: 'How many review cycles do you need?', type: 'radio', options: ['One round','Two rounds','Three or more'] },
-    ]
+    basePrice: 4000,
+    zoneMultipliers: { '1-3': 1, '4-8': 1.35, '9-15': 1.8, '16+': 2.4 },
+    reviewMultipliers: { '1': 1, '2': 1.5, '3+': 2 },
+    desc: 'A rigorous review of your lighting specifications against biological targets, with clear pass/fail assessment and revision guidance.',
+    descStrategy: '',
+    pdfTitle: 'Design Validation Quote',
+    pdfBody: `This quote covers a biological validation of your existing lighting specifications. We assess every zone against circadian targets, identify gaps and risks, and provide revision guidance. Each review cycle includes a full report with annotated specifications and alternative recommendations where targets are not met.`
   }
 };
 
-let currentPath = null;
-let formData = {};
+function selectPath(path) {
+  currentPath = path;
+  answers = { path };
 
-function selectPath(pathKey) {
-  currentPath = pathKey;
-  formData = { path: pathKey, service: paths[pathKey].name };
+  // Hide entry, show correct quiz
+  document.getElementById('entrySection').style.display = 'none';
+  document.querySelectorAll('.quiz-section').forEach(s => s.classList.remove('show'));
+  document.getElementById('path' + path.charAt(0).toUpperCase() + path.slice(1)).classList.add('show');
 
   // Highlight selected card
-  document.querySelectorAll('.path-card').forEach(c => c.classList.remove('active'));
-  document.querySelector(`.path-card[data-path="${pathKey}"]`).classList.add('active');
-
-  // Build form fields
-  const container = document.getElementById('formFields');
-  container.innerHTML = '';
-
-  const path = paths[pathKey];
-  const section = document.createElement('section');
-  section.className = 'form-section';
-
-  const label = document.createElement('p');
-  label.className = 'section-label';
-  label.textContent = 'Project context';
-  section.appendChild(label);
-
-  path.fields.forEach(field => {
-    const block = document.createElement('div');
-    block.className = 'q-block';
-    block.dataset.fieldId = field.id;
-
-    const lbl = document.createElement('label');
-    lbl.className = 'q-label';
-    lbl.textContent = field.label;
-    block.appendChild(lbl);
-
-    if (field.type === 'select') {
-      const sel = document.createElement('select');
-      sel.id = field.id;
-      sel.required = true;
-      sel.innerHTML = '<option value="" disabled selected>Select...</option>' +
-        field.options.map(o => `<option value="${o}">${o}</option>`).join('');
-      sel.onchange = () => { formData[field.id] = sel.value; checkFlag(field, sel.value); };
-      block.appendChild(sel);
-    }
-    else if (field.type === 'radio') {
-      const group = document.createElement('div');
-      group.className = 'opt-group';
-      field.options.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'opt-btn';
-        btn.textContent = opt;
-        btn.onclick = () => {
-          group.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          formData[field.id] = opt;
-          checkFlag(field, opt);
-        };
-        group.appendChild(btn);
-      });
-      block.appendChild(group);
-    }
-    else if (field.type === 'number') {
-      const inp = document.createElement('input');
-      inp.type = 'number';
-      inp.id = field.id;
-      inp.placeholder = field.placeholder || '';
-      inp.required = true;
-      inp.oninput = () => { formData[field.id] = inp.value; };
-      block.appendChild(inp);
-    }
-    else if (field.type === 'text') {
-      const inp = document.createElement('input');
-      inp.type = 'text';
-      inp.id = field.id;
-      inp.placeholder = field.placeholder || '';
-      inp.required = true;
-      inp.oninput = () => { formData[field.id] = inp.value; };
-      block.appendChild(inp);
-    }
-
-    // Flag hint container
-    if (field.flag) {
-      const hint = document.createElement('p');
-      hint.className = 'q-hint flag';
-      hint.id = `flag-${field.id}`;
-      hint.style.display = 'none';
-      hint.textContent = field.flag.msg;
-      block.appendChild(hint);
-    }
-
-    section.appendChild(block);
+  document.querySelectorAll('.entry-card').forEach((c, i) => {
+    c.classList.toggle('active', ['audit','brief','validate'][i] === path);
   });
-
-  container.appendChild(section);
-
-  // Show common fields and generate button
-  document.getElementById('commonFields').style.display = 'block';
-  document.getElementById('generateWrap').style.display = 'block';
-
-  // Scroll to form
-  document.getElementById('formFields').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function checkFlag(field, value) {
-  if (!field.flag) return;
-  const hint = document.getElementById(`flag-${field.id}`);
-  if (value === field.flag.value) {
-    hint.style.display = 'block';
+function switchPath(path) {
+  // Reset flags
+  document.querySelectorAll('.flag-msg').forEach(f => f.classList.remove('show'));
+  // Clear selections in old path
+  document.querySelectorAll('.quiz-section.show .q-opt').forEach(o => o.classList.remove('selected'));
+  selectPath(path);
+}
+
+function selectOpt(btn, key, value) {
+  answers[key] = value;
+  // Unselect siblings
+  const container = btn.closest('.q-opts');
+  container.querySelectorAll('.q-opt').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  checkComplete();
+}
+
+function saveInput(input, key) {
+  answers[key] = input.value;
+  checkComplete();
+}
+
+function showFlag(id) {
+  document.querySelectorAll('.flag-msg').forEach(f => {
+    if (f.id !== id) f.classList.remove('show');
+  });
+  const el = document.getElementById(id);
+  if (el) el.classList.add('show');
+}
+
+function checkComplete() {
+  const cfg = pathConfig[currentPath];
+  if (!cfg) return;
+
+  let required = ['projectType', 'zones'];
+  if (currentPath === 'audit') required.push('buildType', 'seasonal', 'deliverable');
+  if (currentPath === 'brief') required.push('projectStage', 'humanStates', 'seasonal', 'deliverable');
+  if (currentPath === 'validate') required.push('humanStates', 'reviewCycles');
+
+  const pathComplete = required.every(k => answers[k]);
+
+  if (pathComplete) {
+    document.getElementById('universalSection').classList.add('show');
+  }
+
+  const universalRequired = ['name', 'email', 'org', 'timeline'];
+  const universalComplete = universalRequired.every(k => answers[k] && answers[k].trim());
+
+  if (pathComplete && universalComplete) {
+    document.getElementById('generateSection').classList.add('show');
   } else {
-    hint.style.display = 'none';
+    document.getElementById('generateSection').classList.remove('show');
   }
 }
 
-// ========== PDF GENERATION ==========
-async function generatePDF() {
-  // Collect common fields
-  formData.name = document.getElementById('qName').value;
-  formData.email = document.getElementById('qEmail').value;
-  formData.project = document.getElementById('qProject').value;
-  formData.startDate = document.getElementById('qDate').value;
+function calculatePrice() {
+  const cfg = pathConfig[currentPath];
+  let price = cfg.basePrice;
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  price *= (cfg.zoneMultipliers[answers.zones] || 1);
 
-  const isDark = !window.matchMedia('(prefers-color-scheme: light)').matches;
-  const bg = isDark ? [10,10,10] : [247,245,242];
-  const textMain = isDark ? [232,228,223] : [26,24,20];
-  const textSec = isDark ? [160,154,144] : [90,85,80];
-  const textMute = isDark ? [107,101,96] : [154,149,143];
-  const accent = [232,123,60];
+  if (currentPath === 'validate') {
+    price *= (cfg.reviewMultipliers[answers.reviewCycles] || 1);
+  } else {
+    price *= (cfg.seasonalMultipliers[answers.seasonal] || 1);
+    price *= (cfg.deliverableMultipliers[answers.deliverable] || 1);
+  }
 
-  // Background
-  doc.setFillColor(...bg);
-  doc.rect(0, 0, 210, 297, 'F');
+  // Round to nearest 100
+  return Math.round(price / 100) * 100;
+}
 
-  let y = 20;
-  const margin = 20;
-  const w = 210 - margin * 2;
+function generateQuote() {
+  const cfg = pathConfig[currentPath];
+  const price = calculatePrice();
 
-  // Logo
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10);
-  doc.setTextColor(...textMain);
-  doc.text('ELIXLIGHT', margin, y);
-  y += 8;
+  document.getElementById('resultService').textContent = cfg.name.toUpperCase();
+  document.getElementById('resultPrice').textContent = '€' + price.toLocaleString();
+
+  let desc = cfg.desc;
+  if (currentPath !== 'validate' && answers.deliverable && answers.deliverable.includes('+')) {
+    desc += cfg.descStrategy;
+  }
+  document.getElementById('resultDesc').textContent = desc;
+
+  // Build details
+  const details = [];
+  details.push(`<p><strong>Project type:</strong> ${answers.projectType || '—'}</p>`);
+  if (answers.scale) details.push(`<p><strong>Scale:</strong> ${answers.scale}</p>`);
+  if (currentPath === 'audit') {
+    details.push(`<p><strong>Build type:</strong> ${answers.buildType || '—'}</p>`);
+  }
+  if (currentPath === 'brief') {
+    details.push(`<p><strong>Project stage:</strong> ${answers.projectStage || '—'}</p>`);
+  }
+  details.push(`<p><strong>Zones:</strong> ${answers.zones || '—'}</p>`);
+  if (answers.humanStates) details.push(`<p><strong>Human states:</strong> ${answers.humanStates}</p>`);
+  if (answers.seasonal) details.push(`<p><strong>Seasonal complexity:</strong> ${answers.seasonal}</p>`);
+  if (answers.deliverable) details.push(`<p><strong>Deliverable:</strong> ${answers.deliverable}</p>`);
+  if (answers.reviewCycles) details.push(`<p><strong>Review cycles:</strong> ${answers.reviewCycles}</p>`);
+  details.push(`<p><strong>Timeline:</strong> ${answers.timeline || '—'}</p>`);
+  details.push(`<p style="margin-top:1rem"><strong>Quoted for:</strong> ${answers.name || '—'}${answers.org ? ', ' + answers.org : ''}</p>`);
+
+  document.getElementById('resultDetails').innerHTML = details.join('');
+
+  document.getElementById('resultSection').classList.add('show');
+  document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function downloadPDF() {
+  const cfg = pathConfig[currentPath];
+  const price = calculatePrice();
+
+  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  const pageW = doc.internal.pageSize.getWidth();
+  const margin = 50;
+  let y = 60;
+
+  // Dark background fill
+  doc.setFillColor(10, 10, 10);
+  doc.rect(0, 0, pageW, 842, 'F');
+
+  // Accent line
+  doc.setDrawColor(232, 123, 60);
+  doc.setLineWidth(1);
+  doc.line(margin, y, margin + 60, y);
+  y += 24;
 
   // Title
-  doc.setFontSize(22);
+  doc.setTextColor(232, 228, 223);
   doc.setFont('helvetica', 'bold');
-  doc.setTextColor(...textMain);
-  doc.text('Project Quote', margin, y);
-  y += 6;
+  doc.setFontSize(24);
+  doc.text(cfg.pdfTitle, margin, y);
+  y += 36;
 
   // Service name
-  doc.setFontSize(12);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(...accent);
-  doc.text(paths[currentPath].name, margin, y);
-  y += 12;
-
-  // Horizontal line
-  doc.setDrawColor(...textMute);
-  doc.setLineWidth(0.2);
-  doc.line(margin, y, 210 - margin, y);
-  y += 10;
-
-  // Client info
   doc.setFontSize(11);
-  doc.setTextColor(...textSec);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Prepared for', margin, y);
-  y += 6;
+  doc.setTextColor(107, 101, 96);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(...textMain);
-  doc.text(formData.name, margin, y);
-  y += 5;
-  doc.setTextColor(...textMute);
+  doc.text('ELIXLIGHT — Biological Lighting Strategy', margin, y);
+  y += 50;
+
+  // Price
+  doc.setTextColor(232, 228, 223);
+  doc.setFontSize(42);
+  doc.setFont('helvetica', 'bold');
+  doc.text('€' + price.toLocaleString(), margin, y);
+  y += 28;
+
+  // Date
   doc.setFontSize(10);
-  doc.text(formData.email, margin, y);
-  y += 10;
-
-  // Project
-  doc.setFontSize(11);
-  doc.setTextColor(...textSec);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Project', margin, y);
-  y += 6;
+  doc.setTextColor(107, 101, 96);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor(...textMain);
-  doc.text(formData.project, margin, y);
-  y += 5;
-  doc.setTextColor(...textMute);
-  doc.setFontSize(10);
-  doc.text('Preferred start: ' + formData.startDate, margin, y);
-  y += 12;
+  doc.text('Quote generated: ' + new Date().toLocaleDateString('en-GB'), margin, y);
+  y += 40;
 
-  // Line
-  doc.setDrawColor(...textMute);
-  doc.line(margin, y, 210 - margin, y);
-  y += 10;
+  // Separator
+  doc.setDrawColor(34, 32, 28);
+  doc.setLineWidth(0.5);
+  doc.line(margin, y, pageW - margin, y);
+  y += 28;
 
-  // Project context
+  // Body
+  doc.setTextColor(160, 154, 144);
   doc.setFontSize(11);
-  doc.setTextColor(...textSec);
+  const bodyLines = doc.splitTextToSize(cfg.pdfBody, pageW - margin * 2);
+  doc.text(bodyLines, margin, y);
+  y += bodyLines.length * 14 + 28;
+
+  // Scope
+  doc.setTextColor(232, 228, 223);
+  doc.setFontSize(13);
   doc.setFont('helvetica', 'bold');
-  doc.text('Project context', margin, y);
-  y += 8;
+  doc.text('Scope', margin, y);
+  y += 20;
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.setTextColor(...textMain);
+  doc.setTextColor(160, 154, 144);
 
-  const path = paths[currentPath];
-  path.fields.forEach(field => {
-    const val = formData[field.id] || '—';
-    doc.setTextColor(...textMute);
-    doc.text(field.label, margin, y);
-    y += 5;
-    doc.setTextColor(...textMain);
-    const lines = doc.splitTextToSize(String(val), w);
-    doc.text(lines, margin, y);
-    y += lines.length * 4.5 + 4;
+  const scopeItems = [];
+  scopeItems.push(`Project type: ${answers.projectType || '—'}`);
+  if (answers.scale) scopeItems.push(`Scale: ${answers.scale}`);
+  scopeItems.push(`Zones: ${answers.zones || '—'}`);
+  if (answers.humanStates) scopeItems.push(`Human states: ${answers.humanStates}`);
+  if (answers.seasonal) scopeItems.push(`Seasonal complexity: ${answers.seasonal}`);
+  if (answers.deliverable) scopeItems.push(`Deliverable: ${answers.deliverable}`);
+  if (answers.reviewCycles) scopeItems.push(`Review cycles: ${answers.reviewCycles}`);
+  scopeItems.push(`Timeline: ${answers.timeline || '—'}`);
 
-    if (y > 270) {
-      doc.addPage();
-      doc.setFillColor(...bg);
-      doc.rect(0, 0, 210, 297, 'F');
-      y = 20;
-    }
+  scopeItems.forEach(item => {
+    doc.text('• ' + item, margin + 8, y);
+    y += 16;
   });
 
-  y += 6;
-  doc.setDrawColor(...textMute);
-  doc.line(margin, y, 210 - margin, y);
-  y += 10;
+  y += 20;
 
   // What's included
-  doc.setFontSize(11);
-  doc.setTextColor(...textSec);
+  doc.setTextColor(232, 228, 223);
+  doc.setFontSize(13);
   doc.setFont('helvetica', 'bold');
   doc.text('What\'s included', margin, y);
-  y += 8;
+  y += 20;
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.setTextColor(...textMain);
+  doc.setTextColor(160, 154, 144);
 
-  const includes = {
-    A: [
-      'On-site or remote circadian light assessment',
-      'Melanopic lux mapping per zone',
-      'Biological risk report with priority rankings',
-      'Recommended interventions with cost tiers',
-      'Optional: strategy document for implementation'
-    ],
-    B: [
-      'Biological intent definition workshop',
-      'Circadian lighting strategy document',
-      'Zone-by-zone specification guidance',
-      'Integration with existing design workflow',
-      'Optional: design review sessions during DD/CD'
-    ],
-    C: [
-      'Biological target checklist against your specs',
-      'Gap analysis per zone and human state',
-      'Revised specification recommendations',
-      'Review cycle with tracked changes',
-      'Final sign-off document for build'
-    ]
-  };
+  const included = [];
+  if (currentPath === 'audit') {
+    included.push('On-site or remote light measurement across all zones');
+    included.push('Spectral analysis and melanopic lux mapping');
+    included.push('Biological impact assessment per zone and time of day');
+    included.push('Prioritised findings report with remediation guidance');
+    if (answers.deliverable === 'audit+strategy') {
+      included.push('Implementation roadmap with fixture specifications');
+      included.push('Priority-ranked action plan with budget estimates');
+    }
+  } else if (currentPath === 'brief') {
+    included.push('Circadian intent definition for each zone');
+    included.push('Measurable biological targets (melanopic lux, CCT, timing)');
+    included.push('Design principles document for your lighting designer');
+    included.push('Fixture category guidance (not brand-specific)');
+    if (answers.deliverable === 'brief+reviews') {
+      included.push('Two design review checkpoints at schematic and DD stages');
+      included.push('Revision feedback with annotated drawings');
+    }
+  } else {
+    included.push('Zone-by-zone specification review against biological targets');
+    included.push('Pass/fail assessment with quantitative justification');
+    included.push('Revision guidance for failed zones');
+    included.push('Alternative fixture recommendations where needed');
+    if (answers.reviewCycles === '2') included.push('Second review cycle after revisions');
+    if (answers.reviewCycles === '3+') included.push('Multiple iterative review cycles');
+  }
 
-  includes[currentPath].forEach(item => {
-    doc.setTextColor(...accent);
-    doc.text('•', margin, y);
-    doc.setTextColor(...textMain);
-    const lines = doc.splitTextToSize(item, w - 5);
-    doc.text(lines, margin + 4, y);
-    y += lines.length * 4.5 + 3;
+  included.forEach(item => {
+    doc.text('• ' + item, margin + 8, y);
+    y += 16;
   });
 
-  y += 8;
-  doc.setDrawColor(...textMute);
-  doc.line(margin, y, 210 - margin, y);
-  y += 10;
+  y += 28;
 
-  // Pricing
-  doc.setFontSize(11);
-  doc.setTextColor(...textSec);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Estimated investment', margin, y);
-  y += 8;
-  doc.setFontSize(18);
-  doc.setTextColor(...accent);
-  doc.setFont('helvetica', 'bold');
-  doc.text(paths[currentPath].price, margin, y);
-  y += 8;
+  // Terms
+  doc.setDrawColor(34, 32, 28);
+  doc.line(margin, y, pageW - margin, y);
+  y += 20;
+
+  doc.setTextColor(107, 101, 96);
   doc.setFontSize(9);
-  doc.setTextColor(...textMute);
-  doc.setFont('helvetica', 'normal');
-  doc.text('Final quote confirmed after project review. VAT not included.', margin, y);
-  y += 14;
-
-  // Next steps
-  doc.setFontSize(11);
-  doc.setTextColor(...textSec);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Next steps', margin, y);
-  y += 8;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(...textMain);
-  const steps = [
-    '1. Review this quote and confirm the scope fits your needs.',
-    '2. Email this PDF to collabs@elixlight.com to start the conversation.',
-    '3. We\'ll schedule a 20-minute call to align on timeline and deliverables.',
-    '4. Project kickoff within 5 business days of confirmation.'
-  ];
-  steps.forEach(step => {
-    const lines = doc.splitTextToSize(step, w);
-    doc.text(lines, margin, y);
-    y += lines.length * 4.5 + 3;
-  });
+  const terms = 'This quote is valid for 30 days. Final scope and timeline will be confirmed on a kickoff call. Payment terms: 50% on commencement, 50% on delivery. To proceed, reply to this document or email collabs@elixlight.com.';
+  const termsLines = doc.splitTextToSize(terms, pageW - margin * 2);
+  doc.text(termsLines, margin, y);
 
   // Footer
-  doc.setFontSize(8);
-  doc.setTextColor(...textMute);
-  doc.text('© 2025 ELIXLIGHT  ·  elixlight.com  ·  collabs@elixlight.com', margin, 285);
+  doc.setTextColor(107, 101, 96);
+  doc.setFontSize(9);
+  doc.text('elixlight.com  ·  collabs@elixlight.com', margin, 810);
 
-  doc.save(`ELIXLIGHT-Quote-${formData.project.replace(/\\s+/g,'-').slice(0,30)}.pdf`);
+  doc.save('elixlight-quote-' + currentPath + '.pdf');
 }
 </script>
 
