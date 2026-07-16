@@ -57,40 +57,39 @@
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; }
 
-  .w { max-width: 1000px; margin: 0 auto; }
+  .w { max-width: 1100px; margin: 0 auto; }
 
   /* ========== NAV ========== */
   .nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem 2rem;
     border-bottom: 0.5px solid var(--border);
   }
-  .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; }
-  .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; letter-spacing: 0.02em; }
+  .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; }
+  .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; }
 
   /* ========== HERO ========== */
   .hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    min-height: 480px;
     border-bottom: 0.5px solid var(--border);
-    min-height: 520px;
   }
   .hero-visual {
-    border-right: 0.5px solid var(--border);
+    background: var(--surface-1);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3rem 2rem;
-    gap: 1.5rem;
-    background: var(--surface-1);
+    gap: 1.25rem;
+    padding: 2.5rem;
+    border-right: 0.5px solid var(--border);
   }
   .room-box {
-    position: relative;
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
     border: 1.5px solid var(--border-strong);
     border-radius: 4px;
     display: flex;
@@ -99,186 +98,262 @@
     transition: background 1.2s ease;
   }
   .ldot {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     transition: background 1.2s ease, box-shadow 1.2s ease;
   }
-  .tline {
-    font-size: 12px;
+  .v-time {
+    font-size: 11px;
     color: var(--text-muted);
     letter-spacing: 0.1em;
     font-family: var(--font-mono);
   }
-  .slabel {
-    font-size: 14px;
+  .v-state {
+    font-size: 12px;
     color: var(--text-secondary);
-    text-align: center;
   }
 
   .hero-services {
-    padding: 3rem 2.5rem;
+    padding: 2rem 2.5rem 2rem 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 0;
   }
-  .sg-label {
+  .s-super {
     font-size: 10px;
     color: var(--text-muted);
     letter-spacing: 0.12em;
-    padding: 1rem 0 0.5rem;
-    border-top: 0.5px solid var(--border);
-    margin-top: 0.75rem;
+    margin-bottom: 0.4rem;
+    margin-top: 1.25rem;
     text-transform: uppercase;
   }
-  .sg-label:first-child { border-top: none; margin-top: 0; padding-top: 0; }
-  .svc {
+  .s-super:first-child { margin-top: 0; }
+  .s-item {
+    padding: 0.75rem 0;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+  }
+  .s-item:last-child { border-bottom: none; }
+  .s-row {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    padding: 0.75rem 0;
-    cursor: default;
-    gap: 1rem;
-  }
-  .svc-name { font-size: 14px; color: var(--text-primary); line-height: 1.4; flex: 1; }
-  .svc-actions {
-    display: flex;
     align-items: center;
-    gap: 0.5rem;
-    white-space: nowrap;
+    transition: padding-left 0.15s;
+  }
+  .s-item:hover .s-row { padding-left: 0.3rem; }
+  .s-name {
     font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
   }
-  .svc-price { color: var(--text-muted); }
-  .svc-btn {
+  .s-price {
     font-size: 12px;
     color: var(--text-muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: color 0.15s;
+    white-space: nowrap;
+    margin-left: 1rem;
   }
-  .svc-btn:hover { color: var(--text-primary); }
-  .svc-btn:disabled {
-    color: var(--text-muted);
-    cursor: not-allowed;
-    opacity: 0.5;
+  .s-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 0.6rem;
+    padding-bottom: 0.2rem;
+    display: none;
+    border-left: 1.5px solid var(--border-strong);
+    padding-left: 0.75rem;
   }
-  .svc-btn-link {
+  .s-desc.open { display: block; }
+  .s-contact {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-decoration: underline;
+  }
+  .s-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 0.5px solid var(--border);
     font-size: 12px;
     color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: color 0.15s;
   }
-  .svc-btn-link:hover { color: var(--text-primary); }
+  .s-footer a { color: var(--text-secondary); text-decoration: underline; cursor: pointer; }
 
   /* ========== TRUE OR FALSE ========== */
-  .truefalse {
-    padding: 4rem 1.5rem;
+  .q-section {
+    padding: 3.5rem 2rem;
     border-bottom: 0.5px solid var(--border);
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
     text-align: center;
   }
-  .tf-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    margin-bottom: 2rem;
-  }
-  .tf-icon {
-    font-size: 14px;
-    color: var(--text-muted);
-  }
-  .tf-label {
+  .q-label {
     font-size: 11px;
     color: var(--text-muted);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
     text-transform: uppercase;
   }
-  .tf-q {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.4;
-    margin-bottom: 2.5rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    color: var(--text-primary);
-  }
-  .tf-opts {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+  .q-belief {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.45;
     margin-bottom: 2rem;
-  }
-  .tf-btn {
-    padding: 0.75rem 2rem;
-    border: 0.5px solid var(--border-strong);
-    border-radius: var(--radius);
-    font-size: 14px;
     color: var(--text-primary);
-    background: transparent;
+  }
+  .q-reveal-btn {
+    font-size: 13px;
+    padding: 0.55rem 1.4rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s;
   }
-  .tf-btn:hover { border-color: var(--border-stronger); background: var(--surface-1); }
-  .tf-btn.correct { border-color: var(--border-stronger); background: var(--surface-1); }
-  .tf-btn.wrong { opacity: 0.5; }
-  .tf-reveal {
-    max-width: 700px;
-    margin: 0 auto 1.5rem;
-    padding: 1.5rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
-    font-size: 13px;
-    line-height: 1.8;
+  .q-reveal-btn:hover { background: var(--surface-1); }
+  .q-answer {
+    margin-top: 1.5rem;
+    font-size: 14px;
     color: var(--text-secondary);
+    line-height: 1.8;
     text-align: left;
+    padding: 1.25rem;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-1);
     display: none;
   }
-  .tf-reveal.show { display: block; }
-  .tf-next {
-    display: inline-block;
-    padding: 0.6rem 1.5rem;
-    border: 0.5px solid var(--border-strong);
-    border-radius: var(--radius);
+  .q-answer.show { display: block; }
+  .q-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: none;
+  }
+  .q-actions.show { display: flex; }
+  .q-next {
     font-size: 12px;
     color: var(--text-muted);
-    background: transparent;
     cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    background: none;
+    border: none;
+    text-decoration: underline;
   }
-  .tf-next:hover { border-color: var(--border-stronger); color: var(--text-primary); background: var(--surface-1); }
+  .q-sci {
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+
+  /* ========== SCIENCE PAGE ========== */
+  .sci-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .sci-page.active { display: block; }
+  .sci-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .sci-back:hover { color: var(--text-secondary); }
+  .sci-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .sci-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+  .sci-body p strong { color: var(--text-primary); font-weight: 500; }
+  .sci-pull {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.45;
+    margin: 2.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border-strong);
+  }
+  .sci-hormones {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .sci-h-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .sci-h-row:last-child { border-bottom: none; }
+  .sci-h-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .sci-h-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .sci-end {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  /* ========== PAGE TOGGLE ========== */
+  .home-content { display: block; }
+  .home-content.hidden { display: none; }
 
   /* ========== FOOTER ========== */
   footer {
-    padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-top: 0.5px solid var(--border);
   }
   footer .copy { font-size: 12px; color: var(--text-muted); }
-  footer a { font-size: 13px; color: var(--text-primary); }
+  footer a { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
   footer a:hover { color: var(--accent); }
 
   /* ========== RESPONSIVE ========== */
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; }
     .hero-visual { border-right: none; border-bottom: 0.5px solid var(--border); }
-    .tf-opts { flex-direction: column; align-items: center; }
-    .tf-opts .tf-btn { width: 200px; }
+    .nav { padding: 1.25rem 1.5rem; }
+    .q-actions { flex-direction: column; gap: 0.75rem; align-items: center; }
+    .sci-h-row { grid-template-columns: 1fr; gap: 0.25rem; }
   }
   @media (max-width: 560px) {
     .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .tf-q { font-size: 14px; }
     .hero-services { padding: 2rem 1.5rem; }
-    .svc { flex-direction: column; gap: 0.4rem; }
-    .svc-actions { align-self: flex-start; }
+    .q-section { padding: 3rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
   }
 </style>
 </head>
@@ -286,197 +361,212 @@
 
 <div class="w">
 
-<!-- ========== NAV ========== -->
-<nav class="nav">
-  <span class="nav-logo">ELIXLIGHT</span>
-  <span class="nav-quote">designing light for your true nature</span>
-</nav>
+  <!-- ========== NAV ========== -->
+  <nav class="nav">
+    <span class="nav-logo" onclick="goHome()">ELIXLIGHT</span>
+    <span class="nav-quote">designing light for your true nature</span>
+  </nav>
 
-<!-- ========== HERO ========== -->
-<section class="hero">
+  <!-- ========== HOME ========== -->
+  <div class="home-content" id="homeContent">
 
-  <!-- Visual: Animated circadian light -->
-  <div class="hero-visual">
-    <div class="room-box" id="box">
-      <div class="ldot" id="dot"></div>
-    </div>
-    <div class="tline" id="tl">19:00</div>
-    <div class="slabel" id="sl">evening — melatonin begins</div>
+    <section class="hero">
+      <div class="hero-visual">
+        <div class="room-box" id="box">
+          <div class="ldot" id="dot"></div>
+        </div>
+        <div class="v-time" id="vtime">06:00</div>
+        <div class="v-state" id="vstate">dawn — cortisol rising</div>
+      </div>
+
+      <div class="hero-services">
+
+        <p class="s-super">FOR YOUR HOME OR HOTEL</p>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">reset your sleep in 48 hours</span>
+            <span class="s-price">€297</span>
+          </div>
+          <div class="s-desc">Send photos of your guest rooms or bedroom. Get exact bulb and positioning recommendations for evening and morning — implemented by your team in an afternoon. No renovation required.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">understand what your space is doing to you</span>
+            <span class="s-price">from €3,500</span>
+          </div>
+          <div class="s-desc">Remote assessment of your current lighting. What's working biologically, what's undermining your experience, and a ranked list of improvements by impact — before you invest in changes.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <p class="s-super">FOR YOUR PROJECT</p>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">give your design a biological intent</span>
+            <span class="s-price">from €8,000</span>
+          </div>
+          <div class="s-desc">Before your lighting designer starts specifying, we define what each zone should do hormonally — which state, at which hour, for which user. Your designer receives a biological target instead of guessing.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">validate your specs before you build</span>
+            <span class="s-price">from €4,000</span>
+          </div>
+          <div class="s-desc">Your lighting designer has drafted specs. We review them against biological targets before you order fixtures. The last checkpoint before it's built into the walls.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <p class="s-footer">To discuss any of these, write to <a href="mailto:hello@elixlight.com">hello@elixlight.com</a></p>
+
+      </div>
+    </section>
+
+    <section class="q-section">
+      <p class="q-label">TRUE OR FALSE?</p>
+      <p class="q-belief" id="qbelief"></p>
+      <button class="q-reveal-btn" id="qbtn" onclick="reveal()">Is this true? →</button>
+      <div class="q-answer" id="qanswer"></div>
+      <div class="q-actions" id="qactions">
+        <button class="q-next" onclick="nextQ()">Try another →</button>
+        <button class="q-sci" onclick="goScience()">Why does this happen? The science →</button>
+      </div>
+    </section>
+
+    <footer>
+      <span class="copy">© 2025 ELIXLIGHT</span>
+      <span><a href="mailto:hello@elixlight.com">hello@elixlight.com</a> · <a href="#" onclick="goScience(); return false;">the science →</a></span>
+    </footer>
+
   </div>
 
-  <!-- Services -->
-  <div class="hero-services">
-    <p class="sg-label">Products</p>
-    <div class="svc">
-      <span class="svc-name">learn to design your own space</span>
-      <div class="svc-actions">
-        <span class="svc-price">€19</span>
-        <button class="svc-btn" disabled>buy →</button>
-      </div>
-    </div>
-    <div class="svc">
-      <span class="svc-name">discover what your light does</span>
-      <div class="svc-actions">
-        <span class="svc-price">€29</span>
-        <button class="svc-btn" disabled>buy →</button>
-      </div>
-    </div>
-    <div class="svc">
-      <span class="svc-name">reset your sleep in 48 hours</span>
-      <div class="svc-actions">
-        <span class="svc-price">€297</span>
-        <button class="svc-btn" disabled>buy →</button>
-      </div>
-    </div>
+  <!-- ========== SCIENCE PAGE ========== -->
+  <div class="sci-page" id="sciPage">
+    <button class="sci-back" onclick="goHome()">← back</button>
+    <p class="sci-title">THE SCIENCE</p>
+    <div class="sci-body">
 
-    <p class="sg-label">Services</p>
-    <div class="svc">
-      <span class="svc-name">understand your space</span>
-      <div class="svc-actions">
-        <span class="svc-price">from €3,500</span>
-        <a href="https://elixlight.com/collabs" class="svc-btn-link" target="_blank" rel="noopener">quote →</a>
+      <p>You spend roughly 90% of your waking hours indoors. This is a recent development, in evolutionary terms. Your biology hasn't noticed.</p>
+
+      <p>Your body still expects the same light it evolved under: a full-spectrum sun that rises, peaks, and sets. Bright and cool at noon. Warm and low at dusk. Absent at night. Instead, it receives ceiling lights running at the same intensity from 8 AM to 11 PM. Bathrooms built for morning, used at midnight. Screens held six inches from the face.</p>
+
+      <p>Your body responds to all of it. Not metaphorically — biologically. There's a third type of photoreceptor in your retina, distinct from the ones that handle vision. It doesn't help you see. It reads light intensity and wavelength, then sends that signal directly to the clock in your brain that governs every hormone in your body.</p>
+
+      <p>It doesn't ask for permission. It doesn't wait for you to believe in it.</p>
+
+      <div class="sci-pull">You have been communicating with your biology through light your entire life. You just didn't know what you were saying.</div>
+
+      <p>Think of it like meowing at a cat without knowing what the sounds mean. You're definitely communicating. The cat is definitely responding. Whether what you said was what you meant — that's a different question.</p>
+
+      <p>Most indoor lighting is unintentional this way. Not bad. Not broken. Just not saying what you'd say if you knew the language. The overhead light that's been running since dinner is telling your body it's noon. The bathroom mirror light you flick on at midnight is more melatonin-suppressing than your phone. The dim warm lamp in the corner — the one that just feels nicer — is closer to the right signal than anything designed to be "functional."</p>
+
+      <p>Your nervous system has been responding to all of it, every evening, without your input. The question is only what it's been told.</p>
+
+      <p><strong>Here's what light actually says to your body.</strong></p>
+
+      <div class="sci-hormones">
+        <div class="sci-h-row">
+          <div class="sci-h-name">Cortisol</div>
+          <div class="sci-h-desc">Your primary alertness and stress hormone. Should peak in the morning and decline by evening. Bright overhead light can keep it elevated past midnight — which is why you feel wired but tired.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Melatonin</div>
+          <div class="sci-h-desc">Your sleep-preparation hormone. Should begin rising about two hours before sleep. Suppressed by any light above 10 lux that contains blue wavelengths — including most standard home lighting. Thirty minutes of exposure is enough to delay it by 90 minutes.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Dopamine</div>
+          <div class="sci-h-desc">Your reward and attention neurotransmitter. Stimulated by contrast — the gap between a bright focal point and a dim ambient. Uniform lighting depletes it. A candle in a dark room activates it more than a well-lit office.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Serotonin</div>
+          <div class="sci-h-desc">Your mood stabilizer. Requires full-spectrum daylight for production. Depletes in low-light seasons and windowless environments — which is why winter, and windowless offices, feel heavier than they should.</div>
+        </div>
       </div>
-    </div>
-    <div class="svc">
-      <span class="svc-name">give your design intent</span>
-      <div class="svc-actions">
-        <span class="svc-price">from €8,000</span>
-        <a href="https://elixlight.com/collabs" class="svc-btn-link" target="_blank" rel="noopener">quote →</a>
+
+      <p>When light is designed to say the right thing at the right time, the body receives the signals it was built to receive. Cortisol rises cleanly in the morning and declines by evening. Melatonin arrives on schedule. Sleep comes without negotiation. You wake having actually rested — not just spent time unconscious.</p>
+
+      <p>The space doesn't feel different in a way you can name. You just feel like yourself. Which, if you've been living under unintentional light for years, might feel surprisingly unfamiliar.</p>
+
+      <div class="sci-end">
+        <p style="font-size:13px;color:var(--text-muted);">Want to understand what your specific space is doing? Write to <a href="mailto:hello@elixlight.com" style="color:var(--text-secondary)">hello@elixlight.com</a></p>
       </div>
-    </div>
-    <div class="svc">
-      <span class="svc-name">validate your specs</span>
-      <div class="svc-actions">
-        <span class="svc-price">from €4,000</span>
-        <a href="https://elixlight.com/collabs" class="svc-btn-link" target="_blank" rel="noopener">quote →</a>
-      </div>
+
     </div>
   </div>
 
-</section>
-
-<!-- ========== TRUE OR FALSE ========== -->
-<section class="truefalse" id="truefalse">
-  <div class="tf-header">
-    <span class="tf-icon">💡</span>
-    <span class="tf-label" id="tf-counter">TRUE OR FALSE?</span>
-  </div>
-  <h2 class="tf-q" id="tf-q">"A dark bedroom just means turning the lights off."</h2>
-  <div class="tf-opts" id="tf-opts">
-    <button class="tf-btn" onclick="tfAnswer(this,true)">True</button>
-    <button class="tf-btn" onclick="tfAnswer(this,false)">False</button>
-  </div>
-  <div class="tf-reveal" id="tf-rev"></div>
-  <button class="tf-next" id="tf-next" style="display:none" onclick="nextTF()">Try another →</button>
-</section>
-
-</div><!-- /w -->
-
-<!-- ========== FOOTER ========== -->
-<footer id="contact">
-  <div class="copy">© 2025<br>ELIXLIGHT</div>
-  <a href="mailto:hello@elixlight.com">hello@elixlight.com</a>
-</footer>
+</div>
 
 <script>
-// ========== CIRCADIAN LIGHT ANIMATION ==========
+// ========== ROOM ANIMATION ==========
 const states = [
-  { t: "05:47", l: "dawn — cortisol awakening response",        b: "#1A1008", d: "#FFB347", g: "0 0 22px 9px rgba(255,179,71,0.55)" },
-  { t: "08:15", l: "morning — peak alertness",                 b: "#121820", d: "#87CEEB", g: "0 0 26px 11px rgba(135,206,235,0.50)" },
-  { t: "12:30", l: "midday — maximum melanopic lux",           b: "#181A12", d: "#FFFFFF", g: "0 0 32px 14px rgba(255,255,255,0.60)" },
-  { t: "15:45", l: "afternoon — sustained performance",        b: "#1A1810", d: "#F0E68C", g: "0 0 28px 12px rgba(240,230,140,0.40)" },
-  { t: "18:20", l: "sunset — melatonin onset begins",          b: "#1A0E08", d: "#FF6B35", g: "0 0 24px 10px rgba(255,107,53,0.50)" },
-  { t: "21:00", l: "evening — wind-down phase",               b: "#140A06", d: "#8B4513", g: "0 0 16px 6px rgba(139,69,19,0.40)" },
-  { t: "23:15", l: "night — circadian nadir",                 b: "#0C0604", d: "#2C1810", g: "0 0 10px 3px rgba(44,24,16,0.35)" },
-  { t: "02:00", l: "late night — complete darkness",          b: "#080604", d: "#0A0A0A", g: "none" },
+  {t:"06:00", s:"dawn — cortisol rising", b:"#1a1008", d:"#e8822a", g:"0 0 22px 9px rgba(220,110,30,0.55)"},
+  {t:"09:00", s:"morning — full activation", b:"#221a0e", d:"#f5c060", g:"0 0 26px 11px rgba(240,180,60,0.45)"},
+  {t:"13:00", s:"afternoon — sustained focus", b:"#1e1810", d:"#f0d090", g:"0 0 30px 13px rgba(240,210,130,0.35)"},
+  {t:"19:00", s:"evening — melatonin begins", b:"#180e06", d:"#d05820", g:"0 0 18px 7px rgba(200,80,20,0.5)"},
+  {t:"22:00", s:"pre-sleep — deep restoration", b:"#100804", d:"#a03010", g:"0 0 12px 4px rgba(160,40,10,0.4)"},
+  {t:"00:00", s:"sleep — complete darkness", b:"#080604", d:"#1a0e06", g:"none"},
 ];
-
 let si = 0;
 function applyState(s) {
   document.getElementById("box").style.background = s.b;
   document.getElementById("dot").style.background = s.d;
   document.getElementById("dot").style.boxShadow = s.g;
-  document.getElementById("tl").textContent = s.t;
-  document.getElementById("sl").textContent = s.l;
+  document.getElementById("vtime").textContent = s.t;
+  document.getElementById("vstate").textContent = s.s;
 }
-applyState(states[4]);
-setInterval(() => { si = (si + 1) % states.length; applyState(states[si]); }, 1500);
+applyState(states[0]);
+setInterval(() => { si = (si + 1) % states.length; applyState(states[si]); }, 2200);
 
-// ========== TRUE OR FALSE QUIZ ==========
-const tfQuestions = [
-  {
-    q: '"A dark bedroom just means turning the lights off."',
-    trueText: "True",
-    falseText: "False",
-    correct: false,
-    reveal: "Even 5 lux of light through closed eyelids — a hallway light under the door, a standby LED, thin curtains — measurably suppresses melatonin. The sleeping body is not less sensitive to light. In some ways, it's more."
-  },
-  {
-    q: '"Dimming your lights at night is enough to prepare your body for sleep."',
-    trueText: "True",
-    falseText: "False",
-    correct: false,
-    reveal: "Dimming helps, but it's not enough on its own. A dimmed cool-white light still emits the blue wavelengths that suppress melatonin. Colour temperature matters more than brightness — a dim 5000K bulb can delay your sleep onset longer than a bright 2200K one."
-  },
-  {
-    q: '"Your phone screen is the main reason you can\'t sleep at night."',
-    trueText: "True",
-    falseText: "False",
-    correct: false,
-    reveal: "Your phone contributes, but it's rarely the main culprit. The overhead light you've sat under for hours before bed suppresses far more melatonin. The screen is the last thing your body reacts to — the room is the problem that started hours earlier."
-  },
-  {
-    q: '"A warm, cosy atmosphere means the lighting is good for your sleep."',
-    trueText: "True",
-    falseText: "False",
-    correct: false,
-    reveal: "A space can feel warm and still be biologically activating. Warm colour temperature in the right position supports sleep. The same warmth overhead, at high brightness, still signals daytime to your brain. The feeling of cosiness and the hormonal effect of light are two different things."
-  },
-  {
-    q: '"Your body can adapt to bad lighting and learn to sleep well anyway."',
-    trueText: "True",
-    falseText: "False",
-    correct: false,
-    reveal: "Your circadian system doesn't adapt to light the way your eyes adapt to darkness. No matter how many years you sleep under the wrong light, the hormonal response remains the same. You may stop noticing the light — but your melatonin still does."
-  },
+// ========== SERVICE EXPAND ==========
+function toggleDesc(item) {
+  const desc = item.querySelector('.s-desc');
+  const isOpen = desc.classList.contains('open');
+  document.querySelectorAll('.s-desc').forEach(d => d.classList.remove('open'));
+  if (!isOpen) desc.classList.add('open');
+}
+
+// ========== Q&A ==========
+const questions = [
+  {b:'"Dimming the lights is enough to wind down before sleep."', a:"Dimming reduces intensity, not biology. A dimmed 4000K light still floods your retina with blue wavelengths — the exact signal that suppresses melatonin. You're turning down the volume, but the wrong song is still playing."},
+  {b:'"Your phone is the main reason you can\'t sleep."', a:"Your ceiling light exposes you to more melatonin-suppressing light than your screen. Screens get the blame because they're visible and easy to target. The overhead fixture that's been running for four hours does far more biological damage — and nobody talks about it."},
+  {b:'"Warm light is always relaxing."', a:"Not if it's above you. An amber ceiling light at 10 PM still sends a midday signal because of its position, not just its color. Direction is as legible to your biology as spectrum. The same bulb, moved below eye level, tells a completely different story."},
+  {b:'"You can catch up on sleep over the weekend."', a:"Sleeping in on Sunday shifts your circadian clock later — which is why Monday morning feels like jet lag. The problem isn't just how much you sleep. It's when. And when is governed by light."},
+  {b:'"Bright morning light is harsh and uncomfortable."', a:"That discomfort is your cortisol responding exactly as designed. Bright cool light in the morning is the strongest signal your body has to lock your clock, sharpen focus, and start the 16-hour cascade that ends in quality sleep. Softening your morning light softens your entire day."},
+  {b:'"A dark bedroom just means turning the lights off."', a:"Even 5 lux of light through closed eyelids — a hallway light under the door, a standby LED, thin curtains — measurably suppresses melatonin. The sleeping body is not less sensitive to light. In some ways, it's more."},
+  {b:'"Your body adapts to artificial light over time."', a:"It doesn't. Your circadian clock responds to light input the same way it did before electricity existed. There is no adaptation — only constant biological response to whatever light you give it. The question is whether that response is working for you or against you."},
+  {b:'"Blue light blocking glasses solve the evening light problem."', a:"They filter one variable while the others run unchecked. Intensity, direction, and duration of evening light each suppress melatonin independently of spectrum. Blue light glasses under a bright overhead fixture still leave most of the biological problem intact."},
 ];
-
-let tfi = 0, tfDone = false;
-function renderTF() {
-  const q = tfQuestions[tfi];
-  tfDone = false;
-  document.getElementById('tf-counter').textContent = 'TRUE OR FALSE?';
-  document.getElementById('tf-q').textContent = q.q;
-  document.getElementById('tf-opts').innerHTML = `
-    <button class="tf-btn" onclick="tfAnswer(this,true)">${q.trueText}</button>
-    <button class="tf-btn" onclick="tfAnswer(this,false)">${q.falseText}</button>
-  `;
-  document.getElementById('tf-rev').classList.remove('show');
-  document.getElementById('tf-rev').textContent = '';
-  document.getElementById('tf-next').style.display = 'none';
+let qi = Math.floor(Math.random() * questions.length);
+let revealed = false;
+function loadQ(i) {
+  document.getElementById("qbelief").textContent = questions[i].b;
+  document.getElementById("qanswer").textContent = "";
+  document.getElementById("qanswer").classList.remove("show");
+  document.getElementById("qbtn").style.display = "inline-block";
+  document.getElementById("qactions").classList.remove("show");
+  revealed = false;
 }
-
-function tfAnswer(btn, wasTrue) {
-  if (tfDone) return;
-  tfDone = true;
-  const q = tfQuestions[tfi];
-  document.querySelectorAll('.tf-btn').forEach(el => {
-    const elTrue = el.textContent === q.trueText;
-    if (elTrue === q.correct) el.classList.add('correct');
-    else el.classList.add('wrong');
-  });
-  const rev = document.getElementById('tf-rev');
-  rev.textContent = q.reveal;
-  rev.classList.add('show');
-  document.getElementById('tf-next').style.display = 'inline-block';
+function reveal() {
+  document.getElementById("qanswer").textContent = questions[qi].a;
+  document.getElementById("qanswer").classList.add("show");
+  document.getElementById("qbtn").style.display = "none";
+  document.getElementById("qactions").classList.add("show");
+  revealed = true;
 }
+function nextQ() { qi = (qi + 1) % questions.length; loadQ(qi); }
+loadQ(qi);
 
-function nextTF() {
-  tfi = (tfi + 1) % tfQuestions.length;
-  renderTF();
+// ========== NAVIGATION ==========
+function goScience() {
+  document.getElementById("homeContent").classList.add("hidden");
+  document.getElementById("sciPage").classList.add("active");
+  window.scrollTo(0, 0);
 }
-
-renderTF();
+function goHome() {
+  document.getElementById("sciPage").classList.remove("active");
+  document.getElementById("homeContent").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
 </script>
 
 </body>
