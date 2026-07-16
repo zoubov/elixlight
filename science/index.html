@@ -125,24 +125,54 @@
     margin-bottom: 1rem;
   }
 
-  /* ========== TWO COLUMN LAYOUT ========== */
-  .two-col {
+  /* ========== FRAMEWORK CARDS ========== */
+  .framework-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 2rem;
   }
-  .two-col h3 {
-    font-size: 14px;
-    font-weight: 500;
+  .framework-card {
+    padding: 1.75rem;
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.2s;
+  }
+  .framework-card:hover { border-color: var(--border-strong); }
+  .framework-card .tag {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     margin-bottom: 0.75rem;
-    color: var(--text-primary);
   }
-  .two-col p {
+  .framework-card .name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .framework-card .hormones {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .framework-card .desc {
     font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 1rem;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+  .framework-card .used {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .framework-card .used strong {
+    color: var(--text-primary);
+    font-weight: 500;
   }
 
   /* ========== TIMELINE ========== */
@@ -189,37 +219,6 @@
     border-radius: 4px;
   }
 
-  /* ========== HORMONE CARDS ========== */
-  .hormone-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.75rem;
-    margin-top: 2rem;
-  }
-  .hormone-card {
-    padding: 1.5rem;
-    background: var(--surface-1);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-  }
-  .hormone-card .name {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-  .hormone-card .role {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-  }
-  .hormone-card .desc {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
   /* ========== STAT GRID ========== */
   .stat-grid {
     display: grid;
@@ -246,25 +245,80 @@
     line-height: 1.5;
   }
 
+  /* ========== TWO COLUMN ========== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+  .two-col h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+  .two-col p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
   /* ========== QUOTE BLOCK ========== */
   .quote-block {
-    padding: 2.5rem;
+    padding: 2rem;
     background: var(--surface-1);
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
-    margin-top: 2rem;
+    margin-top: 1.5rem;
   }
   .quote-block p {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.7;
     color: var(--text-primary);
     font-style: italic;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
   }
   .quote-block .source {
     font-size: 12px;
     color: var(--text-muted);
     font-style: normal;
+  }
+
+  /* ========== GAP CARDS ========== */
+  .gap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .gap-card {
+    padding: 1.5rem;
+    background: var(--surface-1);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .gap-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+  .gap-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+  }
+  .gap-card .note {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.5;
+    padding-top: 0.75rem;
+    border-top: 0.5px solid var(--border);
   }
 
   /* ========== FOOTER ========== */
@@ -281,14 +335,14 @@
 
   /* ========== RESPONSIVE ========== */
   @media (max-width: 860px) {
+    .framework-grid { grid-template-columns: 1fr; }
     .two-col { grid-template-columns: 1fr; gap: 2rem; }
-    .hormone-grid { grid-template-columns: 1fr 1fr; }
+    .gap-grid { grid-template-columns: 1fr; }
     .stat-grid { grid-template-columns: 1fr; }
     .timeline-item { grid-template-columns: 60px 1fr; }
   }
   @media (max-width: 560px) {
     .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .hormone-grid { grid-template-columns: 1fr; }
     .hero { padding: 3rem 1.5rem 2.5rem; }
   }
 </style>
@@ -306,21 +360,73 @@
 <!-- ========== HERO ========== -->
 <section class="hero">
   <div class="hero-label">The Science</div>
-  <h1>Why biology needs<br>to lead lighting design</h1>
-  <p>Light is not decoration. It is the primary signal that tells your body what time it is, what state to be in, and how to regulate the hormones that control sleep, mood, metabolism, and recovery.</p>
+  <h1>Light as behaviour<br>engineering</h1>
+  <p>Every wavelength, intensity, and angle of light sends a biological signal. Most spaces send the wrong one. This is the framework for sending the right one.</p>
 </section>
 
-<!-- ========== THE PROBLEM ========== -->
+<!-- ========== 1. THE FRAMEWORK ========== -->
 <section class="section">
   <div class="section-header">
-    <div class="section-label">The Problem</div>
-    <h2>We moved indoors. Our biology didn't.</h2>
+    <div class="section-label">The Framework</div>
+    <h2>Four hormone states</h2>
   </div>
-  <p>For most of human history, we lived under natural light. Dawn woke us. Midday energized us. Sunset prepared us for sleep. Our hormones followed the sun's rhythm without conscious effort.</p>
-  <p>Then we moved indoors. We replaced the sun with fixed, artificial light — the same intensity and colour temperature at 9 AM, 3 PM, or 9 PM. Our eyes see the light. Our biology reads it as midday, all day.</p>
-  <p>The result: a circadian system in constant confusion. Melatonin suppressed when it should rise. Cortisol elevated when it should fall. The body never receives the environmental cues it evolved to depend on.</p>
-  
-  <div class="stat-grid">
+  <p>Every space pushes the human body toward one of four hormonal profiles. The question is whether that push is intentional — or accidental.</p>
+
+  <div class="framework-grid">
+    <div class="framework-card">
+      <div class="tag">Activation</div>
+      <div class="name">Energy & Alertness</div>
+      <div class="hormones">Cortisol · Dopamine</div>
+      <div class="desc">Bright, cooler light (4000–6500K) at higher intensity, positioned overhead or directionally. Signals the body to engage, focus, and metabolise.</div>
+      <div class="used"><strong>Used in:</strong> workspaces, kitchens, gyms, morning environments</div>
+    </div>
+    <div class="framework-card">
+      <div class="tag">Connection</div>
+      <div class="name">Social Comfort</div>
+      <div class="hormones">Oxytocin · Serotonin</div>
+      <div class="desc">Warm tones (2700–3000K) at eye level, reduced glare, balanced contrast. Creates social comfort, trust, and emotional presence.</div>
+      <div class="used"><strong>Used in:</strong> dining areas, living rooms, hospitality spaces</div>
+    </div>
+    <div class="framework-card">
+      <div class="tag">Restoration</div>
+      <div class="name">Recovery & Sleep</div>
+      <div class="hormones">Melatonin · Growth Hormone</div>
+      <div class="desc">Low intensity, warm spectrum (2200–2700K), indirect light, minimal overhead exposure. Prepares the body for sleep and cellular repair.</div>
+      <div class="used"><strong>Used in:</strong> bedrooms, wellness spaces, spas</div>
+    </div>
+    <div class="framework-card">
+      <div class="tag">Sensory Pleasure</div>
+      <div class="name">Stimulation & Curiosity</div>
+      <div class="hormones">Dopamine · Endorphins</div>
+      <div class="desc">High contrast, focal highlights, visual rhythm, depth. Stimulates curiosity and emotional engagement without biological disruption.</div>
+      <div class="used"><strong>Used in:</strong> bars, lounges, experiential environments</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 2. WHY LIGHT MATTERS ========== -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-label">The Mechanism</div>
+    <h2>Why light matters more than you think</h2>
+  </div>
+  <p>Your eyes contain a third type of photoreceptor, discovered in 2002: intrinsically photosensitive retinal ganglion cells (ipRGCs). They don't help you see images. They exist solely to detect light and send signals directly to the brain's master clock — the suprachiasmatic nucleus.</p>
+  <p>These cells are most sensitive to blue light (around 480nm). When they detect it, they suppress melatonin and elevate cortisol. When they don't detect it, melatonin rises and the body prepares for rest.</p>
+
+  <div class="two-col">
+    <div>
+      <h3>What the eyes see</h3>
+      <p>Brightness, colour, contrast. The visual experience of a space. This is what lighting designers traditionally optimise for.</p>
+      <p>A room can look warm, dim, and cosy while still emitting biologically activating wavelengths. The visual impression and the hormonal effect are two separate systems.</p>
+    </div>
+    <div>
+      <h3>What the body reads</h3>
+      <p>Spectrum, intensity, timing, duration, angle. The non-visual properties of light that ipRGCs detect and translate into hormonal commands.</p>
+      <p>The same warm-looking light overhead at high brightness sends a different biological signal than the same light at eye level at low brightness. Position matters as much as spectrum.</p>
+    </div>
+  </div>
+
+  <div class="stat-grid" style="margin-top: 2.5rem;">
     <div class="stat-item">
       <div class="stat-num">87%</div>
       <div class="stat-label">of time spent indoors<br>in developed countries</div>
@@ -336,35 +442,11 @@
   </div>
 </section>
 
-<!-- ========== HOW LIGHT SPEAKS TO THE BODY ========== -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-label">Mechanism</div>
-    <h2>How light speaks to the body</h2>
-  </div>
-  <p>Your eyes contain a third type of photoreceptor, discovered in 2002: intrinsically photosensitive retinal ganglion cells (ipRGCs). They don't help you see images. They exist solely to detect light and send signals directly to the brain's master clock — the suprachiasmatic nucleus.</p>
-  <p>These cells are most sensitive to blue light (around 480nm). When they detect it, they suppress melatonin production and elevate cortisol. When they don't detect it, melatonin rises and the body prepares for rest.</p>
-  <p>The problem: standard LED bulbs emit significant blue light regardless of their colour temperature. A "warm" 2700K bulb still contains enough blue to suppress melatonin if the intensity is high enough or the exposure long enough.</p>
-
-  <div class="two-col" style="margin-top: 2rem;">
-    <div>
-      <h3>What the eyes see</h3>
-      <p>Brightness, colour, contrast. The visual experience of a space. This is what lighting designers traditionally optimise for.</p>
-      <p>A room can look warm, dim, and cosy while still emitting biologically activating wavelengths. The visual impression and the hormonal effect are two separate systems.</p>
-    </div>
-    <div>
-      <h3>What the body reads</h3>
-      <p>Spectrum, intensity, timing, duration, angle. The non-visual properties of light that ipRGCs detect and translate into hormonal commands.</p>
-      <p>The same warm-looking light overhead at high brightness sends a different biological signal than the same light at eye level at low brightness. Position matters as much as spectrum.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ========== THE HORMONAL CLOCK ========== -->
+<!-- ========== 3. THE DAILY CYCLE ========== -->
 <section class="section">
   <div class="section-header">
     <div class="section-label">The Daily Cycle</div>
-    <h2>The hormonal clock</h2>
+    <h2>How hormones follow the light</h2>
   </div>
   <p>Your body runs on a roughly 24-hour cycle called the circadian rhythm. Light is the primary zeitgeber — the external cue that sets and resets this clock every day. When light is wrong, the clock drifts. When light is right, the clock synchronises every cell in your body to the same rhythm.</p>
 
@@ -389,7 +471,7 @@
       <div class="timeline-time">12:30</div>
       <div class="timeline-content">
         <h4>Maximum Melanopic Lux</h4>
-        <p>Midday sun provides the highest melanopic efficacy — the measure of how effectively light suppresses melatonin. This is when the body needs the strongest signal that it is daytime. Indoor spaces rarely reach even 10% of outdoor melanopic lux.</p>
+        <p>Midday sun provides the highest melanopic efficacy — the measure of how effectively light suppresses melatonin. Indoor spaces rarely reach even 10% of outdoor melanopic lux, leaving the circadian system under-stimulated during the day.</p>
         <span class="timeline-tag">Melanopic peak</span>
       </div>
     </div>
@@ -421,7 +503,7 @@
       <div class="timeline-time">23:15</div>
       <div class="timeline-content">
         <h4>Circadian Nadir</h4>
-        <p>The lowest point of the circadian alertness signal. The body is in deep restoration mode: growth hormone release, cellular repair, memory consolidation. Even brief light exposure during this window (a bathroom visit, a phone check) can suppress melatonin and fragment sleep architecture.</p>
+        <p>The lowest point of the circadian alertness signal. The body is in deep restoration mode: growth hormone release, cellular repair, memory consolidation. Even brief light exposure during this window can suppress melatonin and fragment sleep architecture.</p>
         <span class="timeline-tag">Deep restoration</span>
       </div>
     </div>
@@ -436,71 +518,7 @@
   </div>
 </section>
 
-<!-- ========== THE FOUR HORMONE STATES ========== -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-label">The Framework</div>
-    <h2>Four hormone states shaped by light</h2>
-  </div>
-  <p>Every space you design or inhabit pushes the body toward one of four hormonal profiles. The question is whether that push is intentional and aligned with the activity, or accidental and working against it.</p>
-
-  <div class="hormone-grid">
-    <div class="hormone-card">
-      <div class="name">Activation</div>
-      <div class="role">Cortisol · Dopamine</div>
-      <div class="desc">Bright, cooler light (4000–6500K) at higher intensity, positioned overhead or directionally. Signals the body to engage, focus, and metabolise.</div>
-    </div>
-    <div class="hormone-card">
-      <div class="name">Connection</div>
-      <div class="role">Oxytocin · Serotonin</div>
-      <div class="desc">Warm tones (2700–3000K) at eye level, reduced glare, balanced contrast. Creates social comfort, trust, and emotional presence.</div>
-    </div>
-    <div class="hormone-card">
-      <div class="name">Restoration</div>
-      <div class="role">Melatonin · Growth Hormone</div>
-      <div class="desc">Low intensity, warm spectrum (2200–2700K), indirect light, minimal overhead exposure. Prepares the body for sleep and cellular repair.</div>
-    </div>
-    <div class="hormone-card">
-      <div class="name">Sensory Pleasure</div>
-      <div class="role">Dopamine · Endorphins</div>
-      <div class="desc">High contrast, focal highlights, visual rhythm, depth. Stimulates curiosity and emotional engagement without biological disruption.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== WHAT GOES WRONG ========== -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-label">The Gap</div>
-    <h2>What goes wrong in typical spaces</h2>
-  </div>
-  <p>Most interior lighting is designed for visual tasks and aesthetic goals. Biological impact is treated as a side effect — if it is considered at all. Here are the most common disconnects between design intent and biological reality.</p>
-
-  <div class="two-col" style="margin-top: 2rem;">
-    <div>
-      <h3>The bedroom that looks calm</h3>
-      <p>A bedroom with warm 2700K bulbs and dimmer switches feels restful. But if those bulbs are overhead pendants at full brightness, the body reads it as midday. The guest lies in bed with cortisol elevated and melatonin suppressed, unable to understand why they cannot sleep.</p>
-      <p>The colour temperature was right. The intensity, position, and timing were wrong.</p>
-    </div>
-    <div>
-      <h3>The bathroom that wakes you up</h3>
-      <p>Bathrooms are designed for grooming — tasks that need bright, crisp light. But guests also use bathrooms at 11 PM, 2 AM, and 5 AM. A 4000K vanity mirror at full brightness sends a cortisol spike that takes 30–60 minutes to settle. The guest returns to bed biologically awake.</p>
-      <p>The space served the morning version of the person. It failed the night version.</p>
-    </div>
-    <div>
-      <h3>The restaurant that suppresses appetite</h3>
-      <p>High-end restaurants often use cool, bright light to make food look vibrant and fresh. But cool light at evening hours suppresses melatonin and elevates cortisol — a stress state that reduces digestive enzyme production and extends meal duration without increasing satisfaction.</p>
-      <p>The food looked better. The body digested worse.</p>
-    </div>
-    <div>
-      <h3>The lobby that creates jet lag</h3>
-      <p>A hotel lobby designed with dramatic contrast — dark surfaces, focused spotlights — creates visual impact. But guests arriving from bright daylight walk into a dim interior. Their pupils dilate, cortisol spikes from the sudden darkness, and they feel disoriented and fatigued within minutes.</p>
-      <p>The space made a visual statement. It created a biological shock.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ========== THE EVIDENCE ========== -->
+<!-- ========== 4. THE EVIDENCE ========== -->
 <section class="section">
   <div class="section-header">
     <div class="section-label">Research</div>
@@ -529,7 +547,39 @@
   </div>
 </section>
 
-<!-- ========== WHY IT MATTERS ========== -->
+<!-- ========== 5. WHAT GOES WRONG ========== -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-label">The Gap</div>
+    <h2>What goes wrong in typical spaces</h2>
+  </div>
+  <p>Most interior lighting is designed for visual tasks and aesthetic goals. Biological impact is treated as a side effect — if it is considered at all. Here are the most common disconnects between design intent and biological reality.</p>
+
+  <div class="gap-grid">
+    <div class="gap-card">
+      <h3>The bedroom that looks calm</h3>
+      <p>A bedroom with warm 2700K bulbs and dimmer switches feels restful. But if those bulbs are overhead pendants at full brightness, the body reads it as midday. The guest lies in bed with cortisol elevated and melatonin suppressed.</p>
+      <div class="note">The colour temperature was right. The intensity, position, and timing were wrong.</div>
+    </div>
+    <div class="gap-card">
+      <h3>The bathroom that wakes you up</h3>
+      <p>Bathrooms are designed for grooming — tasks that need bright, crisp light. But guests also use bathrooms at 11 PM, 2 AM, and 5 AM. A 4000K vanity mirror at full brightness sends a cortisol spike that takes 30–60 minutes to settle.</p>
+      <div class="note">The space served the morning version of the person. It failed the night version.</div>
+    </div>
+    <div class="gap-card">
+      <h3>The restaurant that suppresses appetite</h3>
+      <p>High-end restaurants often use cool, bright light to make food look vibrant. But cool light at evening hours suppresses melatonin and elevates cortisol — a stress state that reduces digestive enzyme production and extends meal duration without increasing satisfaction.</p>
+      <div class="note">The food looked better. The body digested worse.</div>
+    </div>
+    <div class="gap-card">
+      <h3>The lobby that creates jet lag</h3>
+      <p>A hotel lobby with dramatic contrast — dark surfaces, focused spotlights — creates visual impact. But guests arriving from bright daylight walk into a dim interior. Their pupils dilate, cortisol spikes from the sudden darkness, and they feel disoriented within minutes.</p>
+      <div class="note">The space made a visual statement. It created a biological shock.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 6. WHY IT MATTERS ========== -->
 <section class="section">
   <div class="section-header">
     <div class="section-label">Implication</div>
