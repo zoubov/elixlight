@@ -138,13 +138,43 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 0.75rem 0;
-    cursor: pointer;
-    transition: padding-left 0.15s;
+    cursor: default;
     gap: 1rem;
   }
-  .svc:hover { padding-left: 0.35rem; }
   .svc-name { font-size: 14px; color: var(--text-primary); line-height: 1.4; flex: 1; }
-  .svc-price { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
+  .svc-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+  .svc-price { color: var(--text-muted); }
+  .svc-btn {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.15s;
+  }
+  .svc-btn:hover { color: var(--text-primary); }
+  .svc-btn:disabled {
+    color: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .svc-btn-link {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.15s;
+  }
+  .svc-btn-link:hover { color: var(--text-primary); }
 
   /* ========== TRUE OR FALSE ========== */
   .truefalse {
@@ -152,12 +182,22 @@
     border-bottom: 0.5px solid var(--border);
     text-align: center;
   }
+  .tf-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+  .tf-icon {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
   .tf-label {
     font-size: 11px;
     color: var(--text-muted);
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: 2rem;
   }
   .tf-q {
     font-size: 26px;
@@ -194,7 +234,7 @@
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface-1);
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.8;
     color: var(--text-secondary);
     text-align: left;
@@ -206,72 +246,15 @@
     padding: 0.6rem 1.5rem;
     border: 0.5px solid var(--border-strong);
     border-radius: var(--radius);
-    font-size: 14px;
-    color: var(--text-primary);
+    font-size: 12px;
+    color: var(--text-muted);
     background: transparent;
     cursor: pointer;
     transition: all 0.2s;
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
-  .tf-next:hover { border-color: var(--border-stronger); background: var(--surface-1); }
-
-  /* ========== PODCAST ========== */
-  .podcast { border-bottom: 0.5px solid var(--border); }
-  .podcast-hero {
-    padding: 3rem 1.5rem;
-    display: grid; grid-template-columns: 1fr 260px; gap: 3rem;
-    max-width: 900px; margin: 0 auto;
-  }
-  .podcast-hero .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.25rem; }
-  .podcast-hero h2 { font-size: 32px; font-weight: 500; line-height: 1.2; margin-bottom: 1.25rem; }
-  .podcast-hero p { font-size: 15px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 1rem; max-width: 480px; }
-  .podcast-hero .meta { font-size: 13px; color: var(--text-muted); }
-  .podcast-cover {
-    display: flex; align-items: center; justify-content: center;
-  }
-  .podcast-cover-inner {
-    width: 220px; height: 220px; border-radius: 16px;
-    background: var(--surface-1); border: 0.5px solid var(--border);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
-  }
-  .podcast-cover-inner .emoji { font-size: 28px; }
-  .podcast-cover-inner .title { font-size: 16px; font-weight: 500; }
-  .podcast-cover-inner .subtitle { font-size: 12px; color: var(--text-muted); }
-
-  .episodes { padding: 0 1.5rem 3rem; max-width: 900px; margin: 0 auto; }
-  .episodes .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
-  .episode-list { border-top: 0.5px solid var(--border); }
-  .episode {
-    display: grid; grid-template-columns: 48px 1fr; gap: 1.25rem;
-    padding: 1.5rem 0; border-bottom: 0.5px solid var(--border);
-  }
-  .episode .num { font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); padding-top: 2px; }
-  .episode .title { font-size: 15px; font-weight: 500; margin-bottom: 0.4rem; }
-  .episode .desc { font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin: 0 0 0.4rem; }
-  .episode .duration { font-size: 11px; color: var(--text-muted); }
-
-  .listen-on {
-    padding: 1.5rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .listen-on .label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-  .listen-btn {
-    padding: 0.5rem 1rem; border: 0.5px solid var(--border); border-radius: 6px;
-    color: var(--text-primary); font-size: 13px; transition: all 0.2s;
-  }
-  .listen-btn:hover { border-color: var(--border-strong); background: var(--surface-1); }
-
-  .subscribe-cta {
-    padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;
-  }
-  .subscribe-cta span { font-size: 14px; color: var(--text-secondary); }
-  .subscribe-btn {
-    padding: 0.6rem 1.25rem; border: 0.5px solid var(--border); border-radius: 6px;
-    color: var(--text-primary); font-size: 13px; display: flex; align-items: center; gap: 6px;
-    transition: all 0.2s;
-  }
-  .subscribe-btn:hover { border-color: var(--border-strong); background: var(--surface-1); }
+  .tf-next:hover { border-color: var(--border-stronger); color: var(--text-primary); background: var(--surface-1); }
 
   /* ========== FOOTER ========== */
   footer {
@@ -286,16 +269,15 @@
   @media (max-width: 860px) {
     .hero { grid-template-columns: 1fr; }
     .hero-visual { border-right: none; border-bottom: 0.5px solid var(--border); }
-    .podcast-hero { grid-template-columns: 1fr; }
-    .podcast-cover { order: -1; }
     .tf-opts { flex-direction: column; align-items: center; }
     .tf-opts .tf-btn { width: 200px; }
   }
   @media (max-width: 560px) {
     .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .subscribe-cta { flex-direction: column; gap: 1rem; align-items: flex-start; }
     .tf-q { font-size: 20px; }
     .hero-services { padding: 2rem 1.5rem; }
+    .svc { flex-direction: column; gap: 0.4rem; }
+    .svc-actions { align-self: flex-start; }
   }
 </style>
 </head>
@@ -323,34 +305,50 @@
 
   <!-- Services -->
   <div class="hero-services">
-    <p class="sg-label">FOR YOURSELF</p>
-    <div class="svc">
-      <span class="svc-name">discover what your light is doing to you</span>
-      <span class="svc-price">€29 →</span>
-    </div>
+    <p class="sg-label">Products</p>
     <div class="svc">
       <span class="svc-name">learn to design your own space</span>
-      <span class="svc-price">€19 →</span>
+      <div class="svc-actions">
+        <span class="svc-price">€19</span>
+        <button class="svc-btn" disabled>buy →</button>
+      </div>
     </div>
-
-    <p class="sg-label">FOR YOUR HOME OR HOTEL</p>
+    <div class="svc">
+      <span class="svc-name">discover what your light does</span>
+      <div class="svc-actions">
+        <span class="svc-price">€29</span>
+        <button class="svc-btn" disabled>buy →</button>
+      </div>
+    </div>
     <div class="svc">
       <span class="svc-name">reset your sleep in 48 hours</span>
-      <span class="svc-price">€297 →</span>
-    </div>
-    <div class="svc">
-      <span class="svc-name">understand what's happening in your space</span>
-      <span class="svc-price">from €3,500 →</span>
+      <div class="svc-actions">
+        <span class="svc-price">€297</span>
+        <button class="svc-btn" disabled>buy →</button>
+      </div>
     </div>
 
-    <p class="sg-label">FOR YOUR PROJECT</p>
+    <p class="sg-label">Services</p>
     <div class="svc">
-      <span class="svc-name">give your design a biological intent</span>
-      <span class="svc-price">from €8,000 →</span>
+      <span class="svc-name">understand your space</span>
+      <div class="svc-actions">
+        <span class="svc-price">from €3,500</span>
+        <a href="https://elixlight.com/collabs" class="svc-btn-link" target="_blank" rel="noopener">quote →</a>
+      </div>
     </div>
     <div class="svc">
-      <span class="svc-name">validate your specs before you build</span>
-      <span class="svc-price">from €4,000 →</span>
+      <span class="svc-name">give your design intent</span>
+      <div class="svc-actions">
+        <span class="svc-price">from €8,000</span>
+        <a href="https://elixlight.com/collabs" class="svc-btn-link" target="_blank" rel="noopener">quote →</a>
+      </div>
+    </div>
+    <div class="svc">
+      <span class="svc-name">validate your specs</span>
+      <div class="svc-actions">
+        <span class="svc-price">from €4,000</span>
+        <a href="https://elixlight.com/collabs" class="svc-btn-link" target="_blank" rel="noopener">quote →</a>
+      </div>
     </div>
   </div>
 
@@ -358,7 +356,10 @@
 
 <!-- ========== TRUE OR FALSE ========== -->
 <section class="truefalse" id="truefalse">
-  <p class="tf-label" id="tf-counter">TRUE OR FALSE?</p>
+  <div class="tf-header">
+    <span class="tf-icon">💡</span>
+    <span class="tf-label" id="tf-counter">TRUE OR FALSE?</span>
+  </div>
   <h2 class="tf-q" id="tf-q">"A dark bedroom just means turning the lights off."</h2>
   <div class="tf-opts" id="tf-opts">
     <button class="tf-btn" onclick="tfAnswer(this,true)">True</button>
@@ -369,108 +370,6 @@
 </section>
 
 </div><!-- /w -->
-
-<!-- ========== PODCAST ========== -->
-<section class="podcast" id="podcast">
-
-  <div class="podcast-hero">
-    <div>
-      <div class="label">PODCAST</div>
-      <h2>Short episodes on light, biology, and the spaces we live in.</h2>
-      <p>Each episode takes one thing your nervous system already does — and connects it to the space you're sitting in right now. No jargon. No performance. Just the intersection of how biology works and why design matters.</p>
-      <div class="meta">Episodes: 8–12 minutes. New episodes monthly.</div>
-    </div>
-    <div class="podcast-cover">
-      <div class="podcast-cover-inner">
-        <div class="emoji">🎙</div>
-        <div class="title">ELIXLIGHT</div>
-        <div class="subtitle">light · biology · space</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="episodes">
-    <div class="label">EPISODES</div>
-    <div class="episode-list">
-      <div class="episode">
-        <div class="num">01</div>
-        <div>
-          <div class="title">The best sleep you didn't have</div>
-          <p class="desc">You slept eight hours. You woke up tired. Here's exactly what happened in the 90 minutes before you closed your eyes — and why the light in the room was the main character.</p>
-          <div class="duration">9 min</div>
-        </div>
-      </div>
-      <div class="episode">
-        <div class="num">02</div>
-        <div>
-          <div class="title">Your bathroom is lying to you</div>
-          <p class="desc">The bathroom is designed for the morning version of you. The problem is you also use it at night. What's happening to your nervous system in those three minutes before bed — and one change that makes a measurable difference.</p>
-          <div class="duration">8 min</div>
-        </div>
-      </div>
-      <div class="episode">
-        <div class="num">03</div>
-        <div>
-          <div class="title">What a hotel room knows about you</div>
-          <p class="desc">Luxury hotels are increasingly designing for biology, not just aesthetics. What's the difference between a room that looks calming and a room that actually calms your nervous system — and how do you tell which one you're in?</p>
-          <div class="duration">11 min</div>
-        </div>
-      </div>
-      <div class="episode">
-        <div class="num">04</div>
-        <div>
-          <div class="title">Cortisol and the ceiling light</div>
-          <p class="desc">Overhead light mimics the midday sun. Your body doesn't ask for permission before responding. A short look at why the single most common lighting choice in homes and offices is also the one with the most biological consequences.</p>
-          <div class="duration">9 min</div>
-        </div>
-      </div>
-      <div class="episode">
-        <div class="num">05</div>
-        <div>
-          <div class="title">The dinner table and melatonin</div>
-          <p class="desc">Restaurant lighting is optimized to make food look beautiful. It's also, quite often, suppressing your melatonin at exactly the moment your body wants to start winding down. What a good restaurant would do differently — and why almost none of them do.</p>
-          <div class="duration">10 min</div>
-        </div>
-      </div>
-      <div class="episode">
-        <div class="num">06</div>
-        <div>
-          <div class="title">What Mediterranean light does to a Mediterranean body</div>
-          <p class="desc">Greece has 3,000 hours of sunlight a year. Moving indoors into artificial light creates a specific kind of biological confusion that Northern European design research hasn't fully accounted for. What designing for this climate actually means.</p>
-          <div class="duration">12 min</div>
-        </div>
-      </div>
-      <div class="episode">
-        <div class="num">07</div>
-        <div>
-          <div class="title">A regulated nervous system — what it actually feels like</div>
-          <p class="desc">Not a metaphor. Not a wellness claim. What regulation means biologically: HRV, cortisol curve, melatonin onset timing. And what it feels like when your environment is supporting it rather than disrupting it.</p>
-          <div class="duration">10 min</div>
-        </div>
-      </div>
-      <div class="episode">
-        <div class="num">08</div>
-        <div>
-          <div class="title">Darkness as a design element</div>
-          <p class="desc">We've become very good at adding light. We've forgotten how to design absence. What complete darkness does to the sleeping body — and why the hotel that masters blackout will outperform every hotel that masters ambiance.</p>
-          <div class="duration">8 min</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="listen-on">
-    <div class="label">LISTEN ON</div>
-    <a href="#" class="listen-btn">Spotify</a>
-    <a href="#" class="listen-btn">Apple Podcasts</a>
-    <a href="#" class="listen-btn">YouTube</a>
-  </div>
-
-  <div class="subscribe-cta">
-    <span>Want to be notified when new episodes drop?</span>
-    <a href="#" class="subscribe-btn">Subscribe ↗</a>
-  </div>
-</section>
 
 <!-- ========== FOOTER ========== -->
 <footer id="contact">
@@ -577,15 +476,6 @@ function nextTF() {
 }
 
 renderTF();
-
-// ========== SMOOTH SCROLL ==========
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
-  });
-});
 </script>
 
 </body>
