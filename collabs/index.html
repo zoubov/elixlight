@@ -57,7 +57,7 @@
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; }
 
-  .w { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
+  .w { max-width: 700px; margin: 0 auto; }
 
   /* ========== NAV ========== */
   .nav {
@@ -66,76 +66,76 @@
     align-items: center;
     padding: 1.25rem 1.5rem;
     border-bottom: 0.5px solid var(--border);
-    max-width: 1000px;
-    margin: 0 auto;
   }
   .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; }
   .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; letter-spacing: 0.02em; }
 
-  /* ========== PAGE HEADER ========== */
-  .page-header {
-    padding: 4rem 0 3rem;
+  /* ========== HEADER ========== */
+  .header {
+    padding: 4rem 1.5rem 2rem;
     text-align: center;
-    border-bottom: 0.5px solid var(--border);
   }
-  .page-header h1 {
+  .header h1 {
     font-size: 32px;
     font-weight: 500;
-    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .header .sub {
+    font-size: 14px;
+    color: var(--text-muted);
   }
 
   /* ========== PATH SELECTOR ========== */
   .path-selector {
-    padding: 3rem 0;
-    border-bottom: 0.5px solid var(--border);
+    padding: 0 1.5rem 3rem;
   }
   .path-label {
     font-size: 11px;
     color: var(--text-muted);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-align: center;
   }
   .paths {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 0.75rem;
   }
   .path-card {
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface-1);
     cursor: pointer;
     transition: all 0.2s;
-    text-align: left;
+    text-align: center;
   }
   .path-card:hover { border-color: var(--border-strong); }
-  .path-card.active { border-color: var(--accent); background: var(--accent-dim); }
-  .path-card .name {
-    font-size: 13px;
+  .path-card.active {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .path-card .title {
+    font-size: 14px;
     font-weight: 500;
+    margin-bottom: 0.4rem;
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    line-height: 1.4;
   }
   .path-card .price {
     font-size: 12px;
     color: var(--text-muted);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
-  .path-card .cta {
-    font-size: 12px;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  .path-card .tag {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
   }
 
   /* ========== FORM ========== */
   .form-section {
-    padding: 3rem 0;
+    padding: 0 1.5rem 4rem;
     display: none;
   }
   .form-section.show { display: block; }
@@ -150,16 +150,15 @@
   .step-label {
     font-size: 11px;
     color: var(--text-muted);
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 1.25rem;
   }
   .step-q {
     font-size: 18px;
     font-weight: 500;
-    line-height: 1.4;
     margin-bottom: 1.25rem;
-    color: var(--text-primary);
+    line-height: 1.4;
   }
 
   /* Options */
@@ -169,19 +168,29 @@
     gap: 0.5rem;
   }
   .opt {
-    text-align: left;
     padding: 0.75rem 1rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
-    font-size: 14px;
+    background: var(--surface-2);
     color: var(--text-primary);
-    background: var(--surface-1);
+    font-size: 14px;
+    text-align: left;
     cursor: pointer;
     transition: all 0.15s;
     font-family: inherit;
   }
-  .opt:hover { border-color: var(--border-strong); background: var(--surface-2); }
-  .opt.selected { border-color: var(--accent); background: var(--accent-dim); }
+  .opt:hover { border-color: var(--border-strong); background: var(--surface-1); }
+  .opt.selected {
+    border-color: var(--border-stronger);
+    background: var(--surface-1);
+  }
+
+  /* Grid options */
+  .opts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
 
   /* Text input */
   .text-input {
@@ -189,18 +198,21 @@
     padding: 0.75rem 1rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
-    font-size: 14px;
+    background: var(--surface-2);
     color: var(--text-primary);
-    background: var(--surface-1);
+    font-size: 14px;
     font-family: inherit;
     transition: border-color 0.15s;
-    outline: none;
   }
-  .text-input:focus { border-color: var(--border-stronger); }
+  .text-input:focus {
+    outline: none;
+    border-color: var(--border-stronger);
+  }
   .text-input::placeholder { color: var(--text-muted); }
 
   /* Flag message */
   .flag {
+    margin-top: 1rem;
     padding: 1rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
@@ -208,81 +220,34 @@
     font-size: 13px;
     line-height: 1.7;
     color: var(--text-secondary);
-    margin-top: 1rem;
     display: none;
   }
   .flag.show { display: block; }
-  .flag a { color: var(--accent); text-decoration: underline; cursor: pointer; }
 
-  /* ========== COMMON QUESTIONS ========== */
-  .common-section {
-    padding: 3rem 0;
-    border-top: 0.5px solid var(--border);
-    display: none;
-  }
-  .common-section.show { display: block; }
-
-  /* ========== QUOTE RESULT ========== */
-  .quote-result {
-    padding: 3rem 0;
+  /* Generate button */
+  .generate-wrap {
     text-align: center;
+    padding: 2rem 1.5rem 4rem;
     display: none;
   }
-  .quote-result.show { display: block; }
-  .quote-result h2 {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 1rem;
-  }
-  .quote-result .summary {
-    max-width: 500px;
-    margin: 0 auto 2rem;
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--text-secondary);
-    text-align: left;
-    padding: 1.5rem;
-    border: 0.5px solid var(--border);
+  .generate-wrap.show { display: block; }
+  .generate-btn {
+    padding: 0.9rem 2.5rem;
+    border: none;
     border-radius: var(--radius);
-    background: var(--surface-1);
-  }
-  .quote-result .summary .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.4rem 0;
-    border-bottom: 0.5px solid var(--border);
-  }
-  .quote-result .summary .row:last-child { border-bottom: none; }
-  .quote-result .summary .row .key { color: var(--text-muted); }
-  .quote-result .summary .row .val { color: var(--text-primary); }
-  .quote-result .total {
-    font-size: 36px;
-    font-weight: 500;
-    color: var(--accent);
-    margin: 1.5rem 0;
-  }
-  .quote-result .note {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    max-width: 480px;
-    margin: 0 auto 2rem;
-  }
-  .download-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0.75rem 1.5rem;
-    border: 0.5px solid var(--accent);
-    border-radius: var(--radius);
+    background: var(--accent);
+    color: #fff;
     font-size: 14px;
-    color: var(--accent);
-    background: transparent;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
+    transition: opacity 0.2s;
+    letter-spacing: 0.02em;
   }
-  .download-btn:hover { background: var(--accent-dim); }
+  .generate-btn:hover { opacity: 0.9; }
+  .generate-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 
   /* ========== FOOTER ========== */
   footer {
@@ -291,102 +256,276 @@
     justify-content: space-between;
     align-items: center;
     border-top: 0.5px solid var(--border);
-    max-width: 1000px;
-    margin: 0 auto;
   }
   footer .copy { font-size: 12px; color: var(--text-muted); }
   footer a { font-size: 13px; color: var(--text-primary); }
   footer a:hover { color: var(--accent); }
 
   /* ========== RESPONSIVE ========== */
-  @media (max-width: 720px) {
+  @media (max-width: 700px) {
     .paths { grid-template-columns: 1fr; }
-    .page-header h1 { font-size: 26px; }
-    .step-q { font-size: 16px; }
+    .opts-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 26px; }
   }
 </style>
 </head>
 <body>
 
+<div class="w">
+
 <!-- ========== NAV ========== -->
 <nav class="nav">
-  <a href="/" class="nav-logo">ELIXLIGHT</a>
+  <span class="nav-logo">ELIXLIGHT</span>
   <span class="nav-quote">designing light for your true nature</span>
 </nav>
 
-<div class="w">
-
-<!-- ========== PAGE HEADER ========== -->
-<div class="page-header">
-  <h1>get a quote</h1>
+<!-- ========== HEADER ========== -->
+<div class="header">
+  <h1>Get a quote</h1>
 </div>
 
 <!-- ========== PATH SELECTOR ========== -->
 <div class="path-selector" id="pathSelector">
-  <div class="path-label">Choose your starting point</div>
+  <p class="path-label">Choose your path</p>
   <div class="paths">
-    <div class="path-card" data-path="A" onclick="selectPath('A')">
-      <div class="name">understand what's happening in your space</div>
+    <div class="path-card" onclick="selectPath('A')" data-path="A">
+      <div class="title">Understand your space</div>
       <div class="price">from €3,500</div>
-      <div class="cta">quote →</div>
+      <div class="tag">Circadian Audit</div>
     </div>
-    <div class="path-card" data-path="B" onclick="selectPath('B')">
-      <div class="name">give your design a biological intent</div>
+    <div class="path-card" onclick="selectPath('B')" data-path="B">
+      <div class="title">Give your design intent</div>
       <div class="price">from €8,000</div>
-      <div class="cta">quote →</div>
+      <div class="tag">Strategic Brief</div>
     </div>
-    <div class="path-card" data-path="C" onclick="selectPath('C')">
-      <div class="name">validate your specs before you build</div>
+    <div class="path-card" onclick="selectPath('C')" data-path="C">
+      <div class="title">Validate your specs</div>
       <div class="price">from €4,000</div>
-      <div class="cta">quote →</div>
+      <div class="tag">Design Validation</div>
     </div>
   </div>
 </div>
 
-<!-- ========== DYNAMIC FORM ========== -->
-<div class="form-section" id="formSection">
-  <div id="dynamicSteps"></div>
+<!-- ========== FORM: PATH A ========== -->
+<div class="form-section" id="formA">
+
+  <div class="step" data-q="projectType">
+    <p class="step-label">Project context</p>
+    <p class="step-q">What type of project is this?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('projectType','hotel')">Hotel</button>
+      <button class="opt" onclick="setAnswer('projectType','residential')">Residential</button>
+      <button class="opt" onclick="setAnswer('projectType','wellness')">Wellness</button>
+      <button class="opt" onclick="setAnswer('projectType','other')">Other</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="projectScale">
+    <p class="step-label">Project context</p>
+    <p class="step-q">What is the approximate scale? (sqm)</p>
+    <input type="text" class="text-input" placeholder="e.g. 2,400" onchange="setAnswer('projectScale',this.value)">
+  </div>
+
+  <div class="step" data-q="buildType">
+    <p class="step-label">Project context</p>
+    <p class="step-q">Is this a new build or a retrofit?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('buildType','retrofit')">Retrofit</button>
+      <button class="opt" onclick="setAnswer('buildType','newbuild'); showFlag('A','newbuild')">New build</button>
+    </div>
+    <div class="flag" id="flagA-newbuild">
+      For new builds, a Strategic Brief (Path B) or Design Validation (Path C) is usually more appropriate. An audit measures what already exists — there's nothing to measure yet. Consider switching paths, or continue if you're auditing an existing reference space.
+    </div>
+  </div>
+
+  <div class="step" data-q="numZones">
+    <p class="step-label">Project context</p>
+    <p class="step-q">How many distinct lighting zones?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('numZones','1-5')">1–5</button>
+      <button class="opt" onclick="setAnswer('numZones','6-15')">6–15</button>
+      <button class="opt" onclick="setAnswer('numZones','16-30')">16–30</button>
+      <button class="opt" onclick="setAnswer('numZones','30+')">30+</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="seasonal">
+    <p class="step-label">Project context</p>
+    <p class="step-q">Does the project have seasonal complexity? (e.g. variable daylight, seasonal use patterns)</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('seasonal','yes')">Yes</button>
+      <button class="opt" onclick="setAnswer('seasonal','no')">No</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="deliverable">
+    <p class="step-label">Deliverable</p>
+    <p class="step-q">What do you need?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('deliverable','audit')">Audit only</button>
+      <button class="opt" onclick="setAnswer('deliverable','audit-strategy')">Audit + strategy</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== FORM: PATH B ========== -->
+<div class="form-section" id="formB">
+
+  <div class="step" data-q="projectType">
+    <p class="step-label">Project context</p>
+    <p class="step-q">What type of project is this?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('projectType','hotel')">Hotel</button>
+      <button class="opt" onclick="setAnswer('projectType','residential')">Residential</button>
+      <button class="opt" onclick="setAnswer('projectType','wellness')">Wellness</button>
+      <button class="opt" onclick="setAnswer('projectType','other')">Other</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="projectStage">
+    <p class="step-label">Project context</p>
+    <p class="step-q">What stage is the project at?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('projectStage','concept')">Concept / early design</button>
+      <button class="opt" onclick="setAnswer('projectStage','schematic')">Schematic design</button>
+      <button class="opt" onclick="setAnswer('projectStage','design-dev')">Design development</button>
+      <button class="opt" onclick="setAnswer('projectStage','late'); showFlag('B','late')">Late-stage / construction docs</button>
+    </div>
+    <div class="flag" id="flagB-late">
+      At this stage, specs are likely already fixed. A Design Validation (Path C) will give you faster, more targeted feedback on whether your current specs hit biological targets. Consider switching paths, or continue if you're open to revisiting design decisions.
+    </div>
+  </div>
+
+  <div class="step" data-q="projectScale">
+    <p class="step-label">Project context</p>
+    <p class="step-q">What is the approximate scale? (sqm)</p>
+    <input type="text" class="text-input" placeholder="e.g. 2,400" onchange="setAnswer('projectScale',this.value)">
+  </div>
+
+  <div class="step" data-q="numZones">
+    <p class="step-label">Project context</p>
+    <p class="step-q">How many distinct lighting zones?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('numZones','1-5')">1–5</button>
+      <button class="opt" onclick="setAnswer('numZones','6-15')">6–15</button>
+      <button class="opt" onclick="setAnswer('numZones','16-30')">16–30</button>
+      <button class="opt" onclick="setAnswer('numZones','30+')">30+</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="humanStates">
+    <p class="step-label">Project context</p>
+    <p class="step-q">Which human states does the lighting need to support?</p>
+    <div class="opts-grid">
+      <button class="opt" onclick="toggleMulti(this,'humanStates','sleep')">Sleep</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','focus')">Focus</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','relaxation')">Relaxation</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','social')">Social</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','recovery')">Recovery</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','transition')">Transition</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="seasonal">
+    <p class="step-label">Project context</p>
+    <p class="step-q">Does the project have seasonal complexity?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('seasonal','yes')">Yes</button>
+      <button class="opt" onclick="setAnswer('seasonal','no')">No</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="deliverable">
+    <p class="step-label">Deliverable</p>
+    <p class="step-q">What do you need?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('deliverable','brief')">Brief only</button>
+      <button class="opt" onclick="setAnswer('deliverable','brief-reviews')">Brief + design reviews</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== FORM: PATH C ========== -->
+<div class="form-section" id="formC">
+
+  <div class="step" data-q="projectType">
+    <p class="step-label">Project context</p>
+    <p class="step-q">What type of project is this?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('projectType','hotel')">Hotel</button>
+      <button class="opt" onclick="setAnswer('projectType','residential')">Residential</button>
+      <button class="opt" onclick="setAnswer('projectType','wellness')">Wellness</button>
+      <button class="opt" onclick="setAnswer('projectType','other')">Other</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="numZones">
+    <p class="step-label">Project context</p>
+    <p class="step-q">How many distinct lighting zones?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('numZones','1-5')">1–5</button>
+      <button class="opt" onclick="setAnswer('numZones','6-15')">6–15</button>
+      <button class="opt" onclick="setAnswer('numZones','16-30')">16–30</button>
+      <button class="opt" onclick="setAnswer('numZones','30+')">30+</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="humanStates">
+    <p class="step-label">Project context</p>
+    <p class="step-q">Which human states do the specs need to support?</p>
+    <div class="opts-grid">
+      <button class="opt" onclick="toggleMulti(this,'humanStates','sleep')">Sleep</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','focus')">Focus</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','relaxation')">Relaxation</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','social')">Social</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','recovery')">Recovery</button>
+      <button class="opt" onclick="toggleMulti(this,'humanStates','transition')">Transition</button>
+    </div>
+  </div>
+
+  <div class="step" data-q="reviewCycles">
+    <p class="step-label">Deliverable</p>
+    <p class="step-q">How many review cycles do you need?</p>
+    <div class="opts">
+      <button class="opt" onclick="setAnswer('reviewCycles','1')">One review</button>
+      <button class="opt" onclick="setAnswer('reviewCycles','2')">Two reviews</button>
+      <button class="opt" onclick="setAnswer('reviewCycles','3+')">Three or more</button>
+    </div>
+  </div>
+
 </div>
 
 <!-- ========== COMMON QUESTIONS ========== -->
-<div class="common-section" id="commonSection">
-  <div class="step">
-    <div class="step-label">ABOUT YOU</div>
-    <div class="step-q">Your name and email</div>
+<div class="form-section" id="commonQs">
+
+  <div class="step" data-q="contact">
+    <p class="step-label">Your details</p>
+    <p class="step-q">Your name and email</p>
     <div style="display:flex;flex-direction:column;gap:0.5rem;">
-      <input type="text" class="text-input" id="userName" placeholder="Full name">
-      <input type="email" class="text-input" id="userEmail" placeholder="Email address">
+      <input type="text" class="text-input" placeholder="Full name" id="contactName" onchange="setAnswer('name',this.value)">
+      <input type="email" class="text-input" placeholder="Email address" id="contactEmail" onchange="setAnswer('email',this.value)">
     </div>
   </div>
-  <div class="step">
-    <div class="step-label">PROJECT</div>
-    <div class="step-q">Project name or description</div>
-    <input type="text" class="text-input" id="projectDesc" placeholder="One line — personalises your quote">
+
+  <div class="step" data-q="projectDesc">
+    <p class="step-label">Your details</p>
+    <p class="step-q">Project name or brief description</p>
+    <input type="text" class="text-input" placeholder="e.g. Boutique hotel, Santorini, 24 rooms" onchange="setAnswer('projectDesc',this.value)">
   </div>
-  <div class="step">
-    <div class="step-label">TIMELINE</div>
-    <div class="step-q">Preferred start date</div>
-    <div class="opts" id="startDateOpts">
-      <button class="opt" onclick="selectCommon('startDate',this,'ASAP')">ASAP</button>
-      <button class="opt" onclick="selectCommon('startDate',this,'Within 1 month')">Within 1 month</button>
-      <button class="opt" onclick="selectCommon('startDate',this,'Within 3 months')">Within 3 months</button>
-      <button class="opt" onclick="selectCommon('startDate',this,'Flexible')">Flexible</button>
-    </div>
+
+  <div class="step" data-q="startDate">
+    <p class="step-label">Your details</p>
+    <p class="step-q">Preferred start date</p>
+    <input type="text" class="text-input" placeholder="e.g. September 2025" onchange="setAnswer('startDate',this.value)">
   </div>
-  <div style="text-align:center;padding:1rem 0 2rem;">
-    <button class="download-btn" onclick="generateQuote()">Generate quote</button>
-  </div>
+
 </div>
 
-<!-- ========== QUOTE RESULT ========== -->
-<div class="quote-result" id="quoteResult">
-  <h2>Your estimate</h2>
-  <div class="summary" id="quoteSummary"></div>
-  <div class="total" id="quoteTotal"></div>
-  <div class="note">
-    Review this estimate and send it to <a href="mailto:collabs@elixlight.com" style="color:var(--accent);">collabs@elixlight.com</a> to start your project. No email will be sent automatically.
-  </div>
-  <button class="download-btn" onclick="downloadPDF()">↓ Download quote as PDF</button>
+<!-- ========== GENERATE ========== -->
+<div class="generate-wrap" id="generateWrap">
+  <button class="generate-btn" id="generateBtn" onclick="generatePDF()">Generate quote PDF</button>
 </div>
 
 </div><!-- /w -->
@@ -398,323 +537,244 @@
 </footer>
 
 <script>
-// ========== PATH CONFIGURATION ==========
-const paths = {
-  A: {
-    name: 'Circadian Audit',
-    basePrice: 3500,
-    steps: [
-      {
-        label: 'PROJECT TYPE',
-        q: 'What type of project is this?',
-        field: 'projectType',
-        options: ['Hotel', 'Residential', 'Wellness / Spa', 'Office', 'Retail', 'Other']
-      },
-      {
-        label: 'SCALE',
-        q: 'Project scale (approximate sqm)',
-        field: 'scale',
-        options: ['Under 500 sqm', '500–2,000 sqm', '2,000–5,000 sqm', 'Over 5,000 sqm']
-      },
-      {
-        label: 'BUILD TYPE',
-        q: 'Is this a new build or retrofit?',
-        field: 'buildType',
-        options: ['Retrofit / renovation', 'New build'],
-        flag: {
-          trigger: 'New build',
-          message: 'For new builds, we recommend starting with a Strategic Brief (Path B) or Design Validation (Path C) instead. <a onclick="switchPath(\'B\')">Switch to Strategic Brief →</a> or <a onclick="switchPath(\'C\')">switch to Design Validation →</a>'
-        }
-      },
-      {
-        label: 'ZONES',
-        q: 'How many distinct lighting zones?',
-        field: 'zones',
-        options: ['1–3 zones', '4–8 zones', '9–15 zones', '16+ zones']
-      },
-      {
-        label: 'SEASONS',
-        q: 'Seasonal complexity',
-        field: 'seasons',
-        options: ['Single season (consistent climate)', 'Two seasons', 'Four seasons / high variation']
-      },
-      {
-        label: 'DELIVERABLES',
-        q: 'What do you need?',
-        field: 'deliverables',
-        options: ['Audit report only', 'Audit + implementation strategy'],
-        pricing: { 'Audit report only': 1, 'Audit + implementation strategy': 1.4 }
-      }
-    ]
-  },
-  B: {
-    name: 'Strategic Brief',
-    basePrice: 8000,
-    steps: [
-      {
-        label: 'PROJECT TYPE',
-        q: 'What type of project is this?',
-        field: 'projectType',
-        options: ['Hotel', 'Residential', 'Wellness / Spa', 'Office', 'Retail', 'Other']
-      },
-      {
-        label: 'STAGE',
-        q: 'What stage is your project at?',
-        field: 'stage',
-        options: ['Concept / early design', 'Schematic design', 'Design development', 'Construction documents / late stage'],
-        flag: {
-          trigger: 'Construction documents / late stage',
-          message: 'At this stage, a Design Validation (Path C) is more appropriate and cost-effective. <a onclick="switchPath(\'C\')">Switch to Design Validation →</a>'
-        }
-      },
-      {
-        label: 'SCALE',
-        q: 'Project scale (approximate sqm)',
-        field: 'scale',
-        options: ['Under 500 sqm', '500–2,000 sqm', '2,000–5,000 sqm', 'Over 5,000 sqm']
-      },
-      {
-        label: 'ZONES',
-        q: 'How many distinct lighting zones?',
-        field: 'zones',
-        options: ['1–3 zones', '4–8 zones', '9–15 zones', '16+ zones']
-      },
-      {
-        label: 'HUMAN STATES',
-        q: 'Which human states need to be supported?',
-        field: 'humanStates',
-        options: ['Sleep and rest only', 'Sleep + alertness', 'Sleep + alertness + transition', 'Full circadian programming']
-      },
-      {
-        label: 'SEASONS',
-        q: 'Seasonal complexity',
-        field: 'seasons',
-        options: ['Single season (consistent climate)', 'Two seasons', 'Four seasons / high variation']
-      },
-      {
-        label: 'DELIVERABLES',
-        q: 'What do you need?',
-        field: 'deliverables',
-        options: ['Strategic brief only', 'Brief + design reviews'],
-        pricing: { 'Strategic brief only': 1, 'Brief + design reviews': 1.5 }
-      }
-    ]
-  },
-  C: {
-    name: 'Design Validation',
-    basePrice: 4000,
-    steps: [
-      {
-        label: 'PROJECT TYPE',
-        q: 'What type of project is this?',
-        field: 'projectType',
-        options: ['Hotel', 'Residential', 'Wellness / Spa', 'Office', 'Retail', 'Other']
-      },
-      {
-        label: 'ZONES',
-        q: 'How many distinct lighting zones?',
-        field: 'zones',
-        options: ['1–3 zones', '4–8 zones', '9–15 zones', '16+ zones']
-      },
-      {
-        label: 'HUMAN STATES',
-        q: 'Which human states need to be supported?',
-        field: 'humanStates',
-        options: ['Sleep and rest only', 'Sleep + alertness', 'Sleep + alertness + transition', 'Full circadian programming']
-      },
-      {
-        label: 'REVIEW CYCLES',
-        q: 'How many review cycles do you need?',
-        field: 'reviewCycles',
-        options: ['Single review', 'Two rounds', 'Three rounds', 'Ongoing advisory'],
-        pricing: { 'Single review': 1, 'Two rounds': 1.3, 'Three rounds': 1.6, 'Ongoing advisory': 2.2 }
-      }
-    ]
-  }
-};
-
-// ========== STATE ==========
 let currentPath = null;
 let answers = {};
-let commonAnswers = {};
 
-// ========== PATH SELECTION ==========
-function selectPath(pathKey) {
-  currentPath = pathKey;
-  answers = { service: paths[pathKey].name };
-  commonAnswers = {};
+function selectPath(path) {
+  currentPath = path;
+  answers = { path: path, service: pathService(path) };
 
   // Highlight selected card
   document.querySelectorAll('.path-card').forEach(c => c.classList.remove('active'));
-  document.querySelector(`.path-card[data-path="${pathKey}"]`).classList.add('active');
+  document.querySelector('.path-card[data-path="' + path + '"]').classList.add('active');
 
-  // Build form
-  buildForm();
+  // Hide path selector, show form
+  document.getElementById('pathSelector').style.display = 'none';
+  document.getElementById('formA').classList.remove('show');
+  document.getElementById('formB').classList.remove('show');
+  document.getElementById('formC').classList.remove('show');
+  document.getElementById('commonQs').classList.remove('show');
+  document.getElementById('generateWrap').classList.remove('show');
 
-  // Show form
-  document.getElementById('formSection').classList.add('show');
-  document.getElementById('commonSection').classList.add('show');
-  document.getElementById('quoteResult').classList.remove('show');
+  document.getElementById('form' + path).classList.add('show');
+  document.getElementById('commonQs').classList.add('show');
+  document.getElementById('generateWrap').classList.add('show');
 
   // Scroll to form
-  document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('form' + path).scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function switchPath(pathKey) {
-  selectPath(pathKey);
+function pathService(path) {
+  if (path === 'A') return 'Circadian Audit';
+  if (path === 'B') return 'Strategic Brief';
+  return 'Design Validation';
 }
 
-// ========== BUILD FORM ==========
-function buildForm() {
-  const container = document.getElementById('dynamicSteps');
-  const config = paths[currentPath];
+function setAnswer(key, value) {
+  answers[key] = value;
 
-  container.innerHTML = config.steps.map((step, i) => `
-    <div class="step" data-step="${i}">
-      <div class="step-label">${step.label}</div>
-      <div class="step-q">${step.q}</div>
-      <div class="opts">
-        ${step.options.map(opt => `
-          <button class="opt" onclick="selectOption(${i}, '${opt.replace(/'/g, "\\'")}', this)">${opt}</button>
-        `).join('')}
-      </div>
-      ${step.flag ? `<div class="flag" id="flag-${i}">${step.flag.message}</div>` : ''}
-    </div>
-  `).join('');
-}
-
-// ========== SELECT OPTION ==========
-function selectOption(stepIndex, value, btn) {
-  const step = paths[currentPath].steps[stepIndex];
-  answers[step.field] = value;
-
-  // Visual selection
-  const stepEl = document.querySelector(`.step[data-step="${stepIndex}"]`);
-  stepEl.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-
-  // Handle flags
-  if (step.flag) {
-    const flagEl = document.getElementById(`flag-${stepIndex}`);
-    if (value === step.flag.trigger) {
-      flagEl.classList.add('show');
-    } else {
-      flagEl.classList.remove('show');
-    }
+  // Visual feedback
+  const step = document.querySelector('.step[data-q="' + key + '"], .step:has([onchange*="' + key + '"])');
+  if (step) {
+    step.querySelectorAll('.opt').forEach(btn => {
+      if (btn.textContent.toLowerCase().includes(value.toLowerCase()) ||
+          btn.getAttribute('onclick').includes("'" + value + "'")) {
+        btn.classList.add('selected');
+      } else if (!btn.getAttribute('onclick').includes('toggleMulti')) {
+        btn.classList.remove('selected');
+      }
+    });
   }
 }
 
-// ========== COMMON QUESTIONS ==========
-function selectCommon(field, btn, value) {
-  commonAnswers[field] = value;
-  const parent = btn.parentElement;
-  parent.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-}
-
-// ========== GENERATE QUOTE ==========
-function generateQuote() {
-  // Validate
-  const name = document.getElementById('userName').value.trim();
-  const email = document.getElementById('userEmail').value.trim();
-  const desc = document.getElementById('projectDesc').value.trim();
-
-  if (!name || !email) {
-    alert('Please enter your name and email.');
-    return;
+function toggleMulti(btn, key, value) {
+  if (!answers[key]) answers[key] = [];
+  const idx = answers[key].indexOf(value);
+  if (idx > -1) {
+    answers[key].splice(idx, 1);
+    btn.classList.remove('selected');
+  } else {
+    answers[key].push(value);
+    btn.classList.add('selected');
   }
-
-  commonAnswers.name = name;
-  commonAnswers.email = email;
-  commonAnswers.projectDesc = desc || '—';
-
-  const config = paths[currentPath];
-  let multiplier = 1;
-
-  // Apply pricing multipliers
-  config.steps.forEach(step => {
-    if (step.pricing && answers[step.field]) {
-      multiplier *= step.pricing[answers[step.field]] || 1;
-    }
-  });
-
-  // Zone multiplier
-  const zoneMultipliers = { '1–3 zones': 1, '4–8 zones': 1.2, '9–15 zones': 1.5, '16+ zones': 2 };
-  if (answers.zones) multiplier *= zoneMultipliers[answers.zones] || 1;
-
-  // Scale multiplier (Path A & B)
-  const scaleMultipliers = { 'Under 500 sqm': 0.8, '500–2,000 sqm': 1, '2,000–5,000 sqm': 1.3, 'Over 5,000 sqm': 1.6 };
-  if (answers.scale) multiplier *= scaleMultipliers[answers.scale] || 1;
-
-  // Season multiplier
-  const seasonMultipliers = { 'Single season (consistent climate)': 0.9, 'Two seasons': 1, 'Four seasons / high variation': 1.2 };
-  if (answers.seasons) multiplier *= seasonMultipliers[answers.seasons] || 1;
-
-  const total = Math.round(config.basePrice * multiplier);
-
-  // Build summary
-  const summaryRows = [
-    { key: 'Service', val: config.name },
-    ...config.steps.map(s => ({ key: s.label, val: answers[s.field] || '—' })),
-    { key: 'Name', val: commonAnswers.name },
-    { key: 'Email', val: commonAnswers.email },
-    { key: 'Project', val: commonAnswers.projectDesc },
-    { key: 'Start date', val: commonAnswers.startDate || '—' }
-  ];
-
-  document.getElementById('quoteSummary').innerHTML = summaryRows.map(r => `
-    <div class="row"><span class="key">${r.key}</span><span class="val">${r.val}</span></div>
-  `).join('');
-
-  document.getElementById('quoteTotal').textContent = `€${total.toLocaleString()}`;
-
-  document.getElementById('quoteResult').classList.add('show');
-  document.getElementById('quoteResult').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ========== DOWNLOAD PDF ==========
-function downloadPDF() {
-  const config = paths[currentPath];
-  const total = document.getElementById('quoteTotal').textContent;
+function showFlag(path, flag) {
+  document.getElementById('flag' + path + '-' + flag).classList.add('show');
+}
 
-  let content = `
-ELIXLIGHT — Project Quote
-=========================
+function generatePDF() {
+  // Build PDF content
+  const service = answers.service || 'ELIXLIGHT Service';
+  const path = answers.path;
+  const date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
-Generated: ${new Date().toLocaleDateString()}
+  let estimated = '';
+  if (path === 'A') estimated = '€3,500 – €8,500';
+  if (path === 'B') estimated = '€8,000 – €18,000';
+  if (path === 'C') estimated = '€4,000 – €12,000';
 
-SERVICE
-${config.name}
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #1A1814;
+    background: #F7F5F2;
+    line-height: 1.6;
+    padding: 60px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .header { border-bottom: 0.5px solid #D9D4CD; padding-bottom: 30px; margin-bottom: 40px; }
+  .logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .tagline { font-size: 12px; color: #9A958F; font-style: italic; }
+  .doc-title { font-size: 28px; font-weight: 500; margin: 30px 0 8px; }
+  .doc-meta { font-size: 13px; color: #9A958F; }
+  .section { margin: 35px 0; }
+  .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #9A958F; margin-bottom: 12px; }
+  .detail { font-size: 14px; margin-bottom: 8px; }
+  .detail strong { font-weight: 500; color: #1A1814; }
+  .detail span { color: #5A5550; }
+  .quote-box {
+    background: #EDEAE5;
+    border: 0.5px solid #D9D4CD;
+    border-radius: 6px;
+    padding: 24px;
+    margin: 30px 0;
+  }
+  .quote-box .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #9A958F; margin-bottom: 8px; }
+  .quote-box .amount { font-size: 24px; font-weight: 500; }
+  .quote-box .note { font-size: 13px; color: #5A5550; margin-top: 8px; }
+  .what-you-get { margin: 30px 0; }
+  .what-you-get h3 { font-size: 16px; font-weight: 500; margin-bottom: 12px; }
+  .what-you-get ul { list-style: none; padding: 0; }
+  .what-you-get li { font-size: 14px; color: #5A5550; padding: 6px 0; padding-left: 20px; position: relative; }
+  .what-you-get li::before { content: "—"; position: absolute; left: 0; color: #9A958F; }
+  .next-steps {
+    background: #1A1814;
+    color: #E8E4DF;
+    border-radius: 6px;
+    padding: 24px;
+    margin: 30px 0;
+  }
+  .next-steps h3 { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+  .next-steps p { font-size: 13px; color: #A09A90; line-height: 1.7; }
+  .next-steps a { color: #E87B3C; }
+  .footer { border-top: 0.5px solid #D9D4CD; padding-top: 20px; margin-top: 40px; font-size: 12px; color: #9A958F; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">ELIXLIGHT</div>
+    <div class="tagline">designing light for your true nature</div>
+    <div class="doc-title">Project Quote</div>
+    <div class="doc-meta">${service} · ${date}</div>
+  </div>
 
-PROJECT DETAILS
-`;
-  config.steps.forEach(s => {
-    content += `${s.label}: ${answers[s.field] || '—'}\n`;
-  });
+  <div class="section">
+    <div class="section-title">Your project</div>
+    <div class="detail"><strong>Service:</strong> <span>${service}</span></div>
+    <div class="detail"><strong>Project:</strong> <span>${answers.projectDesc || '—'}</span></div>
+    <div class="detail"><strong>Type:</strong> <span>${capitalize(answers.projectType) || '—'}</span></div>
+    <div class="detail"><strong>Scale:</strong> <span>${answers.projectScale || '—'} sqm</span></div>
+    <div class="detail"><strong>Zones:</strong> <span>${answers.numZones || '—'}</span></div>
+    ${answers.buildType ? `<div class="detail"><strong>Build type:</strong> <span>${capitalize(answers.buildType)}</span></div>` : ''}
+    ${answers.projectStage ? `<div class="detail"><strong>Project stage:</strong> <span>${capitalize(answers.projectStage)}</span></div>` : ''}
+    ${answers.humanStates ? `<div class="detail"><strong>Human states:</strong> <span>${Array.isArray(answers.humanStates) ? answers.humanStates.map(capitalize).join(', ') : capitalize(answers.humanStates)}</span></div>` : ''}
+    ${answers.seasonal ? `<div class="detail"><strong>Seasonal complexity:</strong> <span>${capitalize(answers.seasonal)}</span></div>` : ''}
+    ${answers.reviewCycles ? `<div class="detail"><strong>Review cycles:</strong> <span>${answers.reviewCycles}</span></div>` : ''}
+    ${answers.deliverable ? `<div class="detail"><strong>Deliverable:</strong> <span>${formatDeliverable(answers.deliverable)}</span></div>` : ''}
+  </div>
 
-  content += `
-CONTACT
-Name: ${commonAnswers.name}
-Email: ${commonAnswers.email}
-Project: ${commonAnswers.projectDesc}
-Preferred start: ${commonAnswers.startDate || '—'}
+  <div class="quote-box">
+    <div class="label">Estimated investment</div>
+    <div class="amount">${estimated}</div>
+    <div class="note">Final quote confirmed after initial call. Timeline depends on project complexity and current queue.</div>
+  </div>
 
-ESTIMATED INVESTMENT
-${total}
+  <div class="what-you-get">
+    <h3>What you will receive</h3>
+    <ul>
+      ${whatYouGet(path)}
+    </ul>
+  </div>
 
-—
-Review this estimate and send it to collabs@elixlight.com to start your project.
-`;
+  <div class="next-steps">
+    <h3>Next steps</h3>
+    <p>Review this quote. If it aligns with your expectations, send it to <a href="mailto:collabs@elixlight.com">collabs@elixlight.com</a> to start the project. Include any additional context that would help us prepare for our first conversation.</p>
+  </div>
 
-  const blob = new Blob([content], { type: 'text/plain' });
+  <div class="section">
+    <div class="section-title">Your details</div>
+    <div class="detail"><strong>Name:</strong> <span>${answers.name || '—'}</span></div>
+    <div class="detail"><strong>Email:</strong> <span>${answers.email || '—'}</span></div>
+    <div class="detail"><strong>Preferred start:</strong> <span>${answers.startDate || '—'}</span></div>
+  </div>
+
+  <div class="footer">
+    © 2025 ELIXLIGHT · hello@elixlight.com · elixlight.com
+  </div>
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `ELIXLIGHT-quote-${commonAnswers.name.replace(/\s+/g, '-').toLowerCase()}.txt`;
+  a.download = 'ELIXLIGHT-Quote-' + (answers.projectDesc?.replace(/\\s+/g, '-').slice(0, 30) || service.replace(/\\s+/g, '-')) + '.html';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+function capitalize(s) {
+  if (!s) return '';
+  return s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, ' ');
+}
+
+function formatDeliverable(d) {
+  const map = {
+    'audit': 'Audit only',
+    'audit-strategy': 'Audit + strategy',
+    'brief': 'Brief only',
+    'brief-reviews': 'Brief + design reviews'
+  };
+  return map[d] || d;
+}
+
+function whatYouGet(path) {
+  if (path === 'A') return `
+    <li>On-site or remote circadian light measurement across all zones</li>
+    <li>Biological impact assessment: melatonin suppression, cortisol timing, alertness curves</li>
+    <li>Gap analysis against circadian design targets for your project type</li>
+    <li>Prioritised remediation roadmap with cost-ranked interventions</li>
+    <li>Executive summary + full technical report (PDF)</li>
+    ${answers.deliverable === 'audit-strategy' ? '<li>Integrated strategy document linking findings to design action</li>' : ''}
+  `;
+  if (path === 'B') return `
+    <li>Biological intent document: what the light should do, not just how it should look</li>
+    <li>Circadian design targets mapped to each zone and human state</li>
+    <li>Specification guidance: CCT, intensity, timing, position, control logic</li>
+    <li>Integration notes for architects, lighting designers, and controls teams</li>
+    <li>Executive summary + full technical brief (PDF)</li>
+    ${answers.deliverable === 'brief-reviews' ? '<li>Two design review cycles during schematic and DD phases</li>' : ''}
+  `;
+  return `
+    <li>Biological review of existing lighting specifications per zone</li>
+    <li>Melanopic lux analysis against circadian targets</li>
+    <li>Gap identification: where specs fall short and why it matters</li>
+    <li>Revised specification recommendations with product-agnostic guidance</li>
+    <li>Executive summary + full validation report (PDF)</li>
+    ${answers.reviewCycles === '2' ? '<li>Second review cycle after spec revision</li>' : ''}
+    ${answers.reviewCycles === '3+' ? '<li>Multiple review cycles through to final specification</li>' : ''}
+  `;
 }
 </script>
 
