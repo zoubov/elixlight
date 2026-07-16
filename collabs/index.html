@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELIXLIGHT — Get a Quote</title>
+<title>ELIXLIGHT — The Science</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
@@ -55,9 +55,9 @@
   }
 
   a { color: inherit; text-decoration: none; }
-  button { font-family: inherit; }
+  button { font-family: inherit; background: none; border: none; cursor: pointer; }
 
-  .w { max-width: 720px; margin: 0 auto; }
+  .w { max-width: 680px; margin: 0 auto; }
 
   /* ========== NAV ========== */
   .nav {
@@ -70,269 +70,94 @@
   .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; }
   .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; letter-spacing: 0.02em; }
 
-  /* ========== PAGE HEADER ========== */
-  .page-header {
-    padding: 3rem 1.5rem 2rem;
-    text-align: center;
-    border-bottom: 0.5px solid var(--border);
-  }
-  .page-header h1 {
-    font-size: 32px;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-  }
-
-  /* ========== ENTRY PATHS ========== */
-  .entry-section {
-    padding: 2.5rem 1.5rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-  .entry-label {
-    font-size: 11px;
+  /* ========== BACK LINK ========== */
+  .back-link {
+    display: inline-block;
+    padding: 2.5rem 1.5rem 0;
+    font-size: 12px;
     color: var(--text-muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  .entry-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-  }
-  .entry-card {
-    padding: 1.5rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
     cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
+    transition: color 0.15s;
   }
-  .entry-card:hover {
-    border-color: var(--border-strong);
-    background: var(--surface-2);
-  }
-  .entry-card.active {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-  .entry-card .title {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-  }
-  .entry-card .price {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 0.75rem;
-  }
-  .entry-card .desc {
-    font-size: 12px;
-    line-height: 1.5;
-    color: var(--text-secondary);
-  }
+  .back-link:hover { color: var(--text-secondary); }
 
-  /* ========== QUESTIONNAIRE ========== */
-  .quiz-section {
-    padding: 2.5rem 1.5rem;
-    display: none;
-  }
-  .quiz-section.show { display: block; }
-
-  .q-block {
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-  .q-block:last-of-type { border-bottom: none; }
-  .q-label {
+  /* ========== PAGE TITLE ========== */
+  .page-title {
+    padding: 2.5rem 1.5rem 2rem;
     font-size: 11px;
     color: var(--text-muted);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
   }
-  .q-text {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 1rem;
+
+  /* ========== BODY TEXT ========== */
+  .sci-body {
+    padding: 0 1.5rem;
+  }
+  .sci-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+  .sci-body p strong {
     color: var(--text-primary);
+    font-weight: 500;
   }
-  .q-opts {
+
+  /* Pull quote */
+  .sci-pull {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.45;
+    margin: 2.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border-strong);
+  }
+
+  /* Hormones table */
+  .sci-hormones {
+    margin: 2rem 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0;
   }
-  .q-opt {
-    text-align: left;
-    padding: 0.75rem 1rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    color: var(--text-primary);
-    background: var(--surface-2);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: inherit;
+  .sci-h-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--border);
   }
-  .q-opt:hover { border-color: var(--border-strong); background: var(--surface-1); }
-  .q-opt.selected {
-    border-color: var(--border-stronger);
-    background: var(--surface-1);
-  }
-
-  /* Free input */
-  .q-input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    color: var(--text-primary);
-    background: var(--surface-2);
-    font-family: inherit;
-    transition: border-color 0.15s;
-  }
-  .q-input:focus {
-    outline: none;
-    border-color: var(--border-stronger);
-  }
-  .q-input::placeholder { color: var(--text-muted); }
-
-  /* Flag message */
-  .flag-msg {
-    margin-top: 1rem;
-    padding: 1rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
+  .sci-h-row:last-child { border-bottom: none; }
+  .sci-h-name {
     font-size: 13px;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    display: none;
+    font-weight: 500;
+    color: var(--text-primary);
   }
-  .flag-msg.show { display: block; }
-  .flag-msg a { color: var(--accent); text-decoration: underline; cursor: pointer; }
+  .sci-h-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
 
-  /* ========== UNIVERSAL QUESTIONS ========== */
-  .universal-section {
-    padding: 2.5rem 1.5rem;
+  /* End section */
+  .sci-end {
+    margin-top: 2rem;
+    padding: 2rem 1.5rem 3.5rem;
     border-top: 0.5px solid var(--border);
-    display: none;
   }
-  .universal-section.show { display: block; }
-
-  /* ========== GENERATE QUOTE ========== */
-  .generate-section {
-    padding: 2rem 1.5rem 4rem;
-    text-align: center;
-    display: none;
-  }
-  .generate-section.show { display: block; }
-  .generate-btn {
-    padding: 1rem 2.5rem;
-    border: 0.5px solid var(--border-strong);
-    border-radius: var(--radius);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.02em;
-  }
-  .generate-btn:hover {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-  .generate-note {
-    margin-top: 1.25rem;
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.6;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* ========== QUOTE RESULT ========== */
-  .result-section {
-    padding: 2.5rem 1.5rem;
-    display: none;
-  }
-  .result-section.show { display: block; }
-  .result-box {
-    padding: 2rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
-    margin-bottom: 2rem;
-  }
-  .result-service {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-  .result-price {
-    font-size: 42px;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-  }
-  .result-desc {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-  }
-  .result-details {
+  .sci-end p {
     font-size: 13px;
-    line-height: 1.8;
     color: var(--text-muted);
-  }
-  .result-details p { margin-bottom: 0.25rem; }
-
-  .download-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.875rem 1.75rem;
-    border: 0.5px solid var(--border-strong);
-    border-radius: var(--radius);
-    font-size: 14px;
-    color: var(--text-primary);
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-bottom: 1.5rem;
-  }
-  .download-btn:hover {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-  }
-
-  .next-steps {
-    padding: 1.5rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
-  }
-  .next-steps h3 {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-  }
-  .next-steps p {
-    font-size: 13px;
     line-height: 1.7;
-    color: var(--text-secondary);
   }
-  .next-steps a { color: var(--accent); }
+  .sci-end a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 
   /* ========== FOOTER ========== */
   footer {
@@ -343,21 +168,18 @@
     border-top: 0.5px solid var(--border);
   }
   footer .copy { font-size: 12px; color: var(--text-muted); }
-  footer a { font-size: 13px; color: var(--text-primary); }
+  footer a { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
   footer a:hover { color: var(--accent); }
 
   /* ========== RESPONSIVE ========== */
-  @media (max-width: 640px) {
-    .entry-grid { grid-template-columns: 1fr; }
-    .page-header h1 { font-size: 26px; }
-    .result-price { font-size: 32px; }
+  @media (max-width: 560px) {
+    .sci-h-row { grid-template-columns: 1fr; gap: 0.4rem; }
+    .sci-pull { font-size: 16px; padding-left: 1rem; }
     footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
-
-<div class="w">
 
 <!-- ========== NAV ========== -->
 <nav class="nav">
@@ -365,278 +187,64 @@
   <span class="nav-quote">designing light for your true nature</span>
 </nav>
 
-<!-- ========== PAGE HEADER ========== -->
-<div class="page-header">
-  <h1>Get a quote</h1>
-</div>
+<div class="w">
 
-<!-- ========== ENTRY PATHS ========== -->
-<section class="entry-section" id="entrySection">
-  <p class="entry-label">Choose your starting point</p>
-  <div class="entry-grid">
-    <div class="entry-card" onclick="selectPath('audit')">
-      <div class="title">Understand your space</div>
-      <div class="price">from €3,500</div>
-      <div class="desc">Understand the impact of your lighting. A full circadian audit of your existing space.</div>
+  <!-- ========== BACK LINK ========== -->
+  <a href="index.html" class="back-link">← back</a>
+
+  <!-- ========== PAGE TITLE ========== -->
+  <div class="page-title">THE SCIENCE</div>
+
+  <!-- ========== BODY ========== -->
+  <div class="sci-body">
+
+    <p>You spend roughly 90% of your waking hours indoors. This is a recent development, in evolutionary terms. Your biology hasn't noticed.</p>
+
+    <p>Your body still expects the same light it evolved under: a full-spectrum sun that rises, peaks, and sets. Bright and cool at noon. Warm and low at dusk. Absent at night. Instead, it receives ceiling lights running at the same intensity from 8 AM to 11 PM. Bathrooms built for morning, used at midnight. Screens held six inches from the face.</p>
+
+    <p>Your body responds to all of it. Not metaphorically — biologically. There's a third type of photoreceptor in your retina, distinct from the ones that handle vision. It doesn't help you see. It reads light intensity and wavelength, then sends that signal directly to the clock in your brain that governs every hormone in your body.</p>
+
+    <p>It doesn't ask for permission. It doesn't wait for you to believe in it.</p>
+
+    <div class="sci-pull">You have been communicating with your biology through light your entire life. You just didn't know what you were saying.</div>
+
+    <p>Think of it like meowing at a cat without knowing what the sounds mean. You're definitely communicating. The cat is definitely responding. Whether what you said was what you meant — that's a different question.</p>
+
+    <p>Most indoor lighting is unintentional this way. Not bad. Not broken. Just not saying what you'd say if you knew the language. The overhead light that's been running since dinner is telling your body it's noon. The bathroom mirror light you flick on at midnight is more melatonin-suppressing than your phone. The dim warm lamp in the corner — the one that just feels nicer — is closer to the right signal than anything designed to be "functional."</p>
+
+    <p>Your nervous system has been responding to all of it, every evening, without your input. The question is only what it's been told.</p>
+
+    <p><strong>Here's what light actually says to your body.</strong></p>
+
+    <div class="sci-hormones">
+      <div class="sci-h-row">
+        <div class="sci-h-name">Cortisol</div>
+        <div class="sci-h-desc">Your primary alertness and stress hormone. Should peak in the morning and decline by evening. Bright overhead light can keep it elevated past midnight — which is why you feel wired but tired.</div>
+      </div>
+      <div class="sci-h-row">
+        <div class="sci-h-name">Melatonin</div>
+        <div class="sci-h-desc">Your sleep-preparation hormone. Should begin rising about two hours before sleep. Suppressed by any light above 10 lux that contains blue wavelengths — including most standard home lighting. Thirty minutes of exposure is enough to delay it by 90 minutes.</div>
+      </div>
+      <div class="sci-h-row">
+        <div class="sci-h-name">Dopamine</div>
+        <div class="sci-h-desc">Your reward and attention neurotransmitter. Stimulated by contrast — the gap between a bright focal point and a dim ambient. Uniform lighting depletes it. A candle in a dark room activates it more than a well-lit office.</div>
+      </div>
+      <div class="sci-h-row">
+        <div class="sci-h-name">Serotonin</div>
+        <div class="sci-h-desc">Your mood stabilizer. Requires full-spectrum daylight for production. Depletes in low-light seasons and windowless environments — which is why winter, and windowless offices, feel heavier than they should.</div>
+      </div>
     </div>
-    <div class="entry-card" onclick="selectPath('brief')">
-      <div class="title">Give your design intent</div>
-      <div class="price">from €8,000</div>
-      <div class="desc">Include biological strategy in your project. For studios and developers at any stage.</div>
-    </div>
-    <div class="entry-card" onclick="selectPath('validate')">
-      <div class="title">Validate your specs</div>
-      <div class="price">from €4,000</div>
-      <div class="desc">Review the biological impact of your specs before you build. Fast, specific, final.</div>
-    </div>
-  </div>
-</section>
 
-<!-- ========== PATH A: CIRCADIAN AUDIT ========== -->
-<section class="quiz-section" id="pathAudit">
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">What type of project is this?</p>
-    <div class="q-opts" data-key="projectType">
-      <button class="q-opt" onclick="selectOpt(this,'projectType','hotel')">Hotel</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','residential')">Residential</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','wellness')">Wellness</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','other')">Other</button>
-    </div>
+    <p>When light is designed to say the right thing at the right time, the body receives the signals it was built to receive. Cortisol rises cleanly in the morning and declines by evening. Melatonin arrives on schedule. Sleep comes without negotiation. You wake having actually rested — not just spent time unconscious.</p>
+
+    <p>The space doesn't feel different in a way you can name. You just feel like yourself. Which, if you've been living under unintentional light for years, might feel surprisingly unfamiliar.</p>
+
   </div>
 
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">What is the approximate scale?</p>
-    <input type="text" class="q-input" placeholder="e.g. 2,400 sqm" data-key="scale" onchange="saveInput(this,'scale')">
+  <!-- ========== END SECTION ========== -->
+  <div class="sci-end">
+    <p>Want to understand what your specific space is doing? Write to <a href="mailto:hello@elixlight.com">hello@elixlight.com</a></p>
   </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">Is this a new build or a retrofit?</p>
-    <div class="q-opts" data-key="buildType">
-      <button class="q-opt" onclick="selectOpt(this,'buildType','retrofit'); showFlag('auditRetrofit')">Retrofit</button>
-      <button class="q-opt" onclick="selectOpt(this,'buildType','newbuild'); showFlag('auditNewbuild')">New build</button>
-    </div>
-    <div class="flag-msg" id="auditRetrofit"></div>
-    <div class="flag-msg" id="auditNewbuild">
-      For new builds, a <a onclick="switchPath('brief')">Strategic Brief</a> or <a onclick="switchPath('validate')">Design Validation</a> is usually more appropriate. You can continue with an audit, but the scope will differ.
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">How many distinct zones need assessment?</p>
-    <div class="q-opts" data-key="zones">
-      <button class="q-opt" onclick="selectOpt(this,'zones','1-3')">1–3 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','4-8')">4–8 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','9-15')">9–15 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','16+')">16+ zones</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">Does the space change significantly across seasons?</p>
-    <div class="q-opts" data-key="seasonal">
-      <button class="q-opt" onclick="selectOpt(this,'seasonal','minimal')">Minimal change</button>
-      <button class="q-opt" onclick="selectOpt(this,'seasonal','moderate')">Moderate — some spaces shift use</button>
-      <button class="q-opt" onclick="selectOpt(this,'seasonal','significant')">Significant — dedicated seasonal programming needed</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Deliverables</p>
-    <p class="q-text">What do you need?</p>
-    <div class="q-opts" data-key="deliverable">
-      <button class="q-opt" onclick="selectOpt(this,'deliverable','audit')">Audit only — findings and recommendations</button>
-      <button class="q-opt" onclick="selectOpt(this,'deliverable','audit+strategy')">Audit + strategy — findings plus implementation roadmap</button>
-    </div>
-  </div>
-</section>
-
-<!-- ========== PATH B: STRATEGIC BRIEF ========== -->
-<section class="quiz-section" id="pathBrief">
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">What type of project is this?</p>
-    <div class="q-opts" data-key="projectType">
-      <button class="q-opt" onclick="selectOpt(this,'projectType','hotel')">Hotel</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','residential')">Residential</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','wellness')">Wellness</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','other')">Other</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">What stage is the project at?</p>
-    <div class="q-opts" data-key="projectStage">
-      <button class="q-opt" onclick="selectOpt(this,'projectStage','concept')">Concept / pre-design</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectStage','schematic')">Schematic design</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectStage','designDev'); showFlag('briefLate')">Design development</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectStage','construction'); showFlag('briefLate')">Construction documents / built</button>
-    </div>
-    <div class="flag-msg" id="briefLate">
-      At this stage, a <a onclick="switchPath('validate')">Design Validation</a> may be more practical than a full strategic brief. You can continue, but the value shifts from shaping to confirming.
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">What is the approximate scale?</p>
-    <input type="text" class="q-input" placeholder="e.g. 2,400 sqm" data-key="scale" onchange="saveInput(this,'scale')">
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">How many distinct zones need biological definition?</p>
-    <div class="q-opts" data-key="zones">
-      <button class="q-opt" onclick="selectOpt(this,'zones','1-3')">1–3 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','4-8')">4–8 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','9-15')">9–15 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','16+')">16+ zones</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">Which human states need to be supported?</p>
-    <div class="q-opts" data-key="humanStates">
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','sleep')">Sleep and restoration</button>
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','alertness')">Alertness and focus</button>
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','both')">Both — circadian rhythm across the day</button>
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','specific')">Specific clinical or performance outcomes</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">Does the space change significantly across seasons?</p>
-    <div class="q-opts" data-key="seasonal">
-      <button class="q-opt" onclick="selectOpt(this,'seasonal','minimal')">Minimal change</button>
-      <button class="q-opt" onclick="selectOpt(this,'seasonal','moderate')">Moderate — some spaces shift use</button>
-      <button class="q-opt" onclick="selectOpt(this,'seasonal','significant')">Significant — dedicated seasonal programming needed</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Deliverables</p>
-    <p class="q-text">What do you need?</p>
-    <div class="q-opts" data-key="deliverable">
-      <button class="q-opt" onclick="selectOpt(this,'deliverable','brief')">Brief only — biological intent document</button>
-      <button class="q-opt" onclick="selectOpt(this,'deliverable','brief+reviews')">Brief + design reviews — intent plus checkpoint validation</button>
-    </div>
-  </div>
-</section>
-
-<!-- ========== PATH C: DESIGN VALIDATION ========== -->
-<section class="quiz-section" id="pathValidate">
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">What type of project is this?</p>
-    <div class="q-opts" data-key="projectType">
-      <button class="q-opt" onclick="selectOpt(this,'projectType','hotel')">Hotel</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','residential')">Residential</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','wellness')">Wellness</button>
-      <button class="q-opt" onclick="selectOpt(this,'projectType','other')">Other</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">How many distinct zones need validation?</p>
-    <div class="q-opts" data-key="zones">
-      <button class="q-opt" onclick="selectOpt(this,'zones','1-3')">1–3 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','4-8')">4–8 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','9-15')">9–15 zones</button>
-      <button class="q-opt" onclick="selectOpt(this,'zones','16+')">16+ zones</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Project context</p>
-    <p class="q-text">Which human states need to be validated?</p>
-    <div class="q-opts" data-key="humanStates">
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','sleep')">Sleep and restoration</button>
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','alertness')">Alertness and focus</button>
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','both')">Both — circadian rhythm across the day</button>
-      <button class="q-opt" onclick="selectOpt(this,'humanStates','specific')">Specific clinical or performance outcomes</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Deliverables</p>
-    <p class="q-text">How many review cycles do you anticipate?</p>
-    <div class="q-opts" data-key="reviewCycles">
-      <button class="q-opt" onclick="selectOpt(this,'reviewCycles','1')">One round — single-pass validation</button>
-      <button class="q-opt" onclick="selectOpt(this,'reviewCycles','2')">Two rounds — initial + revision check</button>
-      <button class="q-opt" onclick="selectOpt(this,'reviewCycles','3+')">Three or more — iterative refinement</button>
-    </div>
-  </div>
-</section>
-
-<!-- ========== UNIVERSAL QUESTIONS ========== -->
-<section class="universal-section" id="universalSection">
-  <div class="q-block">
-    <p class="q-label">About you</p>
-    <p class="q-text">Your name</p>
-    <input type="text" class="q-input" placeholder="Full name" data-key="name" onchange="saveInput(this,'name')">
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">About you</p>
-    <p class="q-text">Your email</p>
-    <input type="email" class="q-input" placeholder="you@company.com" data-key="email" onchange="saveInput(this,'email')">
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">About you</p>
-    <p class="q-text">Your role or organisation</p>
-    <input type="text" class="q-input" placeholder="e.g. Architect, Studio Name" data-key="org" onchange="saveInput(this,'org')">
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Timeline</p>
-    <p class="q-text">When do you need this completed?</p>
-    <div class="q-opts" data-key="timeline">
-      <button class="q-opt" onclick="selectOpt(this,'timeline','asap')">ASAP — within 2 weeks</button>
-      <button class="q-opt" onclick="selectOpt(this,'timeline','1month')">Within 1 month</button>
-      <button class="q-opt" onclick="selectOpt(this,'timeline','flexible')">Flexible — aligning with project milestones</button>
-    </div>
-  </div>
-
-  <div class="q-block">
-    <p class="q-label">Anything else</p>
-    <p class="q-text">Is there anything else we should know?</p>
-    <input type="text" class="q-input" placeholder="Optional — constraints, prior work, specific concerns..." data-key="notes" onchange="saveInput(this,'notes')">
-  </div>
-</section>
-
-<!-- ========== GENERATE QUOTE ========== -->
-<section class="generate-section" id="generateSection">
-  <button class="generate-btn" onclick="generateQuote()">Generate quote</button>
-  <p class="generate-note">This will produce a PDF quote document you can download, review, and send to <strong>collabs@elixlight.com</strong> to start your project.</p>
-</section>
-
-<!-- ========== QUOTE RESULT ========== -->
-<section class="result-section" id="resultSection">
-  <div class="result-box">
-    <p class="result-service" id="resultService">CIRCADIAN AUDIT</p>
-    <p class="result-price" id="resultPrice">€4,200</p>
-    <p class="result-desc" id="resultDesc">A full circadian audit of your existing space, with findings and an implementation roadmap.</p>
-    <div class="result-details" id="resultDetails"></div>
-  </div>
-
-  <button class="download-btn" onclick="downloadPDF()">
-    <span>↓</span> Download quote as PDF
-  </button>
-
-  <div class="next-steps">
-    <h3>What happens next</h3>
-    <p>Review your quote. When you're ready, send it to <a href="mailto:collabs@elixlight.com">collabs@elixlight.com</a> and we'll schedule a call to confirm scope and timeline within 48 hours.</p>
-  </div>
-</section>
 
 </div><!-- /w -->
 
@@ -645,327 +253,6 @@
   <div class="copy">© 2025<br>ELIXLIGHT</div>
   <a href="mailto:hello@elixlight.com">hello@elixlight.com</a>
 </footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-const { jsPDF } = window.jspdf;
-
-let currentPath = null;
-let answers = {};
-
-const pathConfig = {
-  audit: {
-    name: 'Circadian Audit',
-    basePrice: 3500,
-    zoneMultipliers: { '1-3': 1, '4-8': 1.4, '9-15': 2, '16+': 2.8 },
-    seasonalMultipliers: { minimal: 1, moderate: 1.15, significant: 1.3 },
-    deliverableMultipliers: { audit: 1, 'audit+strategy': 1.35 },
-    desc: 'A full circadian audit of your existing space, measuring light exposure across zones and times of day against biological targets.',
-    descStrategy: ' Includes a detailed implementation roadmap with prioritised recommendations and fixture specifications.',
-    pdfTitle: 'Circadian Audit Quote',
-    pdfBody: `This quote covers a comprehensive circadian lighting audit of your space. We measure melanopic lux, colour temperature, and spectral distribution across all zones at multiple times of day. The deliverable is a findings report with biological impact assessment and prioritised remediation recommendations.`
-  },
-  brief: {
-    name: 'Strategic Brief',
-    basePrice: 8000,
-    zoneMultipliers: { '1-3': 1, '4-8': 1.3, '9-15': 1.7, '16+': 2.2 },
-    seasonalMultipliers: { minimal: 1, moderate: 1.1, significant: 1.25 },
-    deliverableMultipliers: { brief: 1, 'brief+reviews': 1.4 },
-    desc: 'A biological lighting strategy document that defines intent, targets, and design principles for your project before fixtures are specified.',
-    descStrategy: ' Includes two design review checkpoints to validate that specifications meet biological targets.',
-    pdfTitle: 'Strategic Brief Quote',
-    pdfBody: `This quote covers the creation of a biological lighting strategy document for your project. We define circadian intent, set measurable targets for each zone and time of day, and establish design principles that your lighting designer can implement. The brief becomes a binding reference for all subsequent design decisions.`
-  },
-  validate: {
-    name: 'Design Validation',
-    basePrice: 4000,
-    zoneMultipliers: { '1-3': 1, '4-8': 1.35, '9-15': 1.8, '16+': 2.4 },
-    reviewMultipliers: { '1': 1, '2': 1.5, '3+': 2 },
-    desc: 'A rigorous review of your lighting specifications against biological targets, with clear pass/fail assessment and revision guidance.',
-    descStrategy: '',
-    pdfTitle: 'Design Validation Quote',
-    pdfBody: `This quote covers a biological validation of your existing lighting specifications. We assess every zone against circadian targets, identify gaps and risks, and provide revision guidance. Each review cycle includes a full report with annotated specifications and alternative recommendations where targets are not met.`
-  }
-};
-
-function selectPath(path) {
-  currentPath = path;
-  answers = { path };
-
-  // Hide entry, show correct quiz
-  document.getElementById('entrySection').style.display = 'none';
-  document.querySelectorAll('.quiz-section').forEach(s => s.classList.remove('show'));
-  document.getElementById('path' + path.charAt(0).toUpperCase() + path.slice(1)).classList.add('show');
-
-  // Highlight selected card
-  document.querySelectorAll('.entry-card').forEach((c, i) => {
-    c.classList.toggle('active', ['audit','brief','validate'][i] === path);
-  });
-}
-
-function switchPath(path) {
-  // Reset flags
-  document.querySelectorAll('.flag-msg').forEach(f => f.classList.remove('show'));
-  // Clear selections in old path
-  document.querySelectorAll('.quiz-section.show .q-opt').forEach(o => o.classList.remove('selected'));
-  selectPath(path);
-}
-
-function selectOpt(btn, key, value) {
-  answers[key] = value;
-  // Unselect siblings
-  const container = btn.closest('.q-opts');
-  container.querySelectorAll('.q-opt').forEach(o => o.classList.remove('selected'));
-  btn.classList.add('selected');
-
-  checkComplete();
-}
-
-function saveInput(input, key) {
-  answers[key] = input.value;
-  checkComplete();
-}
-
-function showFlag(id) {
-  document.querySelectorAll('.flag-msg').forEach(f => {
-    if (f.id !== id) f.classList.remove('show');
-  });
-  const el = document.getElementById(id);
-  if (el) el.classList.add('show');
-}
-
-function checkComplete() {
-  const cfg = pathConfig[currentPath];
-  if (!cfg) return;
-
-  let required = ['projectType', 'zones'];
-  if (currentPath === 'audit') required.push('buildType', 'seasonal', 'deliverable');
-  if (currentPath === 'brief') required.push('projectStage', 'humanStates', 'seasonal', 'deliverable');
-  if (currentPath === 'validate') required.push('humanStates', 'reviewCycles');
-
-  const pathComplete = required.every(k => answers[k]);
-
-  if (pathComplete) {
-    document.getElementById('universalSection').classList.add('show');
-  }
-
-  const universalRequired = ['name', 'email', 'org', 'timeline'];
-  const universalComplete = universalRequired.every(k => answers[k] && answers[k].trim());
-
-  if (pathComplete && universalComplete) {
-    document.getElementById('generateSection').classList.add('show');
-  } else {
-    document.getElementById('generateSection').classList.remove('show');
-  }
-}
-
-function calculatePrice() {
-  const cfg = pathConfig[currentPath];
-  let price = cfg.basePrice;
-
-  price *= (cfg.zoneMultipliers[answers.zones] || 1);
-
-  if (currentPath === 'validate') {
-    price *= (cfg.reviewMultipliers[answers.reviewCycles] || 1);
-  } else {
-    price *= (cfg.seasonalMultipliers[answers.seasonal] || 1);
-    price *= (cfg.deliverableMultipliers[answers.deliverable] || 1);
-  }
-
-  // Round to nearest 100
-  return Math.round(price / 100) * 100;
-}
-
-function generateQuote() {
-  const cfg = pathConfig[currentPath];
-  const price = calculatePrice();
-
-  document.getElementById('resultService').textContent = cfg.name.toUpperCase();
-  document.getElementById('resultPrice').textContent = '€' + price.toLocaleString();
-
-  let desc = cfg.desc;
-  if (currentPath !== 'validate' && answers.deliverable && answers.deliverable.includes('+')) {
-    desc += cfg.descStrategy;
-  }
-  document.getElementById('resultDesc').textContent = desc;
-
-  // Build details
-  const details = [];
-  details.push(`<p><strong>Project type:</strong> ${answers.projectType || '—'}</p>`);
-  if (answers.scale) details.push(`<p><strong>Scale:</strong> ${answers.scale}</p>`);
-  if (currentPath === 'audit') {
-    details.push(`<p><strong>Build type:</strong> ${answers.buildType || '—'}</p>`);
-  }
-  if (currentPath === 'brief') {
-    details.push(`<p><strong>Project stage:</strong> ${answers.projectStage || '—'}</p>`);
-  }
-  details.push(`<p><strong>Zones:</strong> ${answers.zones || '—'}</p>`);
-  if (answers.humanStates) details.push(`<p><strong>Human states:</strong> ${answers.humanStates}</p>`);
-  if (answers.seasonal) details.push(`<p><strong>Seasonal complexity:</strong> ${answers.seasonal}</p>`);
-  if (answers.deliverable) details.push(`<p><strong>Deliverable:</strong> ${answers.deliverable}</p>`);
-  if (answers.reviewCycles) details.push(`<p><strong>Review cycles:</strong> ${answers.reviewCycles}</p>`);
-  details.push(`<p><strong>Timeline:</strong> ${answers.timeline || '—'}</p>`);
-  details.push(`<p style="margin-top:1rem"><strong>Quoted for:</strong> ${answers.name || '—'}${answers.org ? ', ' + answers.org : ''}</p>`);
-
-  document.getElementById('resultDetails').innerHTML = details.join('');
-
-  document.getElementById('resultSection').classList.add('show');
-  document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
-}
-
-function downloadPDF() {
-  const cfg = pathConfig[currentPath];
-  const price = calculatePrice();
-
-  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
-  const pageW = doc.internal.pageSize.getWidth();
-  const margin = 50;
-  let y = 60;
-
-  // Dark background fill
-  doc.setFillColor(10, 10, 10);
-  doc.rect(0, 0, pageW, 842, 'F');
-
-  // Accent line
-  doc.setDrawColor(232, 123, 60);
-  doc.setLineWidth(1);
-  doc.line(margin, y, margin + 60, y);
-  y += 24;
-
-  // Title
-  doc.setTextColor(232, 228, 223);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(24);
-  doc.text(cfg.pdfTitle, margin, y);
-  y += 36;
-
-  // Service name
-  doc.setFontSize(11);
-  doc.setTextColor(107, 101, 96);
-  doc.setFont('helvetica', 'normal');
-  doc.text('ELIXLIGHT — Biological Lighting Strategy', margin, y);
-  y += 50;
-
-  // Price
-  doc.setTextColor(232, 228, 223);
-  doc.setFontSize(42);
-  doc.setFont('helvetica', 'bold');
-  doc.text('€' + price.toLocaleString(), margin, y);
-  y += 28;
-
-  // Date
-  doc.setFontSize(10);
-  doc.setTextColor(107, 101, 96);
-  doc.setFont('helvetica', 'normal');
-  doc.text('Quote generated: ' + new Date().toLocaleDateString('en-GB'), margin, y);
-  y += 40;
-
-  // Separator
-  doc.setDrawColor(34, 32, 28);
-  doc.setLineWidth(0.5);
-  doc.line(margin, y, pageW - margin, y);
-  y += 28;
-
-  // Body
-  doc.setTextColor(160, 154, 144);
-  doc.setFontSize(11);
-  const bodyLines = doc.splitTextToSize(cfg.pdfBody, pageW - margin * 2);
-  doc.text(bodyLines, margin, y);
-  y += bodyLines.length * 14 + 28;
-
-  // Scope
-  doc.setTextColor(232, 228, 223);
-  doc.setFontSize(13);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Scope', margin, y);
-  y += 20;
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(160, 154, 144);
-
-  const scopeItems = [];
-  scopeItems.push(`Project type: ${answers.projectType || '—'}`);
-  if (answers.scale) scopeItems.push(`Scale: ${answers.scale}`);
-  scopeItems.push(`Zones: ${answers.zones || '—'}`);
-  if (answers.humanStates) scopeItems.push(`Human states: ${answers.humanStates}`);
-  if (answers.seasonal) scopeItems.push(`Seasonal complexity: ${answers.seasonal}`);
-  if (answers.deliverable) scopeItems.push(`Deliverable: ${answers.deliverable}`);
-  if (answers.reviewCycles) scopeItems.push(`Review cycles: ${answers.reviewCycles}`);
-  scopeItems.push(`Timeline: ${answers.timeline || '—'}`);
-
-  scopeItems.forEach(item => {
-    doc.text('• ' + item, margin + 8, y);
-    y += 16;
-  });
-
-  y += 20;
-
-  // What's included
-  doc.setTextColor(232, 228, 223);
-  doc.setFontSize(13);
-  doc.setFont('helvetica', 'bold');
-  doc.text('What\'s included', margin, y);
-  y += 20;
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(160, 154, 144);
-
-  const included = [];
-  if (currentPath === 'audit') {
-    included.push('On-site or remote light measurement across all zones');
-    included.push('Spectral analysis and melanopic lux mapping');
-    included.push('Biological impact assessment per zone and time of day');
-    included.push('Prioritised findings report with remediation guidance');
-    if (answers.deliverable === 'audit+strategy') {
-      included.push('Implementation roadmap with fixture specifications');
-      included.push('Priority-ranked action plan with budget estimates');
-    }
-  } else if (currentPath === 'brief') {
-    included.push('Circadian intent definition for each zone');
-    included.push('Measurable biological targets (melanopic lux, CCT, timing)');
-    included.push('Design principles document for your lighting designer');
-    included.push('Fixture category guidance (not brand-specific)');
-    if (answers.deliverable === 'brief+reviews') {
-      included.push('Two design review checkpoints at schematic and DD stages');
-      included.push('Revision feedback with annotated drawings');
-    }
-  } else {
-    included.push('Zone-by-zone specification review against biological targets');
-    included.push('Pass/fail assessment with quantitative justification');
-    included.push('Revision guidance for failed zones');
-    included.push('Alternative fixture recommendations where needed');
-    if (answers.reviewCycles === '2') included.push('Second review cycle after revisions');
-    if (answers.reviewCycles === '3+') included.push('Multiple iterative review cycles');
-  }
-
-  included.forEach(item => {
-    doc.text('• ' + item, margin + 8, y);
-    y += 16;
-  });
-
-  y += 28;
-
-  // Terms
-  doc.setDrawColor(34, 32, 28);
-  doc.line(margin, y, pageW - margin, y);
-  y += 20;
-
-  doc.setTextColor(107, 101, 96);
-  doc.setFontSize(9);
-  const terms = 'This quote is valid for 30 days. Final scope and timeline will be confirmed on a kickoff call. Payment terms: 50% on commencement, 50% on delivery. To proceed, reply to this document or email collabs@elixlight.com.';
-  const termsLines = doc.splitTextToSize(terms, pageW - margin * 2);
-  doc.text(termsLines, margin, y);
-
-  // Footer
-  doc.setTextColor(107, 101, 96);
-  doc.setFontSize(9);
-  doc.text('elixlight.com  ·  collabs@elixlight.com', margin, 810);
-
-  doc.save('elixlight-quote-' + currentPath + '.pdf');
-}
-</script>
 
 </body>
 </html>
