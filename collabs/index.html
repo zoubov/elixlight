@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELIXLIGHT — Project Pricing Calculator</title>
+<title>ELIXLIGHT — Get a Quote</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
@@ -43,6 +43,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: var(--font-sans);
     color: var(--text-primary);
@@ -56,7 +57,7 @@
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; }
 
-  .w { max-width: 640px; margin: 0 auto; padding: 0 1.5rem; }
+  .w { max-width: 720px; margin: 0 auto; padding: 0 1.5rem; }
 
   /* ========== NAV ========== */
   .nav {
@@ -65,345 +66,223 @@
     align-items: center;
     padding: 1.25rem 1.5rem;
     border-bottom: 0.5px solid var(--border);
+    max-width: 1000px;
+    margin: 0 auto;
   }
   .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; }
   .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; letter-spacing: 0.02em; }
 
-  /* ========== HEADER ========== */
-  .header {
-    padding: 3rem 1.5rem 2rem;
+  /* ========== PAGE HEADER ========== */
+  .page-header {
+    padding: 4rem 0 3rem;
     text-align: center;
     border-bottom: 0.5px solid var(--border);
   }
-  .header-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .header h1 {
-    font-size: 28px;
+  .page-header h1 {
+    font-size: 32px;
     font-weight: 500;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-  .header p {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    max-width: 480px;
-    margin: 0 auto;
-  }
-  .header .starting {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 1.5rem;
-    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
   }
 
-  /* ========== PROGRESS ========== */
-  .progress-wrap {
-    padding: 1.5rem;
+  /* ========== PATH SELECTOR ========== */
+  .path-selector {
+    padding: 3rem 0;
     border-bottom: 0.5px solid var(--border);
   }
-  .progress-inner {
-    max-width: 640px;
-    margin: 0 auto;
+  .path-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .paths {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  .path-card {
+    padding: 1.5rem;
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-1);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .path-card:hover { border-color: var(--border-strong); }
+  .path-card.active { border-color: var(--accent); background: var(--accent-dim); }
+  .path-card .name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+  .path-card .price {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+  .path-card .cta {
+    font-size: 12px;
+    color: var(--accent);
     display: flex;
     align-items: center;
-    gap: 1rem;
-  }
-  .progress-bar {
-    flex: 1;
-    height: 3px;
-    background: var(--surface-2);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
-  .progress-text {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    font-family: var(--font-mono);
-    white-space: nowrap;
+    gap: 4px;
   }
 
-  /* ========== STEPS ========== */
-  .step {
+  /* ========== FORM ========== */
+  .form-section {
+    padding: 3rem 0;
     display: none;
-    padding: 2.5rem 1.5rem;
+  }
+  .form-section.show { display: block; }
+
+  .step {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
     border-bottom: 0.5px solid var(--border);
-    animation: fadeIn 0.3s ease;
   }
-  .step.active { display: block; }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .step:last-child { border-bottom: none; }
 
   .step-label {
     font-size: 11px;
     color: var(--text-muted);
-    letter-spacing: 0.15em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
-  .step h2 {
-    font-size: 20px;
+  .step-q {
+    font-size: 18px;
     font-weight: 500;
-    margin-bottom: 2rem;
-    line-height: 1.3;
+    line-height: 1.4;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
   }
 
-  /* ========== FORM ELEMENTS ========== */
-  .field { margin-bottom: 1.5rem; }
-  .field-label {
-    display: block;
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
+  /* Options */
+  .opts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
-  .field-hint {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-  }
-  .field-hint.flag {
-    color: var(--accent);
-    background: var(--accent-dim);
-    padding: 0.6rem 0.75rem;
+  .opt {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border: 0.5px solid var(--border);
     border-radius: var(--radius);
-    border: 0.5px solid var(--accent);
-    display: none;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--surface-1);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
   }
-  .field-hint.flag.show { display: block; }
+  .opt:hover { border-color: var(--border-strong); background: var(--surface-2); }
+  .opt.selected { border-color: var(--accent); background: var(--accent-dim); }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="number"],
-  select,
-  textarea {
+  /* Text input */
+  .text-input {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
-    background: var(--surface-1);
-    color: var(--text-primary);
     font-size: 14px;
+    color: var(--text-primary);
+    background: var(--surface-1);
     font-family: inherit;
-    transition: border-color 0.2s;
+    transition: border-color 0.15s;
     outline: none;
   }
-  input:focus, select:focus, textarea:focus {
-    border-color: var(--border-stronger);
-  }
-  input::placeholder, textarea::placeholder {
-    color: var(--text-muted);
-  }
-  select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B6560' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
-  }
-  @media (prefers-color-scheme: light) {
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239A958F' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    }
-  }
+  .text-input:focus { border-color: var(--border-stronger); }
+  .text-input::placeholder { color: var(--text-muted); }
 
-  /* Checkbox grid */
-  .check-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-  .check-item {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.65rem 0.8rem;
+  /* Flag message */
+  .flag {
+    padding: 1rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface-1);
-    cursor: pointer;
-    transition: all 0.15s;
     font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    display: none;
   }
-  .check-item:hover { border-color: var(--border-strong); }
-  .check-item input[type="checkbox"] {
-    appearance: none;
-    width: 16px; height: 16px;
-    border: 0.5px solid var(--border-strong);
-    border-radius: 3px;
-    background: var(--surface-2);
-    cursor: pointer;
-    position: relative;
-    flex-shrink: 0;
-  }
-  .check-item input[type="checkbox"]:checked {
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-  .check-item input[type="checkbox"]:checked::after {
-    content: "";
-    position: absolute;
-    left: 5px; top: 2px;
-    width: 4px; height: 8px;
-    border: solid white;
-    border-width: 0 1.5px 1.5px 0;
-    transform: rotate(45deg);
-  }
+  .flag.show { display: block; }
+  .flag a { color: var(--accent); text-decoration: underline; cursor: pointer; }
 
-  /* Radio options */
-  .radio-group { display: flex; flex-direction: column; gap: 0.5rem; }
-  .radio-item {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.75rem 1rem;
+  /* ========== COMMON QUESTIONS ========== */
+  .common-section {
+    padding: 3rem 0;
+    border-top: 0.5px solid var(--border);
+    display: none;
+  }
+  .common-section.show { display: block; }
+
+  /* ========== QUOTE RESULT ========== */
+  .quote-result {
+    padding: 3rem 0;
+    text-align: center;
+    display: none;
+  }
+  .quote-result.show { display: block; }
+  .quote-result h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .quote-result .summary {
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    text-align: left;
+    padding: 1.5rem;
     border: 0.5px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface-1);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-size: 14px;
   }
-  .radio-item:hover { border-color: var(--border-strong); }
-  .radio-item input[type="radio"] {
-    appearance: none;
-    width: 16px; height: 16px;
-    border: 0.5px solid var(--border-strong);
-    border-radius: 50%;
-    background: var(--surface-2);
-    cursor: pointer;
-    position: relative;
-    flex-shrink: 0;
-  }
-  .radio-item input[type="radio"]:checked {
-    border-color: var(--accent);
-    background: var(--accent);
-  }
-  .radio-item input[type="radio"]:checked::after {
-    content: "";
-    position: absolute;
-    left: 5px; top: 5px;
-    width: 4px; height: 4px;
-    background: white;
-    border-radius: 50%;
-  }
-
-  /* Buttons */
-  .btn-row {
+  .quote-result .summary .row {
     display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 0.5px solid var(--border);
   }
-  .btn {
+  .quote-result .summary .row:last-child { border-bottom: none; }
+  .quote-result .summary .row .key { color: var(--text-muted); }
+  .quote-result .summary .row .val { color: var(--text-primary); }
+  .quote-result .total {
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 1.5rem 0;
+  }
+  .quote-result .note {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 2rem;
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 0.75rem 1.5rem;
-    border: 0.5px solid var(--border-strong);
+    border: 0.5px solid var(--accent);
     border-radius: var(--radius);
     font-size: 14px;
+    color: var(--accent);
+    background: transparent;
     cursor: pointer;
     transition: all 0.2s;
     font-family: inherit;
   }
-  .btn-primary {
-    background: var(--text-primary);
-    color: var(--surface-0);
-    border-color: var(--text-primary);
-  }
-  .btn-primary:hover {
-    opacity: 0.9;
-  }
-  .btn-secondary {
-    background: transparent;
-    color: var(--text-secondary);
-    border-color: var(--border);
-  }
-  .btn-secondary:hover {
-    border-color: var(--border-strong);
-    color: var(--text-primary);
-  }
-
-  /* ========== QUOTE RESULT ========== */
-  .quote-result {
-    display: none;
-    padding: 3rem 1.5rem;
-    text-align: center;
-    animation: fadeIn 0.4s ease;
-  }
-  .quote-result.active { display: block; }
-  .quote-result h2 {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-  .quote-result .quote-service {
-    font-size: 12px;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
-  .quote-box {
-    max-width: 400px;
-    margin: 0 auto 2rem;
-    padding: 2rem;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface-1);
-  }
-  .quote-amount {
-    font-size: 42px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-  }
-  .quote-range {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-  }
-  .quote-breakdown {
-    text-align: left;
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.8;
-  }
-  .quote-breakdown li {
-    list-style: none;
-    padding-left: 1rem;
-    position: relative;
-  }
-  .quote-breakdown li::before {
-    content: "—";
-    position: absolute;
-    left: 0;
-    color: var(--text-muted);
-  }
-  .quote-actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .quote-note {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 2rem;
-  }
-  .quote-note a { color: var(--text-secondary); text-decoration: underline; }
+  .download-btn:hover { background: var(--accent-dim); }
 
   /* ========== FOOTER ========== */
   footer {
@@ -412,19 +291,18 @@
     justify-content: space-between;
     align-items: center;
     border-top: 0.5px solid var(--border);
+    max-width: 1000px;
+    margin: 0 auto;
   }
   footer .copy { font-size: 12px; color: var(--text-muted); }
   footer a { font-size: 13px; color: var(--text-primary); }
   footer a:hover { color: var(--accent); }
 
   /* ========== RESPONSIVE ========== */
-  @media (max-width: 560px) {
-    .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .check-grid { grid-template-columns: 1fr; }
-    .btn-row { flex-direction: column; }
-    .btn { width: 100%; text-align: center; }
-    .quote-actions { flex-direction: column; }
-    .quote-actions .btn { width: 100%; }
+  @media (max-width: 720px) {
+    .paths { grid-template-columns: 1fr; }
+    .page-header h1 { font-size: 26px; }
+    .step-q { font-size: 16px; }
   }
 </style>
 </head>
@@ -432,423 +310,86 @@
 
 <!-- ========== NAV ========== -->
 <nav class="nav">
-  <span class="nav-logo">ELIXLIGHT</span>
+  <a href="/" class="nav-logo">ELIXLIGHT</a>
   <span class="nav-quote">designing light for your true nature</span>
 </nav>
 
-<!-- ========== HEADER ========== -->
-<div class="header">
-  <div class="w">
-    <div class="header-label">Get a quote</div>
-    <h1>Project Pricing</h1>
-    <p>Your fee depends on project complexity. We assess your specific situation — zones, human states, time variations, user needs — then give you a transparent breakdown.</p>
-    <div class="starting" id="startingPrice">Starting from €1,250</div>
+<div class="w">
+
+<!-- ========== PAGE HEADER ========== -->
+<div class="page-header">
+  <h1>get a quote</h1>
+</div>
+
+<!-- ========== PATH SELECTOR ========== -->
+<div class="path-selector" id="pathSelector">
+  <div class="path-label">Choose your starting point</div>
+  <div class="paths">
+    <div class="path-card" data-path="A" onclick="selectPath('A')">
+      <div class="name">understand what's happening in your space</div>
+      <div class="price">from €3,500</div>
+      <div class="cta">quote →</div>
+    </div>
+    <div class="path-card" data-path="B" onclick="selectPath('B')">
+      <div class="name">give your design a biological intent</div>
+      <div class="price">from €8,000</div>
+      <div class="cta">quote →</div>
+    </div>
+    <div class="path-card" data-path="C" onclick="selectPath('C')">
+      <div class="name">validate your specs before you build</div>
+      <div class="price">from €4,000</div>
+      <div class="cta">quote →</div>
+    </div>
   </div>
 </div>
 
-<!-- ========== PROGRESS ========== -->
-<div class="progress-wrap">
-  <div class="progress-inner">
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-    </div>
-    <div class="progress-text" id="progressText">Step 1 of 5</div>
-  </div>
+<!-- ========== DYNAMIC FORM ========== -->
+<div class="form-section" id="formSection">
+  <div id="dynamicSteps"></div>
 </div>
 
-<!-- ========== FORM ========== -->
-<form id="quoteForm" onsubmit="return false;">
-
-  <!-- ===== STEP 0: PATH SELECTION (only shown if no path param) ===== -->
-  <div class="step active" id="step0">
-    <div class="w">
-      <div class="step-label">Choose your path</div>
-      <h2>What brought you here?</h2>
-      <div class="radio-group">
-        <label class="radio-item">
-          <input type="radio" name="path" value="audit" onchange="selectPath('audit')">
-          <span><strong>Understand what's happening in your space</strong><br><span style="color:var(--text-muted);font-size:12px;">Circadian Audit — from €3,500</span></span>
-        </label>
-        <label class="radio-item">
-          <input type="radio" name="path" value="brief" onchange="selectPath('brief')">
-          <span><strong>Give your design a biological intent</strong><br><span style="color:var(--text-muted);font-size:12px;">Strategic Brief — from €8,000</span></span>
-        </label>
-        <label class="radio-item">
-          <input type="radio" name="path" value="validate" onchange="selectPath('validate')">
-          <span><strong>Validate your specs before you build</strong><br><span style="color:var(--text-muted);font-size:12px;">Design Validation — from €4,000</span></span>
-        </label>
-      </div>
+<!-- ========== COMMON QUESTIONS ========== -->
+<div class="common-section" id="commonSection">
+  <div class="step">
+    <div class="step-label">ABOUT YOU</div>
+    <div class="step-q">Your name and email</div>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+      <input type="text" class="text-input" id="userName" placeholder="Full name">
+      <input type="email" class="text-input" id="userEmail" placeholder="Email address">
     </div>
   </div>
-
-  <!-- ===== PATH A: AUDIT ===== -->
-  <div class="step" id="step-a1">
-    <div class="w">
-      <div class="step-label">Project context</div>
-      <h2>Tell us about your space</h2>
-
-      <div class="field">
-        <label class="field-label">Project type</label>
-        <select id="a-type" onchange="checkAuditPath()">
-          <option value="">Select...</option>
-          <option value="hotel">Hotel</option>
-          <option value="residential">Residential</option>
-          <option value="wellness">Wellness / Spa</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Project scale (sqm)</label>
-        <input type="number" id="a-scale" placeholder="e.g. 1200">
-      </div>
-
-      <div class="field">
-        <label class="field-label">New build or retrofit?</label>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="a-build" value="retrofit" onchange="checkAuditPath()">
-            <span>Retrofit — existing space</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="a-build" value="newbuild" onchange="checkAuditPath()">
-            <span>New build</span>
-          </label>
-        </div>
-        <div class="field-hint flag" id="a-build-flag">
-          For new builds, a Strategic Brief or Design Validation may be more appropriate. Would you like to switch paths?
-          <div style="margin-top:0.5rem;">
-            <button type="button" class="btn btn-secondary" style="padding:0.4rem 0.8rem;font-size:12px;" onclick="switchPath('brief')">Switch to Strategic Brief</button>
-            <button type="button" class="btn btn-secondary" style="padding:0.4rem 0.8rem;font-size:12px;margin-left:0.5rem;" onclick="switchPath('validate')">Switch to Validation</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Number of zones</label>
-        <select id="a-zones">
-          <option value="">Select...</option>
-          <option value="1-3">1–3 zones</option>
-          <option value="4-8">4–8 zones</option>
-          <option value="9-15">9–15 zones</option>
-          <option value="16+">16+ zones</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Seasonal complexity</label>
-        <div class="field-hint">Does the space change significantly between seasons?</div>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="a-seasonal" value="simple">
-            <span>Simple — consistent year-round</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="a-seasonal" value="moderate">
-            <span>Moderate — some seasonal variation</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="a-seasonal" value="complex">
-            <span>Complex — major seasonal shifts</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">What do you need?</label>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="a-depth" value="audit-only">
-            <span>Audit only — assessment and report</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="a-depth" value="audit-strategy">
-            <span>Audit + strategy — assessment with actionable recommendations</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
-      </div>
+  <div class="step">
+    <div class="step-label">PROJECT</div>
+    <div class="step-q">Project name or description</div>
+    <input type="text" class="text-input" id="projectDesc" placeholder="One line — personalises your quote">
+  </div>
+  <div class="step">
+    <div class="step-label">TIMELINE</div>
+    <div class="step-q">Preferred start date</div>
+    <div class="opts" id="startDateOpts">
+      <button class="opt" onclick="selectCommon('startDate',this,'ASAP')">ASAP</button>
+      <button class="opt" onclick="selectCommon('startDate',this,'Within 1 month')">Within 1 month</button>
+      <button class="opt" onclick="selectCommon('startDate',this,'Within 3 months')">Within 3 months</button>
+      <button class="opt" onclick="selectCommon('startDate',this,'Flexible')">Flexible</button>
     </div>
   </div>
-
-  <!-- ===== PATH B: STRATEGIC BRIEF ===== -->
-  <div class="step" id="step-b1">
-    <div class="w">
-      <div class="step-label">Project context</div>
-      <h2>Tell us about your project</h2>
-
-      <div class="field">
-        <label class="field-label">Project type</label>
-        <select id="b-type">
-          <option value="">Select...</option>
-          <option value="hotel">Hotel</option>
-          <option value="residential">Residential</option>
-          <option value="wellness">Wellness / Spa</option>
-          <option value="mixed-use">Mixed-use</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Project stage</label>
-        <div class="field-hint">When biological strategy enters matters enormously.</div>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="b-stage" value="early" onchange="checkBriefStage()">
-            <span>Early — concept or schematic design</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="b-stage" value="mid" onchange="checkBriefStage()">
-            <span>Mid — design development</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="b-stage" value="late" onchange="checkBriefStage()">
-            <span>Late — construction documents or beyond</span>
-          </label>
-        </div>
-        <div class="field-hint flag" id="b-stage-flag">
-          At this stage, your specs may already be set. Design Validation could save you more time and money than a full brief.
-          <div style="margin-top:0.5rem;">
-            <button type="button" class="btn btn-secondary" style="padding:0.4rem 0.8rem;font-size:12px;" onclick="switchPath('validate')">Switch to Validation</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Project scale (sqm)</label>
-        <input type="number" id="b-scale" placeholder="e.g. 3000">
-      </div>
-
-      <div class="field">
-        <label class="field-label">Number of zones</label>
-        <select id="b-zones">
-          <option value="">Select...</option>
-          <option value="1-3">1–3 zones</option>
-          <option value="4-8">4–8 zones</option>
-          <option value="9-15">9–15 zones</option>
-          <option value="16+">16+ zones</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Human states involved</label>
-        <div class="field-hint">What activities will happen in this space?</div>
-        <div class="check-grid">
-          <label class="check-item">
-            <input type="checkbox" name="b-states" value="sleep">
-            <span>Sleep / rest</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="b-states" value="work">
-            <span>Work / focus</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="b-states" value="social">
-            <span>Social / dining</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="b-states" value="movement">
-            <span>Movement / transition</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="b-states" value="wellness">
-            <span>Wellness / recovery</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="b-states" value="other">
-            <span>Other</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Seasonal complexity</label>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="b-seasonal" value="simple">
-            <span>Simple — consistent year-round</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="b-seasonal" value="moderate">
-            <span>Moderate — some seasonal variation</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="b-seasonal" value="complex">
-            <span>Complex — major seasonal shifts</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">What do you need?</label>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="b-depth" value="brief-only">
-            <span>Brief only — biological intent document</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="b-depth" value="brief-reviews">
-            <span>Brief + design reviews — ongoing support through design</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
-      </div>
-    </div>
+  <div style="text-align:center;padding:1rem 0 2rem;">
+    <button class="download-btn" onclick="generateQuote()">Generate quote</button>
   </div>
-
-  <!-- ===== PATH C: VALIDATION ===== -->
-  <div class="step" id="step-c1">
-    <div class="w">
-      <div class="step-label">Project context</div>
-      <h2>Tell us what you have</h2>
-
-      <div class="field">
-        <label class="field-label">Project type</label>
-        <select id="c-type">
-          <option value="">Select...</option>
-          <option value="hotel">Hotel</option>
-          <option value="residential">Residential</option>
-          <option value="wellness">Wellness / Spa</option>
-          <option value="mixed-use">Mixed-use</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Number of zones</label>
-        <select id="c-zones">
-          <option value="">Select...</option>
-          <option value="1-3">1–3 zones</option>
-          <option value="4-8">4–8 zones</option>
-          <option value="9-15">9–15 zones</option>
-          <option value="16+">16+ zones</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label class="field-label">Human states involved</label>
-        <div class="check-grid">
-          <label class="check-item">
-            <input type="checkbox" name="c-states" value="sleep">
-            <span>Sleep / rest</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="c-states" value="work">
-            <span>Work / focus</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="c-states" value="social">
-            <span>Social / dining</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="c-states" value="movement">
-            <span>Movement / transition</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="c-states" value="wellness">
-            <span>Wellness / recovery</span>
-          </label>
-          <label class="check-item">
-            <input type="checkbox" name="c-states" value="other">
-            <span>Other</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="field-label">How many review cycles do you need?</label>
-        <div class="radio-group">
-          <label class="radio-item">
-            <input type="radio" name="c-cycles" value="1">
-            <span>One round — single-pass review</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="c-cycles" value="2">
-            <span>Two rounds — review + revision check</span>
-          </label>
-          <label class="radio-item">
-            <input type="radio" name="c-cycles" value="3+">
-            <span>Three or more — ongoing validation</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep()">Continue</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== STEP FINAL: CONTACT DETAILS (all paths) ===== -->
-  <div class="step" id="step-final">
-    <div class="w">
-      <div class="step-label">Your details</div>
-      <h2>Where should we send your quote?</h2>
-
-      <div class="field">
-        <label class="field-label">Your name</label>
-        <input type="text" id="contact-name" placeholder="Full name">
-      </div>
-
-      <div class="field">
-        <label class="field-label">Email</label>
-        <input type="email" id="contact-email" placeholder="you@company.com">
-      </div>
-
-      <div class="field">
-        <label class="field-label">Project name or description</label>
-        <div class="field-hint">One line — this personalises your quote PDF.</div>
-        <input type="text" id="contact-project" placeholder="e.g. Boutique hotel in Lisbon, 24 rooms">
-      </div>
-
-      <div class="field">
-        <label class="field-label">Preferred start date</label>
-        <div class="field-hint">Sets timeline expectations for both sides.</div>
-        <input type="text" id="contact-timeline" placeholder="e.g. Within 2 weeks, Q3 2026">
-      </div>
-
-      <div class="btn-row">
-        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-        <button type="button" class="btn btn-primary" onclick="generateQuote()">Generate quote</button>
-      </div>
-    </div>
-  </div>
-
-</form>
+</div>
 
 <!-- ========== QUOTE RESULT ========== -->
 <div class="quote-result" id="quoteResult">
-  <div class="w">
-    <div class="quote-service" id="quoteServiceLabel">CIRCADIAN AUDIT</div>
-    <h2>Your estimated investment</h2>
-    <div class="quote-box">
-      <div class="quote-amount" id="quoteAmount">€4,200</div>
-      <div class="quote-range" id="quoteRange">Range: €3,500 — €5,500</div>
-      <ul class="quote-breakdown" id="quoteBreakdown">
-        <li>Base audit fee</li>
-        <li>8 zones assessed</li>
-        <li>Seasonal complexity: moderate</li>
-        <li>Audit + strategy package</li>
-      </ul>
-    </div>
-    <div class="quote-actions">
-      <button class="btn btn-primary" onclick="downloadPDF()">Download quote as PDF</button>
-      <button class="btn btn-secondary" onclick="resetForm()">Start over</button>
-    </div>
-    <div class="quote-note">
-      Or reach us at <a href="mailto:hello@elixlight.com">hello@elixlight.com</a> for special requests.
-    </div>
+  <h2>Your estimate</h2>
+  <div class="summary" id="quoteSummary"></div>
+  <div class="total" id="quoteTotal"></div>
+  <div class="note">
+    Review this estimate and send it to <a href="mailto:collabs@elixlight.com" style="color:var(--accent);">collabs@elixlight.com</a> to start your project. No email will be sent automatically.
   </div>
+  <button class="download-btn" onclick="downloadPDF()">↓ Download quote as PDF</button>
 </div>
+
+</div><!-- /w -->
 
 <!-- ========== FOOTER ========== -->
 <footer>
@@ -857,238 +398,324 @@
 </footer>
 
 <script>
-// ========== STATE ==========
-let currentPath = null;
-let currentStepIndex = 0;
-let stepHistory = [];
-
-// Path configs
-const pathConfigs = {
-  audit: {
+// ========== PATH CONFIGURATION ==========
+const paths = {
+  A: {
     name: 'Circadian Audit',
-    starting: 'Starting from €3,500',
-    steps: ['step0', 'step-a1', 'step-final'],
-    totalSteps: 3,
     basePrice: 3500,
+    steps: [
+      {
+        label: 'PROJECT TYPE',
+        q: 'What type of project is this?',
+        field: 'projectType',
+        options: ['Hotel', 'Residential', 'Wellness / Spa', 'Office', 'Retail', 'Other']
+      },
+      {
+        label: 'SCALE',
+        q: 'Project scale (approximate sqm)',
+        field: 'scale',
+        options: ['Under 500 sqm', '500–2,000 sqm', '2,000–5,000 sqm', 'Over 5,000 sqm']
+      },
+      {
+        label: 'BUILD TYPE',
+        q: 'Is this a new build or retrofit?',
+        field: 'buildType',
+        options: ['Retrofit / renovation', 'New build'],
+        flag: {
+          trigger: 'New build',
+          message: 'For new builds, we recommend starting with a Strategic Brief (Path B) or Design Validation (Path C) instead. <a onclick="switchPath(\'B\')">Switch to Strategic Brief →</a> or <a onclick="switchPath(\'C\')">switch to Design Validation →</a>'
+        }
+      },
+      {
+        label: 'ZONES',
+        q: 'How many distinct lighting zones?',
+        field: 'zones',
+        options: ['1–3 zones', '4–8 zones', '9–15 zones', '16+ zones']
+      },
+      {
+        label: 'SEASONS',
+        q: 'Seasonal complexity',
+        field: 'seasons',
+        options: ['Single season (consistent climate)', 'Two seasons', 'Four seasons / high variation']
+      },
+      {
+        label: 'DELIVERABLES',
+        q: 'What do you need?',
+        field: 'deliverables',
+        options: ['Audit report only', 'Audit + implementation strategy'],
+        pricing: { 'Audit report only': 1, 'Audit + implementation strategy': 1.4 }
+      }
+    ]
   },
-  brief: {
+  B: {
     name: 'Strategic Brief',
-    starting: 'Starting from €8,000',
-    steps: ['step0', 'step-b1', 'step-final'],
-    totalSteps: 3,
     basePrice: 8000,
+    steps: [
+      {
+        label: 'PROJECT TYPE',
+        q: 'What type of project is this?',
+        field: 'projectType',
+        options: ['Hotel', 'Residential', 'Wellness / Spa', 'Office', 'Retail', 'Other']
+      },
+      {
+        label: 'STAGE',
+        q: 'What stage is your project at?',
+        field: 'stage',
+        options: ['Concept / early design', 'Schematic design', 'Design development', 'Construction documents / late stage'],
+        flag: {
+          trigger: 'Construction documents / late stage',
+          message: 'At this stage, a Design Validation (Path C) is more appropriate and cost-effective. <a onclick="switchPath(\'C\')">Switch to Design Validation →</a>'
+        }
+      },
+      {
+        label: 'SCALE',
+        q: 'Project scale (approximate sqm)',
+        field: 'scale',
+        options: ['Under 500 sqm', '500–2,000 sqm', '2,000–5,000 sqm', 'Over 5,000 sqm']
+      },
+      {
+        label: 'ZONES',
+        q: 'How many distinct lighting zones?',
+        field: 'zones',
+        options: ['1–3 zones', '4–8 zones', '9–15 zones', '16+ zones']
+      },
+      {
+        label: 'HUMAN STATES',
+        q: 'Which human states need to be supported?',
+        field: 'humanStates',
+        options: ['Sleep and rest only', 'Sleep + alertness', 'Sleep + alertness + transition', 'Full circadian programming']
+      },
+      {
+        label: 'SEASONS',
+        q: 'Seasonal complexity',
+        field: 'seasons',
+        options: ['Single season (consistent climate)', 'Two seasons', 'Four seasons / high variation']
+      },
+      {
+        label: 'DELIVERABLES',
+        q: 'What do you need?',
+        field: 'deliverables',
+        options: ['Strategic brief only', 'Brief + design reviews'],
+        pricing: { 'Strategic brief only': 1, 'Brief + design reviews': 1.5 }
+      }
+    ]
   },
-  validate: {
+  C: {
     name: 'Design Validation',
-    starting: 'Starting from €4,000',
-    steps: ['step0', 'step-c1', 'step-final'],
-    totalSteps: 3,
     basePrice: 4000,
-  },
+    steps: [
+      {
+        label: 'PROJECT TYPE',
+        q: 'What type of project is this?',
+        field: 'projectType',
+        options: ['Hotel', 'Residential', 'Wellness / Spa', 'Office', 'Retail', 'Other']
+      },
+      {
+        label: 'ZONES',
+        q: 'How many distinct lighting zones?',
+        field: 'zones',
+        options: ['1–3 zones', '4–8 zones', '9–15 zones', '16+ zones']
+      },
+      {
+        label: 'HUMAN STATES',
+        q: 'Which human states need to be supported?',
+        field: 'humanStates',
+        options: ['Sleep and rest only', 'Sleep + alertness', 'Sleep + alertness + transition', 'Full circadian programming']
+      },
+      {
+        label: 'REVIEW CYCLES',
+        q: 'How many review cycles do you need?',
+        field: 'reviewCycles',
+        options: ['Single review', 'Two rounds', 'Three rounds', 'Ongoing advisory'],
+        pricing: { 'Single review': 1, 'Two rounds': 1.3, 'Three rounds': 1.6, 'Ongoing advisory': 2.2 }
+      }
+    ]
+  }
 };
 
-// ========== URL PARAMS ==========
-function getParam(name) {
-  const url = new URL(window.location.href);
-  return url.searchParams.get(name);
-}
-
-function init() {
-  const pathParam = getParam('path');
-  if (pathParam && pathConfigs[pathParam]) {
-    selectPath(pathParam, true);
-  }
-}
+// ========== STATE ==========
+let currentPath = null;
+let answers = {};
+let commonAnswers = {};
 
 // ========== PATH SELECTION ==========
-function selectPath(path, skipAnimation = false) {
-  currentPath = path;
-  const config = pathConfigs[path];
+function selectPath(pathKey) {
+  currentPath = pathKey;
+  answers = { service: paths[pathKey].name };
+  commonAnswers = {};
 
-  document.getElementById('startingPrice').textContent = config.starting;
+  // Highlight selected card
+  document.querySelectorAll('.path-card').forEach(c => c.classList.remove('active'));
+  document.querySelector(`.path-card[data-path="${pathKey}"]`).classList.add('active');
 
-  // Pre-fill the radio in step0 if visible
-  const radio = document.querySelector(`input[name="path"][value="${path}"]`);
-  if (radio) radio.checked = true;
+  // Build form
+  buildForm();
 
-  stepHistory = [config.steps[0]];
-  currentStepIndex = 0;
+  // Show form
+  document.getElementById('formSection').classList.add('show');
+  document.getElementById('commonSection').classList.add('show');
+  document.getElementById('quoteResult').classList.remove('show');
 
-  if (!skipAnimation) {
-    nextStep();
-  } else {
-    // Skip step0, go straight to first real step
-    showStep(config.steps[1]);
-    stepHistory = [config.steps[0], config.steps[1]];
-    currentStepIndex = 1;
-    updateProgress();
+  // Scroll to form
+  document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function switchPath(pathKey) {
+  selectPath(pathKey);
+}
+
+// ========== BUILD FORM ==========
+function buildForm() {
+  const container = document.getElementById('dynamicSteps');
+  const config = paths[currentPath];
+
+  container.innerHTML = config.steps.map((step, i) => `
+    <div class="step" data-step="${i}">
+      <div class="step-label">${step.label}</div>
+      <div class="step-q">${step.q}</div>
+      <div class="opts">
+        ${step.options.map(opt => `
+          <button class="opt" onclick="selectOption(${i}, '${opt.replace(/'/g, "\\'")}', this)">${opt}</button>
+        `).join('')}
+      </div>
+      ${step.flag ? `<div class="flag" id="flag-${i}">${step.flag.message}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ========== SELECT OPTION ==========
+function selectOption(stepIndex, value, btn) {
+  const step = paths[currentPath].steps[stepIndex];
+  answers[step.field] = value;
+
+  // Visual selection
+  const stepEl = document.querySelector(`.step[data-step="${stepIndex}"]`);
+  stepEl.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  // Handle flags
+  if (step.flag) {
+    const flagEl = document.getElementById(`flag-${stepIndex}`);
+    if (value === step.flag.trigger) {
+      flagEl.classList.add('show');
+    } else {
+      flagEl.classList.remove('show');
+    }
   }
 }
 
-function switchPath(newPath) {
-  // Clear all form data for current path
-  document.querySelectorAll('input, select').forEach(el => {
-    if (el.type === 'checkbox' || el.type === 'radio') el.checked = false;
-    else el.value = '';
-  });
-  // Hide all flags
-  document.querySelectorAll('.field-hint.flag').forEach(el => el.classList.remove('show'));
-
-  selectPath(newPath);
+// ========== COMMON QUESTIONS ==========
+function selectCommon(field, btn, value) {
+  commonAnswers[field] = value;
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
 }
 
-// ========== STEP NAVIGATION ==========
-function showStep(stepId) {
-  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-  document.getElementById(stepId).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function nextStep() {
-  const config = pathConfigs[currentPath];
-  if (currentStepIndex < config.steps.length - 1) {
-    currentStepIndex++;
-    const nextStepId = config.steps[currentStepIndex];
-    stepHistory.push(nextStepId);
-    showStep(nextStepId);
-    updateProgress();
-  }
-}
-
-function prevStep() {
-  if (stepHistory.length > 1) {
-    stepHistory.pop();
-    currentStepIndex--;
-    const prevStepId = stepHistory[stepHistory.length - 1];
-    showStep(prevStepId);
-    updateProgress();
-  }
-}
-
-function updateProgress() {
-  const config = pathConfigs[currentPath];
-  const pct = ((currentStepIndex) / (config.totalSteps - 1)) * 100;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressText').textContent = `Step ${currentStepIndex + 1} of ${config.totalSteps}`;
-}
-
-// ========== PATH A: AUDIT FLAGS ==========
-function checkAuditPath() {
-  const buildType = document.querySelector('input[name="a-build"]:checked');
-  const flag = document.getElementById('a-build-flag');
-  if (buildType && buildType.value === 'newbuild') {
-    flag.classList.add('show');
-  } else {
-    flag.classList.remove('show');
-  }
-}
-
-// ========== PATH B: BRIEF FLAGS ==========
-function checkBriefStage() {
-  const stage = document.querySelector('input[name="b-stage"]:checked');
-  const flag = document.getElementById('b-stage-flag');
-  if (stage && (stage.value === 'late' || stage.value === 'mid')) {
-    flag.classList.add('show');
-  } else {
-    flag.classList.remove('show');
-  }
-}
-
-// ========== QUOTE GENERATION ==========
+// ========== GENERATE QUOTE ==========
 function generateQuote() {
-  const config = pathConfigs[currentPath];
-  let base = config.basePrice;
-  let min = base;
-  let max = base * 1.4;
-  let breakdown = [];
+  // Validate
+  const name = document.getElementById('userName').value.trim();
+  const email = document.getElementById('userEmail').value.trim();
+  const desc = document.getElementById('projectDesc').value.trim();
 
-  if (currentPath === 'audit') {
-    const zones = document.getElementById('a-zones').value;
-    const depth = document.querySelector('input[name="a-depth"]:checked')?.value;
-    const seasonal = document.querySelector('input[name="a-seasonal"]:checked')?.value;
-
-    breakdown.push('Base audit fee');
-
-    if (zones === '4-8') { base += 800; min += 600; max += 1000; breakdown.push('4–8 zones assessed'); }
-    else if (zones === '9-15') { base += 1800; min += 1400; max += 2200; breakdown.push('9–15 zones assessed'); }
-    else if (zones === '16+') { base += 3500; min += 2800; max += 4500; breakdown.push('16+ zones assessed'); }
-    else { breakdown.push('1–3 zones assessed'); }
-
-    if (seasonal === 'moderate') { base += 400; min += 300; max += 600; breakdown.push('Moderate seasonal complexity'); }
-    else if (seasonal === 'complex') { base += 900; min += 700; max += 1300; breakdown.push('Complex seasonal shifts'); }
-    else { breakdown.push('Simple year-round profile'); }
-
-    if (depth === 'audit-strategy') { base += 1200; min += 900; max += 1600; breakdown.push('Audit + strategy package'); }
-    else { breakdown.push('Audit only'); }
+  if (!name || !email) {
+    alert('Please enter your name and email.');
+    return;
   }
 
-  else if (currentPath === 'brief') {
-    const zones = document.getElementById('b-zones').value;
-    const depth = document.querySelector('input[name="b-depth"]:checked')?.value;
-    const seasonal = document.querySelector('input[name="b-seasonal"]:checked')?.value;
-    const states = document.querySelectorAll('input[name="b-states"]:checked').length;
+  commonAnswers.name = name;
+  commonAnswers.email = email;
+  commonAnswers.projectDesc = desc || '—';
 
-    breakdown.push('Base strategic brief');
+  const config = paths[currentPath];
+  let multiplier = 1;
 
-    if (zones === '4-8') { base += 1500; min += 1200; max += 2000; breakdown.push('4–8 zones'); }
-    else if (zones === '9-15') { base += 3500; min += 2800; max += 4500; breakdown.push('9–15 zones'); }
-    else if (zones === '16+') { base += 6000; min += 5000; max += 8000; breakdown.push('16+ zones'); }
-    else { breakdown.push('1–3 zones'); }
+  // Apply pricing multipliers
+  config.steps.forEach(step => {
+    if (step.pricing && answers[step.field]) {
+      multiplier *= step.pricing[answers[step.field]] || 1;
+    }
+  });
 
-    if (states > 3) { base += 800; min += 600; max += 1200; breakdown.push(`${states} human states`); }
-    else if (states > 0) { breakdown.push(`${states} human states`); }
+  // Zone multiplier
+  const zoneMultipliers = { '1–3 zones': 1, '4–8 zones': 1.2, '9–15 zones': 1.5, '16+ zones': 2 };
+  if (answers.zones) multiplier *= zoneMultipliers[answers.zones] || 1;
 
-    if (seasonal === 'moderate') { base += 600; min += 400; max += 900; breakdown.push('Moderate seasonal complexity'); }
-    else if (seasonal === 'complex') { base += 1400; min += 1000; max += 2000; breakdown.push('Complex seasonal shifts'); }
-    else { breakdown.push('Simple year-round profile'); }
+  // Scale multiplier (Path A & B)
+  const scaleMultipliers = { 'Under 500 sqm': 0.8, '500–2,000 sqm': 1, '2,000–5,000 sqm': 1.3, 'Over 5,000 sqm': 1.6 };
+  if (answers.scale) multiplier *= scaleMultipliers[answers.scale] || 1;
 
-    if (depth === 'brief-reviews') { base += 2500; min += 2000; max += 3500; breakdown.push('Brief + ongoing design reviews'); }
-    else { breakdown.push('Brief only'); }
-  }
+  // Season multiplier
+  const seasonMultipliers = { 'Single season (consistent climate)': 0.9, 'Two seasons': 1, 'Four seasons / high variation': 1.2 };
+  if (answers.seasons) multiplier *= seasonMultipliers[answers.seasons] || 1;
 
-  else if (currentPath === 'validate') {
-    const zones = document.getElementById('c-zones').value;
-    const cycles = document.querySelector('input[name="c-cycles"]:checked')?.value;
-    const states = document.querySelectorAll('input[name="c-states"]:checked').length;
+  const total = Math.round(config.basePrice * multiplier);
 
-    breakdown.push('Base validation fee');
+  // Build summary
+  const summaryRows = [
+    { key: 'Service', val: config.name },
+    ...config.steps.map(s => ({ key: s.label, val: answers[s.field] || '—' })),
+    { key: 'Name', val: commonAnswers.name },
+    { key: 'Email', val: commonAnswers.email },
+    { key: 'Project', val: commonAnswers.projectDesc },
+    { key: 'Start date', val: commonAnswers.startDate || '—' }
+  ];
 
-    if (zones === '4-8') { base += 600; min += 400; max += 900; breakdown.push('4–8 zones'); }
-    else if (zones === '9-15') { base += 1400; min += 1000; max += 2000; breakdown.push('9–15 zones'); }
-    else if (zones === '16+') { base += 2800; min += 2200; max += 3800; breakdown.push('16+ zones'); }
-    else { breakdown.push('1–3 zones'); }
+  document.getElementById('quoteSummary').innerHTML = summaryRows.map(r => `
+    <div class="row"><span class="key">${r.key}</span><span class="val">${r.val}</span></div>
+  `).join('');
 
-    if (states > 3) { base += 400; min += 300; max += 600; breakdown.push(`${states} human states`); }
-    else if (states > 0) { breakdown.push(`${states} human states`); }
+  document.getElementById('quoteTotal').textContent = `€${total.toLocaleString()}`;
 
-    if (cycles === '2') { base += 800; min += 600; max += 1100; breakdown.push('Two review cycles'); }
-    else if (cycles === '3+') { base += 1800; min += 1400; max += 2400; breakdown.push('Three+ review cycles'); }
-    else { breakdown.push('One review cycle'); }
-  }
-
-  // Render
-  document.getElementById('quoteServiceLabel').textContent = config.name.toUpperCase();
-  document.getElementById('quoteAmount').textContent = '€' + base.toLocaleString();
-  document.getElementById('quoteRange').textContent = `Range: €${Math.round(min).toLocaleString()} — €${Math.round(max).toLocaleString()}`;
-  document.getElementById('quoteBreakdown').innerHTML = breakdown.map(b => `<li>${b}</li>`).join('');
-
-  // Hide form, show result
-  document.getElementById('quoteForm').style.display = 'none';
-  document.querySelector('.progress-wrap').style.display = 'none';
-  document.getElementById('quoteResult').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('quoteResult').classList.add('show');
+  document.getElementById('quoteResult').scrollIntoView({ behavior: 'smooth' });
 }
 
+// ========== DOWNLOAD PDF ==========
 function downloadPDF() {
-  alert('PDF download would generate here. In production, this creates a branded quote PDF with all details.');
-}
+  const config = paths[currentPath];
+  const total = document.getElementById('quoteTotal').textContent;
 
-function resetForm() {
-  location.reload();
-}
+  let content = `
+ELIXLIGHT — Project Quote
+=========================
 
-// ========== INIT ==========
-init();
+Generated: ${new Date().toLocaleDateString()}
+
+SERVICE
+${config.name}
+
+PROJECT DETAILS
+`;
+  config.steps.forEach(s => {
+    content += `${s.label}: ${answers[s.field] || '—'}\n`;
+  });
+
+  content += `
+CONTACT
+Name: ${commonAnswers.name}
+Email: ${commonAnswers.email}
+Project: ${commonAnswers.projectDesc}
+Preferred start: ${commonAnswers.startDate || '—'}
+
+ESTIMATED INVESTMENT
+${total}
+
+—
+Review this estimate and send it to collabs@elixlight.com to start your project.
+`;
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ELIXLIGHT-quote-${commonAnswers.name.replace(/\s+/g, '-').toLowerCase()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 </script>
 
 </body>
