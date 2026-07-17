@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELIXLIGHT — Designing Light for Your True Nature</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    --radius: 6px;
+    --surface-0: #0A0A0A;
+    --surface-1: #11100E;
+    --surface-2: #1A1814;
+    --surface-3: #24201A;
+    --text-primary: #E8E4DF;
+    --text-secondary: #A09A90;
+    --text-muted: #6B6560;
+    --border: #22201C;
+    --border-strong: #3A3630;
+    --border-stronger: #5A5450;
+    --accent: #E87B3C;
+    --accent-dim: rgba(232,123,60,0.12);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --surface-0: #F7F5F2;
+      --surface-1: #EDEAE5;
+      --surface-2: #E5E1DB;
+      --surface-3: #D9D4CD;
+      --text-primary: #1A1814;
+      --text-secondary: #5A5550;
+      --text-muted: #9A958F;
+      --border: #D9D4CD;
+      --border-strong: #C0BBB4;
+      --border-stronger: #A09A90;
+      --accent: #D4692A;
+      --accent-dim: rgba(212,105,42,0.10);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background: var(--surface-0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font-family: inherit; }
+
+  .w { max-width: 1100px; margin: 0 auto; }
+
+  /* ========== NAV ========== */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; }
+  .nav-center { font-size: 12px; color: var(--text-muted); font-style: italic; }
+  .nav-right { font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+  .nav-right:hover { color: var(--accent); }
+
+  /* ========== HERO ========== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 480px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-visual {
+    background: var(--surface-1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 2.5rem;
+    border-right: 0.5px solid var(--border);
+  }
+  .room-box {
+    width: 160px;
+    height: 160px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 1.2s ease;
+  }
+  .ldot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: background 1.2s ease, box-shadow 1.2s ease;
+  }
+  .v-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+  }
+  .v-state {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .hero-services {
+    padding: 2rem 2.5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .s-super {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+    margin-top: 1.25rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .s-super:first-child { margin-top: 0; }
+  .s-super:hover { color: var(--accent); }
+  .s-item {
+    padding: 0.75rem 0;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+  }
+  .s-item:last-child { border-bottom: none; }
+  .s-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: padding-left 0.15s;
+  }
+  .s-item:hover .s-row { padding-left: 0.3rem; }
+  .s-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .s-price {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+  .s-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 0.6rem;
+    padding-bottom: 0.2rem;
+    display: none;
+    border-left: 1.5px solid var(--border-strong);
+    padding-left: 0.75rem;
+  }
+  .s-desc.open { display: block; }
+  .s-contact {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* ========== TRUE OR FALSE ========== */
+  .q-section {
+    padding: 3.5rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
+  .q-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .q-belief {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.45;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+  }
+  .q-reveal-btn {
+    font-size: 13px;
+    padding: 0.55rem 1.4rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .q-reveal-btn:hover { background: var(--surface-1); }
+  .q-answer {
+    margin-top: 1.5rem;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    text-align: left;
+    padding: 1.25rem;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-1);
+    display: none;
+  }
+  .q-answer.show { display: block; }
+  .q-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: none;
+  }
+  .q-actions.show { display: flex; }
+  .q-next {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+  .q-sci {
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+
+  /* ========== SCIENCE PAGE ========== */
+  .sci-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .sci-page.active { display: block; }
+  .sci-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .sci-back:hover { color: var(--text-secondary); }
+  .sci-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .sci-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+  .sci-body p strong { color: var(--text-primary); font-weight: 500; }
+  .sci-pull {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.45;
+    margin: 2.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border-strong);
+  }
+  .sci-hormones {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .sci-h-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .sci-h-row:last-child { border-bottom: none; }
+  .sci-h-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .sci-h-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .sci-end {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  /* ========== CATEGORY PAGES ========== */
+  .cat-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cat-page.active { display: block; }
+  .cat-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .cat-back:hover { color: var(--text-secondary); }
+  .cat-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .cat-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 3rem;
+  }
+  .cat-service {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .cat-service:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .cat-service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cat-service-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .cat-service-price {
+    font-size: 14px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .cat-service-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .cat-service-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .cat-service-meta strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .cat-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ========== PAGE TOGGLE ========== */
+  .home-content { display: block; }
+  .home-content.hidden { display: none; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.5px solid var(--border);
+  }
+  footer .copy { font-size: 12px; color: var(--text-muted); }
+  footer a { font-size: 13px; color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .nav { padding: 1.25rem 1.5rem; }
+    .q-actions { flex-direction: column; gap: 0.75rem; align-items: center; }
+    .sci-h-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    .cat-service-header { flex-direction: column; gap: 0.25rem; }
+  }
+  @media (max-width: 560px) {
+    .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .hero-services { padding: 2rem 1.5rem; }
+    .q-section { padding: 3rem 1.5rem; }
+    .sci-page, .cat-page { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="w">
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav">
+    <span class="nav-logo" onclick="goHome()">ELIXLIGHT</span>
+    <span class="nav-center">designing light for your true nature</span>
+    <span class="nav-right" onclick="goScience()">the science →</span>
+  </nav>
+
+  <!-- ========== HOME ========== -->
+  <div class="home-content" id="homeContent">
+
+    <section class="hero">
+      <div class="hero-visual">
+        <div class="room-box" id="box">
+          <div class="ldot" id="dot"></div>
+        </div>
+        <div class="v-time" id="vtime">06:00</div>
+        <div class="v-state" id="vstate">dawn — cortisol rising</div>
+      </div>
+
+      <div class="hero-services">
+
+        <p class="s-super" onclick="goCat('homehotel')">FOR YOUR HOME OR HOTEL →</p>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">reset your sleep in 48 hours</span>
+            <span class="s-price">€297</span>
+          </div>
+          <div class="s-desc">Send photos of your guest rooms or bedroom. Get exact bulb and positioning recommendations for evening and morning — implemented by your team in an afternoon. No renovation required.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">understand what your space is doing to you</span>
+            <span class="s-price">from €3,500</span>
+          </div>
+          <div class="s-desc">Remote assessment of your current lighting. What's working biologically, what's undermining your experience, and a ranked list of improvements by impact — before you invest in changes.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <p class="s-super" onclick="goCat('project')">FOR YOUR PROJECT →</p>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">give your design a biological intent</span>
+            <span class="s-price">from €8,000</span>
+          </div>
+          <div class="s-desc">Before your lighting designer starts specifying, we define what each zone should do hormonally — which state, at which hour, for which user. Your designer receives a biological target instead of guessing.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">validate your specs before you build</span>
+            <span class="s-price">from €4,000</span>
+          </div>
+          <div class="s-desc">Your lighting designer has drafted specs. We review them against biological targets before you order fixtures. The last checkpoint before it's built into the walls.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="q-section">
+      <p class="q-label">TRUE OR FALSE?</p>
+      <p class="q-belief" id="qbelief"></p>
+      <button class="q-reveal-btn" id="qbtn" onclick="reveal()">Is this true? →</button>
+      <div class="q-answer" id="qanswer"></div>
+      <div class="q-actions" id="qactions">
+        <button class="q-next" onclick="nextQ()">Try another →</button>
+        <button class="q-sci" onclick="goScience()">Why does this happen? The science →</button>
+      </div>
+    </section>
+
+    <footer>
+      <span class="copy">© 2025 ELIXLIGHT</span>
+      <span><a href="mailto:hello@elixlight.com">hello@elixlight.com</a></span>
+    </footer>
+
+  </div>
+
+  <!-- ========== SCIENCE PAGE ========== -->
+  <div class="sci-page" id="sciPage">
+    <button class="sci-back" onclick="goHome()">← back</button>
+    <p class="sci-title">THE SCIENCE</p>
+    <div class="sci-body">
+
+      <p>You spend roughly 90% of your waking hours indoors. This is a recent development, in evolutionary terms. Your biology hasn't noticed.</p>
+
+      <p>Your body still expects the same light it evolved under: a full-spectrum sun that rises, peaks, and sets. Bright and cool at noon. Warm and low at dusk. Absent at night. Instead, it receives ceiling lights running at the same intensity from 8 AM to 11 PM. Bathrooms built for morning, used at midnight. Screens held six inches from the face.</p>
+
+      <p>Your body responds to all of it. Not metaphorically — biologically. There's a third type of photoreceptor in your retina, distinct from the ones that handle vision. It doesn't help you see. It reads light intensity and wavelength, then sends that signal directly to the clock in your brain that governs every hormone in your body.</p>
+
+      <p>It doesn't ask for permission. It doesn't wait for you to believe in it.</p>
+
+      <div class="sci-pull">You have been communicating with your biology through light your entire life. You just didn't know what you were saying.</div>
+
+      <p>Think of it like meowing at a cat without knowing what the sounds mean. You're definitely communicating. The cat is definitely responding. Whether what you said was what you meant — that's a different question.</p>
+
+      <p>Most indoor lighting is unintentional this way. Not bad. Not broken. Just not saying what you'd say if you knew the language. The overhead light that's been running since dinner is telling your body it's noon. The bathroom mirror light you flick on at midnight is more melatonin-suppressing than your phone. The dim warm lamp in the corner — the one that just feels nicer — is closer to the right signal than anything designed to be "functional."</p>
+
+      <p>Your nervous system has been responding to all of it, every evening, without your input. The question is only what it's been told.</p>
+
+      <p><strong>Here's what light actually says to your body.</strong></p>
+
+      <div class="sci-hormones">
+        <div class="sci-h-row">
+          <div class="sci-h-name">Cortisol</div>
+          <div class="sci-h-desc">Your primary alertness and stress hormone. Should peak in the morning and decline by evening. Bright overhead light can keep it elevated past midnight — which is why you feel wired but tired.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Melatonin</div>
+          <div class="sci-h-desc">Your sleep-preparation hormone. Should begin rising about two hours before sleep. Suppressed by any light above 10 lux that contains blue wavelengths — including most standard home lighting. Thirty minutes of exposure is enough to delay it by 90 minutes.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Dopamine</div>
+          <div class="sci-h-desc">Your reward and attention neurotransmitter. Stimulated by contrast — the gap between a bright focal point and a dim ambient. Uniform lighting depletes it. A candle in a dark room activates it more than a well-lit office.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Serotonin</div>
+          <div class="sci-h-desc">Your mood stabilizer. Requires full-spectrum daylight for production. Depletes in low-light seasons and windowless environments — which is why winter, and windowless offices, feel heavier than they should.</div>
+        </div>
+      </div>
+
+      <p>When light is designed to say the right thing at the right time, the body receives the signals it was built to receive. Cortisol rises cleanly in the morning and declines by evening. Melatonin arrives on schedule. Sleep comes without negotiation. You wake having actually rested — not just spent time unconscious.</p>
+
+      <p>The space doesn't feel different in a way you can name. You just feel like yourself. Which, if you've been living under unintentional light for years, might feel surprisingly unfamiliar.</p>
+
+      <div class="sci-end">
+        <p style="font-size:13px;color:var(--text-muted);">Want to understand what your specific space is doing? Write to <a href="mailto:hello@elixlight.com" style="color:var(--accent)">hello@elixlight.com</a></p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========== FOR YOUR HOME OR HOTEL PAGE ========== -->
+  <div class="cat-page" id="catHomehotel">
+    <button class="cat-back" onclick="goHome()">← back</button>
+    <p class="cat-title">FOR YOUR HOME OR HOTEL</p>
+
+    <p class="cat-intro">Whether you're a hotel owner noticing sleep complaints in reviews, or someone who hasn't felt truly rested in years — the problem is often the same. Light is giving your body the wrong signals at the wrong time. These two tools address it directly.</p>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Reset your sleep in 48 hours</span>
+        <span class="cat-service-price">€297</span>
+      </div>
+      <p class="cat-service-body">You send five to ten photos of your bedroom or guest rooms — the ceiling fixtures, bedside lamps, bathroom mirror light. We send back a specific document: exact bulb replacements, repositioning notes, and which lights to stop using after which hour. Your team implements it in an afternoon. No renovation. No electrician. No waiting.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Hotels with sleep complaints in their reviews. Homeowners who sleep for eight hours and wake up tired. Anyone who wants to change something this week.<br><strong>Timeline:</strong> 48 hours. Remote.</p>
+    </div>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Understand what your space is doing to you</span>
+        <span class="cat-service-price">from €3,500</span>
+      </div>
+      <p class="cat-service-body">You send floor plans, photos, and current lighting specs. We send back a Circadian Audit Report: what your lighting is communicating to the biology of every person in that space, what's working, what's working against you, and a ranked list of improvements by impact — before you spend anything on changes.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Hotels preparing for renovation. Wellness operators who want to optimize without full redesign. Anyone who wants to understand their space before investing in it.<br><strong>Timeline:</strong> 1–2 weeks. Remote.</p>
+    </div>
+
+    <div class="cat-footer">
+      To discuss a project, write to <a href="mailto:hello@elixlight.com">hello@elixlight.com</a> — share what stage you're at and a brief description of the project. We'll respond within 48 hours.
+    </div>
+  </div>
+
+  <!-- ========== FOR YOUR PROJECT PAGE ========== -->
+  <div class="cat-page" id="catProject">
+    <button class="cat-back" onclick="goHome()">← back</button>
+    <p class="cat-title">FOR YOUR PROJECT</p>
+
+    <p class="cat-intro">Architecture and lighting design studios, developers, and project teams working on new builds or renovations. Biological strategy sits upstream of your process. Your lighting designer makes the technical decisions. We define what those decisions should achieve biologically. The two don't compete — one informs the other.</p>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Give your design a biological intent</span>
+        <span class="cat-service-price">from €8,000</span>
+      </div>
+      <p class="cat-service-body">Before your lighting designer begins specifying, we define the biological goals for every zone in your project. Which hormonal state each space should support, at which hours, for which user. What the light needs to do to people — not just how it should look. Your designer receives a Hormonal Lighting Brief alongside the architectural brief. Every specification they write now has a biological target to design toward.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Architecture studios, lighting design studios, hospitality developers, wellness project teams. Any project where the experience of the space matters as much as its appearance.<br><strong>Timeline:</strong> 2–3 weeks. Remote.</p>
+    </div>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Validate your specs before you build</span>
+        <span class="cat-service-price">from €4,000</span>
+      </div>
+      <p class="cat-service-body">Your lighting designer has drafted specifications. Before you order fixtures or lock the design, we review them against biological targets. Is the color temperature right for this zone at this hour? Is the source position supporting or undermining the intended state? Are there misalignments that would be expensive to fix after installation? You receive a Biological Impact Review with specific feedback your designer can implement before the build starts.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Lighting designers wanting independent biological validation. Architects wanting certainty before committing. Anyone about to spend significant money on fixtures who wants to know they'll work.<br><strong>Timeline:</strong> 1 week per review cycle. Remote.</p>
+    </div>
+
+    <div class="cat-footer">
+      To discuss a project, write to <a href="mailto:hello@elixlight.com">hello@elixlight.com</a> — share what stage you're at and a brief description of the project. We'll respond within 48 hours.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========== ROOM ANIMATION ==========
+const states = [
+  {t:"06:00", s:"dawn — cortisol rising", b:"#1a1008", d:"#e8822a", g:"0 0 22px 9px rgba(220,110,30,0.55)"},
+  {t:"09:00", s:"morning — full activation", b:"#221a0e", d:"#f5c060", g:"0 0 26px 11px rgba(240,180,60,0.45)"},
+  {t:"13:00", s:"afternoon — sustained focus", b:"#1e1810", d:"#f0d090", g:"0 0 30px 13px rgba(240,210,130,0.35)"},
+  {t:"19:00", s:"evening — melatonin begins", b:"#180e06", d:"#d05820", g:"0 0 18px 7px rgba(200,80,20,0.5)"},
+  {t:"22:00", s:"pre-sleep — deep restoration", b:"#100804", d:"#a03010", g:"0 0 12px 4px rgba(160,40,10,0.4)"},
+  {t:"00:00", s:"sleep — complete darkness", b:"#080604", d:"#1a0e06", g:"none"},
+];
+let si = 0;
+function applyState(s) {
+  document.getElementById("box").style.background = s.b;
+  document.getElementById("dot").style.background = s.d;
+  document.getElementById("dot").style.boxShadow = s.g;
+  document.getElementById("vtime").textContent = s.t;
+  document.getElementById("vstate").textContent = s.s;
+}
+applyState(states[0]);
+setInterval(() => { si = (si + 1) % states.length; applyState(states[si]); }, 2200);
+
+// ========== SERVICE EXPAND ==========
+function toggleDesc(item) {
+  const desc = item.querySelector('.s-desc');
+  const isOpen = desc.classList.contains('open');
+  document.querySelectorAll('.s-desc').forEach(d => d.classList.remove('open'));
+  if (!isOpen) desc.classList.add('open');
+}
+
+// ========== Q&A ==========
+const questions = [
+  {b:'"Dimming the lights is enough to wind down before sleep."', a:"Dimming reduces intensity, not biology. A dimmed 4000K light still floods your retina with blue wavelengths — the exact signal that suppresses melatonin. You're turning down the volume, but the wrong song is still playing."},
+  {b:'"Your phone is the main reason you can\'t sleep."', a:"Your ceiling light exposes you to more melatonin-suppressing light than your screen. Screens get the blame because they're visible and easy to target. The overhead fixture that's been running for four hours does far more biological damage — and nobody talks about it."},
+  {b:'"Warm light is always relaxing."', a:"Not if it's above you. An amber ceiling light at 10 PM still sends a midday signal because of its position, not just its color. Direction is as legible to your biology as spectrum. The same bulb, moved below eye level, tells a completely different story."},
+  {b:'"You can catch up on sleep over the weekend."', a:"Sleeping in on Sunday shifts your circadian clock later — which is why Monday morning feels like jet lag. The problem isn't just how much you sleep. It's when. And when is governed by light."},
+  {b:'"Bright morning light is harsh and uncomfortable."', a:"That discomfort is your cortisol responding exactly as designed. Bright cool light in the morning is the strongest signal your body has to lock your clock, sharpen focus, and start the 16-hour cascade that ends in quality sleep. Softening your morning light softens your entire day."},
+  {b:'"A dark bedroom just means turning the lights off."', a:"Even 5 lux of light through closed eyelids — a hallway light under the door, a standby LED, thin curtains — measurably suppresses melatonin. The sleeping body is not less sensitive to light. In some ways, it's more."},
+  {b:'"Your body adapts to artificial light over time."', a:"It doesn't. Your circadian clock responds to light input the same way it did before electricity existed. There is no adaptation — only constant biological response to whatever light you give it. The question is whether that response is working for you or against you."},
+  {b:'"Blue light blocking glasses solve the evening light problem."', a:"They filter one variable while the others run unchecked. Intensity, direction, and duration of evening light each suppress melatonin independently of spectrum. Blue light glasses under a bright overhead fixture still leave most of the biological problem intact."},
+];
+let qi = Math.floor(Math.random() * questions.length);
+let revealed = false;
+function loadQ(i) {
+  document.getElementById("qbelief").textContent = questions[i].b;
+  document.getElementById("qanswer").textContent = "";
+  document.getElementById("qanswer").classList.remove("show");
+  document.getElementById("qbtn").style.display = "inline-block";
+  document.getElementById("qactions").classList.remove("show");
+  revealed = false;
+}
+function reveal() {
+  document.getElementById("qanswer").textContent = questions[qi].a;
+  document.getElementById("qanswer").classList.add("show");
+  document.getElementById("qbtn").style.display = "none";
+  document.getElementById("qactions").classList.add("show");
+  revealed = true;
+}
+function nextQ() { qi = (qi + 1) % questions.length; loadQ(qi); }
+loadQ(qi);
+
+// ========== NAVIGATION ==========
+function hideAll() {
+  document.getElementById("homeContent").classList.add("hidden");
+  document.getElementById("sciPage").classList.remove("active");
+  document.getElementById("catHomehotel").classList.remove("active");
+  document.getElementById("catProject").classList.remove("active");
+}
+
+function goHome() {
+  hideAll();
+  document.getElementById("homeContent").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+function goScience() {
+  hideAll();
+  document.getElementById("sciPage").classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+function goCat(cat) {
+  hideAll();
+  if (cat === 'homehotel') document.getElementById("catHomehotel").classList.add("active");
+  if (cat === 'project') document.getElementById("catProject").classList.add("active");
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
