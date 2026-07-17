@@ -54,7 +54,8 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
-  a { color: inherit; text-decoration: none; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
   button { font-family: inherit; }
 
   .w { max-width: 1100px; margin: 0 auto; }
@@ -68,7 +69,9 @@
     border-bottom: 0.5px solid var(--border);
   }
   .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; }
-  .nav-quote { font-size: 12px; color: var(--text-muted); font-style: italic; }
+  .nav-center { font-size: 12px; color: var(--text-muted); font-style: italic; }
+  .nav-right { font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+  .nav-right:hover { color: var(--accent); }
 
   /* ========== HERO ========== */
   .hero {
@@ -127,8 +130,11 @@
     margin-bottom: 0.4rem;
     margin-top: 1.25rem;
     text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.15s;
   }
   .s-super:first-child { margin-top: 0; }
+  .s-super:hover { color: var(--accent); }
   .s-item {
     padding: 0.75rem 0;
     border-bottom: 0.5px solid var(--border);
@@ -169,17 +175,9 @@
     display: inline-block;
     margin-top: 0.5rem;
     font-size: 12px;
-    color: var(--text-secondary);
+    color: var(--accent);
     text-decoration: underline;
   }
-  .s-footer {
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: 0.5px solid var(--border);
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-  .s-footer a { color: var(--text-secondary); text-decoration: underline; cursor: pointer; }
 
   /* ========== TRUE OR FALSE ========== */
   .q-section {
@@ -246,7 +244,7 @@
   }
   .q-sci {
     font-size: 12px;
-    color: var(--text-secondary);
+    color: var(--accent);
     cursor: pointer;
     background: none;
     border: none;
@@ -325,6 +323,90 @@
     border-top: 0.5px solid var(--border);
   }
 
+  /* ========== CATEGORY PAGES ========== */
+  .cat-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cat-page.active { display: block; }
+  .cat-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .cat-back:hover { color: var(--text-secondary); }
+  .cat-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .cat-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 3rem;
+  }
+  .cat-service {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .cat-service:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .cat-service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cat-service-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .cat-service-price {
+    font-size: 14px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .cat-service-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .cat-service-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .cat-service-meta strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .cat-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
   /* ========== PAGE TOGGLE ========== */
   .home-content { display: block; }
   .home-content.hidden { display: none; }
@@ -338,8 +420,8 @@
     border-top: 0.5px solid var(--border);
   }
   footer .copy { font-size: 12px; color: var(--text-muted); }
-  footer a { font-size: 13px; color: var(--text-secondary); text-decoration: none; }
-  footer a:hover { color: var(--accent); }
+  footer a { font-size: 13px; color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 
   /* ========== RESPONSIVE ========== */
   @media (max-width: 860px) {
@@ -348,11 +430,13 @@
     .nav { padding: 1.25rem 1.5rem; }
     .q-actions { flex-direction: column; gap: 0.75rem; align-items: center; }
     .sci-h-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    .cat-service-header { flex-direction: column; gap: 0.25rem; }
   }
   @media (max-width: 560px) {
     .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
     .hero-services { padding: 2rem 1.5rem; }
     .q-section { padding: 3rem 1.5rem; }
+    .sci-page, .cat-page { padding: 2.5rem 1.5rem; }
     footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
   }
 </style>
@@ -364,7 +448,8 @@
   <!-- ========== NAV ========== -->
   <nav class="nav">
     <span class="nav-logo" onclick="goHome()">ELIXLIGHT</span>
-    <span class="nav-quote">designing light for your true nature</span>
+    <span class="nav-center">designing light for your true nature</span>
+    <span class="nav-right" onclick="goScience()">the science →</span>
   </nav>
 
   <!-- ========== HOME ========== -->
@@ -381,7 +466,7 @@
 
       <div class="hero-services">
 
-        <p class="s-super">FOR YOUR HOME OR HOTEL</p>
+        <p class="s-super" onclick="goCat('homehotel')">FOR YOUR HOME OR HOTEL →</p>
 
         <div class="s-item" onclick="toggleDesc(this)">
           <div class="s-row">
@@ -399,7 +484,7 @@
           <div class="s-desc">Remote assessment of your current lighting. What's working biologically, what's undermining your experience, and a ranked list of improvements by impact — before you invest in changes.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
         </div>
 
-        <p class="s-super">FOR YOUR PROJECT</p>
+        <p class="s-super" onclick="goCat('project')">FOR YOUR PROJECT →</p>
 
         <div class="s-item" onclick="toggleDesc(this)">
           <div class="s-row">
@@ -417,8 +502,6 @@
           <div class="s-desc">Your lighting designer has drafted specs. We review them against biological targets before you order fixtures. The last checkpoint before it's built into the walls.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
         </div>
 
-        <p class="s-footer">To discuss any of these, write to <a href="mailto:hello@elixlight.com">hello@elixlight.com</a></p>
-
       </div>
     </section>
 
@@ -435,7 +518,7 @@
 
     <footer>
       <span class="copy">© 2025 ELIXLIGHT</span>
-      <span><a href="mailto:hello@elixlight.com">hello@elixlight.com</a> · <a href="#" onclick="goScience(); return false;">the science →</a></span>
+      <span><a href="mailto:hello@elixlight.com">hello@elixlight.com</a></span>
     </footer>
 
   </div>
@@ -488,9 +571,69 @@
       <p>The space doesn't feel different in a way you can name. You just feel like yourself. Which, if you've been living under unintentional light for years, might feel surprisingly unfamiliar.</p>
 
       <div class="sci-end">
-        <p style="font-size:13px;color:var(--text-muted);">Want to understand what your specific space is doing? Write to <a href="mailto:hello@elixlight.com" style="color:var(--text-secondary)">hello@elixlight.com</a></p>
+        <p style="font-size:13px;color:var(--text-muted);">Want to understand what your specific space is doing? Write to <a href="mailto:hello@elixlight.com" style="color:var(--accent)">hello@elixlight.com</a></p>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ========== FOR YOUR HOME OR HOTEL PAGE ========== -->
+  <div class="cat-page" id="catHomehotel">
+    <button class="cat-back" onclick="goHome()">← back</button>
+    <p class="cat-title">FOR YOUR HOME OR HOTEL</p>
+
+    <p class="cat-intro">Whether you're a hotel owner noticing sleep complaints in reviews, or someone who hasn't felt truly rested in years — the problem is often the same. Light is giving your body the wrong signals at the wrong time. These two tools address it directly.</p>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Reset your sleep in 48 hours</span>
+        <span class="cat-service-price">€297</span>
+      </div>
+      <p class="cat-service-body">You send five to ten photos of your bedroom or guest rooms — the ceiling fixtures, bedside lamps, bathroom mirror light. We send back a specific document: exact bulb replacements, repositioning notes, and which lights to stop using after which hour. Your team implements it in an afternoon. No renovation. No electrician. No waiting.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Hotels with sleep complaints in their reviews. Homeowners who sleep for eight hours and wake up tired. Anyone who wants to change something this week.<br><strong>Timeline:</strong> 48 hours. Remote.</p>
+    </div>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Understand what your space is doing to you</span>
+        <span class="cat-service-price">from €3,500</span>
+      </div>
+      <p class="cat-service-body">You send floor plans, photos, and current lighting specs. We send back a Circadian Audit Report: what your lighting is communicating to the biology of every person in that space, what's working, what's working against you, and a ranked list of improvements by impact — before you spend anything on changes.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Hotels preparing for renovation. Wellness operators who want to optimize without full redesign. Anyone who wants to understand their space before investing in it.<br><strong>Timeline:</strong> 1–2 weeks. Remote.</p>
+    </div>
+
+    <div class="cat-footer">
+      To discuss a project, write to <a href="mailto:hello@elixlight.com">hello@elixlight.com</a> — share what stage you're at and a brief description of the project. We'll respond within 48 hours.
+    </div>
+  </div>
+
+  <!-- ========== FOR YOUR PROJECT PAGE ========== -->
+  <div class="cat-page" id="catProject">
+    <button class="cat-back" onclick="goHome()">← back</button>
+    <p class="cat-title">FOR YOUR PROJECT</p>
+
+    <p class="cat-intro">Architecture and lighting design studios, developers, and project teams working on new builds or renovations. Biological strategy sits upstream of your process. Your lighting designer makes the technical decisions. We define what those decisions should achieve biologically. The two don't compete — one informs the other.</p>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Give your design a biological intent</span>
+        <span class="cat-service-price">from €8,000</span>
+      </div>
+      <p class="cat-service-body">Before your lighting designer begins specifying, we define the biological goals for every zone in your project. Which hormonal state each space should support, at which hours, for which user. What the light needs to do to people — not just how it should look. Your designer receives a Hormonal Lighting Brief alongside the architectural brief. Every specification they write now has a biological target to design toward.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Architecture studios, lighting design studios, hospitality developers, wellness project teams. Any project where the experience of the space matters as much as its appearance.<br><strong>Timeline:</strong> 2–3 weeks. Remote.</p>
+    </div>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Validate your specs before you build</span>
+        <span class="cat-service-price">from €4,000</span>
+      </div>
+      <p class="cat-service-body">Your lighting designer has drafted specifications. Before you order fixtures or lock the design, we review them against biological targets. Is the color temperature right for this zone at this hour? Is the source position supporting or undermining the intended state? Are there misalignments that would be expensive to fix after installation? You receive a Biological Impact Review with specific feedback your designer can implement before the build starts.</p>
+      <p class="cat-service-meta"><strong>For:</strong> Lighting designers wanting independent biological validation. Architects wanting certainty before committing. Anyone about to spend significant money on fixtures who wants to know they'll work.<br><strong>Timeline:</strong> 1 week per review cycle. Remote.</p>
+    </div>
+
+    <div class="cat-footer">
+      To discuss a project, write to <a href="mailto:hello@elixlight.com">hello@elixlight.com</a> — share what stage you're at and a brief description of the project. We'll respond within 48 hours.
     </div>
   </div>
 
@@ -557,14 +700,29 @@ function nextQ() { qi = (qi + 1) % questions.length; loadQ(qi); }
 loadQ(qi);
 
 // ========== NAVIGATION ==========
-function goScience() {
+function hideAll() {
   document.getElementById("homeContent").classList.add("hidden");
+  document.getElementById("sciPage").classList.remove("active");
+  document.getElementById("catHomehotel").classList.remove("active");
+  document.getElementById("catProject").classList.remove("active");
+}
+
+function goHome() {
+  hideAll();
+  document.getElementById("homeContent").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+function goScience() {
+  hideAll();
   document.getElementById("sciPage").classList.add("active");
   window.scrollTo(0, 0);
 }
-function goHome() {
-  document.getElementById("sciPage").classList.remove("active");
-  document.getElementById("homeContent").classList.remove("hidden");
+
+function goCat(cat) {
+  hideAll();
+  if (cat === 'homehotel') document.getElementById("catHomehotel").classList.add("active");
+  if (cat === 'project') document.getElementById("catProject").classList.add("active");
   window.scrollTo(0, 0);
 }
 </script>
