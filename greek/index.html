@@ -1,566 +1,732 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ELIXLIGHT</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELIXLIGHT — σχεδίαση φωτισμού για τη φυσική σου κατάσταση</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    --radius: 6px;
+    --surface-0: #0A0A0A;
+    --surface-1: #11100E;
+    --surface-2: #1A1814;
+    --surface-3: #24201A;
+    --text-primary: #E8E4DF;
+    --text-secondary: #A09A90;
+    --text-muted: #6B6560;
+    --border: #22201C;
+    --border-strong: #3A3630;
+    --border-stronger: #5A5450;
+    --accent: #E87B3C;
+    --accent-dim: rgba(232,123,60,0.12);
+  }
+
+  @media (prefers-color-scheme: light) {
     :root {
-      --bg: #0a0a0a;
-      --fg: #e8e4df;
-      --muted: #8a8580;
-      --accent: #c4a882;
-      --line: #2a2a2a;
+      --surface-0: #F7F5F2;
+      --surface-1: #EDEAE5;
+      --surface-2: #E5E1DB;
+      --surface-3: #D9D4CD;
+      --text-primary: #1A1814;
+      --text-secondary: #5A5550;
+      --text-muted: #9A958F;
+      --border: #D9D4CD;
+      --border-strong: #C0BBB4;
+      --border-stronger: #A09A90;
+      --accent: #D4692A;
+      --accent-dim: rgba(212,105,42,0.10);
     }
+  }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background: var(--surface-0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
 
-    html {
-      scroll-behavior: smooth;
-    }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font-family: inherit; }
 
-    body {
-      font-family: 'Georgia', 'Times New Roman', serif;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.7;
-      font-size: 17px;
-      -webkit-font-smoothing: antialiased;
-    }
+  .w { max-width: 1100px; margin: 0 auto; }
 
-    /* Language visibility */
-    [data-lang="el"] { display: none; }
-    html[lang="el"] [data-lang="en"] { display: none; }
-    html[lang="el"] [data-lang="el"] { display: block; }
-    html[lang="el"] [data-lang="el"].inline { display: inline; }
-    html[lang="en"] [data-lang="en"].inline { display: inline; }
+  /* ========== NAV ========== */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; }
+  .nav-center { font-size: 12px; color: var(--text-muted); font-style: italic; }
+  .nav-right { font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+  .nav-right:hover { color: var(--accent); }
 
-    .inline { display: inline; }
+  /* ========== HERO ========== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 480px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-visual {
+    background: var(--surface-1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 2.5rem;
+    border-right: 0.5px solid var(--border);
+  }
+  .room-box {
+    width: 160px;
+    height: 160px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 1.2s ease;
+  }
+  .ldot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: background 1.2s ease, box-shadow 1.2s ease;
+  }
+  .v-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+  }
+  .v-state {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
 
-    /* Header */
-    header {
-      padding: 2.5rem 5vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--line);
-    }
+  .hero-services {
+    padding: 2rem 2.5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .s-super {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+    margin-top: 1.25rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .s-super:first-child { margin-top: 0; }
+  .s-super:hover { color: var(--accent); }
+  .s-item {
+    padding: 0.75rem 0;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+  }
+  .s-item:last-child { border-bottom: none; }
+  .s-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: padding-left 0.15s;
+  }
+  .s-item:hover .s-row { padding-left: 0.3rem; }
+  .s-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .s-price {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+  .s-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 0.6rem;
+    padding-bottom: 0.2rem;
+    display: none;
+    border-left: 1.5px solid var(--border-strong);
+    padding-left: 0.75rem;
+  }
+  .s-desc.open { display: block; }
+  .s-contact {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: underline;
+  }
 
-    .logo {
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--fg);
-      text-decoration: none;
-      font-weight: 400;
-    }
+  /* ========== TRUE OR FALSE ========== */
+  .q-section {
+    padding: 3.5rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
+  .q-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .q-belief {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.45;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+  }
+  .q-reveal-btn {
+    font-size: 13px;
+    padding: 0.55rem 1.4rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .q-reveal-btn:hover { background: var(--surface-1); }
+  .q-answer {
+    margin-top: 1.5rem;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    text-align: left;
+    padding: 1.25rem;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-1);
+    display: none;
+  }
+  .q-answer.show { display: block; }
+  .q-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: none;
+  }
+  .q-actions.show { display: flex; }
+  .q-next {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+  .q-sci {
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
 
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      margin-left: 2rem;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: color 0.3s;
-    }
+  /* ========== SCIENCE PAGE ========== */
+  .sci-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .sci-page.active { display: block; }
+  .sci-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .sci-back:hover { color: var(--text-secondary); }
+  .sci-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .sci-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+  .sci-body p strong { color: var(--text-primary); font-weight: 500; }
+  .sci-pull {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.45;
+    margin: 2.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border-strong);
+  }
+  .sci-hormones {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .sci-h-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .sci-h-row:last-child { border-bottom: none; }
+  .sci-h-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .sci-h-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .sci-end {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+  }
 
-    nav a:hover {
-      color: var(--fg);
-    }
+  /* ========== CATEGORY PAGES ========== */
+  .cat-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cat-page.active { display: block; }
+  .cat-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .cat-back:hover { color: var(--text-secondary); }
+  .cat-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .cat-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 3rem;
+  }
+  .cat-service {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .cat-service:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .cat-service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cat-service-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .cat-service-price {
+    font-size: 14px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .cat-service-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .cat-service-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .cat-service-meta strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .cat-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
 
-    /* Hero */
-    .hero {
-      padding: 10vh 5vw 6vh;
-      max-width: 900px;
-    }
+  /* ========== PAGE TOGGLE ========== */
+  .home-content { display: block; }
+  .home-content.hidden { display: none; }
 
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 400;
-      line-height: 1.15;
-      margin-bottom: 2rem;
-      letter-spacing: -0.02em;
-    }
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.5px solid var(--border);
+  }
+  footer .copy { font-size: 12px; color: var(--text-muted); }
+  footer a { font-size: 13px; color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
 
-    .hero .sub {
-      color: var(--muted);
-      font-size: 1.1rem;
-      max-width: 600px;
-      line-height: 1.6;
-    }
-
-    .hero .time {
-      font-family: 'Courier New', monospace;
-      font-size: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-    }
-
-    /* Sections */
-    section {
-      padding: 6vh 5vw;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    section.wide {
-      max-width: 1100px;
-    }
-
-    h2 {
-      font-size: 1.3rem;
-      font-weight: 400;
-      margin-bottom: 2rem;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-    }
-
-    h3 {
-      font-size: 1.1rem;
-      font-weight: 400;
-      margin: 2.5rem 0 1rem;
-      color: var(--fg);
-    }
-
-    p {
-      margin-bottom: 1.5rem;
-      color: var(--muted);
-    }
-
-    p.lead {
-      color: var(--fg);
-      font-size: 1.05rem;
-    }
-
-    strong {
-      color: var(--fg);
-      font-weight: 600;
-    }
-
-    /* Divider */
-    .divider {
-      height: 1px;
-      background: var(--line);
-      margin: 4rem auto;
-      max-width: 700px;
-    }
-
-    /* Services */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .service-card {
-      border: 1px solid var(--line);
-      padding: 2rem;
-      transition: border-color 0.3s;
-    }
-
-    .service-card:hover {
-      border-color: var(--accent);
-    }
-
-    .service-card .tag {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .service-card h3 {
-      font-size: 1.15rem;
-      margin: 0 0 0.5rem;
-    }
-
-    .service-card .price {
-      font-size: 1.5rem;
-      color: var(--fg);
-      margin-bottom: 1rem;
-      font-weight: 400;
-    }
-
-    .service-card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-
-    .service-card a {
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
-    }
-
-    .service-card a:hover {
-      border-color: var(--accent);
-    }
-
-    /* Hormones */
-    .hormone {
-      margin-bottom: 2.5rem;
-    }
-
-    .hormone h3 {
-      font-size: 1.2rem;
-      color: var(--fg);
-      margin-bottom: 0.5rem;
-    }
-
-    /* CTA */
-    .cta {
-      text-align: center;
-      padding: 8vh 5vw;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .cta p {
-      font-size: 1.1rem;
-      color: var(--fg);
-      margin-bottom: 1rem;
-    }
-
-    .cta a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid var(--accent);
-      padding-bottom: 2px;
-    }
-
-    /* Footer */
-    footer {
-      padding: 4vh 5vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .lang-switch {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-
-    .lang-switch button {
-      background: transparent;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      padding: 0.4rem 1rem;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: all 0.3s;
-    }
-
-    .lang-switch button:hover {
-      border-color: var(--accent);
-      color: var(--fg);
-    }
-
-    .lang-switch button.active {
-      border-color: var(--accent);
-      color: var(--fg);
-      background: rgba(196, 168, 130, 0.1);
-    }
-
-    .copyright {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-
-      nav a {
-        margin: 0 0.75rem;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-
-      footer {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-  </style>
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .nav { padding: 1.25rem 1.5rem; }
+    .q-actions { flex-direction: column; gap: 0.75rem; align-items: center; }
+    .sci-h-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    .cat-service-header { flex-direction: column; gap: 0.25rem; }
+  }
+  @media (max-width: 560px) {
+    .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .hero-services { padding: 2rem 1.5rem; }
+    .q-section { padding: 3rem 1.5rem; }
+    .sci-page, .cat-page { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <a href="#" class="logo">ELIXLIGHT</a>
-    <nav>
-      <a href="#science" data-lang="en">Science</a>
-      <a href="#science" data-lang="el">Επιστήμη</a>
-      <a href="#services" data-lang="en">Services</a>
-      <a href="#services" data-lang="el">Υπηρεσίες</a>
-      <a href="#contact" data-lang="en">Contact</a>
-      <a href="#contact" data-lang="el">Επικοινωνία</a>
-    </nav>
-  </header>
+<div class="w">
 
-  <!-- Hero -->
-  <section class="hero wide">
-    <div class="time">05:47</div>
-    <h1 data-lang="en">Designing Light for Your True Nature</h1>
-    <h1 data-lang="el">Σχεδίαση Φωτισμού για τη Φυσική σου Κατάσταση</h1>
-    <p class="sub" data-lang="en">
-      You spend roughly 90% of your waking hours indoors. This is a recent development, in evolutionary terms. Your biology hasn't noticed.
-    </p>
-    <p class="sub" data-lang="el">
-      Περίπου το 90% του χρόνου που είμαστε ξύπνιοι το περνάμε σε εσωτερικούς χώρους. Αυτό είναι εξαιρετικά πρόσφατο από άποψη εξέλιξης. Η βιολογία μας δεν έχει προσαρμοστεί.
-    </p>
-  </section>
+  <!-- ========== NAV ========== -->
+  <nav class="nav">
+    <span class="nav-logo" onclick="goHome()">ELIXLIGHT</span>
+    <span class="nav-center">σχεδίαση φωτισμού για τη φυσική σου κατάσταση</span>
+    <span class="nav-right" onclick="goScience()">η επιστήμη →</span>
+  </nav>
 
-  <!-- Narrative -->
-  <section id="science">
-    <p class="lead" data-lang="en">
-      Your body still expects the same light it evolved under: a full-spectrum sun that rises, peaks, and sets. Bright and cool at noon. Warm and low at dusk. Absent at night. Instead, it receives ceiling lights running at the same intensity from 8 AM to 11 PM. Bathrooms built for morning, used at midnight. Screens held six inches from the face.
-    </p>
-    <p class="lead" data-lang="el">
-      Το σώμα μας εξακολουθεί να περιμένει το φυσικό φως κάτω από το οποίο εξελίχθηκε: τον ήλιο που ανατέλλει, κορυφώνεται το μεσημέρι, δύει το βράδυ. Αντί γι' αυτό, εκτίθεται σε φωτισμό σταθερής έντασης από το πρωί μέχρι αργά τη νύχτα.
-    </p>
+  <!-- ========== HOME ========== -->
+  <div class="home-content" id="homeContent">
 
-    <p data-lang="en">
-      Your body responds to all of it. Not metaphorically — <strong>biologically</strong>. There's a third type of photoreceptor in your retina, distinct from the ones that handle vision. It doesn't help you see. It reads light intensity and wavelength, then sends that signal directly to the clock in your brain that governs every hormone in your body.
-    </p>
-    <p data-lang="el">
-      Ο οργανισμός αντιδρά σε όλο αυτό <strong>βιολογικά</strong>. Στον αμφιβληστροειδή υπάρχει ένας τρίτος τύπος φωτοϋποδοχέα που δεν χρησιμοποιείται για την όραση. Ανιχνεύει την ένταση του φωτός, το φάσμα του, και στέλνει αυτές τις πληροφορίες απευθείας στο βιολογικό ρολόι του εγκεφάλου.
-    </p>
-
-    <p data-lang="en">
-      It doesn't ask for permission. It doesn't wait for you to believe in it.
-    </p>
-    <p data-lang="el">
-      Δεν ζητάει άδεια. Δεν περιμένει να το πιστέψεις.
-    </p>
-
-    <p data-lang="en">
-      You have been communicating with your biology through light your entire life. You just didn't know what you were saying.
-    </p>
-    <p data-lang="el">
-      Επικοινωνείς με τη βιολογία σου μέσω του φωτός για όλη σου τη ζωή. Απλώς μέχρι τώρα δεν γνώριζες τι της έλεγες.
-    </p>
-
-    <p data-lang="en">
-      Think of it like meowing at a cat without knowing what the sounds mean. You're definitely communicating. The cat is definitely responding. Whether what you said was what you meant — that's a different question.
-    </p>
-    <p data-lang="el">
-      Σκέψου ότι προσπαθείς να νιαουρίσεις σε μια γάτα χωρίς να γνωρίζεις τη γλώσσα της. Επικοινωνία υπάρχει. Η γάτα ανταποκρίνεται. Το ερώτημα είναι αν της λες αυτό που νομίζεις.
-    </p>
-
-    <p data-lang="en">
-      Most indoor lighting is unintentional this way. Not bad. Not broken. Just not saying what you'd say if you knew the language. The overhead light that's been running since dinner is telling your body it's noon. The bathroom mirror light you flick on at midnight is more melatonin-suppressing than your phone. The dim warm lamp in the corner — the one that just feels nicer — is closer to the right signal than anything designed to be "functional."
-    </p>
-    <p data-lang="el">
-      Τις περισσότερες φορές ο εσωτερικός φωτισμός δεν είναι «κακός». Απλώς δεν έχει σχεδιαστεί συνειδητά. Το φωτιστικό της οροφής μετά το δείπνο επικοινωνεί στο σώμα ότι είναι μεσημέρι. Το φως του καθρέφτη στο μπάνιο τα μεσάνυχτα μπορεί να καταστέλλει περισσότερο τη μελατονίνη από το κινητό. Αντίθετα, ένα μικρό ζεστό φωτιστικό σε χαμηλό ύψος είναι πιο κατάλληλο βιολογικό μήνυμα.
-    </p>
-
-    <p data-lang="en">
-      Your nervous system has been responding to all of it, every evening, without your input. The question is only <strong>what it's been told</strong>.
-    </p>
-    <p data-lang="el">
-      Το νευρικό σου σύστημα ανταποκρίνεται όλη την ημέρα στα σήματα που του δίνει το φως. Το μόνο ερώτημα είναι <strong>τι ακριβώς του λες</strong>.
-    </p>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Hormones -->
-  <section>
-    <h2 data-lang="en">Here's what light actually says to your body.</h2>
-    <h2 data-lang="el">Τι λέει το φως στο σώμα σου.</h2>
-
-    <div class="hormone">
-      <h3 data-lang="en">Cortisol</h3>
-      <h3 data-lang="el">Κορτιζόλη</h3>
-      <p data-lang="en">
-        Your primary alertness and stress hormone. Should peak in the morning and decline by evening. Bright overhead light can keep it elevated past midnight — which is why you feel wired but tired.
-      </p>
-      <p data-lang="el">
-        Η βασική ορμόνη εγρήγορσης. Πρέπει να κορυφώνεται το πρωί και να μειώνεται σταδιακά το βράδυ. Ο έντονος φωτισμός μπορεί να την κρατήσει αυξημένη μέχρι αργά τη νύχτα.
-      </p>
-    </div>
-
-    <div class="hormone">
-      <h3 data-lang="en">Melatonin</h3>
-      <h3 data-lang="el">Μελατονίνη</h3>
-      <p data-lang="en">
-        Your sleep-preparation hormone. Should begin rising about two hours before sleep. Suppressed by any light above 10 lux that contains blue wavelengths — including most standard home lighting. Thirty minutes of exposure is enough to delay it by 90 minutes.
-      </p>
-      <p data-lang="el">
-        Η ορμόνη που προετοιμάζει τον ύπνο. Κανονικά αρχίζει να αυξάνεται περίπου δύο ώρες πριν τον ύπνο. Καταστέλλεται από φως άνω των 10 lux που περιέχει μπλε μήκη κύματος. Ακόμη και 30 λεπτά έκθεσης μπορούν να καθυστερήσουν την έκκρισή της περίπου 90 λεπτά.
-      </p>
-    </div>
-
-    <div class="hormone">
-      <h3 data-lang="en">Dopamine</h3>
-      <h3 data-lang="el">Ντοπαμίνη</h3>
-      <p data-lang="en">
-        Your reward and attention neurotransmitter. Stimulated by contrast — the gap between a bright focal point and a dim ambient. Uniform lighting depletes it. A candle in a dark room activates it more than a well-lit office.
-      </p>
-      <p data-lang="el">
-        Νευροδιαβιβαστής ανταμοιβής και προσοχής. Ενεργοποιείται από την αντίθεση ανάμεσα σε ένα φωτεινό σημείο και ένα σκοτεινότερο περιβάλλον. Ο ομοιόμορφος φωτισμός μειώνει αυτή τη διέγερση.
-      </p>
-    </div>
-
-    <div class="hormone">
-      <h3 data-lang="en">Serotonin</h3>
-      <h3 data-lang="el">Σεροτονίνη</h3>
-      <p data-lang="en">
-        Your mood stabilizer. Requires full-spectrum daylight for production. Depletes in low-light seasons and windowless environments — which is why winter, and windowless offices, feel heavier than they should.
-      </p>
-      <p data-lang="el">
-        Ο νευροδιαβιβαστής της διάθεσης. Χρειάζεται πλήρες φυσικό φως ημέρας για να παραχθεί. Γι' αυτό ο χειμώνας και οι χώροι χωρίς παράθυρα επηρεάζουν τόσο έντονα τη διάθεση.
-      </p>
-    </div>
-
-    <p class="lead" data-lang="en">
-      When light is designed to say the right thing at the right time, the body receives the signals it was built to receive. Cortisol rises cleanly in the morning and declines by evening. Melatonin arrives on schedule. Sleep comes without negotiation. You wake having actually rested — not just spent time unconscious.
-    </p>
-    <p class="lead" data-lang="el">
-      Όταν ο φωτισμός στέλνει το σωστό μήνυμα τη σωστή στιγμή: η κορτιζόλη ανεβαίνει το πρωί, η μελατονίνη εμφανίζεται την κατάλληλη ώρα, ο ύπνος έρχεται φυσικά, ξυπνάς πραγματικά ξεκούραστος.
-    </p>
-
-    <p data-lang="en">
-      The space doesn't feel different in a way you can name. You just feel like yourself. Which, if you've been living under unintentional light for years, might feel surprisingly unfamiliar.
-    </p>
-    <p data-lang="el">
-      Ο χώρος ίσως να μη φαίνεται διαφορετικός. Αλλά εσύ αισθάνεσαι ξανά ο εαυτός σου.
-    </p>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Services -->
-  <section id="services" class="wide">
-    <h2 data-lang="en">Services</h2>
-    <h2 data-lang="el">Υπηρεσίες</h2>
-
-    <div class="services-grid">
-      <!-- Service 1 -->
-      <div class="service-card">
-        <div class="tag" data-lang="en">For Homes & Hotels</div>
-        <div class="tag" data-lang="el">Για Οικίες & Ξενοδοχεία</div>
-        <h3 data-lang="en">Upgrade Your Sleep in 48 Hours</h3>
-        <h3 data-lang="el">Αναβαθμίστε τον Ύπνο σας σε 48 Ώρες</h3>
-        <div class="price">€297</div>
-        <p data-lang="en">
-          Send photos of your bedroom or guest rooms. You'll receive specific recommendations for which bulbs to replace, correct placement, and when each fixture should be used to support your biological rhythm. Applied in one day, no renovation needed.
-        </p>
-        <p data-lang="el">
-          Θα χρειαστούν φωτογραφίες από το υπνοδωμάτιο ή τα δωμάτιά σας. Θα πάρετε συγκεκριμένες προτάσεις για τις λάμπες που πρέπει να αντικατασταθούν, τη σωστή τοποθέτησή τους και το πότε πρέπει να χρησιμοποιείται κάθε φωτιστικό. Η εφαρμογή γίνεται μέσα σε μια μέρα, χωρίς ανακαίνιση.
-        </p>
-        <a href="mailto:hello@elixlight.com">hello@elixlight.com →</a>
+    <section class="hero">
+      <div class="hero-visual">
+        <div class="room-box" id="box">
+          <div class="ldot" id="dot"></div>
+        </div>
+        <div class="v-time" id="vtime">06:00</div>
+        <div class="v-state" id="vstate">αυγή — η κορτιζόλη ανεβαίνει</div>
       </div>
 
-      <!-- Service 2 -->
-      <div class="service-card">
-        <div class="tag" data-lang="en">For Homes & Hotels</div>
-        <div class="tag" data-lang="el">Για Οικίες & Ξενοδοχεία</div>
-        <h3 data-lang="en">Understand How Your Space Affects Your Body</h3>
-        <h3 data-lang="el">Κατανοήστε πώς Επιδρά ο Χώρος σας στο Σώμα σας</h3>
-        <div class="price" data-lang="en">From €3,500</div>
-        <div class="price" data-lang="el">Από €3.500</div>
-        <p data-lang="en">
-          Remote assessment of your existing lighting. You'll learn what works biologically, what undermines your experience, and which changes have the greatest impact before you invest money.
-        </p>
-        <p data-lang="el">
-          Εξ αποστάσεως αξιολόγηση του υπάρχοντος φωτισμού σας. Θα μάθετε τι λειτουργεί βιολογικά, τι υπονομεύει την εμπειρία σας, ποιες αλλαγές έχουν τη μεγαλύτερη επίδραση πριν επενδύσετε χρήματα.
-        </p>
-        <a href="mailto:hello@elixlight.com">hello@elixlight.com →</a>
+      <div class="hero-services">
+
+        <p class="s-super" onclick="goCat('homehotel')">ΓΙΑ ΟΙΚΙΕΣ ΚΑΙ ΞΕΝΟΔΟΧΕΙΑ →</p>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">αναβαθμίστε τον ύπνο σας σε 48 ώρες</span>
+            <span class="s-price">€297</span>
+          </div>
+          <div class="s-desc">Θα χρειαστούν φωτογραφίες από το υπνοδωμάτιο ή τα δωμάτιά σας. Θα πάρετε συγκεκριμένες προτάσεις για τις λάμπες που πρέπει να αντικατασταθούν, τη σωστή τοποθέτησή τους και το πότε πρέπει να χρησιμοποιείται κάθε φωτιστικό, ώστε να υποστηρίζει τον βιολογικό σας ρυθμό.
+Η εφαρμογή γίνεται μέσα σε μια μέρα, χωρίς ανακαίνιση.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">κατανοήστε πώς επιδρά ο χώρος σας στο σώμα σας</span>
+            <span class="s-price">από €3.500</span>
+          </div>
+          <div class="s-desc">Εξ αποστάσεως αξιολόγηση του υπάρχοντος φωτισμού σας. Θα μάθετε τι λειτουργεί βιολογικά, τι υπονομεύει την εμπειρία σας, ποιες αλλαγές έχουν τη μεγαλύτερη επίδραση πριν επενδύσετε χρήματα.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <p class="s-super" onclick="goCat('project')">ΓΙΑ ΑΡΧΙΤΕΚΤΟΝΙΚΑ ΕΡΓΑ →</p>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">δώστε βιολογική πρόθεση στον σχεδιασμό σας</span>
+            <span class="s-price">από €8.000</span>
+          </div>
+          <div class="s-desc">Πριν τον σχεδιασμό φωτισμού, καθορίζουμε τι πρέπει να πετυχαίνει βιολογικά κάθε ζώνη του έργου: ποια ορμονική κατάσταση πρέπει να υποστηρίζει, ποια ώρα, για ποιον χρήστη. Ο σχεδιαστής λαμβάνει έναν βιολογικό στόχο και τον εφαρμόζει στη σχεδίαση.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+        <div class="s-item" onclick="toggleDesc(this)">
+          <div class="s-row">
+            <span class="s-name">αξιολογήστε τις προδιαγραφές βιολογικά πριν κατασκευάσετε</span>
+            <span class="s-price">από €4.000</span>
+          </div>
+          <div class="s-desc">Οι προδιαγραφές φωτισμού έχουν ήδη δημιουργηθεί, και τις αξιολογούμε πριν γίνει η παραγγελία των φωτιστικών. Είναι ο τελευταίος έλεγχος πριν ο σχεδιασμός ενσωματωθεί στην κατασκευή.<br><a class="s-contact" href="mailto:hello@elixlight.com">hello@elixlight.com →</a></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="q-section">
+      <p class="q-label">ΣΩΣΤΟ Ή ΛΑΘΟΣ;</p>
+      <p class="q-belief" id="qbelief"></p>
+      <button class="q-reveal-btn" id="qbtn" onclick="reveal()">Είναι αλήθεια; →</button>
+      <div class="q-answer" id="qanswer"></div>
+      <div class="q-actions" id="qactions">
+        <button class="q-next" onclick="nextQ()">Άλλο →</button>
+        <button class="q-sci" onclick="goScience()">Γιατί συμβαίνει αυτό; Η επιστήμη →</button>
+      </div>
+    </section>
+
+    <footer>
+      <span class="copy">© 2025 ELIXLIGHT</span>
+      <span><a href="mailto:hello@elixlight.com">hello@elixlight.com</a></span>
+    </footer>
+
+  </div>
+
+  <!-- ========== SCIENCE PAGE ========== -->
+  <div class="sci-page" id="sciPage">
+    <button class="sci-back" onclick="goHome()">← πίσω</button>
+    <p class="sci-title">Η ΕΠΙΣΤΗΜΗ</p>
+    <div class="sci-body">
+
+      <p>Περίπου το 90% του χρόνου που είμαστε ξύπνιοι το περνάμε σε εσωτερικούς χώρους. Αυτό είναι εξαιρετικά πρόσφατο από άποψη εξέλιξης. Η βιολογία μας δεν έχει προσαρμοστεί.</p>
+
+      <p>Το σώμα μας εξακολουθεί να περιμένει το φυσικό φως κάτω από το οποίο εξελίχθηκε: τον ήλιο που ανατέλλει, κορυφώνεται το μεσημέρι, δύει το βράδυ. Αντί γι' αυτό, εκτίθεται σε φωτισμό σταθερής έντασης από το πρωί μέχρι αργά τη νύχτα.</p>
+
+      <p>Ο οργανισμός αντιδρά σε όλο αυτό βιολογικά. Στον αμφιβληστροειδή υπάρχει ένας τρίτος τύπος φωτοϋποδοχέα που δεν χρησιμοποιείται για την όραση. Ανιχνεύει την ένταση του φωτός, το φάσμα του, και στέλνει αυτές τις πληροφορίες απευθείας στο βιολογικό ρολόι του εγκεφάλου.</p>
+
+      <div class="sci-pull">Επικοινωνείς με τη βιολογία σου μέσω του φωτός για όλη σου τη ζωή. Απλώς μέχρι τώρα δεν γνώριζες τι της έλεγες.</div>
+
+      <p>Σκέψου ότι προσπαθείς να νιαουρίσεις σε μια γάτα χωρίς να γνωρίζεις τη γλώσσα της. Επικοινωνία υπάρχει. Η γάτα ανταποκρίνεται. Το ερώτημα είναι αν της λες αυτό που νομίζεις. Το ίδιο συμβαίνει και με τον φωτισμό.</p>
+
+      <p>Τις περισσότερος φορές ο εσωτερικός φωτισμός δεν είναι «κακός». Απλώς δεν έχει σχεδιαστεί συνειδητά. Το φωτιστικό της οροφής μετά το δείπνο επικοινωνεί στο σώμα ότι είναι μεσημέρι. Το φως του καθρέφτη στο μπάνιο τα μεσάνυχτα μπορεί να καταστέλλει περισσότερο τη μελατονίνη από το κινητό. Αντίθετα, ένα μικρό ζεστό φωτιστικό σε χαμηλό ύψος είναι πιο κατάλληλο βιολογικό μήνυμα.</p>
+
+      <p>Το νευρικό σου σύστημα ανταποκρίνεται όλη την ημέρα στα σήματα που του δίνει το φως. Το μόνο ερώτημα είναι</p>
+
+      <p><strong>τι ακριβώς του λες.</strong></p>
+
+      <div class="sci-hormones">
+        <div class="sci-h-row">
+          <div class="sci-h-name">Κορτιζόλη</div>
+          <div class="sci-h-desc">Η βασική ορμόνη εγρήγορσης. Πρέπει να κορυφώνεται το πρωί και να μειώνεται σταδιακά το βράδυ. Ο έντονος φωτισμός μπορεί να την κρατήσει αυξημένη μέχρι αργά τη νύχτα.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Μελατονίνη</div>
+          <div class="sci-h-desc">Η ορμόνη που προετοιμάζει τον ύπνο. Κανονικά αρχίζει να αυξάνεται περίπου δύο ώρες πριν τον ύπνο. Καταστέλλεται από φως άνω των 10 lux που περιέχει μπλε μήκη κύματος. Ακόμη και 30 λεπτά έκθεσης σε φως μπορούν να καθυστερήσουν την έκκρισή της περίπου 90 λεπτά.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Ντοπαμίνη</div>
+          <div class="sci-h-desc">Νευροδιαβιβαστής ανταμοιβής και προσοχής. Ενεργοποιείται από την αντίθεση ανάμεσα σε ένα φωτεινό σημείο και ένα σκοτεινότερο περιβάλλον. Ο ομοιόμορφος φωτισμός μειώνει αυτή τη διέγερση.</div>
+        </div>
+        <div class="sci-h-row">
+          <div class="sci-h-name">Σεροτονίνη</div>
+          <div class="sci-h-desc">Ο νευροδιαβιβαστής της διάθεσης. Χρειάζεται πλήρες φυσικό φως ημέρας για να παραχθεί. Γι' αυτό ο χειμώνας και οι χώροι χωρίς παράθυρα επηρεάζουν τόσο έντονα τη διάθεση.</div>
+        </div>
       </div>
 
-      <!-- Service 3 -->
-      <div class="service-card">
-        <div class="tag" data-lang="en">For Architectural Projects</div>
-        <div class="tag" data-lang="el">Για Αρχιτεκτονικά Έργα</div>
-        <h3 data-lang="en">Give Biological Intention to Your Design</h3>
-        <h3 data-lang="el">Δώστε Βιολογική Πρόθεση στον Σχεδιασμό σας</h3>
-        <div class="price" data-lang="en">From €8,000</div>
-        <div class="price" data-lang="el">Από €8.000</div>
-        <p data-lang="en">
-          Before lighting design, we define what each zone of the project must achieve biologically: which hormonal state to support, at what time, for which user. The designer receives a biological target and applies it to the design.
-        </p>
-        <p data-lang="el">
-          Πριν τον σχεδιασμό φωτισμού, καθορίζουμε τι πρέπει να πετυχαίνει βιολογικά κάθε ζώνη του έργου. Ο σχεδιαστής λαμβάνει έναν βιολογικό στόχο και τον εφαρμόζει στη σχεδίαση.
-        </p>
-        <a href="mailto:hello@elixlight.com">hello@elixlight.com →</a>
+      <p>Όταν ο φωτισμός στέλνει το σωστό μήνυμα τη σωστή στιγμή: η κορτιζόλη ανεβαίνει το πρωί, η μελατονίνη εμφανίζεται την κατάλληλη ώρα, ο ύπνος έρχεται φυσικά, ξυπνάς πραγματικά ξεκούραστος.</p>
+
+      <p>Ο χώρος ίσως να μη φαίνεται διαφορετικός. Αλλά εσύ αισθάνεσαι ξανά ο εαυτός σου.</p>
+
+      <div class="sci-end">
+        <p style="font-size:13px;color:var(--text-muted);">Θέλεις να καταλάβεις τι επιδραση έχει στο σώμα σου ο δικός σου χώρος; Γράψε στο <a href="mailto:hello@elixlight.com" style="color:var(--accent)">hello@elixlight.com</a></p>
       </div>
 
-      <!-- Service 4 -->
-      <div class="service-card">
-        <div class="tag" data-lang="en">For Architectural Projects</div>
-        <div class="tag" data-lang="el">Για Αρχιτεκτονικά Έργα</div>
-        <h3 data-lang="en">Evaluate Specifications Biologically Before You Build</h3>
-        <h3 data-lang="el">Αξιολογήστε τις Προδιαγραφές Βιολογικά πριν Κατασκευάσετε</h3>
-        <div class="price" data-lang="en">From €4,000</div>
-        <div class="price" data-lang="el">Από €4.000</div>
-        <p data-lang="en">
-          Lighting specifications have already been created, and we evaluate them before fixtures are ordered. The last check before the design is embedded into construction.
-        </p>
-        <p data-lang="el">
-          Οι προδιαγραφές φωτισμού έχουν ήδη δημιουργηθεί, και τις αξιολογούμε πριν γίνει η παραγγελία των φωτιστικών. Είναι ο τελευταίος έλεγχος πριν ο σχεδιασμός ενσωματωθεί στην κατασκευή.
-        </p>
-        <a href="mailto:hello@elixlight.com">hello@elixlight.com →</a>
-      </div>
     </div>
-  </section>
+  </div>
 
-  <div class="divider"></div>
+  <!-- ========== FOR YOUR HOME OR HOTEL PAGE ========== -->
+  <div class="cat-page" id="catHomehotel">
+    <button class="cat-back" onclick="goHome()">← πίσω</button>
+    <p class="cat-title">ΓΙΑ ΟΙΚΙΕΣ ΚΑΙ ΞΕΝΟΔΟΧΕΙΑ</p>
 
-  <!-- Contact -->
-  <section id="contact" class="cta">
-    <p data-lang="en">Want to understand what your specific space is doing?</p>
-    <p data-lang="el">Θέλεις να καταλάβεις τι επιδραση έχει στο σώμα σου ο δικός σου χώρος;</p>
-    <a href="mailto:hello@elixlight.com">hello@elixlight.com</a>
-  </section>
+    <p class="cat-intro">Είτε είστε ιδιοκτήτης ξενοδοχείου και βλέπετε παράπονα για τον ύπνο στις αξιολογήσεις, είτε είστε κάποιος που ξυπνά κουρασμένος εδώ και χρόνια, το πρόβλημα είναι συχνά το ίδιο. Ο φωτισμός δίνει στο σώμα λάθος βιολογικά σήματα τη λάθος στιγμή.</p>
 
-  <!-- Footer -->
-  <footer>
-    <div class="copyright">© ELIXLIGHT</div>
-    <div class="lang-switch">
-      <button id="btn-en" class="active" onclick="setLang('en')">English</button>
-      <button id="btn-el" onclick="setLang('el')">Ελληνικά</button>
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Αποκαταστήστε τον ύπνο σας μέσα σε 48 ώρες</span>
+        <span class="cat-service-price">€297</span>
+      </div>
+      <p class="cat-service-body">Χρειάζεται να στείλετε 5–10 φωτογραφίες του χώρου ή τα δωμάτια των επισκεπτών — τα φωτιστικά οροφής, τα κομοδίνα, το φως του καθρέφτη του μπάνιου. Λαμβάνετε ακριβείς αντικαταστάσεις λαμπτήρων, αλλαγές θέσεων, οδηγίες για το ποια φώτα πρέπει να χρησιμοποιούνται σε κάθε ώρα.</p>
+      <p class="cat-service-meta"><strong>Κατάλληλο για:</strong> Ξενοδοχεία με παράπονα για ύπνο στις κριτικές τους. Ιδιοκτήτες σπιτιού που κοιμούνται οκτώ ώρες και ξυπνάνε κουρασμένοι. Οποιονδήποτε θέλει άμεση βελτίωση.<br><strong>Χρονοδιάγραμμα:</strong> 48 ώρες. Εξ αποστάσεως</p>
     </div>
-  </footer>
 
-  <script>
-    function setLang(lang) {
-      document.documentElement.lang = lang;
-      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-      document.getElementById('btn-el').classList.toggle('active', lang === 'el');
-      localStorage.setItem('elixlight-lang', lang);
-    }
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Κατανοήστε την επίδραση του χώρου σας</span>
+        <span class="cat-service-price">από €3.500</span>
+      </div>
+      <p class="cat-service-body">Στέλνετε κατόψεις, φωτογραφίες, υπάρχουσες προδιαγραφές φωτισμού. Λαμβάνετε Έκθεση Κιρκαδικής Αξιολόγησης με: βιολογική αξιολόγηση, τι λειτουργεί, τι χρειάζεται βελτίωση, κατάταξη των παρεμβάσεων ανάλογα με την επίδρασή τους.</p>
+      <p class="cat-service-meta"><strong>Κατάλληλο για:</strong> Ξενοδοχεία που ετοιμάζονται για ανακαίνιση. Λειτουργούς ευεξίας που θέλουν να βελτιστοποιήσουν το χώρο τους χωρίς πλήρη ανασχεδιασμό. Οποιονδήποτε θέλει να καταλάβει τον χώρο του πριν επενδύσει σε αυτόν.<br><strong>Χρονοδιάγραμμα:</strong> 1–2 εβδομάδες. Εξ αποστάσεως.</p>
+    </div>
 
-    // Restore saved preference or default to English
-    const saved = localStorage.getItem('elixlight-lang');
-    if (saved) setLang(saved);
-  </script>
+    <div class="cat-footer">
+      Για να συζητήσουμε για κάποιο έργο που σκέφτεσαι, γράψε στο <a href="mailto:hello@elixlight.com">hello@elixlight.com</a> — μοιράσου σε ποιο στάδιο βρίσκεσαι και μια σύντομη περιγραφή του έργου.
+    </div>
+  </div>
+
+  <!-- ========== FOR YOUR PROJECT PAGE ========== -->
+  <div class="cat-page" id="catProject">
+    <button class="cat-back" onclick="goHome()">← πίσω</button>
+    <p class="cat-title">ΓΙΑ ΑΡΧΙΤΕΚΤΟΝΙΚΑ ΕΡΓΑ</p>
+
+    <p class="cat-intro">Απευθύνεται σε αρχιτεκτονικά γραφεία, γραφεία σχεδίασης φωτισμού, κατασκευαστές, ομάδες έργων σε νέες κατασκευές ή ανακαινίσεις. Η ELIXLIGHT καθορίζει τους βιολογικούς στόχους του φωτισμού. Ο υπεύθυνος σχεδίασης φωτισμού αποφασίζει πώς θα τους υλοποιήσει.</p>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Δώστε βιολογική πρόθεση στον σχεδιασμό</span>
+        <span class="cat-service-price">από €8.000</span>
+      </div>
+      <p class="cat-service-body">Καθορίζονται για κάθε χώρο: ποια ορμονική κατάσταση πρέπει να υποστηρίζει, ποιες ώρες, για ποιον χρήστη.Ο σχεδιαστής φωτισμού λαμβάνει ένα Brief Ορμονικού Φωτισμού μαζί με το αρχιτεκτονικό brief.</p>
+      <p class="cat-service-meta"><strong>Για:</strong> Αρχιτεκτονικά γραφεία, γραφεία σχεδιασμού φωτισμού, κατασκευαστές χώρων φιλοξενίας, ομάδες έργων ευεξίας. Οποιοδήποτε έργο όπου η εμπειρία του χώρου έχει ίδια σημασία με την εμφάνισή του.<br><strong>Χρονοδιάγραμμα:</strong> 2–3 εβδομάδες. Εξ αποστάσεως.</p>
+    </div>
+
+    <div class="cat-service">
+      <div class="cat-service-header">
+        <span class="cat-service-name">Αξιολόγηση προδιαγραφών πριν το έργο</span>
+        <span class="cat-service-price">από €4.000</span>
+      </div>
+      <p class="cat-service-body">Ελέγχουμε: θερμοκρασία χρώματος, θέση φωτιστικών, πιθανές βιολογικές αστοχίες, διορθώσεις πριν την κατασκευή. Παραδίδεται Ανασκόπηση Βιολογικής Επίδρασης. Χρόνος: περίπου μία εβδομάδα ανά κύκλο αξιολόγησης.</p>
+      <p class="cat-service-meta"><strong>Για:</strong> Φωτιστές που θέλουν ανεξάρτητη βιολογική επικύρωση. Αρχιτέκτονες που θέλουν να βεβαιωθούν πριν δεσμευτούν. Οποιονδήποτε πρόκειται να ξοδέψει σημαντικό ποσό σε φωτιστικά και θέλει να ξέρει ότι θα λειτουργήσουν.<br><strong>Χρονοδιάγραμμα:</strong> 1 εβδομάδα ανά κύκλο αναθεώρησης. Εξ αποστάσεως.</p>
+    </div>
+
+    <div class="cat-footer">
+      Για να συζητήσουμε για κάποιο έργο που σκέφτεσαι, γράψε στο <a href="mailto:hello@elixlight.com">hello@elixlight.com</a> — μοιράσου σε ποιο στάδιο βρίσκεσαι και μια σύντομη περιγραφή του έργου. Θα απαντήσουμε εντός 48 ωρών.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ========== ROOM ANIMATION ==========
+const states = [
+  {t:"05:47", s:"αυγή — αφύπνιση κορτιζόλης", b:"#1a1008", d:"#e8822a", g:"0 0 22px 9px rgba(220,110,30,0.55)"},
+  {t:"08:15", s:"πρωί — μέγιστη εγρήγορση", b:"#221a0e", d:"#f5c060", g:"0 0 26px 11px rgba(240,180,60,0.45)"},
+  {t:"12:30", s:"μεσημέρι — μέγιστο melanopic lux", b:"#1e1810", d:"#f0d090", g:"0 0 30px 13px rgba(240,210,130,0.35)"},
+  {t:"15:45", s:"απόγευμα — διατήρηση απόδοσης", b:"#1e1810", d:"#f0d090", g:"0 0 28px 12px rgba(240,210,130,0.35)"},
+  {t:"18:20", s:"δύση — έναρξη μελατονίνης", b:"#180e06", d:"#d05820", g:"0 0 18px 7px rgba(200,80,20,0.5)"},
+  {t:"21:00", s:"βράδυ — φάση χαλάρωσης", b:"#100804", d:"#a03010", g:"0 0 12px 4px rgba(160,40,10,0.4)"},
+  {t:"23:15", s:"νύχτα — κιρκαδικό ναδίρ", b:"#080604", d:"#1a0e06", g:"none"},
+  {t:"02:00", s:"μεσάνυχτα — πλήρες σκοτάδι", b:"#080604", d:"#0a0a0a", g:"none"},
+];
+let si = 0;
+function applyState(s) {
+  document.getElementById("box").style.background = s.b;
+  document.getElementById("dot").style.background = s.d;
+  document.getElementById("dot").style.boxShadow = s.g;
+  document.getElementById("vtime").textContent = s.t;
+  document.getElementById("vstate").textContent = s.s;
+}
+applyState(states[0]);
+setInterval(() => { si = (si + 1) % states.length; applyState(states[si]); }, 2200);
+
+// ========== SERVICE EXPAND ==========
+function toggleDesc(item) {
+  const desc = item.querySelector('.s-desc');
+  const isOpen = desc.classList.contains('open');
+  document.querySelectorAll('.s-desc').forEach(d => d.classList.remove('open'));
+  if (!isOpen) desc.classList.add('open');
+}
+
+// ========== Q&A ==========
+const questions = [
+  {b:'"Αρκεί να χαμηλώνεις την ένταση του φωτισμού για να χαλαρώσεις πριν τον ύπνο."', a:"Το dimming μειώνει την ένταση, όχι τη βιολογία. Ένας dimmed λαμπτήρας 4000K πλημμυρίζει ακόμα τον αμφιβληστροειδή σου με μπλε μήκη κύματος — το ακριβές σήμα που καταστέλλει τη μελατονίνη. Χαμηλώνεις την ένταση, αλλά το λάθος τραγούδι παίζει ακόμα.Η μείωση της έντασης δεν αλλάζει απαραίτητα το βιολογικό μήνυμα του φωτός. Ένα φωτιστικό 4000K (ψυχρού χρώματος), ακόμη και χαμηλωμένο, συνεχίζει να εκπέμπει μπλε μήκη κύματος που καταστέλλουν τη μελατονίνη. Μειώνεις την ένταση, όχι το μήνυμα."},
+  {b:'"Το κινητό είναι ο βασικός λόγος που δεν μπορώ να κοιμηθώ."', a:"Συχνά ο φωτισμός της οροφής εκθέτει τα μάτια σε περισσότερο φως που καταστέλλει τη μελατονίνη από ό,τι η ίδια η οθόνη. Οι οθόνες κατηγορούνται επειδή είναι εμφανείς. Ο φωτισμός του χώρου όμως μπορεί να έχει ακόμη μεγαλύτερη βιολογική επίδραση."},
+  {b:'"Το ζεστό φως είναι πάντα χαλαρωτικό."', a:"Όχι απαραίτητα. Ένα θερμό φωτιστικό στην οροφή στις 22:00 μπορεί να συνεχίζει να στέλνει σήμα ότι είναι «μεσημέρι» στον εγκέφαλο, γιατί είναι ψηλά όπως ο μεσημαριανός ήλιος. Η θέση του φωτός είναι εξίσου σημαντική με το χρώμα του."},
+  {b:'"Μπορείς να αναπληρώσεις τον χαμένο ύπνο το Σαββατοκύριακο."', a:"Το να κοιμηθείς περισσότερο την Κυριακή μετατοπίζει το κιρκαδικό σου ρολόι, γι' αυτό και τη Δευτέρα νιώθεις σαν να έχεις jet lag. Δεν έχει σημασία μόνο πόσο κοιμάσαι. Έχει σημασία και πότε."},
+  {b:'"Το έντονο πρωινό φως είναι κουραστικό."', a:"Η ενόχληση που νιώθεις είναι η φυσιολογική αντίδραση της κορτιζόλης. Το έντονο πρωινό φως είναι το ισχυρότερο σήμα για να συγχρονίσεις το βιολογικό σου ρολόι, να συγκεντρώνεσαι καλύτερα, να κοιμηθείς καλύτερα το βράδυ."},
+  {b:'"Σκοτεινό υπνοδωμάτιο σημαίνει μόνο να σβήσεις τα φώτα."', a:"Ακόμη και 5 lux φωτός μέσα από κλειστά βλέφαρα μπορούν να μειώσουν τη μελατονίνη. Ένα φωτάκι αναμονής ή το φως του διαδρόμου μπορεί να επηρεάσει τον ύπνο και να ευθύνεται που ξυπνάς τη νύχτα."},
+  {b:'"Το σώμα συνηθίζει το τεχνητό φως."', a:"Δεν συνηθίζει. Το κιρκαδικό ρολόι αντιδρά στο φως σήμερα όπως αντιδρούσε πριν από την ανακάλυψη του ηλεκτρισμού. Το σώμα ανταποκρίνεται συνεχώς στα φωτεινά ερεθίσματα."},
+  {b:'"Τα γυαλιά που φιλτράρουν το μπλε φως είναι η λύση."', a:"Τα γυαλιά μειώνουν μόνο έναν παράγοντα. Η ένταση, η κατεύθυνση και η διάρκεια του φωτός συνεχίζουν να επηρεάζουν τη μελατονίνη."},
+];
+let qi = Math.floor(Math.random() * questions.length);
+let revealed = false;
+function loadQ(i) {
+  document.getElementById("qbelief").textContent = questions[i].b;
+  document.getElementById("qanswer").textContent = "";
+  document.getElementById("qanswer").classList.remove("show");
+  document.getElementById("qbtn").style.display = "inline-block";
+  document.getElementById("qactions").classList.remove("show");
+  revealed = false;
+}
+function reveal() {
+  document.getElementById("qanswer").textContent = questions[qi].a;
+  document.getElementById("qanswer").classList.add("show");
+  document.getElementById("qbtn").style.display = "none";
+  document.getElementById("qactions").classList.add("show");
+  revealed = true;
+}
+function nextQ() { qi = (qi + 1) % questions.length; loadQ(qi); }
+loadQ(qi);
+
+// ========== NAVIGATION ==========
+function hideAll() {
+  document.getElementById("homeContent").classList.add("hidden");
+  document.getElementById("sciPage").classList.remove("active");
+  document.getElementById("catHomehotel").classList.remove("active");
+  document.getElementById("catProject").classList.remove("active");
+}
+
+function goHome() {
+  hideAll();
+  document.getElementById("homeContent").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+function goScience() {
+  hideAll();
+  document.getElementById("sciPage").classList.add("active");
+  window.scrollTo(0, 0);
+}
+
+function goCat(cat) {
+  hideAll();
+  if (cat === 'homehotel') document.getElementById("catHomehotel").classList.add("active");
+  if (cat === 'project') document.getElementById("catProject").classList.add("active");
+  window.scrollTo(0, 0);
+}
+</script>
 
 </body>
 </html>
