@@ -6,6 +6,7 @@ let qi = 0;
 let revealed = false;
 let si = 0;
 let animInterval = null;
+let isDark = true; // default: night mode
 
 function t(keyPath) {
   const keys = keyPath.split('.');
@@ -15,6 +16,20 @@ function t(keyPath) {
     val = val[k];
   }
   return val;
+}
+
+// ========== THEME ==========
+function toggleTheme() {
+  isDark = !isDark;
+  applyTheme();
+}
+
+function applyTheme() {
+  if (isDark) {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
 }
 
 function renderHeroServices() {
@@ -192,4 +207,5 @@ function init() {
 }
 
 // ========== BOOT ==========
+applyTheme();
 init();
