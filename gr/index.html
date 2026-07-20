@@ -110,18 +110,18 @@
     height: 16px;
     transition: all 0.3s ease;
   }
-  .theme-btn .moon-icon {
-    display: block;
-    fill: var(--moon-color);
-  }
   .theme-btn .sun-icon {
-    display: none;
+    display: block;
     fill: var(--sun-color);
   }
-  [data-theme="light"] .theme-btn .moon-icon {
+  .theme-btn .moon-icon {
     display: none;
+    fill: var(--moon-color);
   }
   [data-theme="light"] .theme-btn .sun-icon {
+    display: none;
+  }
+  [data-theme="light"] .theme-btn .moon-icon {
     display: block;
   }
 
