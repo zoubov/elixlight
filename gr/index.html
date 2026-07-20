@@ -1,1248 +1,524 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELIXLIGHT — Designing Light for Your True Nature</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #111111;
-            --bg-card: #161616;
-            --text-primary: #f5f5f5;
-            --text-secondary: #a0a0a0;
-            --text-muted: #666666;
-            --accent: #c4a77d;
-            --accent-hover: #d4b88d;
-            --border: #222222;
-            --border-light: #333333;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* Language visibility */
-        [data-lang] {
-            display: none;
-        }
-
-        [data-lang].active {
-            display: block;
-        }
-
-        span[data-lang].active,
-        a[data-lang].active,
-        li[data-lang].active,
-        h1[data-lang].active,
-        h2[data-lang].active,
-        h3[data-lang].active,
-        h4[data-lang].active,
-        p[data-lang].active,
-        div[data-lang].active {
-            display: inline;
-        }
-
-        div[data-lang].active.block,
-        section[data-lang].active {
-            display: block;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            transition: color 0.3s;
-            text-transform: uppercase;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(196, 167, 125, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-label {
-            font-size: 0.75rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 400;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            max-width: 900px;
-        }
-
-        .hero h1 em {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 3rem;
-            font-weight: 300;
-        }
-
-        .hero-dawn {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            letter-spacing: 0.1em;
-            margin-top: 2rem;
-        }
-
-        /* Sections */
-        section {
-            padding: 6rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 400;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .section-header p {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.05rem;
-        }
-
-        .divider {
-            width: 60px;
-            height: 1px;
-            background: var(--accent);
-            margin: 2rem auto;
-        }
-
-        /* Invisible Standard */
-        .invisible-standard {
-            background: var(--bg-secondary);
-            border-radius: 4px;
-            padding: 4rem;
-            border: 1px solid var(--border);
-        }
-
-        .invisible-standard h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-
-        .invisible-standard p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        .light-shapes {
-            list-style: none;
-            margin-top: 2rem;
-        }
-
-        .light-shapes li {
-            padding: 0.5rem 0;
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        .light-shapes li::before {
-            content: '—';
-            color: var(--accent);
-            margin-right: 1rem;
-        }
-
-        /* Framework */
-        .framework-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .framework-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 2.5rem;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .framework-card:hover {
-            border-color: var(--border-light);
-            transform: translateY(-4px);
-        }
-
-        .framework-card h4 {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .framework-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
-
-        .hormone-tag {
-            display: inline-block;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-
-        .framework-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .framework-card ul {
-            list-style: none;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .framework-card ul li {
-            padding: 0.25rem 0;
-            padding-left: 1rem;
-            position: relative;
-        }
-
-        .framework-card ul li::before {
-            content: '·';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-        }
-
-        /* Services / Pricing */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .service-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 380px;
-            transition: border-color 0.3s;
-        }
-
-        .service-card:hover {
-            border-color: var(--border-light);
-        }
-
-        .service-card .tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .service-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            font-weight: 400;
-            line-height: 1.3;
-        }
-
-        .service-card .price {
-            font-size: 1.5rem;
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .service-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .service-card .meta {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .service-card .email-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: color 0.3s;
-        }
-
-        .service-card .email-link:hover {
-            color: var(--accent-hover);
-        }
-
-        .service-card .email-link::after {
-            content: '→';
-        }
-
-        /* Science Section */
-        .science-section {
-            background: var(--bg-secondary);
-            border-radius: 4px;
-            padding: 4rem;
-            border: 1px solid var(--border);
-        }
-
-        .science-section h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .science-section p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-        }
-
-        .hormone-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .hormone-item h4 {
-            color: var(--accent);
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .hormone-item p {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        /* Collaboration */
-        .process-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .step {
-            display: flex;
-            gap: 2rem;
-            align-items: flex-start;
-            padding: 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-        }
-
-        .step-number {
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--accent);
-            line-height: 1;
-            min-width: 40px;
-        }
-
-        .step h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .step p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* What to Expect */
-        .expect-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .expect-card {
-            padding: 2rem;
-            border-left: 2px solid var(--accent);
-        }
-
-        .expect-card h4 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .expect-card ul {
-            list-style: none;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .expect-card ul li {
-            padding: 0.4rem 0;
-        }
-
-        .expect-card .output {
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 500;
-        }
-
-        /* Applications */
-        .applications-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-top: 3rem;
-        }
-
-        .applications-text h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-
-        .applications-text p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .stats {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .stat {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-align: right;
-        }
-
-        /* Contact */
-        .contact-section {
-            text-align: center;
-            padding: 6rem 2rem;
-        }
-
-        .contact-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
-
-        .contact-section p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .contact-email {
-            font-size: 1.25rem;
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s;
-        }
-
-        .contact-email:hover {
-            border-color: var(--accent);
-        }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .footer-logo {
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-        }
-
-        .language-switcher {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .language-switcher button {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 0.5rem 1.25rem;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-            border-radius: 2px;
-        }
-
-        .language-switcher button:hover {
-            border-color: var(--border-light);
-            color: var(--text-primary);
-        }
-
-        .language-switcher button.active {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-color: var(--accent);
-            font-weight: 500;
-        }
-
-        .lang-separator {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        .footer-copy {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
-
-            .nav-links {
-                gap: 1.5rem;
-            }
-
-            .invisible-standard,
-            .science-section {
-                padding: 2rem;
-            }
-
-            .applications-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .step {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .hero {
-                padding: 6rem 1.5rem 3rem;
-            }
-        }
-
-        /* Fade animation */
-        .fade-in {
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELIXLIGHT</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    --radius: 6px;
+    --surface-0: #0A0A0A;
+    --surface-1: #11100E;
+    --surface-2: #1A1814;
+    --surface-3: #24201A;
+    --text-primary: #E8E4DF;
+    --text-secondary: #A09A90;
+    --text-muted: #6B6560;
+    --border: #22201C;
+    --border-strong: #3A3630;
+    --border-stronger: #5A5450;
+    --accent: #E87B3C;
+    --accent-dim: rgba(232,123,60,0.12);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --surface-0: #F7F5F2;
+      --surface-1: #EDEAE5;
+      --surface-2: #E5E1DB;
+      --surface-3: #D9D4CD;
+      --text-primary: #1A1814;
+      --text-secondary: #5A5550;
+      --text-muted: #9A958F;
+      --border: #D9D4CD;
+      --border-strong: #C0BBB4;
+      --border-stronger: #A09A90;
+      --accent: #D4692A;
+      --accent-dim: rgba(212,105,42,0.10);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background: var(--surface-0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font-family: inherit; }
+
+  .w { max-width: 1100px; margin: 0 auto; }
+
+  /* ========== NAV ========== */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; }
+  .nav-center { font-size: 12px; color: var(--text-muted); font-style: italic; }
+  .nav-right-wrap { display: flex; align-items: center; gap: 1rem; }
+  .nav-right { font-size: 12px; color: var(--text-secondary); cursor: pointer; }
+  .nav-right:hover { color: var(--accent); }
+  .lang-btn {
+    font-size: 11px;
+    background: var(--surface-2);
+    border: 0.5px solid var(--border-strong);
+    color: var(--text-secondary);
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ========== HERO ========== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 480px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-visual {
+    background: var(--surface-1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 2.5rem;
+    border-right: 0.5px solid var(--border);
+  }
+  .room-box {
+    width: 160px;
+    height: 160px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 1.2s ease;
+  }
+  .ldot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    transition: background 1.2s ease, box-shadow 1.2s ease;
+  }
+  .v-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+  }
+  .v-state {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .hero-services {
+    padding: 2rem 2.5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .s-super {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.4rem;
+    margin-top: 1.25rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .s-super:first-child { margin-top: 0; }
+  .s-super:hover { color: var(--accent); }
+  .s-item {
+    padding: 0.75rem 0;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+  }
+  .s-item:last-child { border-bottom: none; }
+  .s-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: padding-left 0.15s;
+  }
+  .s-item:hover .s-row { padding-left: 0.3rem; }
+  .s-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .s-price {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+  .s-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 0.6rem;
+    padding-bottom: 0.2rem;
+    display: none;
+    border-left: 1.5px solid var(--border-strong);
+    padding-left: 0.75rem;
+  }
+  .s-desc.open { display: block; }
+  .s-contact {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
+  /* ========== TRUE OR FALSE ========== */
+  .q-section {
+    padding: 3.5rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+    max-width: 640px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
+  .q-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .q-belief {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.45;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+  }
+  .q-reveal-btn {
+    font-size: 13px;
+    padding: 0.55rem 1.4rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .q-reveal-btn:hover { background: var(--surface-1); }
+  .q-answer {
+    margin-top: 1.5rem;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    text-align: left;
+    padding: 1.25rem;
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-1);
+    display: none;
+  }
+  .q-answer.show { display: block; }
+  .q-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    display: none;
+  }
+  .q-actions.show { display: flex; }
+  .q-next {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+  .q-sci {
+    font-size: 12px;
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+  }
+
+  /* ========== SCIENCE PAGE ========== */
+  .sci-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .sci-page.active { display: block; }
+  .sci-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .sci-back:hover { color: var(--text-secondary); }
+  .sci-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .sci-body p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+  .sci-body p strong { color: var(--text-primary); font-weight: 500; }
+  .sci-pull {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.45;
+    margin: 2.5rem 0;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border-strong);
+  }
+  .sci-hormones {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .sci-h-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .sci-h-row:last-child { border-bottom: none; }
+  .sci-h-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .sci-h-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+  .sci-end {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+  }
+
+  /* ========== CATEGORY PAGES ========== */
+  .cat-page {
+    display: none;
+    padding: 3.5rem 2rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .cat-page.active { display: block; }
+  .cat-back {
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: block;
+    text-align: left;
+  }
+  .cat-back:hover { color: var(--text-secondary); }
+  .cat-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  .cat-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 3rem;
+  }
+  .cat-service {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .cat-service:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .cat-service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .cat-service-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .cat-service-price {
+    font-size: 14px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .cat-service-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+  .cat-service-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .cat-service-meta strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .cat-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ========== PAGE TOGGLE ========== */
+  .home-content { display: block; }
+  .home-content.hidden { display: none; }
+
+  /* ========== FOOTER ========== */
+  footer {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.5px solid var(--border);
+  }
+  footer .copy { font-size: 12px; color: var(--text-muted); }
+  footer a { font-size: 13px; color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .nav { padding: 1.25rem 1.5rem; }
+    .q-actions { flex-direction: column; gap: 0.75rem; align-items: center; }
+    .sci-h-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    .cat-service-header { flex-direction: column; gap: 0.25rem; }
+  }
+  @media (max-width: 560px) {
+    .nav { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .hero-services { padding: 2rem 1.5rem; }
+    .q-section { padding: 3rem 1.5rem; }
+    .sci-page, .cat-page { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  }
+</style>
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav>
-        <a href="#" class="logo">ELIXLIGHT</a>
-        <ul class="nav-links">
-            <li><a href="#framework" data-lang="en">Framework</a><a href="#framework" data-lang="el">Πλαίσιο</a></li>
-            <li><a href="#services" data-lang="en">Services</a><a href="#services" data-lang="el">Υπηρεσίες</a></li>
-            <li><a href="#science" data-lang="en">Science</a><a href="#science" data-lang="el">Επιστήμη</a></li>
-            <li><a href="#contact" data-lang="en">Contact</a><a href="#contact" data-lang="el">Επικοινωνία</a></li>
-        </ul>
-    </nav>
+<div class="w">
 
-    <!-- Hero -->
+  <nav class="nav">
+    <span class="nav-logo" onclick="goHome()">ELIXLIGHT</span>
+    <span class="nav-center" id="navTagline"></span>
+    <div class="nav-right-wrap">
+      <span class="nav-right" id="navScience" onclick="goScience()"></span>
+      <button class="lang-btn" id="langBtn" onclick="toggleLang()">EL</button>
+    </div>
+  </nav>
+
+  <div class="home-content" id="homeContent">
     <section class="hero">
-        <div class="hero-label" data-lang="en">for Hormonal Health</div>
-        <div class="hero-label" data-lang="el">Για Ορμονική Υγεία</div>
-
-        <h1 data-lang="en">Designing Light for <em>Your True Nature</em></h1>
-        <h1 data-lang="el">Σχεδίαση Φωτισμού για τη <em>Φυσική σου Κατάσταση</em></h1>
-
-        <p class="hero-subtitle" data-lang="en">Defining how environments regulate the human system — with the power of human biology.</p>
-        <p class="hero-subtitle" data-lang="el">Καθορίζοντας πώς τα περιβάλλοντα ρυθμίζουν το ανθρώπινο σύστημα — με τη δύναμη της ανθρώπινης βιολογίας.</p>
-
-        <div class="hero-dawn" data-lang="en">dawn — cortisol awakening</div>
-        <div class="hero-dawn" data-lang="el">αυγή — αφύπνιση κορτιζόλης</div>
+      <div class="hero-visual">
+        <div class="room-box" id="box"><div class="ldot" id="dot"></div></div>
+        <div class="v-time" id="vtime">06:00</div>
+        <div class="v-state" id="vstate"></div>
+      </div>
+      <div class="hero-services" id="heroServices"></div>
     </section>
 
-    <!-- Invisible Standard -->
-    <section id="standard">
-        <div class="section-header">
-            <h2 data-lang="en">An Invisible<br>Standard</h2>
-            <h2 data-lang="el">Ένα Αόρατο<br>Πρότυπο</h2>
-            <div class="divider"></div>
-        </div>
-
-        <div class="invisible-standard">
-            <h3 data-lang="en">Your space is either supporting biology or working against it.</h3>
-            <h3 data-lang="el">Ο χώρος σας είτε υποστηρίζει τη βιολογία είτε εργάζεται εναντίον της.</h3>
-
-            <p data-lang="en">We don't design lighting as a visual layer. We define what the space does to the human system. Before fixtures. Before placement. Before aesthetics.</p>
-            <p data-lang="el">Δεν σχεδιάζουμε φωτισμό ως οπτικό επίπεδο. Καθορίζουμε τι κάνει ο χώρος στο ανθρώπινο σύστημα. Πριν τα φωτιστικά. Πριν την τοποθέτηση. Πριν την αισθητική.</p>
-
-            <p style="color: var(--text-primary); font-weight: 500; margin-bottom: 1rem;" data-lang="en">Light shapes:</p>
-            <p style="color: var(--text-primary); font-weight: 500; margin-bottom: 1rem;" data-lang="el">Ο φωτισμός διαμορφώνει:</p>
-
-            <ul class="light-shapes">
-                <li data-lang="en">when you relax</li>
-                <li data-lang="el">πότε χαλαρώνετε</li>
-                <li data-lang="en">how long you stay</li>
-                <li data-lang="el">πόσο μένετε</li>
-                <li data-lang="en">how you connect</li>
-                <li data-lang="el">πώς συνδέεστε</li>
-                <li data-lang="en">how you sleep</li>
-                <li data-lang="el">πώς κοιμάστε</li>
-            </ul>
-        </div>
+    <section class="q-section">
+      <p class="q-label" id="qLabel"></p>
+      <p class="q-belief" id="qbelief"></p>
+      <button class="q-reveal-btn" id="qbtn" onclick="reveal()"></button>
+      <div class="q-answer" id="qanswer"></div>
+      <div class="q-actions" id="qactions">
+        <button class="q-next" id="qnext" onclick="nextQ()"></button>
+        <button class="q-sci" id="qsci" onclick="goScience()"></button>
+      </div>
     </section>
 
-    <!-- Services -->
-    <section id="services">
-        <div class="section-header">
-            <h2 data-lang="en">Services</h2>
-            <h2 data-lang="el">Υπηρεσίες</h2>
-            <div class="divider"></div>
-        </div>
-
-        <div class="services-grid">
-            <!-- Service 1 -->
-            <div class="service-card">
-                <div>
-                    <div class="tag" data-lang="en">For Homes & Hotels</div>
-                    <div class="tag" data-lang="el">Για Οικίες & Ξενοδοχεία</div>
-                    <h3 data-lang="en">Upgrade your sleep in 48 hours</h3>
-                    <h3 data-lang="el">Αναβαθμίστε τον ύπνο σας σε 48 ώρες</h3>
-                    <div class="price">€297</div>
-                    <p data-lang="en">Send photos of your bedroom or guest rooms. Receive specific recommendations for bulb replacements, correct placement, and when each fixture should be used to support your biological rhythm. Applied in one day, no renovation.</p>
-                    <p data-lang="el">Θα χρειαστούν φωτογραφίες από το υπνοδωμάτιο ή τα δωμάτιά σας. Θα πάρετε συγκεκριμένες προτάσεις για τις λάμπες που πρέπει να αντικατασταθούν, τη σωστή τοποθέτησή τους και το πότε πρέπει να χρησιμοποιείται κάθε φωτιστικό. Η εφαρμογή γίνεται μέσα σε μια μέρα, χωρίς ανακαίνιση.</p>
-                </div>
-                <div>
-                    <div class="meta" data-lang="en">Timeline: 48 hours · Remote</div>
-                    <div class="meta" data-lang="el">Χρονοδιάγραμμα: 48 ώρες · Εξ αποστάσεως</div>
-                    <a href="mailto:hello@elixlight.com" class="email-link">hello@elixlight.com</a>
-                </div>
-            </div>
-
-            <!-- Service 2 -->
-            <div class="service-card">
-                <div>
-                    <div class="tag" data-lang="en">For Homes & Hotels</div>
-                    <div class="tag" data-lang="el">Για Οικίες & Ξενοδοχεία</div>
-                    <h3 data-lang="en">Understand how your space affects your body</h3>
-                    <h3 data-lang="el">Κατανοήστε πώς επιδρά ο χώρος σας στο σώμα σας</h3>
-                    <div class="price" data-lang="en">from €3,500</div>
-                    <div class="price" data-lang="el">από €3.500</div>
-                    <p data-lang="en">Remote assessment of your existing lighting. Learn what works biologically, what undermines your experience, and which changes have the greatest impact before you invest.</p>
-                    <p data-lang="el">Εξ αποστάσεως αξιολόγηση του υπάρχοντος φωτισμού σας. Θα μάθετε τι λειτουργεί βιολογικά, τι υπονομεύει την εμπειρία σας, ποιες αλλαγές έχουν τη μεγαλύτερη επίδραση πριν επενδύσετε χρήματα.</p>
-                </div>
-                <div>
-                    <div class="meta" data-lang="en">Timeline: 1–2 weeks · Remote</div>
-                    <div class="meta" data-lang="el">Χρονοδιάγραμμα: 1–2 εβδομάδες · Εξ αποστάσεως</div>
-                    <a href="mailto:hello@elixlight.com" class="email-link">hello@elixlight.com</a>
-                </div>
-            </div>
-
-            <!-- Service 3 -->
-            <div class="service-card">
-                <div>
-                    <div class="tag" data-lang="en">For Architectural Projects</div>
-                    <div class="tag" data-lang="el">Για Αρχιτεκτονικά Έργα</div>
-                    <h3 data-lang="en">Give biological intent to your design</h3>
-                    <h3 data-lang="el">Δώστε βιολογική πρόθεση στον σχεδιασμό σας</h3>
-                    <div class="price" data-lang="en">from €8,000</div>
-                    <div class="price" data-lang="el">από €8.000</div>
-                    <p data-lang="en">Before lighting design, we define what each zone of the project must achieve biologically: which hormonal state to support, at what time, for which user. The designer receives a biological target and applies it to the design.</p>
-                    <p data-lang="el">Πριν τον σχεδιασμό φωτισμού, καθορίζουμε τι πρέπει να πετυχαίνει βιολογικά κάθε ζώνη του έργου: ποια ορμονική κατάσταση πρέπει να υποστηρίζει, ποια ώρα, για ποιον χρήστη. Ο σχεδιαστής λαμβάνει έναν βιολογικό στόχο και τον εφαρμόζει στη σχεδίαση.</p>
-                </div>
-                <div>
-                    <div class="meta" data-lang="en">Timeline: 2–3 weeks · Remote</div>
-                    <div class="meta" data-lang="el">Χρονοδιάγραμμα: 2–3 εβδομάδες · Εξ αποστάσεως</div>
-                    <a href="mailto:hello@elixlight.com" class="email-link">hello@elixlight.com</a>
-                </div>
-            </div>
-
-            <!-- Service 4 -->
-            <div class="service-card">
-                <div>
-                    <div class="tag" data-lang="en">For Architectural Projects</div>
-                    <div class="tag" data-lang="el">Για Αρχιτεκτονικά Έργα</div>
-                    <h3 data-lang="en">Evaluate specifications biologically before you build</h3>
-                    <h3 data-lang="el">Αξιολογήστε τις προδιαγραφές βιολογικά πριν κατασκευάσετε</h3>
-                    <div class="price" data-lang="en">from €4,000</div>
-                    <div class="price" data-lang="el">από €4.000</div>
-                    <p data-lang="en">Lighting specifications have already been created, and we evaluate them before fixture ordering. The last check before design is embedded in construction.</p>
-                    <p data-lang="el">Οι προδιαγραφές φωτισμού έχουν ήδη δημιουργηθεί, και τις αξιολογούμε πριν γίνει η παραγγελία των φωτιστικών. Είναι ο τελευταίος έλεγχος πριν ο σχεδιασμός ενσωματωθεί στην κατασκευή.</p>
-                </div>
-                <div>
-                    <div class="meta" data-lang="en">Timeline: ~1 week per review cycle · Remote</div>
-                    <div class="meta" data-lang="el">Χρονοδιάγραμμα: ~1 εβδομάδα ανά κύκλο · Εξ αποστάσεως</div>
-                    <a href="mailto:hello@elixlight.com" class="email-link">hello@elixlight.com</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Science -->
-    <section id="science">
-        <div class="section-header">
-            <h2 data-lang="en">The Science</h2>
-            <h2 data-lang="el">Η Επιστήμη</h2>
-            <div class="divider"></div>
-        </div>
-
-        <div class="science-section">
-            <h3 data-lang="en">"Warm light is always relaxing." — True or False?</h3>
-            <h3 data-lang="el">"Το ζεστό φως είναι πάντα χαλαρωτικό." — Σωστό ή Λάθος;</h3>
-
-            <p data-lang="en">About 90% of our waking time is spent indoors. This is extremely recent from an evolutionary perspective. Our biology has not adapted.</p>
-            <p data-lang="el">Περίπου το 90% του χρόνου που είμαστε ξύπνιοι το περνάμε σε εσωτερικούς χώρους. Αυτό είναι εξαιρετικά πρόσφατο από άποψη εξέλιξης. Η βιολογία μας δεν έχει προσαρμοστεί.</p>
-
-            <p data-lang="en">Our body still expects the natural light under which it evolved: the sun that rises, peaks at noon, sets in the evening. Instead, it is exposed to constant-intensity lighting from morning until late at night.</p>
-            <p data-lang="el">Το σώμα μας εξακολουθεί να περιμένει το φυσικό φως κάτω από το οποίο εξελίχθηκε: τον ήλιο που ανατέλλει, κορυφώνεται το μεσημέρι, δύει το βράδυ. Αντί γι' αυτό, εκτίθεται σε φωτισμό σταθερής έντασης από το πρωί μέχρι αργά τη νύχτα.</p>
-
-            <p data-lang="en">The organism reacts to all of this biologically. In the retina, there is a third type of photoreceptor that is not used for vision. It detects light intensity, its spectrum, and sends this information directly to the brain's biological clock.</p>
-            <p data-lang="el">Ο οργανισμός αντιδρά σε όλο αυτό βιολογικά. Στον αμφιβληστροειδή υπάρχει ένας τρίτος τύπος φωτοϋποδοχέα που δεν χρησιμοποιείται για την όραση. Ανιχνεύει την ένταση του φωτός, το φάσμα του, και στέλνει αυτές τις πληροφορίες απευθείας στο βιολογικό ρολόι του εγκεφάλου.</p>
-
-            <p data-lang="en">You communicate with your biology through light for your entire life. You just didn't know what you were telling it.</p>
-            <p data-lang="el">Επικοινωνείτε με τη βιολογία σας μέσω του φωτός για όλη σας τη ζωή. Απλώς μέχρι τώρα δεν γνωρίζατε τι της λέγατε.</p>
-
-            <p data-lang="en">Think of trying to meow at a cat without knowing its language. Communication exists. The cat responds. The question is whether you're saying what you think you are. The same happens with lighting.</p>
-            <p data-lang="el">Σκεφτείτε ότι προσπαθείτε να νιαουρίσετε σε μια γάτα χωρίς να γνωρίζετε τη γλώσσα της. Επικοινωνία υπάρχει. Η γάτα ανταποκρίνεται. Το ερώτημα είναι αν της λέτε αυτό που νομίζετε. Το ίδιο συμβαίνει και με τον φωτισμό.</p>
-
-            <p data-lang="en">Most of the time, indoor lighting isn't "bad." It simply hasn't been designed consciously. The ceiling fixture after dinner tells the body it's noon. The bathroom mirror light at midnight can suppress more melatonin than your phone. Conversely, a small warm fixture at low height is a more appropriate biological message.</p>
-            <p data-lang="el">Τις περισσότερες φορές ο εσωτερικός φωτισμός δεν είναι «κακός». Απλώς δεν έχει σχεδιαστεί συνειδητά. Το φωτιστικό της οροφής μετά το δείπνο επικοινωνεί στο σώμα ότι είναι μεσημέρι. Το φως του καθρέφτη στο μπάνιο τα μεσάνυχτα μπορεί να καταστέλλει περισσότερο τη μελατονίνη από το κινητό. Αντίθετα, ένα μικρό ζεστό φωτιστικό σε χαμηλό ύψος είναι πιο κατάλληλο βιολογικό μήνυμα.</p>
-
-            <p data-lang="en">Your nervous system responds all day to the signals light gives it. The only question is: <strong>what exactly are you telling it?</strong></p>
-            <p data-lang="el">Το νευρικό σας σύστημα ανταποκρίνεται όλη την ημέρα στα σήματα που του δίνει το φως. Το μόνο ερώτημα είναι: <strong>τι ακριβώς του λέτε;</strong></p>
-
-            <div class="hormone-grid">
-                <div class="hormone-item">
-                    <h4 data-lang="en">Cortisol</h4>
-                    <h4 data-lang="el">Κορτιζόλη</h4>
-                    <p data-lang="en">The primary alertness hormone. Should peak in the morning and decrease gradually in the evening. Bright light can keep it elevated until late at night.</p>
-                    <p data-lang="el">Η βασική ορμόνη εγρήγορσης. Πρέπει να κορυφώνεται το πρωί και να μειώνεται σταδιακά το βράδυ. Ο έντονος φωτισμός μπορεί να την κρατήσει αυξημένη μέχρι αργά τη νύχτα.</p>
-                </div>
-                <div class="hormone-item">
-                    <h4 data-lang="en">Melatonin</h4>
-                    <h4 data-lang="el">Μελατονίνη</h4>
-                    <p data-lang="en">The sleep-preparation hormone. Normally begins rising about two hours before sleep. Suppressed by light above 10 lux containing blue wavelengths. Even 30 minutes of exposure can delay secretion by about 90 minutes.</p>
-                    <p data-lang="el">Η ορμόνη που προετοιμάζει τον ύπνο. Κανονικά αρχίζει να αυξάνεται περίπου δύο ώρες πριν τον ύπνο. Καταστέλλεται από φως άνω των 10 lux που περιέχει μπλε μήκη κύματος. Ακόμη και 30 λεπτά έκθεσης μπορούν να καθυστερήσουν την έκκρισή της περίπου 90 λεπτά.</p>
-                </div>
-                <div class="hormone-item">
-                    <h4 data-lang="en">Dopamine</h4>
-                    <h4 data-lang="el">Ντοπαμίνη</h4>
-                    <p data-lang="en">Reward and attention neurotransmitter. Activated by contrast between a bright point and a darker environment. Uniform lighting reduces this stimulation.</p>
-                    <p data-lang="el">Νευροδιαβιβαστής ανταμοιβής και προσοχής. Ενεργοποιείται από την αντίθεση ανάμεσα σε ένα φωτεινό σημείο και ένα σκοτεινότερο περιβάλλον. Ο ομοιόμορφος φωτισμός μειώνει αυτή τη διέγερση.</p>
-                </div>
-                <div class="hormone-item">
-                    <h4 data-lang="en">Serotonin</h4>
-                    <h4 data-lang="el">Σεροτονίνη</h4>
-                    <p data-lang="en">The mood neurotransmitter. Needs full natural daylight to be produced. This is why winter and windowless spaces affect mood so strongly.</p>
-                    <p data-lang="el">Ο νευροδιαβιβαστής της διάθεσης. Χρειάζεται πλήρες φυσικό φως ημέρας για να παραχθεί. Γι' αυτό ο χειμώνας και οι χώροι χωρίς παράθυρα επηρεάζουν τόσο έντονα τη διάθεση.</p>
-                </div>
-            </div>
-
-            <p style="margin-top: 3rem; font-size: 1.1rem; color: var(--text-primary);" data-lang="en">When lighting sends the right message at the right time: cortisol rises in the morning, melatonin appears at the right time, sleep comes naturally, you wake up truly rested. The space may not look different. But you feel like yourself again.</p>
-            <p style="margin-top: 3rem; font-size: 1.1rem; color: var(--text-primary);" data-lang="el">Όταν ο φωτισμός στέλνει το σωστό μήνυμα τη σωστή στιγμή: η κορτιζόλη ανεβαίνει το πρωί, η μελατονίνη εμφανίζεται την κατάλληλη ώρα, ο ύπνος έρχεται φυσικά, ξυπνάτε πραγματικά ξεκούραστοι. Ο χώρος ίσως να μη φαίνεται διαφορετικός. Αλλά εσείς αισθάνεστε ξανά ο εαυτός σας.</p>
-        </div>
-    </section>
-
-    <!-- Framework -->
-    <section id="framework">
-        <div class="section-header">
-            <h2 data-lang="en">Light as<br>Behavior Engineering</h2>
-            <h2 data-lang="el">Ο Φωτισμός ως<br>Μηχανική Συμπεριφοράς</h2>
-            <p data-lang="en">Right now lighting is perceived as a visual layer. It is behavioral infrastructure.</p>
-            <p data-lang="el">Αυτή τη στιγμή ο φωτισμός αντιλαμβάνεται ως οπτικό επίπεδο. Είναι υποδομή συμπεριφοράς.</p>
-            <div class="divider"></div>
-        </div>
-
-        <div class="framework-grid">
-            <div class="framework-card">
-                <h4 data-lang="en">Activation</h4>
-                <h4 data-lang="el">Ενεργοποίηση</h4>
-                <h3 data-lang="en">Energy, Alertness & Cognitive Engagement</h3>
-                <h3 data-lang="el">Ενέργεια, Εγρήγορση & Γνωστική Δέσμευση</h3>
-                <div class="hormone-tag">cortisol · dopamine</div>
-                <p data-lang="en">Used in workspaces, kitchens, gyms, morning environments.</p>
-                <p data-lang="el">Χρήση σε χώρους εργασίας, κουζίνες, γυμναστήρια, πρωινά περιβάλλοντα.</p>
-                <ul>
-                    <li data-lang="en">Higher intensity</li>
-                    <li data-lang="el">Υψηλότερη ένταση</li>
-                    <li data-lang="en">Cooler spectrum</li>
-                    <li data-lang="el">Ψυχρότερο φάσμα</li>
-                    <li data-lang="en">Directional light</li>
-                    <li data-lang="el">Κατευθυντικό φως</li>
-                    <li data-lang="en">Dynamic transitions</li>
-                    <li data-lang="el">Δυναμικές μεταβάσεις</li>
-                </ul>
-            </div>
-
-            <div class="framework-card">
-                <h4 data-lang="en">Connection</h4>
-                <h4 data-lang="el">Σύνδεση</h4>
-                <h3 data-lang="en">Social Comfort, Trust & Emotional Presence</h3>
-                <h3 data-lang="el">Κοινωνική Άνεση, Εμπιστοσύνη & Συναισθηματική Παρουσία</h3>
-                <div class="hormone-tag">oxytocin · serotonin</div>
-                <p data-lang="en">Used in dining areas, living rooms, hospitality spaces.</p>
-                <p data-lang="el">Χρήση σε τραπεζαρίες, σαλόνια, χώρους φιλοξενίας.</p>
-                <ul>
-                    <li data-lang="en">Warm tones</li>
-                    <li data-lang="el">Ζεστοί τόνοι</li>
-                    <li data-lang="en">Eye-level light sources</li>
-                    <li data-lang="el">Πηγές φωτός σε ύψος ματιών</li>
-                    <li data-lang="en">Reduced glare</li>
-                    <li data-lang="el">Μειωμένη θάμβωση</li>
-                    <li data-lang="en">Balanced contrast</li>
-                    <li data-lang="el">Ισορροπημένη αντίθεση</li>
-                </ul>
-            </div>
-
-            <div class="framework-card">
-                <h4 data-lang="en">Restoration</h4>
-                <h4 data-lang="el">Αποκατάσταση</h4>
-                <h3 data-lang="en">Recovery, Relaxation & Sleep Preparation</h3>
-                <h3 data-lang="el">Ανάρρωση, Χαλάρωση & Προετοιμασία Ύπνου</h3>
-                <div class="hormone-tag">melatonin · growth hormone</div>
-                <p data-lang="en">Used in bedrooms, wellness spaces, spas.</p>
-                <p data-lang="el">Χρήση σε υπνοδωμάτια, χώρους ευεξίας, σπα.</p>
-                <ul>
-                    <li data-lang="en">Low intensity</li>
-                    <li data-lang="el">Χαμηλή ένταση</li>
-                    <li data-lang="en">Warm spectrum</li>
-                    <li data-lang="el">Ζεστό φάσμα</li>
-                    <li data-lang="en">Indirect light</li>
-                    <li data-lang="el">Έμμεσο φως</li>
-                    <li data-lang="en">Minimal overhead exposure</li>
-                    <li data-lang="el">Ελάχιστη έκθεση από πάνω</li>
-                </ul>
-            </div>
-
-            <div class="framework-card">
-                <h4 data-lang="en">Sensory Pleasure</h4>
-                <h4 data-lang="el">Αισθητηριακή Απόλαυση</h4>
-                <h3 data-lang="en">Stimulation, Curiosity & Emotional Engagement</h3>
-                <h3 data-lang="el">Διέγερση, Περιέργεια & Συναισθηματική Δέσμευση</h3>
-                <div class="hormone-tag">dopamine · endorphins</div>
-                <p data-lang="en">Used in bars, lounges, experiential environments.</p>
-                <p data-lang="el">Χρήση σε μπαρ, σαλόνια, πειραματικά περιβάλλοντα.</p>
-                <ul>
-                    <li data-lang="en">Contrast and depth</li>
-                    <li data-lang="el">Αντίθεση και βάθος</li>
-                    <li data-lang="en">Focal highlights</li>
-                    <li data-lang="el">Εστιακές επισημάνσεις</li>
-                    <li data-lang="en">Visual rhythm</li>
-                    <li data-lang="el">Οπτικός ρυθμός</li>
-                </ul>
-            </div>
-        </div>
-
-        <div style="margin-top: 4rem; text-align: center;">
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem;" data-lang="en">What This Means for Design</h3>
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem;" data-lang="el">Τι Σημαίνει Αυτό για το Σχεδιασμό</h3>
-            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;" data-lang="en">This framework allows design teams to define what the space should do to people, translate that into lighting behavior, and create more intentional and differentiated experiences.</p>
-            <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;" data-lang="el">Αυτό το πλαίσιο επιτρέπει στις ομάδες σχεδιασμού να καθορίσουν τι πρέπει να κάνει ο χώρος στους ανθρώπους, να το μεταφράσουν σε συμπεριφορά φωτισμού, και να δημιουργήσουν πιο σκόπιμες και διαφοροποιημένες εμπειρίες.</p>
-        </div>
-    </section>
-
-    <!-- Collaboration -->
-    <section id="collaboration">
-        <div class="section-header">
-            <h2 data-lang="en">Collaboration</h2>
-            <h2 data-lang="el">Συνεργασία</h2>
-            <p data-lang="en">Elixlight collaborates as a strategic advisor, typically in three phases:</p>
-            <p data-lang="el">Η ELIXLIGHT συνεργάζεται ως στρατηγικός σύμβουλος, συνήθως σε τρεις φάσεις:</p>
-            <div class="divider"></div>
-        </div>
-
-        <div class="process-steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div>
-                    <h4 data-lang="en">Hormonal Lighting Strategy</h4>
-                    <h4 data-lang="el">Στρατηγική Ορμονικού Φωτισμού</h4>
-                    <p data-lang="en">Defines the biological and experiential intent of the project.</p>
-                    <p data-lang="el">Καθορίζει τη βιολογική και εμπειρική πρόθεση του έργου.</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div>
-                    <h4 data-lang="en">Human State Mapping</h4>
-                    <h4 data-lang="el">Χαρτογράφηση Ανθρώπινης Κατάστασης</h4>
-                    <p data-lang="en">Translates spatial zones into desired human states and lighting behaviors.</p>
-                    <p data-lang="el">Μεταφράζει τις χωρικές ζώνες σε επιθυμητές ανθρώπινες καταστάσεις και συμπεριφορές φωτισμού.</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div>
-                    <h4 data-lang="en">Design Review</h4>
-                    <h4 data-lang="el">Ανασκόπηση Σχεδιασμού</h4>
-                    <p data-lang="en">Provides feedback on lighting proposals based on hormonal and circadian impact.</p>
-                    <p data-lang="el">Παρέχει ανατροφοδότηση σε προτάσεις φωτισμού με βάση την ορμονική και κιρκαδική επίδραση.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- What to Expect -->
-    <section id="expect">
-        <div class="section-header">
-            <h2 data-lang="en">What to Expect</h2>
-            <h2 data-lang="el">Τι να Περιμένετε</h2>
-            <p data-lang="en">The contribution is not technical lighting design. It is a decision-making framework that informs it.</p>
-            <p data-lang="el">Η συνεισφορά δεν είναι τεχνικός σχεδιασμός φωτισμού. Είναι ένα πλαίσιο λήψης αποφάσεων που το ενημερώνει.</p>
-            <div class="divider"></div>
-        </div>
-
-        <div class="expect-grid">
-            <div class="expect-card">
-                <h4 data-lang="en">Early Concept Stage</h4>
-                <h4 data-lang="el">Αρχικό Στάδιο Σχεδιασμού</h4>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;" data-lang="en">Defines the foundation of the experience.</p>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;" data-lang="el">Καθορίζει τη βάση της εμπειρίας.</p>
-                <ul>
-                    <li data-lang="en">What states the space should support</li>
-                    <li data-lang="el">Ποιες καταστάσεις πρέπει να υποστηρίζει ο χώρος</li>
-                    <li data-lang="en">How these states relate to time of day</li>
-                    <li data-lang="el">Πώς σχετίζονται αυτές οι καταστάσεις με την ώρα της ημέρας</li>
-                    <li data-lang="en">The role of light in shaping them</li>
-                    <li data-lang="el">Ο ρόλος του φωτός στη διαμόρφωσή τους</li>
-                </ul>
-                <div class="output" data-lang="en">→ Output: Hormonal Lighting Strategy</div>
-                <div class="output" data-lang="el">→ Αποτέλεσμα: Στρατηγική Ορμονικού Φωτισμού</div>
-            </div>
-
-            <div class="expect-card">
-                <h4 data-lang="en">Design Development</h4>
-                <h4 data-lang="el">Ανάπτυξη Σχεδιασμού</h4>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;" data-lang="en">Aligns the concept with spatial and lighting behavior.</p>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;" data-lang="el">Ευθυγραμμίζει την έννοια με τη χωρική και φωτιστική συμπεριφορά.</p>
-                <ul>
-                    <li data-lang="en">Translation of human states into lighting principles</li>
-                    <li data-lang="el">Μετάφραση ανθρώπινων καταστάσεων σε αρχές φωτισμού</li>
-                    <li data-lang="en">How different zones should function</li>
-                    <li data-lang="el">Πώς πρέπει να λειτουργούν διαφορετικές ζώνες</li>
-                    <li data-lang="en">Support in maintaining consistency</li>
-                    <li data-lang="el">Υποστήριξη στη διατήρηση συνέπειας</li>
-                </ul>
-                <div class="output" data-lang="en">→ Output: Human State Mapping + Lighting Guidelines</div>
-                <div class="output" data-lang="el">→ Αποτέλεσμα: Χαρτογράφηση Ανθρώπινης Κατάστασης + Οδηγίες Φωτισμού</div>
-            </div>
-
-            <div class="expect-card">
-                <h4 data-lang="en">Pre-Final Lighting Review</h4>
-                <h4 data-lang="el">Προτελικός Έλεγχος Φωτισμού</h4>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;" data-lang="en">Evaluates the proposal before implementation.</p>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;" data-lang="el">Αξιολογεί την πρόταση πριν την υλοποίηση.</p>
-                <ul>
-                    <li data-lang="en">Identification of overstimulation or insufficient contrast</li>
-                    <li data-lang="el">Εντοπισμός υπερδιέγερσης ή ανεπαρκούς αντίθεσης</li>
-                    <li data-lang="en">Detection of circadian disruption risks</li>
-                    <li data-lang="el">Ανίχνευση κινδύνων κιρκαδικής διατάραξης</li>
-                    <li data-lang="en">Alignment check between concept and lighting behavior</li>
-                    <li data-lang="el">Έλεγχος ευθυγράμμισης μεταξύ έννοιας και συμπεριφοράς φωτισμού</li>
-                </ul>
-                <div class="output" data-lang="en">→ Output: Hormonal Design Review</div>
-                <div class="output" data-lang="el">→ Αποτέλεσμα: Ορμονική Ανασκόπηση Σχεδιασμού</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Layer -->
-    <section id="layer">
-        <div class="section-header">
-            <h2 data-lang="en">A Layer of<br>Lighting Strategy</h2>
-            <h2 data-lang="el">Ένα Επίπεδο<br>Στρατηγικής Φωτισμού</h2>
-            <p data-lang="en">This contribution works alongside existing roles.</p>
-            <p data-lang="el">Αυτή η συνεισφορά λειτουργεί παράλληλα με υπάρχοντες ρόλους.</p>
-            <div class="divider"></div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
-            <div>
-                <h4 style="font-weight: 600; margin-bottom: 0.5rem;" data-lang="en">Lighting Designers</h4>
-                <h4 style="font-weight: 600; margin-bottom: 0.5rem;" data-lang="el">Σχεδιαστές Φωτισμού</h4>
-                <p style="color: var(--text-secondary); font-size: 0.95rem;" data-lang="en">Design and implementation</p>
-                <p style="color: var(--text-secondary); font-size: 0.95rem;" data-lang="el">Σχεδιασμός και υλοποίηση</p>
-            </div>
-            <div>
-                <h4 style="font-weight: 600; margin-bottom: 0.5rem;" data-lang="en">Architects & Interior Designers</h4>
-                <h4 style="font-weight: 600; margin-bottom: 0.5rem;" data-lang="el">Αρχιτέκτονες & Διακοσμητές Εσωτερικών Χώρων</h4>
-                <p style="color: var(--text-secondary); font-size: 0.95rem;" data-lang="en">Spatial intent</p>
-                <p style="color: var(--text-secondary); font-size: 0.95rem;" data-lang="el">Χωρική πρόθεση</p>
-            </div>
-            <div>
-                <h4 style="font-weight: 600; margin-bottom: 0.5rem;" data-lang="en">Hospitality or Wellness Teams</h4>
-                <h4 style="font-weight: 600; margin-bottom: 0.5rem;" data-lang="el">Ομάδες Φιλοξενίας ή Ευεξίας</h4>
-                <p style="color: var(--text-secondary); font-size: 0.95rem;" data-lang="en">User experience</p>
-                <p style="color: var(--text-secondary); font-size: 0.95rem;" data-lang="el">Εμπειρία χρήστη</p>
-            </div>
-        </div>
-
-        <p style="text-align: center; margin-top: 3rem; color: var(--text-secondary); max-width: 700px; margin-left: auto; margin-right: auto;" data-lang="en">The strategy provides a shared layer of biological intent that informs decisions across disciplines.</p>
-        <p style="text-align: center; margin-top: 3rem; color: var(--text-secondary); max-width: 700px; margin-left: auto; margin-right: auto;" data-lang="el">Η στρατηγική παρέχει ένα κοινό επίπεδο βιολογικής πρόθεσης που ενημερώνει αποφάσεις σε όλες τις ειδικότητες.</p>
-    </section>
-
-    <!-- Applications -->
-    <section id="applications">
-        <div class="section-header">
-            <h2 data-lang="en">Applications</h2>
-            <h2 data-lang="el">Εφαρμογές</h2>
-            <p data-lang="en">Here's how lighting can support the body to achieve high-end recovery experiences.</p>
-            <p data-lang="el">Δείτε πώς ο φωτισμός μπορεί να υποστηρίξει το σώμα για εμπειρίες υψηλού επιπέδου ανάρρωσης.</p>
-            <div class="divider"></div>
-        </div>
-
-        <div class="applications-content">
-            <div class="applications-text">
-                <h3 data-lang="en">Jet Lag Recovery Hotel Room</h3>
-                <h3 data-lang="el">Δωμάτιο Ξενοδοχείου για Ανάρρωση από Jet Lag</h3>
-                <p data-lang="en">A room designed for overseas travellers who aim to enjoy their time visiting <em>to the fullest</em>. The room uses light to guide the guest through faster circadian reset, improved rest and sleep, higher energy levels.</p>
-                <p data-lang="el">Ένα δωμάτιο σχεδιασμένο για ταξιδιώτες από το εξωτερικό που στοχεύουν να απολαύσουν τον χρόνο τους <em>στο έπακρο</em>. Το δωμάτιο χρησιμοποιεί φως για να καθοδηγήσει τον επισκέπτη σε ταχύτερη κιρκαδική επαναφορά, βελτιωμένη ανάπαυση και ύπνο, υψηλότερα επίπεδα ενέργειας.</p>
-            </div>
-            <div class="stats">
-                <div class="stat">
-                    <span class="stat-value">+$30</span>
-                    <span class="stat-label" data-lang="en">Marriott Delos Stay Well<br>per night premium</span>
-                    <span class="stat-label" data-lang="el">Marriott Delos Stay Well<br>ανά διανυκτέρευση premium</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-value">$1,700</span>
-                    <span class="stat-label" data-lang="en">Equinox Hotels<br>per night for sleep optimization</span>
-                    <span class="stat-label" data-lang="el">Equinox Hotels<br>ανά διανυκτέρευση για βελτιστοποίηση ύπνου</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-value">+18-20%</span>
-                    <span class="stat-label" data-lang="en">Wellness Hotels<br>higher average daily rates with sleep enhancements</span>
-                    <span class="stat-label" data-lang="el">Ξενοδοχεία Ευεξίας<br>υψηλότερες μέσες ημερήσιες τιμές με βελτιώσεις ύπνου</span>
-                </div>
-            </div>
-        </div>
-
-        <p style="text-align: center; margin-top: 3rem; color: var(--text-secondary); font-size: 1.05rem;" data-lang="en">Outcomes like that are achievable through strategic lighting — at lower implementation cost and higher margins.</p>
-        <p style="text-align: center; margin-top: 3rem; color: var(--text-secondary); font-size: 1.05rem;" data-lang="el">Τέτοια αποτελέσματα είναι εφικτά μέσω στρατηγικού φωτισμού — με χαμηλότερο κόστος υλοποίησης και υψηλότερα περιθώρια.</p>
-    </section>
-
-    <!-- Final Note -->
-    <section id="final">
-        <div class="section-header">
-            <div class="divider"></div>
-        </div>
-        <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-            <p style="font-family: 'Playfair Display', serif; font-size: 1.5rem; line-height: 1.6; color: var(--text-primary); margin-bottom: 2rem;" data-lang="en">Lighting is often treated as a visual tool.<br><br>In practice, it is also a biological one.<br><br>When light is aligned with the body, it does not only improve how a space looks — it improves how it is experienced, used and remembered.</p>
-            <p style="font-family: 'Playfair Display', serif; font-size: 1.5rem; line-height: 1.6; color: var(--text-primary); margin-bottom: 2rem;" data-lang="el">Ο φωτισμός συχνά αντιμετωπίζεται ως οπτικό εργαλείο.<br><br>Στην πράξη, είναι επίσης βιολογικό.<br><br>Όταν το φως ευθυγραμμίζεται με το σώμα, δεν βελτιώνει μόνο πώς φαίνεται ένας χώρος — βελτιώνει πώς βιώνεται, χρησιμοποιείται και θυμάται.</p>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section class="contact-section" id="contact">
-        <h2 data-lang="en">Contact</h2>
-        <h2 data-lang="el">Επικοινωνία</h2>
-        <p data-lang="en">Available for collaborations worldwide.</p>
-        <p data-lang="el">Διαθέσιμη για συνεργασίες παγκοσμίως.</p>
-        <a href="mailto:hello@elixlight.com" class="contact-email">hello@elixlight.com</a>
-    </section>
-
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-logo">ELIXLIGHT</div>
-
-            <div class="language-switcher">
-                <button id="btn-en" class="active" onclick="switchLang('en')">English</button>
-                <span class="lang-separator">/</span>
-                <button id="btn-el" onclick="switchLang('el')">Ελληνικά</button>
-            </div>
-
-            <div class="footer-copy">
-                <span data-lang="en">Designing light for your true nature.</span>
-                <span data-lang="el">Σχεδίαση φωτισμού για τη φυσική σου κατάσταση.</span>
-            </div>
-        </div>
+      <span class="copy">&copy; 2025 ELIXLIGHT</span>
+      <span><a href="mailto:hello@elixlight.com">hello@elixlight.com</a></span>
     </footer>
+  </div>
 
-    <script>
-        // Language switching
-        function switchLang(lang) {
-            // Update buttons
-            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-            document.getElementById('btn-el').classList.toggle('active', lang === 'el');
+  <div class="sci-page" id="sciPage">
+    <button class="sci-back" id="sciBack" onclick="goHome()"></button>
+    <p class="sci-title" id="sciTitle"></p>
+    <div class="sci-body" id="sciBody"></div>
+  </div>
 
-            // Update all elements with data-lang
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                if (el.getAttribute('data-lang') === lang) {
-                    el.classList.add('active');
-                    // Add fade animation
-                    el.classList.add('fade-in');
-                    setTimeout(() => el.classList.remove('fade-in'), 400);
-                } else {
-                    el.classList.remove('active');
-                }
-            });
+  <div class="cat-page" id="catHomehotel">
+    <button class="cat-back" id="catHomehotelBack" onclick="goHome()"></button>
+    <p class="cat-title" id="catHomehotelTitle"></p>
+    <p class="cat-intro" id="catHomehotelIntro"></p>
+    <div id="catHomehotelServices"></div>
+    <div class="cat-footer" id="catHomehotelFooter"></div>
+  </div>
 
-            // Update html lang attribute
-            document.documentElement.lang = lang;
+  <div class="cat-page" id="catProject">
+    <button class="cat-back" id="catProjectBack" onclick="goHome()"></button>
+    <p class="cat-title" id="catProjectTitle"></p>
+    <p class="cat-intro" id="catProjectIntro"></p>
+    <div id="catProjectServices"></div>
+    <div class="cat-footer" id="catProjectFooter"></div>
+  </div>
 
-            // Save preference
-            localStorage.setItem('elixlight-lang', lang);
-        }
+</div>
 
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('elixlight-lang') || 'en';
-            switchLang(savedLang);
-        });
-    </script>
+<script src="translations.js"></script>
+<script src="app.js"></script>
+
 </body>
 </html>
