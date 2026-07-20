@@ -23,23 +23,25 @@
     --border-stronger: #5A5450;
     --accent: #E87B3C;
     --accent-dim: rgba(232,123,60,0.12);
+    --moon-color: #0A0A0A;
+    --sun-color: #E87B3C;
   }
 
-  @media (prefers-color-scheme: light) {
-    :root {
-      --surface-0: #F7F5F2;
-      --surface-1: #EDEAE5;
-      --surface-2: #E5E1DB;
-      --surface-3: #D9D4CD;
-      --text-primary: #1A1814;
-      --text-secondary: #5A5550;
-      --text-muted: #9A958F;
-      --border: #D9D4CD;
-      --border-strong: #C0BBB4;
-      --border-stronger: #A09A90;
-      --accent: #D4692A;
-      --accent-dim: rgba(212,105,42,0.10);
-    }
+  [data-theme="light"] {
+    --surface-0: #F7F5F2;
+    --surface-1: #EDEAE5;
+    --surface-2: #E5E1DB;
+    --surface-3: #D9D4CD;
+    --text-primary: #1A1814;
+    --text-secondary: #5A5550;
+    --text-muted: #9A958F;
+    --border: #D9D4CD;
+    --border-strong: #C0BBB4;
+    --border-stronger: #A09A90;
+    --accent: #D4692A;
+    --accent-dim: rgba(212,105,42,0.10);
+    --moon-color: #1A1814;
+    --sun-color: #D4692A;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -84,6 +86,44 @@
     transition: all 0.2s;
   }
   .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ========== THEME TOGGLE ========== */
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border-strong);
+    background: var(--surface-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+  .theme-btn:hover {
+    border-color: var(--accent);
+    transform: scale(1.08);
+  }
+  .theme-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: all 0.3s ease;
+  }
+  .theme-btn .moon-icon {
+    display: block;
+    fill: var(--moon-color);
+  }
+  .theme-btn .sun-icon {
+    display: none;
+    fill: var(--sun-color);
+  }
+  [data-theme="light"] .theme-btn .moon-icon {
+    display: none;
+  }
+  [data-theme="light"] .theme-btn .sun-icon {
+    display: block;
+  }
 
   /* ========== HERO ========== */
   .hero {
@@ -462,7 +502,25 @@
     <span class="nav-center" id="navTagline"></span>
     <div class="nav-right-wrap">
       <span class="nav-right" id="navScience" onclick="goScience()"></span>
-      <button class="lang-btn" id="langBtn" onclick="toggleLang()">ΕΛ</button>
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <!-- Moon icon (shown in dark mode) -->
+        <svg class="moon-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <!-- Sun icon (shown in light mode) -->
+        <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <button class="lang-btn" id="langBtn" onclick="toggleLang()">EL</button>
     </div>
   </nav>
 
